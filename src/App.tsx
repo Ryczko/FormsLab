@@ -1,7 +1,7 @@
-import "./App.scss";
+import PageWrapper from "./Pages/PageWrapper";
 
 function App() {
-    return <div className="app"></div>;
+    return <PageWrapper />;
 }
 
 export default App;
