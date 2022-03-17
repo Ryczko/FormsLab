@@ -5,5 +5,33 @@
 @tailwind utilities;
 
 * {
-    font-family: "Inter", "sans-serif";
+  font-family: "Inter", "sans-serif";
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-2 text-center transition duration-150 ease-in-out shadow cursor-pointer rounded-lg font-medium;
+  }
+  .btn:disabled,
+  .btn[disabled] {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply text-indigo-900 bg-indigo-300 shadow-indigo-600/50 hover:bg-indigo-200;
+  }
+  .btn-secondary {
+    @apply text-gray-900 bg-gray-100 shadow-gray-600/50 hover:bg-gray-50;
+  }
+  .btn-outline {
+    @apply text-gray-900 bg-transparent border border-gray-900 shadow-gray-600/50 hover:bg-gray-100;
+  }
+  .btn-outline-primary {
+    @apply text-indigo-900 bg-transparent border border-indigo-900 shadow-indigo-400/50 hover:bg-indigo-50;
+  }
+  .btn-danger {
+    @apply text-white bg-red-600 shadow-red-500/50 hover:bg-red-500;
+  }
+  .btn-success {
+    @apply text-white bg-emerald-600 shadow-emerald-600/50 hover:bg-emerald-500;
+  }
 }
