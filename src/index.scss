@@ -4,8 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: "Inter", "sans-serif";
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply box-border antialiased;
+  }
+  * {
+    font-family: "Inter", "sans-serif";
+  }
+  body {
+    @apply text-zinc-900;
+  }
 }
 
 @layer components {

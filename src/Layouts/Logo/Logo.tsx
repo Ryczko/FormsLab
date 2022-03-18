@@ -3,7 +3,7 @@ import "./Logo.scss";
 
 function Logo() {
   return (
-    <Link to={"/"} className="flex text-white items-center">
+    <Link to={"/"} className="flex items-center">
       <div className="heart mr-4"></div>
       Employee Pulse
     </Link>

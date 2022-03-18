@@ -4,7 +4,7 @@ import Button, { ButtonSize, ButtonVariant } from "../../Components/Button";
 
 function HomePage() {
   return (
-    <div className="flex flex-col  overflow-hidden">
+    <div className="flex flex-col overflow-hidden">
       <section className="relative mt-5">
         <div
           className="absolute hidden left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none xl:block"
@@ -59,7 +59,7 @@ function HomePage() {
             <div className="text-center pb-12 md:pb-16">
               <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
                 How are you{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-100">
                   feeling?
                 </span>
               </h1>
