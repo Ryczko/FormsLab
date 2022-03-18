@@ -8,6 +8,7 @@ export enum ButtonVariant {
   OUTLINE_PRIMARY = "btn-outline-primary",
   DANGER = "btn-danger",
   SUCCESS = "btn-success",
+  FLAT = "btn-flat",
 }
 export enum ButtonSize {
   DEFAULT = "",
