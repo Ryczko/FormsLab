@@ -1,6 +1,6 @@
 import emote from "../../Assets/emote.svg";
 import emote3 from "../../Assets/emote3.svg";
-import Button, { ButtonVariant } from "../../Components/Button";
+import Button, { ButtonSize, ButtonVariant } from "../../Components/Button";
 
 function HomePage() {
   return (
@@ -67,13 +67,19 @@ function HomePage() {
                 <p className="text-xl text-gray-600 mb-8">
                   There is no better way to find out than Employee Pulse
                 </p>
-                <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-                  <div>
-                    <Button variant={ButtonVariant.PRIMARY}>Sign Up</Button>
-                  </div>
-                  <div className="sm:ml-4">
-                    <Button variant={ButtonVariant.OUTLINE_PRIMARY}>Sign In</Button>
-                  </div>
+                <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center space-x-4">
+                  <Button
+                    variant={ButtonVariant.PRIMARY}
+                    sizeType={ButtonSize.MEDIUM}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    variant={ButtonVariant.OUTLINE_PRIMARY}
+                    sizeType={ButtonSize.MEDIUM}
+                  >
+                    Sign In
+                  </Button>
                 </div>
               </div>
             </div>
