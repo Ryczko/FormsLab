@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=fallback");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=fallback');
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@
     @apply box-border antialiased;
   }
   * {
-    font-family: "Inter", "sans-serif";
+    font-family: 'Inter', 'sans-serif';
   }
   body {
     @apply text-zinc-900;
@@ -30,10 +30,10 @@
     @apply text-indigo-900 bg-indigo-300 shadow-indigo-600/50 hover:bg-indigo-200;
   }
   .btn-secondary {
-    @apply text-gray-900 bg-gray-100 shadow-gray-600/50 hover:bg-gray-50;
+    @apply text-zinc-900 bg-zinc-100 shadow-zinc-600/50 hover:bg-zinc-50;
   }
   .btn-outline {
-    @apply text-gray-900 bg-transparent border border-gray-900 shadow-gray-600/50 hover:bg-gray-100;
+    @apply text-zinc-900 bg-transparent border border-zinc-900 shadow-zinc-600/50 hover:bg-zinc-100;
   }
   .btn-outline-primary {
     @apply text-indigo-900 bg-transparent border border-indigo-900 shadow-indigo-400/50 hover:bg-indigo-50;

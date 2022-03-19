@@ -64,7 +64,7 @@ function HomePage() {
                 </span>
               </h1>
               <div className="max-w-3xl mx-auto">
-                <p className="text-xl text-gray-600 mb-8">
+                <p className="text-xl text-zinc-600 mb-8">
                   There is no better way to find out than Employee Pulse
                 </p>
                 <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center space-x-4">
