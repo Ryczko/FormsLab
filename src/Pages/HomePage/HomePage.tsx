@@ -1,6 +1,6 @@
-import emote from "../../Assets/emote.svg";
-import emote3 from "../../Assets/emote3.svg";
-import Button, { ButtonSize, ButtonVariant } from "../../Components/Button";
+import emote from '../../Assets/emote.svg';
+import emote3 from '../../Assets/emote3.svg';
+import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 
 function HomePage() {
   return (
@@ -58,7 +58,7 @@ function HomePage() {
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
             <div className="text-center pb-12 md:pb-16">
               <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
-                How are you{" "}
+                How are you{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-100">
                   feeling?
                 </span>

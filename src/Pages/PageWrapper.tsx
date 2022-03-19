@@ -1,6 +1,6 @@
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import Navigation from "../Layouts/Navigation/Navigation";
-import HomePage from "./HomePage/HomePage";
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import Navigation from '../Layouts/Navigation/Navigation';
+import HomePage from './HomePage/HomePage';
 
 function PageWrapper() {
   return (

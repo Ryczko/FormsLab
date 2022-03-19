@@ -2,49 +2,49 @@ $heartSize: 20px;
 $hearColor: rgb(75 85 99);
 
 .heart {
-    background-color: $hearColor;
+  background-color: $hearColor;
+  width: $heartSize;
+  height: $heartSize;
+  position: relative;
+  transform: rotate(45deg);
+  animation: animateHeart 5s infinite;
+
+  &::before,
+  &::after {
+    content: '';
     width: $heartSize;
     height: $heartSize;
-    position: relative;
-    transform: rotate(45deg);
-    animation: animateHeart 5s infinite;
+    background-color: $hearColor;
+    position: absolute;
+    border-radius: 50%;
+  }
 
-    &::before,
-    &::after {
-        content: "";
-        width: $heartSize;
-        height: $heartSize;
-        background-color: $hearColor;
-        position: absolute;
-        border-radius: 50%;
-    }
+  &::before {
+    left: -($heartSize * 0.5);
+  }
 
-    &::before {
-        left: -($heartSize / 2);
-    }
-
-    &::after {
-        top: -($heartSize / 2);
-    }
+  &::after {
+    top: -($heartSize * 0.5);
+  }
 }
 
 @keyframes animateHeart {
-    0% {
-        transform: rotate(45deg) scale(0.8);
-    }
-    2% {
-        transform: rotate(45deg) scale(0.9);
-    }
-    4% {
-        transform: rotate(45deg) scale(0.8);
-    }
-    6% {
-        transform: rotate(45deg) scale(1);
-    }
-    20% {
-        transform: rotate(45deg) scale(0.8);
-    }
-    100% {
-        transform: rotate(45deg) scale(0.8);
-    }
+  0% {
+    transform: rotate(45deg) scale(0.8);
+  }
+  2% {
+    transform: rotate(45deg) scale(0.9);
+  }
+  4% {
+    transform: rotate(45deg) scale(0.8);
+  }
+  6% {
+    transform: rotate(45deg) scale(1);
+  }
+  20% {
+    transform: rotate(45deg) scale(0.8);
+  }
+  100% {
+    transform: rotate(45deg) scale(0.8);
+  }
 }

@@ -1,7 +1,7 @@
-import PageWrapper from "./Pages/PageWrapper";
+import PageWrapper from './Pages/PageWrapper';
 
 function App() {
-    return <PageWrapper />;
+  return <PageWrapper />;
 }
 
 export default App;
