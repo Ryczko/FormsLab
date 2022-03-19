@@ -2,7 +2,7 @@ import Logo from "../Logo/Logo";
 
 function Navigation() {
     return (
-        <nav className="py-5 border-b" style={{ borderColor: "#E5E5E5" }}>
+        <nav className="py-5 border-b top-0 absolute w-full z-10 bg-white" style={{ borderColor: "#E5E5E5" }}>
             <div className="container m-auto flex px-4 md:px-8">
                 <Logo />
             </div>
