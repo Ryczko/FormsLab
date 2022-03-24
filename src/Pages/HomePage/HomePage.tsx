@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import emote from '../../Assets/emote.svg';
 import emote3 from '../../Assets/emote3.svg';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
@@ -74,12 +75,14 @@ function HomePage() {
                   >
                     Sign Up
                   </Button>
-                  <Button
-                    variant={ButtonVariant.OUTLINE_PRIMARY}
-                    sizeType={ButtonSize.MEDIUM}
-                  >
-                    Sign In
-                  </Button>
+                  <Link to={'/login'}>
+                    <Button
+                      variant={ButtonVariant.OUTLINE_PRIMARY}
+                      sizeType={ButtonSize.MEDIUM}
+                    >
+                      Sign In
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
