@@ -68,16 +68,10 @@ function HomePage() {
                 <p className="text-xl text-zinc-600 mb-8">
                   There is no better way to find out than Employee Pulse
                 </p>
-                <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center space-x-4">
-                  <Button
-                    variant={ButtonVariant.PRIMARY}
-                    sizeType={ButtonSize.MEDIUM}
-                  >
-                    Sign Up
-                  </Button>
+                <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                   <Link to={'/login'}>
                     <Button
-                      variant={ButtonVariant.OUTLINE_PRIMARY}
+                      variant={ButtonVariant.PRIMARY}
                       sizeType={ButtonSize.MEDIUM}
                     >
                       Sign In
