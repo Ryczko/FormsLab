@@ -13,7 +13,7 @@ function Input({
       <label className="block">{label}</label>
       <input
         {...props}
-        className="block mt-2 w-full py-3 px-4 focus:outline-none rounded-md shadow-md"
+        className="block mt-2 w-full py-3 px-4 focus:outline-none rounded-lg shadow"
       />
     </div>
   );

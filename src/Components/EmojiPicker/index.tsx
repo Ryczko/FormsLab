@@ -24,7 +24,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
   return (
     <div className="relative" ref={wrapperRef}>
       <button
-        className="label-text w-16 text-3xl bg-white p-3 rounded-md shadow-md transition hover:scale-95"
+        className="label-text w-16 text-3xl bg-white p-3 rounded-lg shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {chosenEmoji?.emoji || defaultEmote}
