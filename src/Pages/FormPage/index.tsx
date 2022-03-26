@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
-import IconButton from '../../Components/IconButton/IconButton';
+import IconButton from '../../Components/IconButton';
 
 function FormPage() {
   const { formId } = useParams();
@@ -44,7 +44,7 @@ function FormPage() {
       </div>
       <div className="mt-8">
         <textarea
-          className="w-11/12 h-56 resize-none rounded-lg shadow-md p-4 focus:outline-none lg:w-1/2"
+          className="w-11/12 h-56 resize-none rounded-lg shadow p-4 focus:outline-none lg:w-1/2"
           placeholder="Tell Us More"
           value={answer}
           onChange={handleInputAnswer}

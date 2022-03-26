@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
-import EmojiPicker from '../../Components/EmojiPicker/EmojiPicker';
-import Input from '../../Components/Input/Input';
+import EmojiPicker from '../../Components/EmojiPicker';
+import Input from '../../Components/Input';
 
 function CreatePage() {
   const [title, setTitle] = useState('');
