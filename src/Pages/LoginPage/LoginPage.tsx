@@ -23,8 +23,8 @@ function LoginPage() {
 
   return (
     <div className="container px-4 m-auto mt-10 text-center md:px-8">
-      <h1 className="text-6xl font-bold text-center">Sign In</h1>
-      <div className="flex flex-col items-center justify-center pt-16">
+      <h1 className="text-5xl font-bold text-center">Sign In</h1>
+      <div className="flex flex-col items-center justify-center pt-3">
         <LoginButton
           image={Google}
           loginType="Sign in with Google"

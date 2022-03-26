@@ -31,9 +31,7 @@ function FormPage() {
 
   return (
     <div className="container mt-10 m-auto px-4 md:px-8 text-center">
-      <h1 className="text-center font-bold text-4xl text-zinc-600">
-        {question}
-      </h1>
+      <h1 className="text-center font-bold text-4xl ">{question}</h1>
       <div className="mt-6">
         {icons.map((icon, idx) => (
           <IconButton
