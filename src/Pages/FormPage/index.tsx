@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
-import IconButton from '../../Components/IconButton';
+import EmojiButton from '../../Components/EmojiButton';
 
 function FormPage() {
   const { formId } = useParams();
@@ -34,7 +34,7 @@ function FormPage() {
       <h1 className="text-center font-bold text-4xl ">{question}</h1>
       <div className="mt-6">
         {icons.map((icon, idx) => (
-          <IconButton
+          <EmojiButton
             icon={icon}
             selected={selectedIcon === icon}
             key={idx}

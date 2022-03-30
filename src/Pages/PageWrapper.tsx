@@ -6,6 +6,7 @@ import HomePage from './HomePage';
 const CreatePage = lazy(() => import('./CreatePage'));
 const FormPage = lazy(() => import('./FormPage'));
 const LoginPage = lazy(() => import('./LoginPage'));
+const FormRaportPage = lazy(() => import('./FormRaportPage'));
 
 function PageWrapper() {
   return (
@@ -26,6 +27,7 @@ function PageWrapper() {
             <Route path="/create" element={<CreatePage />} />
             <Route path="/form/:formId" element={<FormPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/form-raport/:formId" element={<FormRaportPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
