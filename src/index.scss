@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=fallback');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Pacifico&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,10 +11,10 @@
     @apply box-border antialiased;
   }
   * {
-    font-family: 'Inter', 'sans-serif';
+    font-family: 'Montserrat', 'sans-serif';
   }
   body {
-    @apply text-zinc-900;
+    @apply text-zinc-900 bg-zinc-100;
   }
 }
 

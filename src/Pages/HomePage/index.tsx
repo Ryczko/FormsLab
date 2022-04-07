@@ -1,9 +1,13 @@
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import emote from '../../Assets/emote.svg';
 import emote3 from '../../Assets/emote3.svg';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
+import { auth } from '../../firebase';
 
 function HomePage() {
+  const [user, loading] = useAuthState(auth);
+
   return (
     <div className="flex flex-col overflow-hidden">
       <section className="relative mt-5">
@@ -68,13 +72,23 @@ function HomePage() {
                 <p className="text-xl text-zinc-600 mb-8">
                   There is no better way to find out than Employee Pulse
                 </p>
-                <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-                  <Link to={'/login'}>
+                <div className="max-w-xs mx-auto sm:max-w-none flex flex-col sm:flex-row sm:space-y-0 space-y-2 sm:justify-center md:space-x-4">
+                  {!loading && !user && (
+                    <Link to={'/login'}>
+                      <Button
+                        variant={ButtonVariant.PRIMARY}
+                        sizeType={ButtonSize.LARGE}
+                      >
+                        Sign In
+                      </Button>
+                    </Link>
+                  )}
+
+                  <Link to={'/create'}>
                     <Button
-                      variant={ButtonVariant.PRIMARY}
-                      sizeType={ButtonSize.MEDIUM}
+                      variant={ButtonVariant.OUTLINE_PRIMARY}
                     >
-                      Sign In
+                      Create Survey
                     </Button>
                   </Link>
                 </div>
