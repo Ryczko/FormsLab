@@ -43,7 +43,7 @@ function FormRaportPage() {
   ];
 
   return (
-    <div className="container mt-10 px-4 text-center">
+    <div className="container mt-10 m-auto px-4 md:px-8 text-center">
       <h1 className="text-center font-bold text-4xl ">Surveys Raport</h1>
       <div className="flex flex-col items-center justify-center py-4">
         <table className="table-auto">
