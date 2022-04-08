@@ -55,7 +55,6 @@ function CreatePage() {
           className="mt-8"
           disabled={!title.length}
           variant={ButtonVariant.PRIMARY}
-          sizeType={ButtonSize.NORMAL}
         >
           Create
         </Button>

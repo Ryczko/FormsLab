@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import Github from '../../Assets/github.svg';
 import Google from '../../Assets/google.svg';
 import LoginButton from '../../Components/LoginButton';
@@ -13,10 +14,11 @@ import Button, { ButtonVariant } from '../../Components/Button';
 
 function LoginPage() {
   const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      console.log('user', user);
+      navigate('/');
     }
   }, [user, loading]);
 
@@ -37,16 +39,6 @@ function LoginPage() {
       {error && (
         <div className="text-center text-red-600 text-sm">
           Error: {error.message}
-        </div>
-      )}
-      {user && (
-        <div className="m-4">
-          <div className="text-center text-zinc-600 text-sm">
-            Logged in as {user.displayName} ({user.email})
-          </div>
-          <Button variant={ButtonVariant.DANGER} onClick={logout}>
-            Logout
-          </Button>
         </div>
       )}
     </div>
