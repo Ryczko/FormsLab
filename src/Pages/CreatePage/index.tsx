@@ -1,11 +1,21 @@
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import Button, { ButtonVariant } from '../../Components/Button';
 import EmojiPicker from '../../Components/EmojiPicker';
 import Input from '../../Components/Input';
+import { auth, db } from '../../firebase';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePage() {
   const [title, setTitle] = useState('');
   const [pack, setPack] = useState(['😃', '🙂', '🙁', '😡']);
+
+  const [user] = useAuthState(auth);
+  const [buttonDisable, setButtonDisable] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChangeTitle = (e: any) => {
     setTitle(e.target.value);
@@ -18,8 +28,27 @@ function CreatePage() {
     });
   };
 
-  const createSurvey = () => {
-    console.log(title, pack);
+  const createSurvey = async () => {
+    setButtonDisable(true);
+    try {
+      const userDoc = await getDocs(
+        query(collection(db, 'users'), where('uid', '==', user?.uid))
+      );
+      const userId = userDoc.docs[0].id;
+      const surwayId = await addDoc(
+        collection(db, 'users', userId, 'surveys'),
+        {
+          title,
+          pack,
+          createdDate: new Date(),
+        }
+      );
+      toast.success('Survey created');
+      navigate(`/answer/${surwayId.id}`);
+    } catch (error) {
+      toast.error('Survey creation failed');
+    }
+    setButtonDisable(false);
   };
 
   return (
@@ -53,7 +82,7 @@ function CreatePage() {
         <Button
           onClick={createSurvey}
           className="mt-8"
-          disabled={!title.length}
+          disabled={!title.length || buttonDisable}
           variant={ButtonVariant.PRIMARY}
         >
           Create

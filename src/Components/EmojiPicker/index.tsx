@@ -38,6 +38,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
           pickerStyle={{
             position: 'absolute',
             top: '105%',
+            zIndex: '1',
           }}
         />
       )}
