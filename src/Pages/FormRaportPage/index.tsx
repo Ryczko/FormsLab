@@ -46,16 +46,16 @@ function FormRaportPage() {
     <div className="container mt-10 m-auto px-4 md:px-8 text-center">
       <h1 className="text-center font-bold text-4xl ">Surveys Raport</h1>
       <div className="flex flex-col items-center justify-center py-4">
-        <table className="table-auto">
+        <table className="text-sm sm:text-base table-auto">
           <thead>
             <tr>
-              <th className="p-4"></th>
-              <th className="p-4">ID</th>
-              <th className="p-4">Time</th>
-              <th className="p-4">Question</th>
-              <th className="p-4"></th>
-              <th className="p-4"></th>
-              <th className="p-4"></th>
+              <th className="sm:p-2" />
+              <th className="sm:p-2">ID</th>
+              <th className="sm:p-2">Time</th>
+              <th className="sm:p-2">Question</th>
+              <th className="sm:p-2" />
+              <th className="sm:p-2" />
+              <th className="sm:p-2" />
             </tr>
           </thead>
           <tbody>
@@ -64,20 +64,24 @@ function FormRaportPage() {
                 {
                   // todo: only dsplay one date for each day
                   item.id % 2 === 0 ? (
-                    <td className="p-4">{item.date}</td>
+                    <td className="sm:p-2 font-medium">{item.date}</td>
                   ) : (
-                    <td className="p-4"></td>
+                    <td />
                   )
                 }
-                <td className="p-4">{item.id}</td>
-                <td className="p-4">{item.time}</td>
-                <td className="p-4">{item.question}</td>
-                <td className="p-2">
-                  <Button variant={ButtonVariant.FLAT}>More</Button>
+                <td className="sm:p-2">{item.id}</td>
+                <td className="sm:p-2">{item.time}</td>
+                <td className="sm:p-2">{item.question}</td>
+                <td className="sm:p-2">
+                  <Button variant={ButtonVariant.FLAT} className="p-2">
+                    More
+                  </Button>
                 </td>
-                <td className="p-2">
+                <td className="sm:p-2">
                   <IconButton
                     variant={IconButtonVariant.PRIMARY}
+                    className="p-2"
+                    title="Download"
                     icon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -96,9 +100,11 @@ function FormRaportPage() {
                     }
                   ></IconButton>
                 </td>
-                <td className="p-2">
+                <td className="sm:p-2">
                   <IconButton
                     variant={IconButtonVariant.PRIMARY}
+                    className="p-2"
+                    title="Copy link"
                     icon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
