@@ -6,6 +6,8 @@ import HomePage from './HomePage';
 const CreatePage = lazy(() => import('./CreatePage'));
 const FormPage = lazy(() => import('./FormPage'));
 const LoginPage = lazy(() => import('./LoginPage'));
+const FormRaportPage = lazy(() => import('./FormRaportPage'));
+const AnswerPage = lazy(() => import('./AnswerPage'));
 
 function PageWrapper() {
   return (
@@ -15,8 +17,8 @@ function PageWrapper() {
         <Suspense
           fallback={
             <div className="flex items-center justify-center transition-all duration-250 animate-pulse">
-              <div className="flex-1 space-y-6 py-1">
-                <div className="ease-in-out h-screen bg-gradient-to-r from-zinc-100 to-transparent rounded-lg"></div>
+              <div className="flex-1 py-1 space-y-6">
+                <div className="h-screen ease-in-out rounded-lg bg-gradient-to-r from-zinc-100 to-transparent"></div>
               </div>
             </div>
           }
@@ -26,6 +28,8 @@ function PageWrapper() {
             <Route path="/create" element={<CreatePage />} />
             <Route path="/form/:formId" element={<FormPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/form-raport/:formId" element={<FormRaportPage />} />
+            <Route path="/answer/:formId" element={<AnswerPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>

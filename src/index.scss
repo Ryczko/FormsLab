@@ -45,6 +45,6 @@
     @apply text-white bg-emerald-600 shadow-emerald-600/50 hover:bg-emerald-500;
   }
   .btn-flat {
-    @apply text-indigo-900 bg-transparent hover:bg-indigo-50;
+    @apply text-indigo-900 bg-transparent hover:bg-indigo-100 border-none;
   }
 }
