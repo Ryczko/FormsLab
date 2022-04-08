@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
+import Button, { ButtonVariant } from '../../Components/Button';
 import EmojiPicker from '../../Components/EmojiPicker';
 import Input from '../../Components/Input';
 
