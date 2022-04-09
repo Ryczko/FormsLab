@@ -3,11 +3,11 @@ import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import Navigation from '../Layouts/Navigation';
 import HomePage from './HomePage';
 
-const CreatePage = lazy(() => import('./CreatePage'));
-const FormPage = lazy(() => import('./FormPage'));
+const SurveyCreatePage = lazy(() => import('./SurveyCreatePage'));
+const SurveyPage = lazy(() => import('./SurveyPage'));
 const LoginPage = lazy(() => import('./LoginPage'));
-const FormRaportPage = lazy(() => import('./FormRaportPage'));
-const AnswerPage = lazy(() => import('./AnswerPage'));
+const SurveyListPage = lazy(() => import('./SurveyListPage'));
+const SurveyAnswerPage = lazy(() => import('./SurveyAnswerPage'));
 
 function PageWrapper() {
   return (
@@ -25,11 +25,14 @@ function PageWrapper() {
         >
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/create" element={<CreatePage />} />
-            <Route path="/form/:formId" element={<FormPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/form-raport/:formId" element={<FormRaportPage />} />
-            <Route path="/answer/:formId" element={<AnswerPage />} />
+            <Route path="/survey/create" element={<SurveyCreatePage />} />
+            <Route path="/survey/:surveyId" element={<SurveyPage />} />
+            <Route path="/surveys" element={<SurveyListPage />} />
+            <Route
+              path="/survey/answer/:answerId"
+              element={<SurveyAnswerPage />}
+            />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>

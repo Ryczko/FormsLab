@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import EmojiButton from '../../Components/EmojiButton';
 
-function FormPage() {
-  const { formId } = useParams();
+function SurveyPage() {
+  const { surveyId } = useParams();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
@@ -14,7 +14,7 @@ function FormPage() {
     //fetch data from backend
     setQuestion('How Do You Feel?');
     setIcons(['☹️', '😕', '🙂', '😃']);
-  }, [formId]);
+  }, [surveyId]);
 
   const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLElement;
@@ -63,4 +63,4 @@ function FormPage() {
   );
 }
 
-export default FormPage;
+export default SurveyPage;

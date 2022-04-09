@@ -8,7 +8,7 @@ import { auth, db } from '../../firebase';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-function CreatePage() {
+function SurveyCreatePage() {
   const [title, setTitle] = useState('');
   const [pack, setPack] = useState(['😃', '🙂', '🙁', '😡']);
 
@@ -35,7 +35,7 @@ function CreatePage() {
         query(collection(db, 'users'), where('uid', '==', user?.uid))
       );
       const userId = userDoc.docs[0].id;
-      const surwayId = await addDoc(
+      const surveyId = await addDoc(
         collection(db, 'users', userId, 'surveys'),
         {
           title,
@@ -44,7 +44,7 @@ function CreatePage() {
         }
       );
       toast.success('Survey created');
-      navigate(`/answer/${surwayId.id}`);
+      navigate(`/survey/answer/${surveyId.id}`);
     } catch (error) {
       toast.error('Survey creation failed');
     }
@@ -92,4 +92,4 @@ function CreatePage() {
   );
 }
 
-export default CreatePage;
+export default SurveyCreatePage;

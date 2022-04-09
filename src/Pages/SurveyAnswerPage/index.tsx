@@ -3,7 +3,7 @@ import AnswerHeader from '../../Components/AnswerHeader';
 import AnswerTableRow from '../../Components/AnswerTableRow';
 import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 
-function AnswerTablePage() {
+function SurveyAnswerPage() {
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
@@ -59,4 +59,4 @@ function AnswerTablePage() {
   );
 }
 
-export default AnswerTablePage;
+export default SurveyAnswerPage;
