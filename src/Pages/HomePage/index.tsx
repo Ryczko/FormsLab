@@ -84,7 +84,7 @@ function HomePage() {
                     </Link>
                   )}
 
-                  <Link to={'/create'}>
+                  <Link to={'/survey/create'}>
                     <Button
                       variant={ButtonVariant.OUTLINE_PRIMARY}
                     >

@@ -1,7 +1,7 @@
 import Button, { ButtonVariant } from '../../Components/Button';
 import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 
-function FormRaportPage() {
+function SurveyListPage() {
   const fakeData = [
     {
       id: 1,
@@ -131,4 +131,4 @@ function FormRaportPage() {
     </div>
   );
 }
-export default FormRaportPage;
+export default SurveyListPage;
