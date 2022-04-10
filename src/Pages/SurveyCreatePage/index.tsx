@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Button, { ButtonVariant } from '../../Components/Button';
@@ -31,18 +31,12 @@ function SurveyCreatePage() {
   const createSurvey = async () => {
     setButtonDisable(true);
     try {
-      const userDoc = await getDocs(
-        query(collection(db, 'users'), where('uid', '==', user?.uid))
-      );
-      const userId = userDoc.docs[0].id;
-      const surveyId = await addDoc(
-        collection(db, 'users', userId, 'surveys'),
-        {
-          title,
-          pack,
-          createdDate: new Date(),
-        }
-      );
+      const surveyId = await addDoc(collection(db, 'surveys'), {
+        title,
+        pack,
+        creatorId: user?.uid,
+        createdDate: new Date(),
+      });
       toast.success('Survey created');
       navigate(`/survey/answer/${surveyId.id}`);
     } catch (error) {
