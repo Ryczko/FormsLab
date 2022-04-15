@@ -15,7 +15,7 @@ function LoginButton({
     <button
       type={type}
       onClick={onClick}
-      className="flex py-2 pr-4 pl-2 font-medium text-zinc-900 bg-white rounded-lg shadow border items-center hover:bg-zinc-50 active:bg-zinc-50"
+      className="flex py-2 pr-4 pl-2 font-semibold text-zinc-900 bg-white rounded-lg shadow border items-center hover:bg-zinc-50 active:bg-zinc-50"
       {...props}
     >
       <img className="mx-2" width="24px" height="24px" src={image} />

@@ -1,7 +1,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import emote from '../../Assets/emote.svg';
-import emote3 from '../../Assets/emote3.svg';
+import emote3 from '../../Assets/undraw_joyride_re_968t.svg';
+import emote from '../../Assets/undraw_smiley_face_re_9uid.svg';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import { auth } from '../../firebase';
 
@@ -39,21 +39,19 @@ function HomePage() {
               <circle cx="155" cy="443" r="64" />
             </g>
             <image
-              className="opacity-80 rotate-12"
+              className="opacity-80 rotate-6"
               y={180}
               x={1100}
-              cx="1232"
-              cy="128"
-              r="128"
+              width="200"
+              height="200"
               xlinkHref={emote}
             />
             <image
-              className="opacity-80 -rotate-12"
-              y={140}
-              x={110}
-              cx="1232"
-              cy="128"
-              r="128"
+              className="opacity-80 -rotate-6"
+              y={100}
+              x={50}
+              width="200"
+              height="200"
               xlinkHref={emote3}
             />
           </svg>
@@ -85,9 +83,7 @@ function HomePage() {
                   )}
 
                   <Link to={'/survey/create'}>
-                    <Button
-                      variant={ButtonVariant.OUTLINE_PRIMARY}
-                    >
+                    <Button variant={ButtonVariant.OUTLINE_PRIMARY}>
                       Create Survey
                     </Button>
                   </Link>
