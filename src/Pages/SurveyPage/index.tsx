@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import EmojiButton from '../../Components/EmojiButton';
+import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 
 function SurveyPage() {
+  useDocumentTitle('Survey');
+
   const { surveyId } = useParams();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');

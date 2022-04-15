@@ -4,8 +4,10 @@ import emote3 from '../../Assets/undraw_joyride_re_968t.svg';
 import emote from '../../Assets/undraw_smiley_face_re_9uid.svg';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import { auth } from '../../firebase';
+import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 
 function HomePage() {
+  useDocumentTitle('Home');
   const [user, loading] = useAuthState(auth);
 
   return (
