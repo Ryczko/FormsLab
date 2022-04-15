@@ -1,28 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
+import { ButtonSize, ButtonVariant, ButtonProps } from '../Button';
 
-export enum IconButtonVariant {
-  PRIMARY = 'btn-primary',
-  SECONDARY = 'btn-secondary',
-  OUTLINE = 'btn-outline',
-  OUTLINE_PRIMARY = 'btn-outline-primary',
-  DANGER = 'btn-danger',
-  SUCCESS = 'btn-success',
-  FLAT = 'btn-flat',
-}
-export enum IconButtonSize {
-  DEFAULT = '',
-  NORMAL = 'w-24',
-  MEDIUM = 'w-32',
-  LARGE = 'w-40',
-  EXTRA_LARGE = 'w-48',
-}
-type ButtonProps = {
-  variant?: IconButtonVariant;
-  disabled?: boolean;
-  sizeType?: IconButtonSize;
-  className?: string | undefined;
-  type?: 'button' | 'submit' | 'reset' | undefined;
+export const IconButtonVariant = ButtonVariant;
+export const IconButtonSize = ButtonSize;
+
+type IconButtonProps = ButtonProps & {
   icon?: React.ReactNode;
 };
 
@@ -35,14 +18,14 @@ const IconButton = ({
   type = 'button',
   icon,
   ...props
-}: ButtonProps & React.HTMLProps<HTMLButtonElement>) => (
+}: IconButtonProps & React.HTMLProps<HTMLButtonElement>) => (
   <button
-    className={clsx('btn', variant, sizeType, className, 'flex')}
+    className={clsx('btn', variant, sizeType, className, 'flex items-center')}
     disabled={disabled}
     type={type}
     {...props}
   >
-    <div>{icon}</div>
+    <div className="pr-1">{icon}</div>
     {children}
   </button>
 );

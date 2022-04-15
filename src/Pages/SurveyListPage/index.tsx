@@ -81,7 +81,7 @@ function SurveyListPage() {
                         className="p-2"
                         title="Download"
                         icon={<DownloadIcon className="w-5 h-5" />}
-                      ></IconButton>
+                      />
                     </td>
                     <td className="sm:p-2">
                       <IconButton
