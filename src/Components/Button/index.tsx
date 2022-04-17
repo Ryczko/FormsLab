@@ -11,6 +11,7 @@ export enum ButtonVariant {
   FLAT = 'btn-flat',
 }
 export enum ButtonSize {
+  SMALL = 'w-16',
   DEFAULT = '',
   NORMAL = 'w-24',
   MEDIUM = 'w-32',

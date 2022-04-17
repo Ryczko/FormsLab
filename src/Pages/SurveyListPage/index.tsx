@@ -43,16 +43,16 @@ function SurveyListPage() {
   ];
 
   return (
-    <div className="container mt-10 m-auto px-4 md:px-8 text-center">
-      <h1 className="text-center font-bold text-4xl ">Surveys Raport</h1>
+    <div className="container px-4 m-auto mt-10 text-center md:px-8">
+      <h1 className="text-4xl font-bold text-center ">Surveys Raport</h1>
       <div className="flex flex-col items-center justify-center py-4">
-        <table className="text-sm sm:text-base table-auto">
+        <table className="text-xs table-auto sm:text-base">
           <thead>
             <tr>
               <th className="sm:p-2" />
               <th className="sm:p-2">ID</th>
               <th className="sm:p-2">Time</th>
-              <th className="sm:p-2">Question</th>
+              <th className="px-10 sm:p-2">Question</th>
               <th className="sm:p-2" />
               <th className="sm:p-2" />
               <th className="sm:p-2" />
@@ -64,7 +64,7 @@ function SurveyListPage() {
                 {
                   // todo: only dsplay one date for each day
                   item.id % 2 === 0 ? (
-                    <td className="sm:p-2 font-medium">{item.date}</td>
+                    <td className="p-2 font-medium sm:p-2">{item.date}</td>
                   ) : (
                     <td />
                   )
@@ -77,7 +77,7 @@ function SurveyListPage() {
                     More
                   </Button>
                 </td>
-                <td className="sm:p-2">
+                <td className="hidden sm:p-2 sm:table-cell">
                   <IconButton
                     variant={IconButtonVariant.PRIMARY}
                     className="p-2"
@@ -85,7 +85,7 @@ function SurveyListPage() {
                     icon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -108,7 +108,7 @@ function SurveyListPage() {
                     icon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

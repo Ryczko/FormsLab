@@ -30,9 +30,9 @@ function SurveyPage() {
   };
 
   return (
-    <div className="container mt-10 m-auto px-4 md:px-8 text-center">
-      <h1 className="text-center font-bold text-4xl ">{question}</h1>
-      <div className="mt-6">
+    <div className="container px-4 m-auto mt-10 mb-6 text-center md:px-8">
+      <h1 className="text-4xl font-bold text-center ">{question}</h1>
+      <div className="flex flex-col items-center mt-6 sm:flex-row sm:justify-center">
         {icons.map((icon, idx) => (
           <EmojiButton
             icon={icon}
@@ -44,7 +44,7 @@ function SurveyPage() {
       </div>
       <div className="mt-8">
         <textarea
-          className="w-11/12 h-56 resize-none rounded-lg shadow p-4 focus:outline-none lg:w-1/2"
+          className="w-11/12 h-56 p-4 rounded-lg shadow resize-none focus:outline-none lg:w-1/2"
           placeholder="Tell Us More"
           value={answer}
           onChange={handleInputAnswer}

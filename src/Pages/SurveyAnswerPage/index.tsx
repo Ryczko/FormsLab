@@ -7,10 +7,11 @@ function SurveyAnswerPage() {
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
-        <h1 className="mx-4 text-4xl font-bold text-center">Answer for #1</h1>
+        <h1 className="text-4xl font-bold text-center sm:mx-4">Answer for #1</h1>
         <IconButton
-          className="p-2"
           variant={IconButtonVariant.PRIMARY}
+          className="hidden p-2 sm:block"
+          title="Copy link"
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
