@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import ProtectedRoute from '../Components/ProtectedRoute';
 import Navigation from '../Layouts/Navigation';
 import HomePage from './HomePage';
 
@@ -26,13 +27,32 @@ function PageWrapper() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/survey/create" element={<SurveyCreatePage />} />
+            <Route
+              path="/survey/create"
+              element={
+                <ProtectedRoute>
+                  <SurveyCreatePage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/survey/:surveyId" element={<SurveyPage />} />
-            <Route path="/surveys" element={<SurveyListPage />} />
+            <Route
+              path="/surveys"
+              element={
+                <ProtectedRoute>
+                  <SurveyListPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/survey/answer/:answerId"
-              element={<SurveyAnswerPage />}
+              element={
+                <ProtectedRoute>
+                  <SurveyAnswerPage />
+                </ProtectedRoute>
+              }
             />
+
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
