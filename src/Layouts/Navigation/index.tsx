@@ -1,10 +1,13 @@
+import { LogoutIcon } from '@heroicons/react/outline';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import { auth } from '../../firebase';
-import  {signOut} from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import IconButton, { IconButtonVariant } from '../../Components/IconButton';
+import { auth, logout } from '../../firebase';
 import Logo from '../Logo';
 import BurgerMenu from '../../Components/BurgerMenu/BurgerMenu';
 
@@ -33,9 +36,14 @@ function Navigation() {
                 <Button variant={ButtonVariant.FLAT}>My Surveys</Button>
               </Link>
             </div>
-            <Button className="hidden md:block"onClick={logoutDesktop} sizeType={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINE_PRIMARY}>
+            <IconButton
+              onClick={logout}
+              variant={IconButtonVariant.FLAT}
+              className="hidden md:block hover:bg-red-100 text-red-600"
+              icon={<LogoutIcon className="w-5 h-5" />}
+            >
               Sign Out
-            </Button>
+            </IconButton>
             <FaBars
               onClick={() => setIsOpen(!isOpen)}
               className='z-50 w-8 h-8 cursor-pointer md:hidden'

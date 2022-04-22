@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Pacifico&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -20,7 +20,7 @@
 
 @layer components {
   .btn {
-    @apply px-6 py-2 text-center border transition duration-150 ease-in-out cursor-pointer select-none rounded-lg font-medium;
+    @apply px-6 py-2 text-center border transition duration-150 ease-in-out cursor-pointer select-none rounded-lg font-semibold;
   }
   .btn:disabled,
   .btn[disabled] {

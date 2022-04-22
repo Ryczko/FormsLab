@@ -18,7 +18,7 @@ export enum ButtonSize {
   LARGE = 'w-40',
   EXTRA_LARGE = 'w-48',
 }
-type ButtonProps = {
+export type ButtonProps = {
   variant?: ButtonVariant;
   disabled?: boolean;
   sizeType?: ButtonSize;

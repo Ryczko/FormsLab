@@ -1,28 +1,64 @@
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import EmojiButton from '../../Components/EmojiButton';
+import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
+import { db } from '../../firebase';
+
 
 function SurveyPage() {
+  useDocumentTitle('Survey');
+
   const { surveyId } = useParams();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
   const [selectedIcon, setSelectedIcon] = useState<string | null>('');
+  const [buttonDisable, setButtonDisable] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    //fetch data from backend
-    setQuestion('How Do You Feel?');
-    setIcons(['☹️', '😕', '🙂', '😃']);
+    if (!surveyId) {
+      navigate('/');
+      return;
+    }
+
+    getSurveyData();
   }, [surveyId]);
+
+  const getSurveyData = async () => {
+    const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
+    if (!surveyData.exists()) {
+      navigate('/');
+      return;
+    }
+    setQuestion(surveyData.data()?.title);
+    setIcons(surveyData.data()?.pack);
+  };
 
   const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLElement;
     setSelectedIcon(target.textContent);
   };
 
-  const handleSave = () => {
-    console.log(selectedIcon, answer);
+  const handleSave = async () => {
+    setButtonDisable(true);
+
+    try {
+      await addDoc(collection(db, 'surveys', surveyId!, 'answers'), {
+        selectedIcon,
+        answer,
+        answerDate: new Date(),
+      });
+      toast.success('The reply has been sent');
+      navigate('/');
+    } catch (error) {
+      toast.error('Error occured');
+    }
+    setButtonDisable(false);
   };
 
   const handleInputAnswer = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,7 +87,7 @@ function SurveyPage() {
         ></textarea>
       </div>
       <Button
-        disabled={!selectedIcon}
+        disabled={!selectedIcon || buttonDisable}
         onClick={handleSave}
         className="mt-6"
         variant={ButtonVariant.PRIMARY}
