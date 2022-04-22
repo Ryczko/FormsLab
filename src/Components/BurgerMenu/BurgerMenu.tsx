@@ -13,13 +13,14 @@ const BurgerMenu = ({ isOpen, children }: BurgerMenuProps) => {
   return (
     <motion.div
       animate={isOpen ? 'open' : 'closed'}
-      initial='closed'
+      initial="closed"
       variants={variants}
-      id='burger_menu'
-      className='fixed left-0 z-10 flex flex-col items-center justify-center w-screen top-20 bg-zinc-100 md:hidden'
+      id="burger_menu"
+      className="fixed left-0 z-10 flex flex-col items-center justify-center w-screen top-20 bg-zinc-100 md:hidden"
     >
       {children}
     </motion.div>
   );
 };
+
 export default BurgerMenu;
