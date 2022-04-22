@@ -78,7 +78,7 @@ function SurveyListPage() {
                     <td className="sm:p-2">
                       <IconButton
                         variant={IconButtonVariant.PRIMARY}
-                        className="p-2"
+                        className="hidden sm:p-2 sm:table-cell"
                         title="Download"
                         icon={<DownloadIcon className="w-5 h-5" />}
                       />
