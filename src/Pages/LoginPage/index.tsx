@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router';
 import Github from '../../Assets/github.svg';
 import Google from '../../Assets/google.svg';
 import LoginButton from '../../Components/LoginButton';
-import {
-  auth,
-  signInWithGoogle,
-  signInWithGithub,
-} from '../../firebase';
+import { auth, signInWithGoogle, signInWithGithub } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 
 function LoginPage() {
+  useDocumentTitle('Login');
+
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 

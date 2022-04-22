@@ -4,9 +4,13 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import EmojiButton from '../../Components/EmojiButton';
+import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { db } from '../../firebase';
 
+
 function SurveyPage() {
+  useDocumentTitle('Survey');
+
   const { surveyId } = useParams();
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');

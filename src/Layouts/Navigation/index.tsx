@@ -1,6 +1,8 @@
+import { LogoutIcon } from '@heroicons/react/outline';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
+import Button, { ButtonVariant } from '../../Components/Button';
+import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 import { auth, logout } from '../../firebase';
 import Logo from '../Logo';
 
@@ -12,11 +14,18 @@ function Navigation() {
       <div className="flex justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (
-          <div className='flex space-x-2'>
-            <p className='sm:flex truncate items-center justify-left hidden sm:w-fit'>{user.email}</p>
-            <Button onClick={logout} sizeType={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINE_PRIMARY}>
+          <div className="flex space-x-2">
+            <p className="sm:flex truncate items-center justify-left hidden sm:w-fit">
+              {user.email}
+            </p>
+            <IconButton
+              onClick={logout}
+              variant={IconButtonVariant.FLAT}
+              className="hover:bg-red-100 text-red-600"
+              icon={<LogoutIcon className="w-5 h-5" />}
+            >
               Sign Out
-            </Button>
+            </IconButton>
           </div>
         ) : (
           <Link to={'/login'}>

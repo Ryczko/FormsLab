@@ -7,8 +7,11 @@ import Input from '../../Components/Input';
 import { auth, db } from '../../firebase';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
+import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 
 function SurveyCreatePage() {
+  useDocumentTitle('Create Survey');
   const [title, setTitle] = useState('');
   const [pack, setPack] = useState(['😃', '🙂', '🙁', '😡']);
 
@@ -16,6 +19,7 @@ function SurveyCreatePage() {
   const [buttonDisable, setButtonDisable] = useState(false);
 
   const navigate = useNavigate();
+  const [, copy] = useCopyToClipboard();
 
   const handleChangeTitle = (e: any) => {
     setTitle(e.target.value);
@@ -31,14 +35,19 @@ function SurveyCreatePage() {
   const createSurvey = async () => {
     setButtonDisable(true);
     try {
-      const surveyId = await addDoc(collection(db, 'surveys'), {
+      const newSurvey = await addDoc(collection(db, 'surveys'), {
         title,
         pack,
         creatorId: user?.uid,
         createdDate: new Date(),
       });
-      toast.success('Survey created');
-      navigate(`/survey/answer/${surveyId.id}`);
+      const domain =
+        window.location.hostname === 'localhost' ? 'http://' : 'https://';
+      const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
+      copy(link);
+      toast.success('Survey created and link copied to clipboard');
+
+      navigate(`/survey/answer/${newSurvey.id}`);
     } catch (error) {
       toast.error('Survey creation failed');
     }
