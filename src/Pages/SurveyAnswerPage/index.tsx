@@ -13,13 +13,6 @@ function SurveyAnswerPage() {
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
-        <h1 className="text-4xl font-bold text-center sm:mx-4">Answers for #1</h1>
-        <IconButton
-          title="Copy link to clipboard"
-          className="hidden p-2 sm:block"
-          variant={IconButtonVariant.PRIMARY}
-          icon={<LinkIcon className="w-5 h-5" />}
-        />
         <h1 className="mx-4 text-4xl font-bold text-center">
           Answers for {answerId}
         </h1>
