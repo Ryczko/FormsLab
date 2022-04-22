@@ -7,7 +7,6 @@ import EmojiButton from '../../Components/EmojiButton';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { db } from '../../firebase';
 
-
 function SurveyPage() {
   useDocumentTitle('Survey');
 
@@ -30,7 +29,11 @@ function SurveyPage() {
   }, [surveyId]);
 
   const getSurveyData = async () => {
-    const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
+    if (!surveyId) {
+      navigate('/');
+      return;
+    }
+    const surveyData = await getDoc(doc(db, 'surveys', surveyId));
     if (!surveyData.exists()) {
       navigate('/');
       return;
@@ -48,7 +51,11 @@ function SurveyPage() {
     setButtonDisable(true);
 
     try {
-      await addDoc(collection(db, 'surveys', surveyId!, 'answers'), {
+      if (!surveyId) {
+        toast.error('Survey ID not found');
+        throw new Error('Survey ID not found');
+      }
+      await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
         selectedIcon,
         answer,
         answerDate: new Date(),
