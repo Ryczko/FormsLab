@@ -3,18 +3,83 @@ import AnswerHeader from '../../Components/AnswerHeader';
 import AnswerTableRow from '../../Components/AnswerTableRow';
 import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 import { LinkIcon } from '@heroicons/react/outline';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
+import { useEffect, useState } from 'react';
+import { db } from '../../firebase';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  Timestamp,
+} from 'firebase/firestore';
+
+interface AnswerData {
+  id: string;
+  answerDate: string;
+  selectedIcon: string;
+  answer: string;
+}
 
 function SurveyAnswerPage() {
   useDocumentTitle('Survey Answers');
-  const { answerId } = useParams();
+  const { surveyId } = useParams();
+  const navigate = useNavigate();
+
+  const [votes, setVotes] = useState(0);
+  const [title, setTitle] = useState('');
+  const [startTime, setStartTime] = useState('-');
+  const [answersData, setAnswersData] = useState<AnswerData[]>([]);
+
+  useEffect(() => {
+    if (!surveyId) {
+      navigate('/');
+      return;
+    }
+
+    getSurveyData();
+  }, [surveyId]);
+
+  const getSurveyData = async () => {
+    const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
+    if (!surveyData.exists()) {
+      navigate('/');
+      return;
+    }
+
+    const answersData = await getDocs(
+      collection(db, 'surveys', surveyId!, 'answers')
+    );
+    setVotes(answersData.docs.length);
+
+    setStartTime(
+      formatFirebaseDate(surveyData.data()?.createdDate as Timestamp)
+    );
+    setTitle(surveyData.data()?.title);
+    const data = answersData.docs.map((doc) => ({
+      ...doc.data(),
+      answerDate: formatFirebaseDate(doc.data().answerDate as Timestamp),
+    })) as AnswerData[];
+
+    setAnswersData(data);
+  };
+
+  const formatFirebaseDate = (date: Timestamp) => {
+    return date.toDate().toLocaleString('pl-PL', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
 
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
         <h1 className="mx-4 text-4xl font-bold text-center">
-          Answers for {answerId}
+          Answers for &quot;{title}&quot;
         </h1>
         <IconButton
           title="Copy link to clipboard"
@@ -23,34 +88,21 @@ function SurveyAnswerPage() {
           icon={<LinkIcon className="w-5 h-5" />}
         />
       </div>
-      <AnswerHeader
-        totalVotes={120}
-        medianOfScore={'3/4'}
-        startTime={'12:30:00'}
-        endTime={'12:45:00'}
-      />
-      <AnswerTable>
-        <AnswerTableRow
-          ID={1}
-          time={'12:41:04'}
-          score={'1/4'}
-          text={'TEST TEST TEST'}
-        />
-        <AnswerTableRow
-          ID={1}
-          time={'12:41:04'}
-          score={'1/4'}
-          text={
-            'TEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TESTTEST TEST TEST'
-          }
-        />
-        <AnswerTableRow
-          ID={1}
-          time={'12:41:04'}
-          score={'1/4'}
-          text={'TEST TEST TEST'}
-        />
-      </AnswerTable>
+      <AnswerHeader totalVotes={votes} startTime={startTime} />
+      {answersData.length > 0 ? (
+        <AnswerTable>
+          {answersData.map((answer) => (
+            <AnswerTableRow
+              key={answer.id}
+              time={answer.answerDate}
+              selectedIcon={answer.selectedIcon}
+              text={answer.answer}
+            />
+          ))}
+        </AnswerTable>
+      ) : (
+        <div className="mt-8">No answers yet</div>
+      )}
     </div>
   );
 }
