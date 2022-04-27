@@ -20,6 +20,7 @@
     "react-firebase-hooks": "^5.0.3",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
+    "react-json-to-csv": "^1.0.4",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "sass": "^1.49.9",
@@ -53,6 +54,8 @@
     ]
   },
   "devDependencies": {
+    "@types/json2csv": "^5.0.3",
+    "@types/react-csv": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "autoprefixer": "^10.4.4",

@@ -8,6 +8,9 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import CsvDownload from 'react-json-to-csv';
 
 function SurveyListPage() {
   useDocumentTitle('Surveys');
@@ -76,12 +79,25 @@ function SurveyListPage() {
                       </Button>
                     </td>
                     <td className="sm:p-2">
-                      <IconButton
-                        variant={IconButtonVariant.PRIMARY}
-                        className="hidden sm:p-2 sm:table-cell"
-                        title="Download"
-                        icon={<DownloadIcon className="w-5 h-5" />}
-                      />
+                      <CsvDownload
+                        data={[
+                          {
+                            id: doc.id,
+                            title: survey.title,
+                            createdDate: survey.createdDate.toDate(),
+                          },
+                        ]}
+                        filename={`${survey.title}_${survey.createdDate
+                          .toDate()
+                          .toDateString()}.csv`}
+                      >
+                        <IconButton
+                          variant={IconButtonVariant.PRIMARY}
+                          className="hidden sm:p-2 sm:table-cell"
+                          title="Download"
+                          icon={<DownloadIcon className="w-5 h-5" />}
+                        />
+                      </CsvDownload>
                     </td>
                     <td className="sm:p-2">
                       <IconButton
