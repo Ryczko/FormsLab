@@ -54,8 +54,6 @@
     ]
   },
   "devDependencies": {
-    "@types/json2csv": "^5.0.3",
-    "@types/react-csv": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "autoprefixer": "^10.4.4",
