@@ -27,7 +27,7 @@ function SurveyListPage() {
   };
 
   const handleOnMoreButton = (id: string) => () => {
-    navigate(`/survey/${id}`);
+    navigate(`/survey/answer/${id}`);
   };
 
   return (

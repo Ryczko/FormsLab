@@ -8,9 +8,10 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [user, loading, error] = useAuthState(auth);
-  const isLoggedIn = user && !loading && !error;
+  const isLoggedIn = user && !error;
   const location = useLocation();
 
+  if (loading) return null;
   if (!isLoggedIn) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   } else {
