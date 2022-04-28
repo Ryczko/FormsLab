@@ -59,6 +59,7 @@ function SurveyAnswerPage() {
     setTitle(surveyData.data()?.title);
     const data = answersData.docs.map((doc) => ({
       ...doc.data(),
+      id: doc.id,
       answerDate: formatFirebaseDate(doc.data().answerDate as Timestamp),
     })) as AnswerData[];
 
