@@ -15,6 +15,8 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import BarChart, { BarChartData } from '../../Components/BarChart/BarChart';
+import toast from 'react-hot-toast';
+import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 
 interface AnswerData {
   id: string;
@@ -32,6 +34,7 @@ function SurveyAnswerPage() {
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('-');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
+  const [, copy] = useCopyToClipboard();
 
   useEffect(() => {
     if (!surveyId) {
@@ -104,6 +107,14 @@ function SurveyAnswerPage() {
 
   const chartData = getDataToChart();
 
+  const handleCopyLink = (id: string) => () => {
+    const domain =
+      window.location.hostname === 'localhost' ? 'http://' : 'https://';
+    const link = `${domain}${window.location.host}/survey/${id}`;
+    copy(link);
+    toast.success('Link copied to clipboard');
+  };
+
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
@@ -111,9 +122,10 @@ function SurveyAnswerPage() {
           Answers for &quot;{title}&quot;
         </h1>
         <IconButton
-          title="Copy link to clipboard"
-          className="p-2"
           variant={IconButtonVariant.PRIMARY}
+          className="p-2"
+          title="Copy link to clipboard"
+          onClick={handleCopyLink(surveyId!)}
           icon={<LinkIcon className="w-5 h-5" />}
         />
       </div>

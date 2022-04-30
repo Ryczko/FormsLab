@@ -106,7 +106,7 @@ function SurveyListPage() {
                         title="Copy link to clipboard"
                         onClick={handleCopyLink(doc.id)}
                         icon={<LinkIcon className="w-5 h-5" />}
-                      ></IconButton>
+                      />
                     </td>
                   </tr>
                 );
