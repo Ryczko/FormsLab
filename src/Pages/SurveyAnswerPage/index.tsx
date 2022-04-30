@@ -14,6 +14,7 @@ import {
   getDocs,
   Timestamp,
 } from 'firebase/firestore';
+import BarChart, { BarChartData } from '../../Components/BarChart/BarChart';
 
 interface AnswerData {
   id: string;
@@ -59,6 +60,7 @@ function SurveyAnswerPage() {
     setTitle(surveyData.data()?.title);
     const data = answersData.docs.map((doc) => ({
       ...doc.data(),
+      id: doc.id,
       answerDate: formatFirebaseDate(doc.data().answerDate as Timestamp),
     })) as AnswerData[];
 
@@ -75,6 +77,33 @@ function SurveyAnswerPage() {
     });
   };
 
+  const getDataToChart = (): BarChartData[] => {
+    if (!answersData.length) {
+      return [];
+    }
+
+    const uniqueAnswers = Array.from(
+      new Set(answersData.map((a) => a.selectedIcon))
+    );
+
+    const result = {};
+
+    uniqueAnswers.forEach((answer) => {
+      result[answer] = 0;
+    });
+
+    answersData.forEach((answer) => {
+      result[answer.selectedIcon] += 1;
+    });
+
+    return Object.keys(result).map((key) => ({
+      name: key,
+      value: result[key],
+    }));
+  };
+
+  const chartData = getDataToChart();
+
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
@@ -88,6 +117,8 @@ function SurveyAnswerPage() {
           icon={<LinkIcon className="w-5 h-5" />}
         />
       </div>
+      {chartData.length ? <BarChart data={chartData} /> : null}
+
       <AnswerHeader totalVotes={votes} startTime={startTime} />
       {answersData.length > 0 ? (
         <AnswerTable>

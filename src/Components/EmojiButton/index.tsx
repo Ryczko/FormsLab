@@ -1,12 +1,17 @@
 import React from 'react';
+import Emoji from '../Emoji/Emoji';
 
 interface EmojiButtonProps {
-    icon: string;
-    selected?: boolean;
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  icon: string;
+  selected?: boolean;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-function EmojiButton({ icon, onClick, selected = false }: EmojiButtonProps & React.HTMLProps<HTMLButtonElement>) {
+function EmojiButton({
+  icon,
+  onClick,
+  selected = false,
+}: EmojiButtonProps & React.HTMLProps<HTMLButtonElement>) {
   return (
     <button
       className={`bg-white text-3xl p-3 border-4 border-transparent rounded-lg duration-100 m-2 shadow ${
@@ -14,7 +19,7 @@ function EmojiButton({ icon, onClick, selected = false }: EmojiButtonProps & Rea
       }`}
       onClick={onClick}
     >
-      {icon}
+      <Emoji symbol={icon} />
     </button>
   );
 }

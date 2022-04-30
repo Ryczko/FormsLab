@@ -1,6 +1,7 @@
 import Picker from 'emoji-picker-react';
 import { useRef, useState } from 'react';
 import { useCloseComponent } from '../../Hooks/useCloseComponent';
+import Emoji from '../Emoji/Emoji';
 
 interface EmojiPickerProps {
   index: number;
@@ -27,14 +28,19 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
         className="label-text w-16 text-3xl bg-white p-3 rounded-lg shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
-        {chosenEmoji?.emoji || defaultEmote}
+        <Emoji symbol={chosenEmoji?.emoji || defaultEmote} />
       </button>
       {displayPicker && (
         <Picker
+          native
           onEmojiClick={onEmojiClick}
           disableAutoFocus
           disableSearchBar
           disableSkinTonePicker
+          groupVisibility={{
+            flags: false,
+            symbols: false,
+          }}
           pickerStyle={{
             position: 'absolute',
             top: '105%',
