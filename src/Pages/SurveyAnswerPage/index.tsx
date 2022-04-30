@@ -14,7 +14,7 @@ import {
   getDocs,
   Timestamp,
 } from 'firebase/firestore';
-import PieChart, { PieChartData } from '../../Components/PieChart/PieChart';
+import BarChart, { BarChartData } from '../../Components/BarChart/BarChart';
 
 interface AnswerData {
   id: string;
@@ -77,7 +77,7 @@ function SurveyAnswerPage() {
     });
   };
 
-  const getDataToChart = (): PieChartData[] => {
+  const getDataToChart = (): BarChartData[] => {
     if (!answersData.length) {
       return [];
     }
@@ -117,7 +117,7 @@ function SurveyAnswerPage() {
           icon={<LinkIcon className="w-5 h-5" />}
         />
       </div>
-      {chartData.length ? <PieChart data={chartData} /> : null}
+      {chartData.length ? <BarChart data={chartData} /> : null}
 
       <AnswerHeader totalVotes={votes} startTime={startTime} />
       {answersData.length > 0 ? (
