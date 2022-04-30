@@ -62,7 +62,7 @@ function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
             <div className="text-center pb-12 md:pb-16">
-              <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
+              <h1 className="text-4xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
                 How are you{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-100">
                   feeling?
@@ -72,12 +72,13 @@ function HomePage() {
                 <p className="text-xl text-zinc-600 mb-8">
                   There is no better way to find out than Employee Pulse
                 </p>
-                <div className="max-w-xs mx-auto sm:max-w-none flex flex-col sm:flex-row sm:space-y-0 space-y-2 sm:justify-center md:space-x-4">
+                <div className="max-w-xs mx-auto sm:max-w-none flex flex-col sm:flex-row sm:space-y-0 space-y-2 sm:justify-center sm:space-x-4">
                   {!loading && !user && (
                     <Link to={'/login'}>
                       <Button
                         variant={ButtonVariant.PRIMARY}
                         sizeType={ButtonSize.LARGE}
+                        className="w-full sm:w-auto"
                       >
                         Sign In
                       </Button>
@@ -85,7 +86,10 @@ function HomePage() {
                   )}
 
                   <Link to={'/survey/create'}>
-                    <Button variant={ButtonVariant.OUTLINE_PRIMARY}>
+                    <Button
+                      variant={ButtonVariant.OUTLINE_PRIMARY}
+                      className="w-full sm:w-auto"
+                    >
                       Create Survey
                     </Button>
                   </Link>

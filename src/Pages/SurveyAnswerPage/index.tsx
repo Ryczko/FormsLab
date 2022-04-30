@@ -15,6 +15,8 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import BarChart, { BarChartData } from '../../Components/BarChart/BarChart';
+import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
+import Loader from '../../Components/Loader/Loader';
 
 interface AnswerData {
   id: string;
@@ -29,6 +31,7 @@ function SurveyAnswerPage() {
   const navigate = useNavigate();
 
   const [votes, setVotes] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('-');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
@@ -65,6 +68,7 @@ function SurveyAnswerPage() {
     })) as AnswerData[];
 
     setAnswersData(data);
+    setIsLoading(false);
   };
 
   const formatFirebaseDate = (date: Timestamp) => {
@@ -105,36 +109,40 @@ function SurveyAnswerPage() {
   const chartData = getDataToChart();
 
   return (
-    <div className="container block px-4 mx-auto mt-10 text-center">
-      <div className="flex flex-row justify-center mb-10">
-        <h1 className="mx-4 text-4xl font-bold text-center">
-          Answers for &quot;{title}&quot;
-        </h1>
-        <IconButton
-          title="Copy link to clipboard"
-          className="p-2"
-          variant={IconButtonVariant.PRIMARY}
-          icon={<LinkIcon className="w-5 h-5" />}
-        />
-      </div>
-      {chartData.length ? <BarChart data={chartData} /> : null}
+    <>
+      <Loader isLoading={isLoading} />
+      {!isLoading && (
+        <div className="container block px-4 mx-auto text-center">
+          <div className="flex flex-row justify-center mb-10">
+            <HeaderComponent>Answers for &quot;{title}&quot;</HeaderComponent>
 
-      <AnswerHeader totalVotes={votes} startTime={startTime} />
-      {answersData.length > 0 ? (
-        <AnswerTable>
-          {answersData.map((answer) => (
-            <AnswerTableRow
-              key={answer.id}
-              time={answer.answerDate}
-              selectedIcon={answer.selectedIcon}
-              text={answer.answer}
+            <IconButton
+              title="Copy link to clipboard"
+              className="p-2"
+              variant={IconButtonVariant.PRIMARY}
+              icon={<LinkIcon className="w-5 h-5" />}
             />
-          ))}
-        </AnswerTable>
-      ) : (
-        <div className="mt-8">No answers yet</div>
+          </div>
+          {chartData.length ? <BarChart data={chartData} /> : null}
+
+          <AnswerHeader totalVotes={votes} startTime={startTime} />
+          {answersData.length > 0 ? (
+            <AnswerTable>
+              {answersData.map((answer) => (
+                <AnswerTableRow
+                  key={answer.id}
+                  time={answer.answerDate}
+                  selectedIcon={answer.selectedIcon}
+                  text={answer.answer}
+                />
+              ))}
+            </AnswerTable>
+          ) : (
+            <div className="mt-8">No answers yet</div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

@@ -6,6 +6,7 @@ import LoginButton from '../../Components/LoginButton';
 import { auth, signInWithGoogle, signInWithGithub } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
+import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
 
 function LoginPage() {
   useDocumentTitle('Login');
@@ -20,9 +21,9 @@ function LoginPage() {
   }, [user, loading]);
 
   return (
-    <div className="container px-4 m-auto mt-10 text-center md:px-8">
-      <h1 className="text-5xl font-bold text-center">Sign In</h1>
-      <div className="flex flex-col items-center justify-center pt-8 space-y-4">
+    <div className="container px-4 m-auto text-center md:px-8">
+      <HeaderComponent>Sign in</HeaderComponent>
+      <div className="flex flex-col items-center justify-center pt-8 space-y-2">
         <LoginButton image={Google} onClick={signInWithGoogle}>
           Sign in with Google
         </LoginButton>

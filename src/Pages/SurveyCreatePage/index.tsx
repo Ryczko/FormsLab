@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
+import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
 
 function SurveyCreatePage() {
   useDocumentTitle('Create Survey');
@@ -55,8 +56,9 @@ function SurveyCreatePage() {
   };
 
   return (
-    <div className="container px-4 m-auto mt-10 text-center md:px-8">
-      <h1 className="text-4xl font-bold text-center">Create new survey</h1>
+    <div className="container px-4 m-auto text-center md:px-8">
+      <HeaderComponent>Create new survey</HeaderComponent>
+
       <div className="mt-8 max-w-lg mx-auto">
         <Input
           label="Survey title"
@@ -66,7 +68,7 @@ function SurveyCreatePage() {
         />
 
         <div className="mt-10">
-          <label className="font-semibold text-left block mb-6">
+          <label className="font-semibold text-left block mb-4">
             Click on icon to change
           </label>
 
@@ -84,7 +86,7 @@ function SurveyCreatePage() {
 
         <Button
           onClick={createSurvey}
-          className="mt-8"
+          className="mt-12 w-full sm:w-auto"
           disabled={!title.length || buttonDisable}
           variant={ButtonVariant.PRIMARY}
         >
