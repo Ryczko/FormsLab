@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase';
+import {formatFirebaseDateWithHours} from '../../Functions/ConvertTime';
 import {
   collection,
   doc,
@@ -64,27 +65,17 @@ function SurveyAnswerPage() {
     setVotes(answersData.docs.length);
 
     setStartTime(
-      formatFirebaseDate(surveyData.data()?.createdDate as Timestamp)
+      formatFirebaseDateWithHours(surveyData.data()?.createdDate as Timestamp)
     );
     setTitle(surveyData.data()?.title);
     const data = answersData.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
-      answerDate: formatFirebaseDate(doc.data().answerDate as Timestamp),
+      answerDate: formatFirebaseDateWithHours(doc.data().answerDate as Timestamp),
     })) as AnswerData[];
 
     setAnswersData(data);
     setIsLoading(false);
-  };
-
-  const formatFirebaseDate = (date: Timestamp) => {
-    return date.toDate().toLocaleString('pl-PL', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
   };
 
   const getDataToChart = (): BarChartData[] => {
@@ -126,25 +117,22 @@ function SurveyAnswerPage() {
     <>
       <Loader isLoading={isLoading} />
       {!isLoading && (
-        <div className="container block px-4 mx-auto text-center">
+        <div className="container px-4 mx-auto text-center">
+          <HeaderComponent>Answers for &quot;{title}&quot;</HeaderComponent>
           <div className="flex flex-row justify-center mb-10">
-            <HeaderComponent>Answers for &quot;{title}&quot;</HeaderComponent>
             <IconButton
-              variant={IconButtonVariant.PRIMARY}
-              className="hidden sm:block ml-4 h-full"
+              variant={IconButtonVariant.PRIMARY}  
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId!)}
               icon={<LinkIcon className="w-5 h-5" />}
             />
-            <CsvDownload
-              className="hidden sm:block h-full"
+            <CsvDownload              
               data={answersData}
               filename={`${title}.csv`}
             >
               <IconButton
                 variant={IconButtonVariant.PRIMARY}
                 title="Download"
-                className="h-full"
                 icon={<DownloadIcon className="w-5 h-5" />}
               />
             </CsvDownload>

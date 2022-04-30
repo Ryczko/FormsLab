@@ -1,12 +1,9 @@
-import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
+import { LinkIcon } from '@heroicons/react/outline';
 import Button, { ButtonVariant } from '../../../Components/Button';
 import IconButton, { IconButtonVariant } from '../../../Components/IconButton';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from '../../../Hooks/useCopyToClipboard';
 import { useNavigate } from 'react-router-dom';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import CsvDownload from 'react-json-to-csv';
 
 type Props = {
   question: string;
@@ -32,7 +29,7 @@ export default function SurveyRow({ question, time, id }: Props) {
 
   return (
     <div className="flex max-w-full flex-col w-[600px] my-2 md:flex-row">
-      <div className="flex justify-between w-full rounded-b-none items-center bg-white px-4 py-3 rounded-md shadow-sm md:rounded-b-md">
+      <div className="flex items-center justify-between w-full px-4 py-3 bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
         <div>{question}</div>
         <div>{time}</div>
       </div>
@@ -44,33 +41,16 @@ export default function SurveyRow({ question, time, id }: Props) {
         >
           More
         </Button>
-        <CsvDownload
-          className="rounded-t-none text-center justify-center md:w-auto md:rounded-t-md pr-2"
-          data={[
-            {
-              id: id,
-              question: question,
-              createdDate: time,
-            },
-          ]}
-          filename={`${question}_${time}.csv`}
-        >
-          <IconButton
-            variant={IconButtonVariant.PRIMARY}
-            className={'h-12'}
-            title="Download as CSV"
-            icon={<DownloadIcon className="w-5 h-5" />}
-          />
-        </CsvDownload>
+
         <IconButton
           variant={IconButtonVariant.PRIMARY}
           className={
-            'rounded-t-none  text-center justify-center md:w-auto md:rounded-t-md'
+            'pl-4 pr-3 rounded-t-none w-full text-center justify-center md:w-auto md:rounded-t-md'
           }
           title="Copy link to clipboard"
           icon={<LinkIcon className="w-5 h-5" />}
           onClick={handleCopyLink}
-        />
+        ></IconButton>
       </div>
     </div>
   );
