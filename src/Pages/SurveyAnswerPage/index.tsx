@@ -14,6 +14,7 @@ import {
   getDocs,
   Timestamp,
 } from 'firebase/firestore';
+import PieChart, { PieChartData } from '../../Components/PieChart/PieChart';
 
 interface AnswerData {
   id: string;
@@ -76,6 +77,33 @@ function SurveyAnswerPage() {
     });
   };
 
+  const getDataToChart = (): PieChartData[] => {
+    if (!answersData.length) {
+      return [];
+    }
+
+    const uniqueAnswers = Array.from(
+      new Set(answersData.map((a) => a.selectedIcon))
+    );
+
+    const result = {};
+
+    uniqueAnswers.forEach((answer) => {
+      result[answer] = 0;
+    });
+
+    answersData.forEach((answer) => {
+      result[answer.selectedIcon] += 1;
+    });
+
+    return Object.keys(result).map((key) => ({
+      name: key,
+      value: result[key],
+    }));
+  };
+
+  const chartData = getDataToChart();
+
   return (
     <div className="container block px-4 mx-auto mt-10 text-center">
       <div className="flex flex-row justify-center mb-10">
@@ -89,6 +117,8 @@ function SurveyAnswerPage() {
           icon={<LinkIcon className="w-5 h-5" />}
         />
       </div>
+      {chartData.length ? <PieChart data={chartData} /> : null}
+
       <AnswerHeader totalVotes={votes} startTime={startTime} />
       {answersData.length > 0 ? (
         <AnswerTable>
