@@ -2,7 +2,7 @@ import AnswerTable from '../../Components/AnswerTable';
 import AnswerHeader from '../../Components/AnswerHeader';
 import AnswerTableRow from '../../Components/AnswerTableRow';
 import IconButton, { IconButtonVariant } from '../../Components/IconButton';
-import { LinkIcon } from '@heroicons/react/outline';
+import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { useEffect, useState } from 'react';
@@ -17,6 +17,9 @@ import {
 import BarChart, { BarChartData } from '../../Components/BarChart/BarChart';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import CsvDownload from 'react-json-to-csv';
 
 interface AnswerData {
   id: string;
@@ -128,6 +131,14 @@ function SurveyAnswerPage() {
           onClick={handleCopyLink(surveyId!)}
           icon={<LinkIcon className="w-5 h-5" />}
         />
+        <CsvDownload data={answersData} filename={`${title}.csv`}>
+          <IconButton
+            variant={IconButtonVariant.PRIMARY}
+            className="hidden sm:p-2 sm:table-cell"
+            title="Download"
+            icon={<DownloadIcon className="w-5 h-5" />}
+          />
+        </CsvDownload>
       </div>
       {chartData.length ? <BarChart data={chartData} /> : null}
 
