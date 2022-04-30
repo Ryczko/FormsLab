@@ -20,6 +20,8 @@ import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import CsvDownload from 'react-json-to-csv';
+import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
+import Loader from '../../Components/Loader/Loader';
 
 interface AnswerData {
   id: string;
@@ -34,6 +36,7 @@ function SurveyAnswerPage() {
   const navigate = useNavigate();
 
   const [votes, setVotes] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('-');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
@@ -71,6 +74,7 @@ function SurveyAnswerPage() {
     })) as AnswerData[];
 
     setAnswersData(data);
+    setIsLoading(false);
   };
 
   const formatFirebaseDate = (date: Timestamp) => {
@@ -119,45 +123,52 @@ function SurveyAnswerPage() {
   };
 
   return (
-    <div className="container block px-4 mx-auto mt-10 text-center">
-      <div className="flex flex-row justify-center mb-10">
-        <h1 className="mx-4 text-4xl font-bold text-center">
-          Answers for &quot;{title}&quot;
-        </h1>
-        <IconButton
-          variant={IconButtonVariant.PRIMARY}
-          className="p-2"
-          title="Copy link to clipboard"
-          onClick={handleCopyLink(surveyId!)}
-          icon={<LinkIcon className="w-5 h-5" />}
-        />
-        <CsvDownload data={answersData} filename={`${title}.csv`}>
-          <IconButton
-            variant={IconButtonVariant.PRIMARY}
-            className="hidden sm:p-2 sm:table-cell"
-            title="Download"
-            icon={<DownloadIcon className="w-5 h-5" />}
-          />
-        </CsvDownload>
-      </div>
-      {chartData.length ? <BarChart data={chartData} /> : null}
-
-      <AnswerHeader totalVotes={votes} startTime={startTime} />
-      {answersData.length > 0 ? (
-        <AnswerTable>
-          {answersData.map((answer) => (
-            <AnswerTableRow
-              key={answer.id}
-              time={answer.answerDate}
-              selectedIcon={answer.selectedIcon}
-              text={answer.answer}
+    <>
+      <Loader isLoading={isLoading} />
+      {!isLoading && (
+        <div className="container block px-4 mx-auto text-center">
+          <div className="flex flex-row justify-center mb-10">
+            <HeaderComponent>Answers for &quot;{title}&quot;</HeaderComponent>
+            <IconButton
+              variant={IconButtonVariant.PRIMARY}
+              className="hidden sm:block ml-4 h-full"
+              title="Copy link to clipboard"
+              onClick={handleCopyLink(surveyId!)}
+              icon={<LinkIcon className="w-5 h-5" />}
             />
-          ))}
-        </AnswerTable>
-      ) : (
-        <div className="mt-8">No answers yet</div>
+            <CsvDownload
+              className="hidden sm:block h-full"
+              data={answersData}
+              filename={`${title}.csv`}
+            >
+              <IconButton
+                variant={IconButtonVariant.PRIMARY}
+                title="Download"
+                className="h-full"
+                icon={<DownloadIcon className="w-5 h-5" />}
+              />
+            </CsvDownload>
+          </div>
+          {chartData.length ? <BarChart data={chartData} /> : null}
+
+          <AnswerHeader totalVotes={votes} startTime={startTime} />
+          {answersData.length > 0 ? (
+            <AnswerTable>
+              {answersData.map((answer) => (
+                <AnswerTableRow
+                  key={answer.id}
+                  time={answer.answerDate}
+                  selectedIcon={answer.selectedIcon}
+                  text={answer.answer}
+                />
+              ))}
+            </AnswerTable>
+          ) : (
+            <div className="mt-8">No answers yet</div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

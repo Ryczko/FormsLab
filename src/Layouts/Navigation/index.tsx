@@ -22,7 +22,7 @@ function Navigation() {
     setIsOpen(!isOpen);
   };
   return (
-    <nav className="py-5 border-b border-neutral-200">
+    <nav className="py-5 fixed w-full border-b bg-zinc-100 border-neutral-200">
       <div className="flex justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (

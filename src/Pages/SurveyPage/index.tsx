@@ -6,6 +6,8 @@ import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
 import EmojiButton from '../../Components/EmojiButton';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { db } from '../../firebase';
+import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
+import Loader from '../../Components/Loader/Loader';
 
 function SurveyPage() {
   useDocumentTitle('Survey');
@@ -16,6 +18,7 @@ function SurveyPage() {
   const [icons, setIcons] = useState<string[]>([]);
   const [selectedIcon, setSelectedIcon] = useState<string | null>('');
   const [buttonDisable, setButtonDisable] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -36,6 +39,7 @@ function SurveyPage() {
     }
     setQuestion(surveyData.data()?.title);
     setIcons(surveyData.data()?.pack);
+    setIsLoading(false);
   };
 
   const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,6 +49,7 @@ function SurveyPage() {
 
   const handleSave = async () => {
     setButtonDisable(true);
+    setIsLoading(true);
 
     try {
       if (!surveyId) {
@@ -60,8 +65,10 @@ function SurveyPage() {
       navigate('/');
     } catch (error) {
       toast.error('Error occured');
+    } finally {
+      setButtonDisable(false);
+      setIsLoading(false);
     }
-    setButtonDisable(false);
   };
 
   const handleInputAnswer = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -69,36 +76,42 @@ function SurveyPage() {
   };
 
   return (
-    <div className="container px-4 m-auto mt-10 mb-6 text-center md:px-8">
-      <h1 className="text-4xl font-bold text-center ">{question}</h1>
-      <div className="flex flex-col items-center mt-6 sm:flex-row sm:justify-center">
-        {icons.map((icon, idx) => (
-          <EmojiButton
-            icon={icon}
-            selected={selectedIcon === icon}
-            key={idx}
-            onClick={handleIconClick}
-          />
-        ))}
-      </div>
-      <div className="mt-8">
-        <textarea
-          className="w-11/12 h-56 p-4 rounded-lg shadow resize-none focus:outline-none lg:w-1/2"
-          placeholder="Tell Us More"
-          value={answer}
-          onChange={handleInputAnswer}
-        ></textarea>
-      </div>
-      <Button
-        disabled={!selectedIcon || buttonDisable}
-        onClick={handleSave}
-        className="mt-6"
-        variant={ButtonVariant.PRIMARY}
-        sizeType={ButtonSize.MEDIUM}
-      >
-        Save
-      </Button>
-    </div>
+    <>
+      <Loader isLoading={isLoading} />
+      {!isLoading && (
+        <div className="container px-4 m-auto mb-6 text-center md:px-8">
+          <HeaderComponent>{question}</HeaderComponent>
+
+          <div className="grid grid-cols-2 max-w-[500px] mx-auto sm:grid-cols-4">
+            {icons.map((icon, idx) => (
+              <EmojiButton
+                icon={icon}
+                selected={selectedIcon === icon}
+                key={idx}
+                onClick={handleIconClick}
+              />
+            ))}
+          </div>
+          <div className="mt-8">
+            <textarea
+              className="max-w-[100%] w-[500px] h-56 p-4 rounded-lg shadow resize-none focus:outline-none"
+              placeholder="Tell Us More"
+              value={answer}
+              onChange={handleInputAnswer}
+            ></textarea>
+          </div>
+          <Button
+            disabled={!selectedIcon || buttonDisable}
+            onClick={handleSave}
+            className="mt-6 w-full sm:w-auto"
+            variant={ButtonVariant.PRIMARY}
+            sizeType={ButtonSize.MEDIUM}
+          >
+            Save
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
 

@@ -1,0 +1,66 @@
+$my-emojis: (
+  '🕛',
+  '🕐',
+  '🕑',
+  '🕒',
+  '🕓',
+  '🕔',
+  '🕕',
+  '🕖',
+  '🕗',
+  '🕘',
+  '🕙',
+  '🕚'
+) !default; // Customise your emoji list here
+
+// Mixin to generate the proper animation based off the emoji list provided
+@mixin emojiLoader(
+  $emoji-list,
+  $loader-name: emojiLoader,
+  $step-duration: 0.05s,
+  $prefix: ''
+) {
+  /*
+  @param $emoji-list: This is a list of the emojis you want in the animation
+  @param $loader-name: Define a different name for the loader animation
+  @param $step-duration: Define how long each emoji is displayed
+  @param $prefix: This allows you to add a prefix such as "Loading… " to have that text show next to the changing emoji - you might want to adjust the .loader class's width, height and font-size.
+  */
+
+  $emoji-count: length($emoji-list); // Get the number of emojis
+  $steps: $emoji-count - 1;
+  content: $prefix nth($emoji-list, 1); // Default is the first emoji in the list (fallback for Safari)
+  animation: #{$loader-name} #{$step-duration * $emoji-count} steps(#{$steps})
+    infinite forwards 0s;
+
+  @keyframes #{$loader-name} {
+    // Sass is smart and compiles this outside of our declaration - yay!
+    @for $e from 1 through $emoji-count {
+      // Loop through all emojis
+      $this-percentage: 100 / $emoji-count * ($e - 1);
+      #{$this-percentage}% {
+        content: $prefix nth($emoji-list, $e);
+      }
+    }
+  }
+}
+
+.loader {
+  // Add this class to the element that needs the loader
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  &::before {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    left: 50%;
+    top: 50%;
+    font-size: 5rem;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    @include emojiLoader($my-emojis);
+  }
+}
