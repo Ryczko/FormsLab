@@ -29,11 +29,7 @@ function SurveyPage() {
   }, [surveyId]);
 
   const getSurveyData = async () => {
-    if (!surveyId) {
-      navigate('/');
-      return;
-    }
-    const surveyData = await getDoc(doc(db, 'surveys', surveyId));
+    const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
       navigate('/');
       return;
