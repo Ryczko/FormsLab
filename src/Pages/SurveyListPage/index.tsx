@@ -1,17 +1,19 @@
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { db } from '../../firebase';
-import { collection } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
+import { collection, query, where } from 'firebase/firestore';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
 import SurveyRow from './SurveyRow/SurveyRow';
 import Loader from '../../Components/Loader/Loader';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function SurveyListPage() {
   useDocumentTitle('Surveys');
 
-  const [surveysCollection, loading, error] = useCollection(
-    collection(db, 'surveys')
-  );
+  const [user] = useAuthState(auth);
+  const surveysCollectionRef = collection(db, 'surveys');
+  const q = query(surveysCollectionRef, where('creatorId', '==', user?.uid));
+  const [surveysCollection, loading, error] = useCollection(q);
 
   return (
     <div className="container m-auto md:px-8 text-center">
