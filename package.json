@@ -20,6 +20,7 @@
     "react-firebase-hooks": "^5.0.3",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
+    "react-json-to-csv": "^1.0.4",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "recharts": "^2.1.9",

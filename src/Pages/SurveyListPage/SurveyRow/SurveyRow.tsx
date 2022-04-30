@@ -1,9 +1,12 @@
-import { LinkIcon } from '@heroicons/react/outline';
+import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
 import Button, { ButtonVariant } from '../../../Components/Button';
 import IconButton, { IconButtonVariant } from '../../../Components/IconButton';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from '../../../Hooks/useCopyToClipboard';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import CsvDownload from 'react-json-to-csv';
 
 type Props = {
   question: string;
@@ -36,21 +39,38 @@ export default function SurveyRow({ question, time, id }: Props) {
       <div className="flex w-full md:w-auto md:ml-2">
         <Button
           variant={ButtonVariant.OUTLINE}
-          className=" border-t-0 p-2 rounded-t-none mr-2 w-full md:w-auto md:rounded-t-md md:border-t-[1px]"
+          className="border-t-0 p-2 rounded-t-none mr-2 w-full md:w-auto md:rounded-t-md md:border-t-[1px]"
           onClick={handleOnMoreButton}
         >
           More
         </Button>
-
+        <CsvDownload
+          className="rounded-t-none text-center justify-center md:w-auto md:rounded-t-md pr-2"
+          data={[
+            {
+              id: id,
+              question: question,
+              createdDate: time,
+            },
+          ]}
+          filename={`${question}_${time}.csv`}
+        >
+          <IconButton
+            variant={IconButtonVariant.PRIMARY}
+            className={'h-12'}
+            title="Download as CSV"
+            icon={<DownloadIcon className="w-5 h-5" />}
+          />
+        </CsvDownload>
         <IconButton
           variant={IconButtonVariant.PRIMARY}
           className={
-            'pl-4 pr-3 rounded-t-none w-full text-center justify-center md:w-auto md:rounded-t-md'
+            'rounded-t-none  text-center justify-center md:w-auto md:rounded-t-md'
           }
           title="Copy link to clipboard"
           icon={<LinkIcon className="w-5 h-5" />}
           onClick={handleCopyLink}
-        ></IconButton>
+        />
       </div>
     </div>
   );

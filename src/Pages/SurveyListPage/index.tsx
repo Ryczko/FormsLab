@@ -28,7 +28,6 @@ function SurveyListPage() {
             loading && <Loader isLoading={true} />
           }
         </p>
-
         {surveysCollection &&
           surveysCollection.docs?.length > 0 &&
           surveysCollection.docs.map((doc) => {
