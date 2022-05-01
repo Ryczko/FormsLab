@@ -6,17 +6,12 @@ export enum ButtonVariant {
   SECONDARY = 'btn-secondary',
   OUTLINE = 'btn-outline',
   OUTLINE_PRIMARY = 'btn-outline-primary',
-  DANGER = 'btn-danger',
-  SUCCESS = 'btn-success',
   FLAT = 'btn-flat',
 }
 export enum ButtonSize {
-  SMALL = 'w-16',
   DEFAULT = '',
-  NORMAL = 'w-24',
   MEDIUM = 'w-32',
   LARGE = 'w-40',
-  EXTRA_LARGE = 'w-48',
 }
 export type ButtonProps = {
   variant?: ButtonVariant;

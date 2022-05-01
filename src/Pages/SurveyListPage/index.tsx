@@ -1,11 +1,12 @@
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db, auth } from '../../firebase';
-import { collection, query, where } from 'firebase/firestore';
+import { collection, query, Timestamp, where } from 'firebase/firestore';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
 import SurveyRow from './SurveyRow/SurveyRow';
 import Loader from '../../Components/Loader/Loader';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import {formatFirebaseDateWithoutHours} from '../../Functions/ConvertTime';
 
 function SurveyListPage() {
   useDocumentTitle('Surveys');
@@ -16,7 +17,7 @@ function SurveyListPage() {
   const [surveysCollection, loading, error] = useCollection(q);
 
   return (
-    <div className="container m-auto md:px-8 text-center">
+    <div className="container m-auto text-center md:px-8">
       <HeaderComponent>Surveys</HeaderComponent>
 
       <div className="flex flex-col items-center justify-center py-2">
@@ -39,7 +40,7 @@ function SurveyListPage() {
                 key={doc.id}
                 id={doc.id}
                 question={survey.title}
-                time={survey.createdDate.toDate().toDateString()}
+                time={formatFirebaseDateWithoutHours(survey.createdDate as Timestamp)}
               ></SurveyRow>
             );
           })}
