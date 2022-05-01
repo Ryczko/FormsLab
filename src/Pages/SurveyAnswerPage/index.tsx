@@ -5,7 +5,7 @@ import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
 import {formatFirebaseDateWithHours} from '../../Functions/ConvertTime';
 import {
@@ -43,6 +43,8 @@ function SurveyAnswerPage() {
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
   const [, copy] = useCopyToClipboard();
 
+  const refreshTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     if (!surveyId) {
       navigate('/');
@@ -50,9 +52,16 @@ function SurveyAnswerPage() {
     }
 
     getSurveyData();
+
+    return () => {
+      if (refreshTimeout.current) {
+        clearTimeout(refreshTimeout.current);
+      }
+    };
   }, [surveyId]);
 
   const getSurveyData = async () => {
+    console.log('pobieram');
     const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
       navigate('/');
@@ -75,6 +84,9 @@ function SurveyAnswerPage() {
     })) as AnswerData[];
 
     setAnswersData(data);
+
+    refreshTimeout.current = setTimeout(getSurveyData, 3000);
+
     setIsLoading(false);
   };
 
