@@ -22,11 +22,11 @@ function Navigation() {
     setIsOpen(!isOpen);
   };
   return (
-    <nav className="py-5 fixed w-full border-b bg-zinc-100 border-neutral-200">
+    <nav className="py-5 fixed z-10 w-full border-b bg-zinc-100 border-neutral-200">
       <div className="flex justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (
-          <div className="flex md:space-x-20">
+          <div className="flex md:space-x-10">
             <div className="hidden space-x-4 md:block">
               <Link to={'/survey/create'}>
                 <Button variant={ButtonVariant.FLAT}>Create Survey</Button>
@@ -35,8 +35,8 @@ function Navigation() {
                 <Button variant={ButtonVariant.FLAT}>My Surveys</Button>
               </Link>
             </div>
-            <div className="sm:flex hidden">
-              <p className="sm:flex truncate items-center justify-left hidden sm:w-fit">
+            <div className="md:flex hidden">
+              <p className="truncate items-center hidden justify-left sm:w-fit lg:flex">
                 {user.email}
               </p>
               <IconButton

@@ -1,13 +1,12 @@
 import AnswerTable from '../../Components/AnswerTable';
 import AnswerHeader from '../../Components/AnswerHeader';
 import AnswerTableRow from '../../Components/AnswerTableRow';
-import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { useEffect, useRef, useState } from 'react';
 import { db } from '../../firebase';
-import {formatFirebaseDateWithHours} from '../../Functions/ConvertTime';
+import { formatFirebaseDateWithHours } from '../../Functions/ConvertTime';
 import {
   collection,
   doc,
@@ -15,7 +14,7 @@ import {
   getDocs,
   Timestamp,
 } from 'firebase/firestore';
-import BarChart, { BarChartData } from '../../Components/BarChart/BarChart';
+import { BarChartData } from '../../Components/BarChart/BarChart';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -23,6 +22,7 @@ import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 import CsvDownload from 'react-json-to-csv';
 import HeaderComponent from '../../Components/HeaderComponent/HeaderComponent';
 import Loader from '../../Components/Loader/Loader';
+import Button, { ButtonVariant } from '../../Components/Button';
 
 interface AnswerData {
   id: string;
@@ -80,7 +80,9 @@ function SurveyAnswerPage() {
     const data = answersData.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
-      answerDate: formatFirebaseDateWithHours(doc.data().answerDate as Timestamp),
+      answerDate: formatFirebaseDateWithHours(
+        doc.data().answerDate as Timestamp
+      ),
     })) as AnswerData[];
 
     setAnswersData(data);
@@ -131,27 +133,32 @@ function SurveyAnswerPage() {
       {!isLoading && (
         <div className="container px-4 mx-auto text-center">
           <HeaderComponent>Answers for &quot;{title}&quot;</HeaderComponent>
-          <div className="flex flex-row justify-center mb-10">
-            <IconButton
-              variant={IconButtonVariant.PRIMARY}  
-              title="Copy link to clipboard"
+          <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
+            <Button
               onClick={handleCopyLink(surveyId!)}
-              icon={<LinkIcon className="w-5 h-5" />}
-            />
-            <CsvDownload              
-              data={answersData}
-              filename={`${title}.csv`}
+              variant={ButtonVariant.PRIMARY}
+              className="w-full sm:w-[170px] mb-2 sm:mr-2 sm:mb-0"
             >
-              <IconButton
-                variant={IconButtonVariant.PRIMARY}
-                title="Download"
-                icon={<DownloadIcon className="w-5 h-5" />}
-              />
-            </CsvDownload>
+              Copy link
+              <LinkIcon className="w-5 h-5 inline-block ml-2" />
+            </Button>
+            <Button
+              className="w-full sm:w-[170px]"
+              variant={ButtonVariant.OUTLINE}
+            >
+              <CsvDownload data={answersData} filename={`${title}.csv`}>
+                <span className="font-semibold"> Download</span>
+                <DownloadIcon className="ml-2 w-5 h-5 inline-block" />
+              </CsvDownload>
+            </Button>
           </div>
-          {chartData.length ? <BarChart data={chartData} /> : null}
 
-          <AnswerHeader totalVotes={votes} startTime={startTime} />
+          <hr className=" md:hidden" />
+          <AnswerHeader
+            chartData={chartData}
+            totalVotes={votes}
+            startTime={startTime}
+          />
           {answersData.length > 0 ? (
             <AnswerTable>
               {answersData.map((answer) => (

@@ -31,7 +31,7 @@ export default function BarChart({ data }: BarChartProps) {
   };
 
   return data ? (
-    <div className="h-[250px] max-w-[300px] mx-auto">
+    <div className="h-[250px] max-w-[300px] w-[300px]">
       <ResponsiveContainer width="100%">
         <Chart
           width={600}
