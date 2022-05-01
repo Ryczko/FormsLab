@@ -14,7 +14,7 @@ function PageWrapper() {
   return (
     <BrowserRouter>
       <Navigation />
-      <div className="min-h-screen px-8 pt-32 m-auto sm:px-4">
+      <div className="min-h-screen px-6 pt-32 m-auto sm:px-4">
         <Suspense
           fallback={
             <div className="flex items-center justify-center transition-all duration-250 animate-pulse">

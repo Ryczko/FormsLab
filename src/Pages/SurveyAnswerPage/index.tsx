@@ -1,4 +1,3 @@
-import AnswerTable from '../../Components/AnswerTable';
 import AnswerHeader from '../../Components/AnswerHeader';
 import AnswerTableRow from '../../Components/AnswerTableRow';
 import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
@@ -131,7 +130,7 @@ function SurveyAnswerPage() {
     <>
       <Loader isLoading={isLoading} />
       {!isLoading && (
-        <div className="container px-4 mx-auto text-center">
+        <div className="container mx-auto text-center">
           <HeaderComponent>Answers for &quot;{title}&quot;</HeaderComponent>
           <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
             <Button
@@ -160,7 +159,7 @@ function SurveyAnswerPage() {
             startTime={startTime}
           />
           {answersData.length > 0 ? (
-            <AnswerTable>
+            <div className="mt-8 mb-6">
               {answersData.map((answer) => (
                 <AnswerTableRow
                   key={answer.id}
@@ -169,7 +168,7 @@ function SurveyAnswerPage() {
                   text={answer.answer}
                 />
               ))}
-            </AnswerTable>
+            </div>
           ) : (
             <div className="mt-8">No answers yet</div>
           )}

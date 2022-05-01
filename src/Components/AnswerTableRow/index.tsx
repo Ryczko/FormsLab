@@ -8,13 +8,13 @@ interface AnswerTableRowProps {
 
 function AnswerTableRow({ time, selectedIcon, text }: AnswerTableRowProps) {
   return (
-    <tr className="bg-white sm:py-4 text-zinc-500">
-      <td className="sm:p-4">{time}</td>
-      <td className="sm:p-4">
+    <div className="bg-white py-3 shadow-sm max-w-[800px] mx-auto px-3 grid grid-cols-6 my-2 rounded-md">
+      <div className="col-span-2">{time}</div>
+      <div>
         <Emoji symbol={selectedIcon} />
-      </td>
-      <td className="sm:p-4">{text}</td>
-    </tr>
+      </div>
+      <div className="col-span-3 text-left break-words">{text || '-'}</div>
+    </div>
   );
 }
 
