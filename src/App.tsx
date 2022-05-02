@@ -1,4 +1,4 @@
-import PageWrapper from './Pages/PageWrapper';
+import PageWrapper from './Layouts/PageWrapper';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
