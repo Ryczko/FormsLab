@@ -21,7 +21,7 @@ import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 import CsvDownload from 'react-json-to-csv';
 import Header from '../../Components/Header/Header';
 import Loader from '../../Components/Loader';
-import Button, { ButtonVariant } from '../../Components/Button/Button';
+import IconButton, { IconButtonVariant } from '../../Components/IconButton';
 
 interface AnswerData {
   id: string;
@@ -122,23 +122,29 @@ function SurveyAnswerPage() {
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
           <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
-            <Button
+            <IconButton
               onClick={handleCopyLink(surveyId!)}
-              variant={ButtonVariant.PRIMARY}
+              variant={IconButtonVariant.PRIMARY}
               className="w-full sm:w-[170px] mb-2 sm:mr-2 sm:mb-0"
+              icon={<LinkIcon className="w-5 h-5" />}
             >
               Copy link
-              <LinkIcon className="w-5 h-5 inline-block ml-2" />
-            </Button>
-            <Button
+            </IconButton>
+            <IconButton
               className="w-full sm:w-[170px]"
-              variant={ButtonVariant.OUTLINE}
+              variant={IconButtonVariant.OUTLINE}
+              icon={
+                <CsvDownload
+                  className="block"
+                  data={answersData}
+                  filename={`${title}.csv`}
+                >
+                  <DownloadIcon className="w-5 h-5" />
+                </CsvDownload>
+              }
             >
-              <CsvDownload data={answersData} filename={`${title}.csv`}>
-                <span className="font-semibold"> Download</span>
-                <DownloadIcon className="ml-2 w-5 h-5 inline-block" />
-              </CsvDownload>
-            </Button>
+              Download
+            </IconButton>
           </div>
 
           <hr className=" md:hidden" />

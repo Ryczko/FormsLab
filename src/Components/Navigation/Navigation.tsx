@@ -26,7 +26,7 @@ function Navigation() {
       <div className="flex justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (
-          <div className="flex md:space-x-10">
+          <div className="flex md:space-x-4">
             <div className="hidden space-x-4 md:block">
               <Link to={'/survey/create'}>
                 <Button variant={ButtonVariant.FLAT}>Create Survey</Button>
@@ -36,7 +36,7 @@ function Navigation() {
               </Link>
             </div>
             <div className="md:flex hidden">
-              <p className="truncate items-center hidden justify-left sm:w-fit lg:flex">
+              <p className="truncate items-center hidden justify-left sm:w-fit lg:flex mr-2">
                 {user.email}
               </p>
               <IconButton
