@@ -3,18 +3,20 @@ import DataCard from '../DataCard';
 
 interface AnswerHeaderProps {
   totalVotes: number;
-  startTime: string;
+  startDate: string;
+  endDate: string;
   chartData: BarChartData[];
 }
 
-function AnswerHeader({ totalVotes, startTime, chartData }: AnswerHeaderProps) {
+function AnswerHeader({ totalVotes, startDate, endDate, chartData }: AnswerHeaderProps) {
   return (
     <div className="flex flex-col-reverse justify-center items-center md:flex-row">
       {chartData.length ? <BarChart data={chartData} /> : null}
 
       <div className="mb-12 mt-6 md:mb-0 md:mt-0 md:ml-6 flex flex-col items-center justify-center md:-translate-y-4">
         <DataCard title="Total Votes" value={totalVotes.toString()} />
-        <DataCard title="Start time" value={startTime} />
+        <DataCard title="Start Date" value={startDate} />
+        <DataCard title="End Date" value={endDate} />
       </div>
     </div>
   );
