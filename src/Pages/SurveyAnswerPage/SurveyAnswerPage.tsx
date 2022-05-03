@@ -126,17 +126,17 @@ function SurveyAnswerPage() {
       {!isLoading && (
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
-          <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
+          <div className="flex flex-col mb-6 sm:flex-row md:mb-10">
             <IconButton
               onClick={handleCopyLink(surveyId!)}
               variant={IconButtonVariant.PRIMARY}
-              className="w-full sm:w-[170px] mb-2 sm:mr-2 sm:mb-0"
+              className="w-full sm:w-[170px] mb-2 sm:mr-2 sm:mb-0 justify-center"
               icon={<LinkIcon className="w-5 h-5" />}
             >
               Copy link
             </IconButton>
             <IconButton
-              className="w-full sm:w-[170px]"
+              className="w-full sm:w-[170px] justify-center"
               variant={IconButtonVariant.OUTLINE}
               icon={
                 <CsvDownload

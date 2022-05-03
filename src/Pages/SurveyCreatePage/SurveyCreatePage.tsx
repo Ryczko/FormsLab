@@ -76,14 +76,15 @@ function SurveyCreatePage() {
     <div className="container px-4 m-auto text-center md:px-8">
       <Header>Create new survey</Header>
 
-      <div className="mt-8 max-w-lg mx-auto">
+      <div className="max-w-lg mx-auto mt-8">
         <Input
           label="Survey title"
           placeholder="Title..."
           value={title}
           onChange={handleChangeTitle}
         />
-        <div className="flex items-center justify-center space-x-8 mt-8">
+        <label className="block mt-10 mb-4 font-semibold text-left">Select duration of survey</label>
+        <div className="flex flex-col items-center justify-center space-y-4 md:space-y-0 md:space-x-8 md:flex-row">
           <DatePicker
             selectedDate={selectedStartDate}
             setSelectedDate={setSelectedStartDate}
@@ -95,7 +96,7 @@ function SurveyCreatePage() {
         </div>
 
         <div className="mt-10">
-          <label className="font-semibold text-left block mb-4">
+          <label className="block mb-4 font-semibold text-left">
             Click on icon to change
           </label>
 
@@ -113,7 +114,7 @@ function SurveyCreatePage() {
 
         <Button
           onClick={createSurvey}
-          className="mt-12 w-full sm:w-auto"
+          className="z-0 w-full mt-12 sm:w-auto"
           disabled={!title.length || buttonDisable}
           variant={ButtonVariant.PRIMARY}
         >
