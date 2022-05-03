@@ -38,7 +38,8 @@ function SurveyAnswerPage() {
   const [votes, setVotes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
-  const [startTime, setStartTime] = useState('-');
+  const [startDate, setStartDate] = useState('-');
+  const [endDate, setEndDate] = useState('-');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
   const [, copy] = useCopyToClipboard();
 
@@ -64,9 +65,13 @@ function SurveyAnswerPage() {
     );
     setVotes(answersData.docs.length);
 
-    setStartTime(
-      formatFirebaseDateWithHours(surveyData.data()?.createdDate as Timestamp)
+    setStartDate(
+      formatFirebaseDateWithHours(surveyData.data()?.startDate as Timestamp)
     );
+    setEndDate(
+      formatFirebaseDateWithHours(surveyData.data()?.endDate as Timestamp)
+    );
+
     setTitle(surveyData.data()?.title);
     const data = answersData.docs.map((doc) => ({
       ...doc.data(),
@@ -151,7 +156,8 @@ function SurveyAnswerPage() {
           <AnswerHeader
             chartData={chartData}
             totalVotes={votes}
-            startTime={startTime}
+            startDate={startDate}
+            endDate={endDate}
           />
           {answersData.length > 0 ? (
             <div className="mt-8 mb-6">

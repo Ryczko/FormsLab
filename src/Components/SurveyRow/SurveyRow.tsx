@@ -7,11 +7,12 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = {
   question: string;
-  time: string;
+  startDate: string;
+  endDate: string;
   id: string;
 };
 
-export default function SurveyRow({ question, time, id }: Props) {
+export default function SurveyRow({ question, startDate, endDate, id }: Props) {
   const [, copy] = useCopyToClipboard();
   const navigate = useNavigate();
 
@@ -31,7 +32,11 @@ export default function SurveyRow({ question, time, id }: Props) {
     <div className="flex max-w-full flex-col w-[600px] my-2 md:flex-row">
       <div className="flex items-center justify-between w-full px-4 py-3 bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
         <div>{question}</div>
-        <div>{time}</div>
+        <div className="flex items-center space-x-2">
+          <div>{startDate}</div>
+          <div>-</div>
+          <div>{endDate}</div>
+        </div>
       </div>
       <div className="flex w-full md:w-auto md:ml-2">
         <Button

@@ -37,6 +37,16 @@ function SurveyPage() {
       navigate('/');
       return;
     }
+
+    if (
+      surveyData.data()?.endDate.toDate().toISOString() <
+      new Date().toISOString()
+    ) {
+      toast.error('Survey is closed');
+      navigate('/');
+      return;
+    }
+
     setQuestion(surveyData.data()?.title);
     setIcons(surveyData.data()?.pack);
     setIsLoading(false);
