@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import {
   format,
   subMonths,
@@ -10,6 +10,7 @@ import {
   getDay,
 } from 'date-fns';
 
+
 type DatepickerType = 'date' | 'month' | 'year';
 
 type DatepickerProps = {
@@ -18,7 +19,7 @@ type DatepickerProps = {
 };
 
 const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
-  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const [dayCount, setDayCount] = useState<Array<number>>([]);
   const [blankDays, setBlankDays] = useState<Array<number>>([]);
   const [showDatepicker, setShowDatepicker] = useState(false);
@@ -105,7 +106,9 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
     setType('date');
   };
 
-  const toggleDatepicker = () => setShowDatepicker((prev) => !prev);
+  const toggleDatepicker = () => {
+    setShowDatepicker((prev) => !prev);
+  };
 
   const showMonthPicker = () => setType('month');
 
@@ -116,22 +119,22 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
   }, [datepickerHeaderDate]);
 
   return (
-    <div className="relative z-30">
+    <div className="relative z-1 w-full md:w-[250px]">
       <input type="hidden" name="date" />
       <input
         type="text"
         readOnly
-        className="cursor-pointer w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-zinc-600 font-medium"
+        className="w-full py-3 pl-4 pr-10 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
         placeholder="Select date"
         value={format(selectedDate, 'yyyy-MM-dd')}
         onClick={toggleDatepicker}
       />
       <div
-        className="cursor-pointer absolute top-0 right-0 px-3 py-2"
+        className="absolute top-0 right-0 px-3 py-2 cursor-pointer"
         onClick={toggleDatepicker}
       >
         <svg
-          className="h-6 w-6 text-zinc-400"
+          className="w-6 h-6 text-zinc-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -146,18 +149,18 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
       </div>
       {showDatepicker && (
         <div
-          className="bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0"
+          className="absolute top-0 left-0 right-0 z-20 p-4 mx-auto mt-12 bg-white rounded-lg shadow"
           style={{ width: '17rem' }}
         >
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex items-center justify-between mb-2">
             <div>
               <button
                 type="button"
-                className="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-zinc-200 p-1 rounded-full"
+                className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-zinc-200"
                 onClick={decrement}
               >
                 <svg
-                  className="h-6 w-6 text-zinc-500 inline-flex"
+                  className="inline-flex w-6 h-6 text-zinc-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -174,7 +177,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
             {type === 'date' && (
               <div
                 onClick={showMonthPicker}
-                className="flex-grow p-1 text-lg font-bold text-zinc-800 cursor-pointer hover:bg-zinc-200 rounded-lg"
+                className="flex-grow p-1 text-lg font-bold rounded-lg cursor-pointer text-zinc-800 hover:bg-zinc-200"
               >
                 <p className="text-center">
                   {format(datepickerHeaderDate, 'MMMM')}
@@ -183,7 +186,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
             )}
             <div
               onClick={showYearPicker}
-              className="flex-grow p-1 text-lg font-bold text-zinc-800 cursor-pointer hover:bg-zinc-200 rounded-lg"
+              className="flex-grow p-1 text-lg font-bold rounded-lg cursor-pointer text-zinc-800 hover:bg-zinc-200"
             >
               <p className="text-center">
                 {format(datepickerHeaderDate, 'yyyy')}
@@ -192,11 +195,11 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
             <div>
               <button
                 type="button"
-                className="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-zinc-200 p-1 rounded-full"
+                className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-zinc-200"
                 onClick={increment}
               >
                 <svg
-                  className="h-6 w-6 text-zinc-500 inline-flex"
+                  className="inline-flex w-6 h-6 text-zinc-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -216,7 +219,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
               <div className="flex flex-wrap mb-3 -mx-1">
                 {DAYS.map((day, i) => (
                   <div key={i} style={{ width: '14.26%' }} className="px-1">
-                    <div className="text-zinc-800 font-medium text-center text-xs">
+                    <div className="text-xs font-medium text-center text-zinc-800">
                       {day}
                     </div>
                   </div>
@@ -227,7 +230,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
                   <div
                     key={i}
                     style={{ width: '14.26%' }}
-                    className="text-center border p-1 border-transparent text-sm"
+                    className="p-1 text-sm text-center border border-transparent"
                   ></div>
                 ))}
                 {dayCount.map((d, i) => (

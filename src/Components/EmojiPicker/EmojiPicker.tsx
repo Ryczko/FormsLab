@@ -25,7 +25,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
   return (
     <div ref={wrapperRef}>
       <button
-        className="label-text w-16 text-3xl bg-white p-3 rounded-lg shadow transition hover:scale-95"
+        className="w-16 p-3 text-3xl transition bg-white rounded-lg shadow label-text hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         <Emoji symbol={chosenEmoji?.emoji || defaultEmote} />
@@ -34,7 +34,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
       {displayPicker && (
         <div
           onClick={() => setDisplayPicker(false)}
-          className="absolute w-full h-full left-0 top-0 bg-black opacity-60"
+          className="absolute top-0 left-0 w-full h-full bg-black opacity-60"
         />
       )}
       {displayPicker && (
@@ -53,7 +53,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            zIndex: '1',
+            zIndex: '99',
             boxShadow: 'none',
             maxWidth: '90%',
             width: '400px',
