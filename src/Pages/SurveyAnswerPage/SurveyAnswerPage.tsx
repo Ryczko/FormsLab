@@ -53,7 +53,6 @@ function SurveyAnswerPage() {
   }, [surveyId]);
 
   const getSurveyData = async () => {
-    console.log('pobieram');
     const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
       navigate('/');
@@ -126,7 +125,7 @@ function SurveyAnswerPage() {
       {!isLoading && (
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
-          <div className="flex flex-col mb-6 sm:flex-row md:mb-10">
+          <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
             <IconButton
               onClick={handleCopyLink(surveyId!)}
               variant={IconButtonVariant.PRIMARY}
