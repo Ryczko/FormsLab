@@ -10,6 +10,8 @@ describe('convertTime', () => {
     let expected: string;
     
     // fix for different timezones on CI
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (process.env.NODE_ENV === 'ci') {
       expected = '5.05.2022, 16:33';
     }
