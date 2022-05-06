@@ -10,7 +10,7 @@ describe('convertTime', () => {
     let expected: string;
     
     // fix for different timezones on CI
-    if (process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV === 'ci') {
       expected = '5.05.2022, 16:33';
     }
     expected = '5.05.2022, 18:33';
