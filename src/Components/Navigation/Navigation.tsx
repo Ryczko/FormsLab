@@ -36,11 +36,14 @@ function Navigation() {
                 <Button variant={ButtonVariant.FLAT}>My Surveys</Button>
               </Link>
             </div>
-            <div className="md:flex hidden">
-              <Menu as="div" className="relative inline-block text-left">
+            <div className="sm:flex justify-center items-center hidden">
+              <Menu
+                as="div"
+                className="relative inline-block text-left hover:bg-zinc-200 py-1 rounded-md"
+              >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium hover:bg-zinc-200"
+                  className="flex w-full justify-center rounded-md px-4 text-sm font-medium"
                 >
                   <p className="truncate items-center hidden justify-left sm:w-fit lg:flex ml-4">
                     {user.displayName}
