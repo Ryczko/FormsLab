@@ -37,7 +37,14 @@ function Navigation() {
             </div>
             <div className="md:flex hidden">
               <p className="truncate items-center hidden justify-left sm:w-fit lg:flex mr-2">
-                {user.email}
+                {user.displayName}
+                {user.photoURL && (
+                  <img
+                    src={user.photoURL}
+                    alt="user photo"
+                    className="ml-6 h-8 w-8 rounded-full"
+                  />
+                )}
               </p>
               <IconButton
                 onClick={logoutDesktop}
