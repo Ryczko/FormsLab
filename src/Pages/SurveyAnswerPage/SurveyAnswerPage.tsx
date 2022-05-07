@@ -137,6 +137,7 @@ function SurveyAnswerPage() {
           <Header>Answers for &quot;{title}&quot;</Header>
           <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
             <IconButton
+              title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId!)}
               variant={IconButtonVariant.PRIMARY}
               className="w-full sm:w-[170px] mb-2 sm:mr-2 sm:mb-0 justify-center"
@@ -145,6 +146,7 @@ function SurveyAnswerPage() {
               Copy link
             </IconButton>
             <IconButton
+              title="Download as CSV file"
               className="w-full sm:w-[170px] justify-center"
               variant={IconButtonVariant.OUTLINE}
               icon={
