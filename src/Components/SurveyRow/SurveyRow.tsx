@@ -79,7 +79,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="justify-center flex flex-col w-auto max-w-md transform overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-zinc-900"
@@ -93,7 +93,14 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
                     </p>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-6 flex justify-between">
+                    <Button
+                      variant={ButtonVariant.SECONDARY}
+                      onClick={closeDeleteModal}
+                      className="uppercase"
+                    >
+                      Cancel
+                    </Button>
                     <IconButton
                       variant={IconButtonVariant.DANGER}
                       onClick={handleOnDelete(id)}
