@@ -25,7 +25,7 @@ const IconButton = ({
     type={type}
     {...props}
   >
-    <div className="pr-1">{icon}</div>
+    <div className="px-1">{icon}</div>
     {children}
   </button>
 );

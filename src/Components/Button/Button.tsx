@@ -6,6 +6,8 @@ export enum ButtonVariant {
   SECONDARY = 'btn-secondary',
   OUTLINE = 'btn-outline',
   OUTLINE_PRIMARY = 'btn-outline-primary',
+  DANGER = 'btn-danger',
+  SUCCESS = 'btn-success',
   FLAT = 'btn-flat',
 }
 export enum ButtonSize {

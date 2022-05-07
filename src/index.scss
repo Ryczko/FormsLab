@@ -48,6 +48,12 @@ html::-webkit-scrollbar {
   .btn-outline-primary {
     @apply text-indigo-900 bg-transparent border border-indigo-900 shadow-indigo-400/50 hover:bg-indigo-50;
   }
+  .btn-danger {
+    @apply text-red-900 bg-red-200 shadow-red-600/50 hover:bg-red-300;
+  }
+  .btn-success {
+    @apply text-green-900 bg-green-200 shadow-green-600/50 hover:bg-green-300;
+  }
   .btn-flat {
     @apply text-indigo-900 bg-transparent hover:bg-indigo-100 border-none;
   }
