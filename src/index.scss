@@ -20,7 +20,7 @@
 
 @layer components {
   .btn {
-    @apply px-6 py-2 text-center border transition duration-150 ease-in-out cursor-pointer select-none rounded-lg font-semibold;
+    @apply px-6 py-2 text-center transition duration-150 ease-in-out cursor-pointer select-none rounded-lg font-semibold;
   }
   .btn:disabled,
   .btn[disabled] {

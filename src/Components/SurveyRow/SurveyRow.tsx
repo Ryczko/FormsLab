@@ -41,7 +41,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
       <div className="flex w-full md:w-auto md:ml-2">
         <Button
           variant={ButtonVariant.OUTLINE}
-          className="border-t-0 p-2 rounded-t-none mr-2 w-full md:w-auto md:rounded-t-md md:border-t-[1px]"
+          className="p-2 mr-2 sm:mt-0 mt-2 w-full md:w-auto md:rounded-t-md md:border-t-[1px]"
           onClick={handleOnMoreButton}
         >
           More
@@ -50,7 +50,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
         <IconButton
           variant={IconButtonVariant.PRIMARY}
           className={
-            'pl-4 pr-3 rounded-t-none w-full text-center justify-center md:w-auto md:rounded-t-md'
+            'pl-4 pr-3 sm:mt-0 mt-2 w-full text-center justify-center md:w-auto md:rounded-t-md'
           }
           title="Copy link to clipboard"
           icon={<LinkIcon className="w-5 h-5" />}
