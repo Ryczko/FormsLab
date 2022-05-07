@@ -9,11 +9,16 @@ import SurveyListPage from '../Pages/SurveyListPage';
 import SurveyAnswerPage from '../Pages/SurveyAnswerPage';
 import { AnimatePresence } from 'framer-motion';
 import Background from '../Components/Background/Background';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
+import GlobalLoader from './GlobalLoader/GlobalLoader';
 
 function PageWrapper() {
+  const [user, loading] = useAuthState(auth);
   const location = useLocation();
   return (
     <>
+      <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
       <Navigation />
       <div className="min-h-screen overflow-hidden px-6 pt-32 m-auto sm:px-4">
         <Background />
