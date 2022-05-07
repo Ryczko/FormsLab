@@ -34,7 +34,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
       {displayPicker && (
         <div
           onClick={() => setDisplayPicker(false)}
-          className="absolute top-0 z-10 left-0 w-full h-full bg-black opacity-60"
+          className="fixed top-0 z-10 left-0 w-full h-full bg-black opacity-60"
         />
       )}
       {displayPicker && (
