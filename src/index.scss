@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   *,
   *::before,

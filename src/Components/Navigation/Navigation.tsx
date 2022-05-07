@@ -36,7 +36,7 @@ function Navigation() {
               </Link>
             </div>
             <div className="md:flex hidden">
-              <p className="truncate items-center hidden justify-left sm:w-fit lg:flex mr-12">
+              <p className="truncate items-center hidden justify-left sm:w-fit lg:flex mr-12 ml-4">
                 {user.displayName}
                 {user.photoURL && (
                   <img

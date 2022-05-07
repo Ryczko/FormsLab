@@ -17,7 +17,7 @@ export interface BarChartData {
   value: number;
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#A5B4FC', '#00C49F', '#FFBB28', '#FF8042'];
 
 export default function BarChart({ data }: BarChartProps) {
   const getMaxValue = () => {

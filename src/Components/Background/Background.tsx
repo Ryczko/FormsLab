@@ -4,7 +4,7 @@ import emote from '../../Assets/undraw_smiley_face_re_9uid.svg';
 export default function Background() {
   return (
     <div
-      className="fixed hidden overflow-hidden  left-1/2 transform -translate-x-1/2  pointer-events-none xl:block opacity-70"
+      className="fixed hidden overflow-hidden  left-1/2 transform -translate-x-1/2 -z-10 pointer-events-none xl:block opacity-70"
       aria-hidden="true"
     >
       <svg

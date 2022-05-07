@@ -1,6 +1,6 @@
 import AnswerHeader from '../../Components/AnswerHeader';
 import AnswerTableRow from '../../Components/AnswerTableRow';
-import { DownloadIcon, LinkIcon } from '@heroicons/react/outline';
+import { DownloadIcon, LinkIcon, RefreshIcon } from '@heroicons/react/outline';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { useEffect, useState } from 'react';
@@ -55,7 +55,7 @@ function SurveyAnswerPage() {
     getSurveyData();
   }, [surveyId]);
 
-  const getSurveyData = async () => {
+  const getSurveyData = async (displayMessages = false) => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
       navigate('/');
@@ -91,6 +91,9 @@ function SurveyAnswerPage() {
       ),
     })) as AnswerData[];
 
+    if (displayMessages) {
+      toast.success('Data has been refreshed');
+    }
     setAnswersData(data);
     setIsLoading(false);
   };
@@ -114,10 +117,12 @@ function SurveyAnswerPage() {
       result[answer.selectedIcon] += 1;
     });
 
-    return Object.keys(result).map((key) => ({
-      name: key,
-      value: result[key],
-    }));
+    return Object.keys(result)
+      .map((key) => ({
+        name: key,
+        value: result[key],
+      }))
+      .sort((a, b) => b.value - a.value);
   };
 
   const chartData = getDataToChart();
@@ -160,6 +165,16 @@ function SurveyAnswerPage() {
                 Download
               </IconButton>
             </CsvDownload>
+
+            <IconButton
+              title="Refresh data"
+              onClick={() => getSurveyData(true)}
+              variant={IconButtonVariant.OUTLINE}
+              className="w-full sm:w-[170px] mt-2 sm:ml-2 sm:mt-0 justify-center"
+              icon={<RefreshIcon className="w-5 h-5" />}
+            >
+              Refresh
+            </IconButton>
           </div>
 
           <hr className=" md:hidden" />
@@ -181,7 +196,7 @@ function SurveyAnswerPage() {
               ))}
             </div>
           ) : (
-            <div className="mt-8">No answers yet</div>
+            <div className="mt-4">No answers yet</div>
           )}
         </div>
       )}
