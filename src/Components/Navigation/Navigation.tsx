@@ -39,11 +39,11 @@ function Navigation() {
             <div className="sm:flex justify-center items-center hidden">
               <Menu
                 as="div"
-                className="relative inline-block text-left hover:bg-zinc-200 py-1 rounded-md"
+                className="relative inline-block text-left rounded-md"
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex w-full justify-center rounded-md px-4 font-medium"
+                  className="flex w-full justify-center hover:bg-zinc-200 py-1 rounded-md px-4 font-medium"
                 >
                   <p className="truncate items-center hidden justify-left sm:flex ml-4">
                     {user.displayName}
