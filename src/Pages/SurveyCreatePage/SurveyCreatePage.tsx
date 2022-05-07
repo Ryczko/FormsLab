@@ -11,6 +11,7 @@ import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import Header from '../../Components/Header';
 import DatePicker from '../../Components/DatePicker';
+import withAnimation from '../../HOC/withAnimation';
 
 function SurveyCreatePage() {
   useDocumentTitle('Create Survey');
@@ -83,7 +84,9 @@ function SurveyCreatePage() {
           value={title}
           onChange={handleChangeTitle}
         />
-        <label className="block mt-10 mb-4 font-semibold text-left">Select duration of survey</label>
+        <label className="block mt-10 mb-4 font-semibold text-left">
+          Select duration of survey
+        </label>
         <div className="flex flex-col items-center justify-center space-y-4 md:space-y-0 md:space-x-8 md:flex-row">
           <DatePicker
             selectedDate={selectedStartDate}
@@ -125,4 +128,4 @@ function SurveyCreatePage() {
   );
 }
 
-export default SurveyCreatePage;
+export default withAnimation(SurveyCreatePage);

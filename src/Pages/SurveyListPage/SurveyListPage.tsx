@@ -14,6 +14,7 @@ import SurveyRow from '../../Components/SurveyRow';
 import Loader from '../../Components/Loader';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { formatFirebaseDateWithoutHours } from '../../Utils/convertTime';
+import withAnimation from '../../HOC/withAnimation';
 
 function SurveyListPage() {
   useDocumentTitle('Surveys');
@@ -74,4 +75,4 @@ function SurveyListPage() {
     </div>
   );
 }
-export default SurveyListPage;
+export default withAnimation(SurveyListPage);

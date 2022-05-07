@@ -7,6 +7,7 @@ import { auth, signInWithGoogle, signInWithGithub } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import Header from '../../Components/Header';
+import withAnimation from '../../HOC/withAnimation';
 
 function LoginPage() {
   useDocumentTitle('Login');
@@ -43,4 +44,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default withAnimation(LoginPage);

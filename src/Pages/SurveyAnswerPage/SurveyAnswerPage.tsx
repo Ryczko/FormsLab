@@ -24,6 +24,7 @@ import CsvDownload from 'react-json-to-csv';
 import Header from '../../Components/Header/Header';
 import Loader from '../../Components/Loader';
 import IconButton, { IconButtonVariant } from '../../Components/IconButton';
+import withAnimation from '../../HOC/withAnimation';
 
 interface AnswerData {
   id: string;
@@ -188,4 +189,4 @@ function SurveyAnswerPage() {
   );
 }
 
-export default SurveyAnswerPage;
+export default withAnimation(SurveyAnswerPage);

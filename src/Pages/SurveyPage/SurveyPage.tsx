@@ -8,6 +8,7 @@ import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import { db } from '../../firebase';
 import Header from '../../Components/Header';
 import Loader from '../../Components/Loader';
+import withAnimation from '../../HOC/withAnimation';
 
 function SurveyPage() {
   useDocumentTitle('Survey');
@@ -125,4 +126,4 @@ function SurveyPage() {
   );
 }
 
-export default SurveyPage;
+export default withAnimation(SurveyPage);
