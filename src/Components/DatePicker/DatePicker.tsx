@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import {
   format,
   subMonths,
@@ -9,7 +9,6 @@ import {
   getDaysInMonth,
   getDay,
 } from 'date-fns';
-
 
 type DatepickerType = 'date' | 'month' | 'year';
 
@@ -65,7 +64,8 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
       new Date(
         datepickerHeaderDate.getFullYear(),
         datepickerHeaderDate.getMonth(),
-        date
+        date,
+        new Date().getHours()
       )
     );
     setShowDatepicker(false);
