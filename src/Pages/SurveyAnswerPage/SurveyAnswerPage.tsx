@@ -145,22 +145,20 @@ function SurveyAnswerPage() {
             >
               Copy link
             </IconButton>
-            <IconButton
-              title="Download as CSV file"
-              className="w-full sm:w-[170px] justify-center"
-              variant={IconButtonVariant.OUTLINE}
-              icon={
-                <CsvDownload
-                  className="block"
-                  data={answersData}
-                  filename={`${title}.csv`}
-                >
-                  <DownloadIcon className="w-5 h-5" />
-                </CsvDownload>
-              }
+            <CsvDownload
+              className="block"
+              data={answersData}
+              filename={`${title}.csv`}
             >
-              Download
-            </IconButton>
+              <IconButton
+                title="Download as CSV file"
+                className="w-full sm:w-[170px] justify-center"
+                variant={IconButtonVariant.OUTLINE}
+                icon={<DownloadIcon className="w-5 h-5" />}
+              >
+                Download
+              </IconButton>
+            </CsvDownload>
           </div>
 
           <hr className=" md:hidden" />
