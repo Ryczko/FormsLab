@@ -43,7 +43,7 @@ function Navigation() {
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex w-full justify-center rounded-md px-4 text-sm font-medium"
+                  className="flex w-full justify-center rounded-md px-4 font-medium"
                 >
                   <p className="truncate items-center hidden justify-left sm:w-fit lg:flex ml-4">
                     {user.displayName}
