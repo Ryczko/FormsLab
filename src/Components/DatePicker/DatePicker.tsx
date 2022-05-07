@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   format,
   subMonths,
@@ -9,6 +9,7 @@ import {
   getDaysInMonth,
   getDay,
 } from 'date-fns';
+import { useCloseComponent } from '../../Hooks/useCloseComponent';
 
 type DatepickerType = 'date' | 'month' | 'year';
 
@@ -24,6 +25,9 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
   const [showDatepicker, setShowDatepicker] = useState(false);
   const [datepickerHeaderDate, setDatepickerHeaderDate] = useState(new Date());
   const [type, setType] = useState<DatepickerType>('date');
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useCloseComponent(wrapperRef, () => setShowDatepicker(false));
 
   const decrement = () => {
     switch (type) {
@@ -119,7 +123,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
   }, [datepickerHeaderDate]);
 
   return (
-    <div className="relative z-1 w-full md:w-[250px]">
+    <div ref={wrapperRef} className="relative z-1 w-full md:w-[250px]">
       <input type="hidden" name="date" />
       <input
         type="text"
