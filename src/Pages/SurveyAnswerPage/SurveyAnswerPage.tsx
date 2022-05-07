@@ -11,6 +11,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
+  query,
   Timestamp,
 } from 'firebase/firestore';
 import { BarChartData } from '../../Components/BarChart/BarChart';
@@ -58,10 +60,18 @@ function SurveyAnswerPage() {
       navigate('/');
       return;
     }
-
-    const answersData = await getDocs(
-      collection(db, 'surveys', surveyId!, 'answers')
+    const anserwsCollectionRef = collection(
+      db,
+      'surveys',
+      surveyId!,
+      'answers'
     );
+    const anserwsQuery = query(
+      anserwsCollectionRef,
+      orderBy('answerDate', 'desc')
+    );
+
+    const answersData = await getDocs(anserwsQuery);
     setVotes(answersData.docs.length);
 
     setStartDate(
