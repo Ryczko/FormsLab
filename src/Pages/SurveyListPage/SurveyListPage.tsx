@@ -1,5 +1,6 @@
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db, auth } from '../../firebase';
+import NoSurveysImage from '../../Assets/no-surveys.svg';
 import {
   collection,
   query,
@@ -42,23 +43,33 @@ function SurveyListPage() {
           }
         </p>
         {surveysCollection &&
-          surveysCollection.docs?.length > 0 &&
-          surveysCollection.docs.map((doc) => {
-            const survey = doc.data();
-            return (
-              <SurveyRow
-                key={doc.id}
-                id={doc.id}
-                question={survey.title}
-                startDate={formatFirebaseDateWithoutHours(
-                  survey.startDate as Timestamp
-                )}
-                endDate={formatFirebaseDateWithoutHours(
-                  survey.endDate as Timestamp
-                )}
-              ></SurveyRow>
-            );
-          })}
+          (surveysCollection.docs?.length > 0 ? (
+            surveysCollection.docs.map((doc) => {
+              const survey = doc.data();
+              return (
+                <SurveyRow
+                  key={doc.id}
+                  id={doc.id}
+                  question={survey.title}
+                  startDate={formatFirebaseDateWithoutHours(
+                    survey.startDate as Timestamp
+                  )}
+                  endDate={formatFirebaseDateWithoutHours(
+                    survey.endDate as Timestamp
+                  )}
+                ></SurveyRow>
+              );
+            })
+          ) : (
+            <>
+              <img
+                className="w-[200px] mt-2 -translate-x-3"
+                src={NoSurveysImage}
+                alt="no surveys"
+              />
+              <p className="mt-8">No surveys yet </p>
+            </>
+          ))}
       </div>
     </div>
   );
