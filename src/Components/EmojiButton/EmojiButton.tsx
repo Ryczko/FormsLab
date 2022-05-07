@@ -14,7 +14,7 @@ function EmojiButton({
 }: EmojiButtonProps & React.HTMLProps<HTMLButtonElement>) {
   return (
     <button
-      className={`bg-white text-3xl p-3 border-4 border-transparent rounded-lg duration-100 m-2 shadow ${
+      className={`bg-white text-3xl p-3 border-4 border-transparent rounded-lg duration-100  shadow ${
         selected ? 'scale-90 border-slate-300' : ''
       }`}
       onClick={onClick}

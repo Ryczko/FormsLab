@@ -32,7 +32,7 @@ function SurveyListPage() {
     <div className="container m-auto text-center md:px-8">
       <Header>Surveys</Header>
 
-      <div className="flex flex-col items-center justify-center py-2">
+      <div className="flex flex-col items-center justify-center">
         <div>
           {
             // TODO: add user friendly error message
