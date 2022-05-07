@@ -42,9 +42,14 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
   };
 
   const handleOnDelete = (id: string) => async () => {
-    await deleteDoc(doc(db, 'surveys', id));
-    closeDeleteModal();
-    toast.success('Survey deleted');
+    try {
+      await deleteDoc(doc(db, 'surveys', id));
+      closeDeleteModal();
+      toast.success('Survey deleted');
+    } catch (error) {
+      toast.error('Error deleting survey');
+      console.error(error);
+    }
   };
 
   return (
