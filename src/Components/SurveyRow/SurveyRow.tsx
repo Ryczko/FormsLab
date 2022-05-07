@@ -53,7 +53,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
   };
 
   return (
-    <div className="flex max-w-full flex-col w-[600px] my-2 md:flex-row">
+    <div className="flex max-w-full flex-col w-[600px] mb-4 md:flex-row">
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
           <Transition.Child

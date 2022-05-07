@@ -77,7 +77,7 @@ function SurveyCreatePage() {
     <div className="container px-4 m-auto text-center md:px-8">
       <Header>Create new survey</Header>
 
-      <div className="max-w-lg mx-auto mt-8">
+      <div className="max-w-lg mx-auto">
         <Input
           label="Survey title"
           placeholder="Title..."
