@@ -14,7 +14,7 @@ import { auth } from '../firebase';
 import GlobalLoader from './GlobalLoader/GlobalLoader';
 
 function PageWrapper() {
-  const [user, loading] = useAuthState(auth);
+  const [, loading] = useAuthState(auth);
   const location = useLocation();
   return (
     <>
