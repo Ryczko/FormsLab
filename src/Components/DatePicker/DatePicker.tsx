@@ -104,10 +104,6 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
       selectedDate
     );
 
-  // const isPastMont = (month: number) =>(
-  //   isPast(new Date(selectedDate.getFullYear(), month, selectedDate.getDate()))
-  // );
-
   const setMonthValue = (month: number) => () => {
     setDatepickerHeaderDate(
       new Date(
