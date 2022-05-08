@@ -8,6 +8,7 @@ import {
   isEqual,
   getDaysInMonth,
   getDay,
+  isPast,
 } from 'date-fns';
 import { useCloseComponent } from '../../Hooks/useCloseComponent';
 
@@ -63,6 +64,10 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
       selectedDate
     );
 
+  const isPastDate = (date: number) =>(
+    isPast(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date+1))
+  );
+
   const setDateValue = (date: number) => () => {
     setSelectedDate(
       new Date(
@@ -98,6 +103,10 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
       new Date(selectedDate.getFullYear(), month, selectedDate.getDate()),
       selectedDate
     );
+
+  // const isPastMont = (month: number) =>(
+  //   isPast(new Date(selectedDate.getFullYear(), month, selectedDate.getDate()))
+  // );
 
   const setMonthValue = (month: number) => () => {
     setDatepickerHeaderDate(
@@ -249,7 +258,13 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
                         isToday(d)
                           ? 'bg-indigo-500 text-white'
                           : 'text-zinc-700 hover:bg-indigo-200'
-                      }`}
+                      }
+                      ${
+                  isPastDate(d)
+                    ? 'pointer-events-none opacity-40'
+                    : null
+                  }`
+                      }
                     >
                       {d}
                     </div>
