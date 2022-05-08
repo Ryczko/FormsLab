@@ -24,7 +24,7 @@ function SurveyCreatePage() {
   const navigate = useNavigate();
   const [, copy] = useCopyToClipboard();
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState(new Date(Date.now() + (3600 * 1000 * 24)));
 
   const handleChangeTitle = (e: any) => {
     setTitle(e.target.value);
