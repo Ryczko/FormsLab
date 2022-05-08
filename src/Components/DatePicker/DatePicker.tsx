@@ -27,6 +27,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
   const [datepickerHeaderDate, setDatepickerHeaderDate] = useState(new Date());
   const [type, setType] = useState<DatepickerType>('date');
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [canDecrement, setCanDecrement] = useState(false);
 
   useCloseComponent(wrapperRef, () => setShowDatepicker(false));
 
@@ -58,15 +59,42 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
     }
   };
 
+  const incrementButton = () => {
+    increment();
+    if(datepickerHeaderDate.getFullYear() >= selectedDate.getFullYear()){
+      if (datepickerHeaderDate.getMonth()+1 > selectedDate.getMonth()){
+        setCanDecrement(true);
+      }
+    }
+  };
+
+  const decrementButton = () => {
+    decrement();
+    if (datepickerHeaderDate.getMonth() == selectedDate.getMonth() + 1){
+      if(datepickerHeaderDate.getFullYear() > selectedDate.getFullYear()){
+        return setCanDecrement(true);
+      }
+      return setCanDecrement(false);
+    }
+    if (datepickerHeaderDate.getMonth() > selectedDate.getMonth()){
+      return setCanDecrement(true);
+    }
+  };
+
   const isToday = (date: number) =>
     isEqual(
       new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date),
       selectedDate
     );
 
-  const isPastDate = (date: number) =>(
-    isPast(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date+1))
-  );
+  const isPastDate = (date: number) =>{
+    if(isPast(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date+1))){
+      if(datepickerHeaderDate.getMonth() > selectedDate.getMonth()){
+        return false;
+      }
+      return true;
+    }
+  };
 
   const setDateValue = (date: number) => () => {
     setSelectedDate(
@@ -119,10 +147,6 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
     setShowDatepicker((prev) => !prev);
   };
 
-  const showMonthPicker = () => setType('month');
-
-  const showYearPicker = () => setType('date');
-
   useEffect(() => {
     getDayCount(datepickerHeaderDate);
   }, [datepickerHeaderDate]);
@@ -163,30 +187,31 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
         >
           <div className="flex items-center justify-between mb-2">
             <div>
-              <button
-                type="button"
-                className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-zinc-200"
-                onClick={decrement}
-              >
-                <svg
-                  className="inline-flex w-6 h-6 text-zinc-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              {canDecrement && (
+                <button
+                  type="button"
+                  className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-zinc-200"
+                  onClick={decrementButton}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    className="inline-flex w-6 h-6 text-zinc-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+              )}
             </div>
             {type === 'date' && (
               <div
-                onClick={showMonthPicker}
-                className="flex-grow p-1 text-lg font-bold rounded-lg cursor-pointer text-zinc-800 hover:bg-zinc-200"
+                className="flex-grow p-1 text-lg font-bold rounded-lg cursor-pointer text-zinc-800"
               >
                 <p className="text-center">
                   {format(datepickerHeaderDate, 'MMMM')}
@@ -194,8 +219,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
               </div>
             )}
             <div
-              onClick={showYearPicker}
-              className="flex-grow p-1 text-lg font-bold rounded-lg cursor-pointer text-zinc-800 hover:bg-zinc-200"
+              className="flex-grow p-1 text-lg font-bold rounded-lg cursor-pointer text-zinc-800"
             >
               <p className="text-center">
                 {format(datepickerHeaderDate, 'yyyy')}
@@ -205,7 +229,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }: DatepickerProps) => {
               <button
                 type="button"
                 className="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer hover:bg-zinc-200"
-                onClick={increment}
+                onClick={incrementButton}
               >
                 <svg
                   className="inline-flex w-6 h-6 text-zinc-500"
