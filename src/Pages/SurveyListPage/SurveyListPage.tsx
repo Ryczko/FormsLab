@@ -7,6 +7,8 @@ import {
   Timestamp,
   where,
   orderBy,
+  DocumentData,
+  Query,
 } from 'firebase/firestore';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import Header from '../../Components/Header';
@@ -15,17 +17,26 @@ import Loader from '../../Components/Loader';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { formatFirebaseDateWithoutHours } from '../../Utils/convertTime';
 import withAnimation from '../../HOC/withAnimation';
+import { useEffect, useState } from 'react';
 
 function SurveyListPage() {
   useDocumentTitle('Surveys');
 
   const [user] = useAuthState(auth);
-  const surveysCollectionRef = collection(db, 'surveys');
-  const q = query(
-    surveysCollectionRef,
-    where('creatorId', '==', user?.uid),
-    orderBy('startDate', 'desc')
-  );
+
+  const [q, setQ] = useState<Query<DocumentData>>();
+
+  useEffect(() => {
+    const surveysCollectionRef = collection(db, 'surveys');
+    setQ(
+      query(
+        surveysCollectionRef,
+        where('creatorId', '==', user?.uid),
+        orderBy('startDate', 'desc')
+      )
+    );
+  }, [user]);
+
   const [surveysCollection, loading, error] = useCollection(q);
 
   return (
