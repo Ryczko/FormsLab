@@ -71,7 +71,7 @@ function Navigation() {
                         <IconButton
                           onClick={logoutDesktop}
                           variant={IconButtonVariant.FLAT}
-                          className="hover:bg-red-100 text-red-600"
+                          className="hover:bg-red-100 text-red-600 w-40"
                           icon={<LogoutIcon className="w-5 h-5" />}
                         >
                           Sign Out
