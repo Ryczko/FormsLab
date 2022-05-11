@@ -17,11 +17,11 @@
 }
 
 .react-datepicker__day--selected {
-  @apply bg-blue-500;
+  @apply bg-indigo-500;
 }
 
 .react-datepicker__day:hover {
-  @apply bg-blue-200 text-indigo-900;
+  @apply bg-indigo-200 text-indigo-900;
 }
 
 .react-datepicker__day--in-range,
@@ -35,7 +35,7 @@
 .react-datepicker__day--selecting-range-end:hover,
 .react-datepicker__day--range-start,
 .react-datepicker__day--range-start:hover {
-  @apply bg-blue-100;
+  @apply bg-indigo-100;
 }
 
 .react-datepicker__day--disabled,
