@@ -1,12 +1,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+
+.react-datepicker {
+  @apply rounded-md shadow-md border-none font-sans;
+}
+.react-datepicker-popper,
+.react-datepicker__month-container {
+  @apply rounded-md border-none;
+}
 .react-datepicker > * {
   @apply bg-white text-zinc-900;
 }
 
 .react-datepicker__header {
-  @apply bg-white;
+  @apply bg-white rounded-md border-none;
 }
 
 .react-datepicker__day,
@@ -46,6 +55,7 @@
 .react-datepicker__input-time-container {
   @apply text-sm w-fit;
 }
+
 .react-datepicker-time__input {
-  @apply p-1;
+  @apply p-1 rounded-md bg-zinc-100 border-none;
 }

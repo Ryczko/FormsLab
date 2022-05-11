@@ -12,7 +12,6 @@ import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import Header from '../../Components/Header';
 import withAnimation from '../../HOC/withAnimation';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import '../../datepicker.scss';
 
 function SurveyCreatePage() {
