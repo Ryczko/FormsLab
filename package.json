@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-datepicker": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "autoprefixer": "^10.4.4",
