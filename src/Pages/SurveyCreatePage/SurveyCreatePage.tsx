@@ -102,7 +102,7 @@ function SurveyCreatePage() {
         </label>
         <div className="flex flex-col items-center justify-center space-y-4 md:space-y-0 md:flex-row">
           <DatePicker
-            className="w-full md:w-48 py-3 px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
+            className="w-full md:w-52 block text-center mr-auto py-3 px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             calendarStartDay={1}
@@ -117,8 +117,9 @@ function SurveyCreatePage() {
             showPreviousMonths={false}
             filterTime={filterPassedTime}
           />
+          <p>to</p>
           <DatePicker
-            className="w-full md:w-48 py-3 px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
+            className="w-full md:w-52 text-center block py-3 ml-auto px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             calendarStartDay={1}

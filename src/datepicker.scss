@@ -25,6 +25,39 @@
   @apply bg-white text-zinc-900;
 }
 
+.react-datepicker-time__input:focus-visible {
+  outline: none;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  background: none;
+  display: none;
+}
+
+.react-datepicker input[type='time'] {
+  margin-right: 5px;
+}
+
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected {
+  @apply bg-indigo-200 text-indigo-900;
+}
+
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected:hover {
+  @apply bg-indigo-200 text-indigo-900;
+}
+
 .react-datepicker__day--selected {
   @apply bg-indigo-500;
 }

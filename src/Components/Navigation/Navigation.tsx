@@ -28,7 +28,7 @@ function Navigation() {
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
-            <div className="hidden space-x-4 md:block">
+            <div className="hidden space-x-4 lg:block">
               <Link to={'/survey/create'}>
                 <Button variant={ButtonVariant.FLAT}>Create Survey</Button>
               </Link>
@@ -36,7 +36,7 @@ function Navigation() {
                 <Button variant={ButtonVariant.FLAT}>My Surveys</Button>
               </Link>
             </div>
-            <div className="sm:flex justify-center items-center hidden">
+            <div className="lg:flex justify-center items-center hidden">
               <Menu
                 as="div"
                 className="relative inline-block text-left rounded-md"
@@ -45,7 +45,7 @@ function Navigation() {
                   title="Expand menu"
                   className="flex w-full justify-center hover:bg-zinc-200 py-1 rounded-md px-4 font-medium"
                 >
-                  <p className="truncate items-center hidden justify-left sm:flex ml-4">
+                  <p className="truncate items-center hidden justify-left sm:flex ml-2">
                     {user.displayName}
                     {user.photoURL && (
                       <img
@@ -84,7 +84,7 @@ function Navigation() {
             </div>
             <MenuIcon
               onClick={() => setIsOpen(!isOpen)}
-              className="z-50 w-8 h-8 cursor-pointer md:hidden"
+              className="z-50 w-8 h-8 cursor-pointer lg:hidden"
             />
           </div>
         ) : (
