@@ -72,6 +72,13 @@ function SurveyCreatePage() {
     setButtonDisable(false);
   };
 
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
   return (
     <div className="container px-4 m-auto text-center md:px-8">
       <Header>Create new survey</Header>
@@ -94,12 +101,14 @@ function SurveyCreatePage() {
             calendarStartDay={1}
             dateFormat="dd/MM/yyyy HH:mm"
             timeFormat="HH:mm"
-            showTimeInput
+            showTimeSelect
+            timeIntervals={5}
             selectsStart
             startDate={startDate}
             endDate={endDate}
             minDate={new Date()}
             showPreviousMonths={false}
+            filterTime={filterPassedTime}
           />
           <DatePicker
             className="w-full md:w-48 py-3 px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
@@ -108,12 +117,14 @@ function SurveyCreatePage() {
             calendarStartDay={1}
             dateFormat="dd/MM/yyyy HH:mm"
             timeFormat="HH:mm"
-            showTimeInput
+            showTimeSelect
+            timeIntervals={5}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
             minDate={startDate}
             showPreviousMonths={false}
+            filterTime={filterPassedTime}
           />
         </div>
 
