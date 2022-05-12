@@ -72,11 +72,18 @@ function SurveyCreatePage() {
     setButtonDisable(false);
   };
 
-  const filterPassedTime = (time) => {
+  const filterPassedTime = (time: string | number | Date) => {
     const currentDate = new Date();
     const selectedDate = new Date(time);
 
     return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedSelectedTime = (time: string | number | Date) => {
+    const currentDate = startDate;
+    const selectedDate = new Date(time);
+
+    return currentDate!.getTime() < selectedDate.getTime();
   };
 
   return (
@@ -124,7 +131,7 @@ function SurveyCreatePage() {
             endDate={endDate}
             minDate={startDate}
             showPreviousMonths={false}
-            filterTime={filterPassedTime}
+            filterTime={filterPassedSelectedTime}
           />
         </div>
 
