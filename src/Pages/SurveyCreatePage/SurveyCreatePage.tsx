@@ -38,16 +38,15 @@ function SurveyCreatePage() {
 
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(
-    new Date().setDate(startDate!.getDate() + 1) as any
+    new Date(new Date().setDate(new Date().getDate() + 1)) as any
   );
 
   useEffect(() => {
-    if (startDate! > endDate!) setStartDate(endDate);
-  }, [endDate]);
-
-  useEffect(() => {
-    if (startDate! > endDate!) setEndDate(startDate);
-  }, [startDate]);
+    if (startDate! > endDate!) {
+      setStartDate(endDate);
+      setEndDate(startDate);
+    }
+  }, [startDate, endDate]);
 
   const createSurvey = async () => {
     setButtonDisable(true);
