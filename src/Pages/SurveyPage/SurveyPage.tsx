@@ -39,6 +39,15 @@ function SurveyPage() {
     }
 
     if (
+      surveyData.data()?.startDate.toDate().toISOString() >
+      new Date().toISOString()
+    ) {
+      toast.error('Survey is not opened yet');
+      navigate('/');
+      return;
+    }
+
+    if (
       surveyData.data()?.endDate.toDate().toISOString() <
       new Date().toISOString()
     ) {

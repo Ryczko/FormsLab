@@ -10,8 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
 import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
 import Header from '../../Components/Header';
-import DatePicker from '../../Components/DatePicker';
 import withAnimation from '../../HOC/withAnimation';
+import DatePicker from 'react-datepicker';
+import '../../datepicker.scss';
 
 function SurveyCreatePage() {
   useDocumentTitle('Create Survey');
@@ -23,8 +24,6 @@ function SurveyCreatePage() {
 
   const navigate = useNavigate();
   const [, copy] = useCopyToClipboard();
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
 
   const handleChangeTitle = (e: any) => {
     setTitle(e.target.value);
@@ -37,17 +36,17 @@ function SurveyCreatePage() {
     });
   };
 
-  const [startDate, setStartDate] = useState(new Date()) as any;
-  const [endDate, setEndDate] = useState(
-    new Date().setMonth(startDate.getMonth() + 1)
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(
+    new Date().setDate(startDate!.getDate() + 1) as any
   );
 
   useEffect(() => {
-    if (startDate > endDate) setStartDate(endDate);
+    if (startDate! > endDate!) setStartDate(endDate);
   }, [endDate]);
 
   useEffect(() => {
-    if (startDate > endDate) setEndDate(startDate);
+    if (startDate! > endDate!) setEndDate(startDate);
   }, [startDate]);
 
   const createSurvey = async () => {
@@ -57,8 +56,8 @@ function SurveyCreatePage() {
         title,
         pack,
         creatorId: user?.uid,
-        startDate: selectedStartDate,
-        endDate: selectedEndDate,
+        startDate,
+        endDate,
       });
       const domain =
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
@@ -71,6 +70,20 @@ function SurveyCreatePage() {
       toast.error('Survey creation failed');
     }
     setButtonDisable(false);
+  };
+
+  const filterPassedTime = (time: string | number | Date) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterPassedSelectedTime = (time: string | number | Date) => {
+    const currentDate = startDate;
+    const selectedDate = new Date(time);
+
+    return currentDate!.getTime() < selectedDate.getTime();
   };
 
   return (
@@ -87,14 +100,39 @@ function SurveyCreatePage() {
         <label className="block mt-10 mb-4 font-semibold text-left">
           Select duration of survey
         </label>
-        <div className="flex flex-col items-center justify-center space-y-4 md:space-y-0 md:space-x-8 md:flex-row">
+        <div className="flex flex-col items-center justify-center space-y-4 md:space-y-0 md:flex-row">
           <DatePicker
-            selectedDate={selectedStartDate}
-            setSelectedDate={setSelectedStartDate}
+            className="w-full md:w-52 block text-center mr-auto py-3 px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            calendarStartDay={1}
+            dateFormat="dd/MM/yyyy HH:mm"
+            timeFormat="HH:mm"
+            showTimeSelect
+            timeIntervals={5}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            minDate={new Date()}
+            showPreviousMonths={false}
+            filterTime={filterPassedTime}
           />
+          <p>to</p>
           <DatePicker
-            selectedDate={selectedEndDate}
-            setSelectedDate={setSelectedEndDate}
+            className="w-full md:w-52 text-center block py-3 ml-auto px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            calendarStartDay={1}
+            dateFormat="dd/MM/yyyy HH:mm"
+            timeFormat="HH:mm"
+            showTimeSelect
+            timeIntervals={5}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            showPreviousMonths={false}
+            filterTime={filterPassedSelectedTime}
           />
         </div>
 
