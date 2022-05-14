@@ -4,10 +4,10 @@ import Button, { ButtonVariant } from '../Button';
 import IconButton, { IconButtonVariant } from '../IconButton';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
-import { useNavigate } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
 import { db } from '../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 
 type Props = {
   question: string;
@@ -18,7 +18,7 @@ type Props = {
 
 export default function SurveyRow({ question, startDate, endDate, id }: Props) {
   const [, copy] = useCopyToClipboard();
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   function closeDeleteModal() {
@@ -38,7 +38,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
   };
 
   const handleOnMoreButton = () => {
-    navigate(`/survey/answer/${id}`);
+    navigate.push(`/survey/answer/${id}`);
   };
 
   const handleOnDelete = (id: string) => async () => {

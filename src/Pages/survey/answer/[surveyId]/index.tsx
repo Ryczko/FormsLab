@@ -1,11 +1,7 @@
-import AnswerHeader from '../../Components/AnswerHeader';
-import AnswerTableRow from '../../Components/AnswerTableRow';
 import { DownloadIcon, LinkIcon, RefreshIcon } from '@heroicons/react/outline';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
+
 import { useEffect, useState } from 'react';
-import { db } from '../../firebase';
-import { formatFirebaseDateWithHours } from '../../Utils/convertTime';
+
 import {
   collection,
   doc,
@@ -15,16 +11,28 @@ import {
   query,
   Timestamp,
 } from 'firebase/firestore';
-import { BarChartData } from '../../Components/BarChart/BarChart';
+
 import toast from 'react-hot-toast';
-import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import CsvDownload from 'react-json-to-csv';
-import Header from '../../Components/Header/Header';
-import Loader from '../../Components/Loader';
-import IconButton, { IconButtonVariant } from '../../Components/IconButton';
-import withAnimation from '../../HOC/withAnimation';
+
+import { useRouter } from 'next/router';
+import AnswerHeader from '../../../../Components/AnswerHeader';
+import AnswerTableRow from '../../../../Components/AnswerTableRow';
+import { BarChartData } from '../../../../Components/BarChart';
+import Header from '../../../../Components/Header';
+import IconButton, {
+  IconButtonVariant,
+} from '../../../../Components/IconButton';
+import Loader from '../../../../Components/Loader';
+import { db } from '../../../../firebase';
+import withAnimation from '../../../../HOC/withAnimation';
+import useCopyToClipboard from '../../../../Hooks/useCopyToClipboard';
+import { formatFirebaseDateWithHours } from '../../../../Utils/convertTime';
+import withProtectedRoute from '../../../../HOC/withProtectedRoute';
+import Head from 'next/head';
 
 interface AnswerData {
   id: string;
@@ -34,9 +42,8 @@ interface AnswerData {
 }
 
 function SurveyAnswerPage() {
-  useDocumentTitle('Survey Answers');
-  const { surveyId } = useParams();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const { surveyId } = router.query as { surveyId: string };
 
   const [votes, setVotes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +55,7 @@ function SurveyAnswerPage() {
 
   useEffect(() => {
     if (!surveyId) {
-      navigate('/');
+      router.replace('/');
       return;
     }
 
@@ -58,7 +65,7 @@ function SurveyAnswerPage() {
   const getSurveyData = async (displayMessages = false) => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
-      navigate('/');
+      router.replace('/');
       return;
     }
     const anserwsCollectionRef = collection(
@@ -137,6 +144,9 @@ function SurveyAnswerPage() {
 
   return (
     <>
+      <Head>
+        <title>Survey Answers</title>
+      </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (
         <div className="container mx-auto text-center">
@@ -204,4 +214,4 @@ function SurveyAnswerPage() {
   );
 }
 
-export default withAnimation(SurveyAnswerPage);
+export default withProtectedRoute(withAnimation(SurveyAnswerPage));

@@ -1,14 +1,15 @@
 import { LogoutIcon, MenuIcon } from '@heroicons/react/outline';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Fragment, useState } from 'react';
-import Button, { ButtonVariant } from '../Button';
+import { ButtonVariant } from '../Button';
 import { signOut } from 'firebase/auth';
 import IconButton, { IconButtonVariant } from '../IconButton';
 import { auth } from '../../firebase';
 import Logo from '../Logo/Logo';
 import BurgerMenu from '../BurgerMenu';
 import { Menu, Transition } from '@headlessui/react';
+import ButtonLink from '../ButtonLink/ButtonLink';
 
 function Navigation() {
   const [user, loading] = useAuthState(auth);
@@ -28,12 +29,14 @@ function Navigation() {
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
-            <div className="hidden space-x-4 lg:block">
-              <Link to={'/survey/create'}>
-                <Button variant={ButtonVariant.FLAT}>Create Survey</Button>
+            <div className="none hidden space-x-4 lg:flex">
+              <Link href={'/survey/create'} passHref>
+                <ButtonLink variant={ButtonVariant.FLAT}>
+                  Create Survey
+                </ButtonLink>
               </Link>
-              <Link to={'/surveys'}>
-                <Button variant={ButtonVariant.FLAT}>My Surveys</Button>
+              <Link href={'/surveys'} passHref>
+                <ButtonLink variant={ButtonVariant.FLAT}>My Surveys</ButtonLink>
               </Link>
             </div>
             <div className="lg:flex justify-center items-center hidden">
@@ -88,27 +91,29 @@ function Navigation() {
             />
           </div>
         ) : (
-          <Link to={'/login'}>
-            <Button variant={ButtonVariant.OUTLINE_PRIMARY}>Sign In</Button>
+          <Link href={'/login'} passHref>
+            <ButtonLink variant={ButtonVariant.OUTLINE_PRIMARY}>
+              Sign In
+            </ButtonLink>
           </Link>
         )}
       </div>
       <BurgerMenu isOpen={isOpen}>
-        <Link className="mb-4" to={'/survey/create'}>
-          <Button
+        <Link className="mb-4" href={'/survey/create'} passHref>
+          <ButtonLink
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
           >
             Create Survey
-          </Button>
+          </ButtonLink>
         </Link>
-        <Link className="mb-4" to={'/surveys'}>
-          <Button
+        <Link className="mb-4" href={'/surveys'} passHref>
+          <ButtonLink
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
           >
             My Surveys
-          </Button>
+          </ButtonLink>
         </Link>
         <IconButton
           onClick={logoutMobile}

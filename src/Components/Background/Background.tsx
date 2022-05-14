@@ -1,6 +1,3 @@
-import emote3 from '../../Assets/undraw_joyride_re_968t.svg';
-import emote from '../../Assets/undraw_smiley_face_re_9uid.svg';
-
 export default function Background() {
   return (
     <div
@@ -36,7 +33,7 @@ export default function Background() {
           x={1100}
           width="200"
           height="200"
-          xlinkHref={emote}
+          xlinkHref={'/emote2.svg'}
         />
         <image
           className="opacity-80 -rotate-6"
@@ -44,7 +41,7 @@ export default function Background() {
           x={50}
           width="200"
           height="200"
-          xlinkHref={emote3}
+          xlinkHref={'/emote.svg'}
         />
       </svg>
     </div>

@@ -1,9 +1,13 @@
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}',
+    './src/Components/**/*.{ts,tsx,js,jsx}',
+    './src/Pages/**/*.{ts,tsx,js,jsx}'],
   theme: {
     extend: {
       fontFamily: {
         serif: 'Pacifico',
+        display: ['Montserrat', 'system-ui', 'sans-serif'],
+        body: ['Montserrat', 'system-ui', 'sans-serif'],
       },
     },
   },

@@ -1,7 +1,11 @@
-import Picker from 'emoji-picker-react';
 import { useRef, useState } from 'react';
 import { useCloseComponent } from '../../Hooks/useCloseComponent';
 import Emoji from '../Emoji';
+
+import dynamic from 'next/dynamic';
+const Picker = dynamic(() => import('emoji-picker-react'), {
+  ssr: false,
+});
 
 interface EmojiPickerProps {
   index: number;

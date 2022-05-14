@@ -1,18 +1,20 @@
 import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
-import Button, { ButtonSize, ButtonVariant } from '../../Components/Button';
-import EmojiButton from '../../Components/EmojiButton';
-import { useDocumentTitle } from '../../Hooks/useDocumentTitle';
-import { db } from '../../firebase';
-import Header from '../../Components/Header';
-import Loader from '../../Components/Loader';
+
+import { useRouter } from 'next/router';
+import Button, { ButtonVariant, ButtonSize } from '../../../Components/Button';
+import EmojiButton from '../../../Components/EmojiButton';
+import Header from '../../../Components/Header';
+import Loader from '../../../Components/Loader';
+import { db } from '../../../firebase';
+import Head from 'next/head';
 
 function SurveyPage() {
-  useDocumentTitle('Survey');
+  const router = useRouter();
 
-  const { surveyId } = useParams();
+  const { surveyId } = router.query as { surveyId: string };
+
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
@@ -20,21 +22,16 @@ function SurveyPage() {
   const [buttonDisable, setButtonDisable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (!surveyId) {
-      navigate('/');
-      return;
+    if (surveyId) {
+      getSurveyData();
     }
-
-    getSurveyData();
   }, [surveyId]);
 
   const getSurveyData = async () => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
-      navigate('/');
+      router.replace('/');
       return;
     }
 
@@ -43,7 +40,7 @@ function SurveyPage() {
       new Date().toISOString()
     ) {
       toast.error('Survey is not opened yet');
-      navigate('/');
+      router.replace('/');
       return;
     }
 
@@ -52,7 +49,7 @@ function SurveyPage() {
       new Date().toISOString()
     ) {
       toast.error('Survey is closed');
-      navigate('/');
+      router.replace('/');
       return;
     }
 
@@ -81,7 +78,7 @@ function SurveyPage() {
         answerDate: new Date(),
       });
       toast.success('The reply has been sent');
-      navigate('/');
+      router.replace('/');
     } catch (error) {
       toast.error('Error occured');
     } finally {
@@ -96,6 +93,9 @@ function SurveyPage() {
 
   return (
     <>
+      <Head>
+        <title>Survey</title>
+      </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (
         <div className="container px-4 m-auto mb-6 text-center md:px-8">
