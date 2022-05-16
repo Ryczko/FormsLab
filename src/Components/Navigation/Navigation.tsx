@@ -99,16 +99,18 @@ function Navigation() {
         )}
       </div>
       <BurgerMenu isOpen={isOpen}>
-        <Link className="mb-4" href={'/survey/create'} passHref>
+        <Link href={'/survey/create'} passHref>
           <ButtonLink
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
+            className="mb-3 w-[95%] lg:w-auto"
           >
             Create Survey
           </ButtonLink>
         </Link>
-        <Link className="mb-4" href={'/surveys'} passHref>
+        <Link href={'/surveys'} passHref>
           <ButtonLink
+            className="mb-3  w-[95%] lg:w-auto"
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
           >
@@ -118,7 +120,7 @@ function Navigation() {
         <IconButton
           onClick={logoutMobile}
           variant={IconButtonVariant.FLAT}
-          className="hover:bg-red-100 text-red-600"
+          className="hover:bg-red-100 text-red-600 w-[95%] lg:w-auto justify-center"
           icon={<LogoutIcon className="w-5 h-5" />}
         >
           Sign Out

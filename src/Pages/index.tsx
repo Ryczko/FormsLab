@@ -35,7 +35,6 @@ function IndexPage() {
                       <Link href={'/login'} passHref>
                         <ButtonLink
                           variant={ButtonVariant.PRIMARY}
-                          sizeType={ButtonSize.LARGE}
                           className="w-full sm:w-auto"
                         >
                           Sign In
