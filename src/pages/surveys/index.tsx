@@ -9,11 +9,11 @@ import {
   DocumentData,
   Query,
 } from 'firebase/firestore';
-import Header from '../../Components/Header';
-import SurveyRow from '../../Components/SurveyRow';
-import Loader from '../../Components/Loader';
+import Header from '../../components/Header';
+import SurveyRow from '../../components/SurveyRow';
+import Loader from '../../components/Loader';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { formatFirebaseDateWithoutHours } from '../../Utils/convertTime';
+import { formatFirebaseDateWithoutHours } from '../../utilities/convertTime';
 import withAnimation from '../../HOC/withAnimation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';

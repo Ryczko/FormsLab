@@ -2,7 +2,7 @@ import '../styles/index.scss';
 import '../styles/datepicker.scss';
 import { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
-import PageLayout from '../Layouts/PageLayout';
+import PageLayout from '../layout/PageLayout';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {

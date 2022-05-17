@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import LoginButton from '../../Components/LoginButton';
+import LoginButton from '../../components/LoginButton';
 import { auth, signInWithGoogle, signInWithGithub } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Header from '../../Components/Header';
+import Header from '../../components/Header';
 import withAnimation from '../../HOC/withAnimation';
 import { useRouter } from 'next/router';
 import Head from 'next/head';

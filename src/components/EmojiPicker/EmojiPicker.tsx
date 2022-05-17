@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useCloseComponent } from '../../Hooks/useCloseComponent';
+import { useCloseComponent } from '../../hooks/useCloseComponent';
 import Emoji from '../Emoji';
 
 import dynamic from 'next/dynamic';

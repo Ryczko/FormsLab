@@ -1,10 +1,10 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
 
-import { ButtonSize, ButtonVariant } from '../Components/Button';
+import { ButtonVariant } from '../components/Button';
 import { auth } from '../firebase';
 import withAnimation from '../HOC/withAnimation';
-import ButtonLink from '../Components/ButtonLink/ButtonLink';
+import ButtonLink from '../components/ButtonLink/ButtonLink';
 import Head from 'next/head';
 
 function IndexPage() {

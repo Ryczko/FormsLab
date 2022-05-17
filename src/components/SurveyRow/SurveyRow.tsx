@@ -3,7 +3,7 @@ import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 import Button, { ButtonVariant } from '../Button';
 import IconButton, { IconButtonVariant } from '../IconButton';
 import toast from 'react-hot-toast';
-import useCopyToClipboard from '../../Hooks/useCopyToClipboard';
+import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 import { Dialog, Transition } from '@headlessui/react';
 import { db } from '../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';

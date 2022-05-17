@@ -6,13 +6,13 @@ import toast from 'react-hot-toast';
 
 import DatePicker from 'react-datepicker';
 import { useRouter } from 'next/router';
-import Button, { ButtonVariant } from '../../../Components/Button';
-import Header from '../../../Components/Header';
-import Input from '../../../Components/Input';
+import Button, { ButtonVariant } from '../../../components/Button';
+import Header from '../../../components/Header';
+import Input from '../../../components/Input';
 import { auth, db } from '../../../firebase';
 import withAnimation from '../../../HOC/withAnimation';
-import useCopyToClipboard from '../../../Hooks/useCopyToClipboard';
-import EmojiPicker from '../../../Components/EmojiPicker';
+import useCopyToClipboard from '../../../hooks/useCopyToClipboard';
+import EmojiPicker from '../../../components/EmojiPicker';
 import withProtectedRoute from '../../../HOC/withProtectedRoute';
 import Head from 'next/head';
 

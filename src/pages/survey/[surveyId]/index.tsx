@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { useRouter } from 'next/router';
-import Button, { ButtonVariant, ButtonSize } from '../../../Components/Button';
-import EmojiButton from '../../../Components/EmojiButton';
-import Header from '../../../Components/Header';
-import Loader from '../../../Components/Loader';
+import Button, { ButtonVariant, ButtonSize } from '../../../components/Button';
+import EmojiButton from '../../../components/EmojiButton';
+import Header from '../../../components/Header';
+import Loader from '../../../components/Loader';
 import { db } from '../../../firebase';
 import Head from 'next/head';
 

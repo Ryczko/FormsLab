@@ -1,7 +1,7 @@
-import Navigation from '../Components/Navigation';
+import Navigation from '../components/Navigation';
 
 import { AnimatePresence } from 'framer-motion';
-import Background from '../Components/Background/Background';
+import Background from '../components/Background/Background';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import GlobalLoader from './GlobalLoader/GlobalLoader';

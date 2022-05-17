@@ -19,18 +19,18 @@ import toast from 'react-hot-toast';
 import CsvDownload from 'react-json-to-csv';
 
 import { useRouter } from 'next/router';
-import AnswerHeader from '../../../../Components/AnswerHeader';
-import AnswerTableRow from '../../../../Components/AnswerTableRow';
-import { BarChartData } from '../../../../Components/BarChart';
-import Header from '../../../../Components/Header';
+import AnswerHeader from '../../../../components/AnswerHeader';
+import AnswerTableRow from '../../../../components/AnswerTableRow';
+import { BarChartData } from '../../../../components/BarChart';
+import Header from '../../../../components/Header';
 import IconButton, {
   IconButtonVariant,
-} from '../../../../Components/IconButton';
-import Loader from '../../../../Components/Loader';
+} from '../../../../components/IconButton';
+import Loader from '../../../../components/Loader';
 import { db } from '../../../../firebase';
 import withAnimation from '../../../../HOC/withAnimation';
-import useCopyToClipboard from '../../../../Hooks/useCopyToClipboard';
-import { formatFirebaseDateWithHours } from '../../../../Utils/convertTime';
+import useCopyToClipboard from '../../../../hooks/useCopyToClipboard';
+import { formatFirebaseDateWithHours } from '../../../../utilities/convertTime';
 import withProtectedRoute from '../../../../HOC/withProtectedRoute';
 import Head from 'next/head';
 

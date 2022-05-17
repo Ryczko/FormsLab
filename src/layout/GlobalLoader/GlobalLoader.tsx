@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import Loader from '../../Components/Loader';
-import Logo from '../../Components/Logo';
+import Loader from '../../components/Loader';
+import Logo from '../../components/Logo';
 
 export default function GlobalLoader() {
   return (
