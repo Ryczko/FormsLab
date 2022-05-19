@@ -1,7 +1,7 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}',
     './src/components/**/*.{ts,tsx,js,jsx}',
-    './src/Pages/**/*.{ts,tsx,js,jsx}'],
+    './src/pages/**/*.{ts,tsx,js,jsx}'],
   theme: {
     extend: {
       fontFamily: {
