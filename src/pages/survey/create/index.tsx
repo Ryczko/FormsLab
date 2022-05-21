@@ -94,7 +94,7 @@ function SurveyCreatePage() {
       <div className="container px-4 m-auto text-center md:px-8">
         <Header>Create new survey</Header>
 
-        <div className="max-w-lg mx-auto">
+        <div className="mx-auto max-w-lg">
           <Input
             label="Survey title"
             placeholder="Title..."
@@ -104,9 +104,9 @@ function SurveyCreatePage() {
           <label className="block mt-10 mb-4 font-semibold text-left">
             Select duration of survey
           </label>
-          <div className="flex flex-col items-center justify-center space-y-4 md:space-y-0 md:flex-row">
+          <div className="flex flex-col justify-center items-center space-y-4 md:flex-row md:space-y-0">
             <DatePicker
-              className="w-full md:w-52 block text-center mr-auto py-3 px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
+              className="block py-3 px-4 mr-auto w-full font-medium leading-none text-center text-zinc-600 rounded-lg focus:outline-none shadow-sm cursor-pointer md:w-52 focus:shadow-outline"
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               calendarStartDay={1}
@@ -123,7 +123,7 @@ function SurveyCreatePage() {
             />
             <p>to</p>
             <DatePicker
-              className="w-full md:w-52 text-center block py-3 ml-auto px-4 font-medium leading-none rounded-lg shadow-sm cursor-pointer focus:outline-none focus:shadow-outline text-zinc-600"
+              className="block py-3 px-4 ml-auto w-full font-medium leading-none text-center text-zinc-600 rounded-lg focus:outline-none shadow-sm cursor-pointer md:w-52 focus:shadow-outline"
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               calendarStartDay={1}
@@ -159,7 +159,7 @@ function SurveyCreatePage() {
 
           <Button
             onClick={createSurvey}
-            className="z-0 w-full mt-12 sm:w-auto"
+            className="z-0 mt-12 w-full sm:w-auto"
             disabled={!title.length || buttonDisable}
             variant={ButtonVariant.PRIMARY}
           >

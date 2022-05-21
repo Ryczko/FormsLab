@@ -10,7 +10,7 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
 interface EmojiPickerProps {
   index: number;
   defaultEmote?: string;
-  onEmotePick: (idx, newValue) => void;
+  onEmotePick: (idx: number, newValue: number | string) => void;
 }
 
 function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
@@ -21,7 +21,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
 
   useCloseComponent(wrapperRef, () => setDisplayPicker(false));
 
-  const onEmojiClick = (event, emojiObject) => {
+  const onEmojiClick = (_event: unknown, emojiObject: { emoji: string; }) => {
     setChosenEmoji(emojiObject);
     onEmotePick(index, emojiObject.emoji as string);
     setDisplayPicker(!displayPicker);
@@ -29,7 +29,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
   return (
     <div ref={wrapperRef}>
       <button
-        className="w-16 p-3 text-3xl transition bg-white rounded-lg shadow label-text hover:scale-95"
+        className="p-3 w-16 text-3xl bg-white rounded-lg shadow transition hover:scale-95 label-text"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         <Emoji symbol={chosenEmoji?.emoji || defaultEmote} />
@@ -38,7 +38,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
       {displayPicker && (
         <div
           onClick={() => setDisplayPicker(false)}
-          className="fixed top-0 z-10 left-0 w-full h-full bg-black opacity-60"
+          className="fixed top-0 left-0 z-10 w-full h-full bg-black opacity-60"
         />
       )}
       {displayPicker && (

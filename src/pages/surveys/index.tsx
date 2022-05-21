@@ -48,7 +48,7 @@ function SurveyListPage() {
       <div className="container m-auto text-center md:px-8">
         <Header>Surveys</Header>
 
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col justify-center items-center">
           <div>
             {
               // TODO: add user friendly error message
@@ -80,7 +80,7 @@ function SurveyListPage() {
             ) : (
               <>
                 <Image
-                  className="w-[200px] mt-2 -translate-x-3"
+                  className="mt-2 w-[200px] -translate-x-3"
                   src={'/no-surveys.svg'}
                   alt="no surveys"
                 />

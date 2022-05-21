@@ -1,6 +1,6 @@
 import { PieChart as Chart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
-const renderLabel = function (entry) {
+const renderLabel = function (entry: { name: string; value: string | number }) {
   return `${entry.name} (${entry.value})`;
 };
 
@@ -17,7 +17,7 @@ interface PieChartProps {
 
 export default function PieChart({ data }: PieChartProps) {
   return data ? (
-    <div className="h-[250px] max-w-[300px] mx-auto">
+    <div className="mx-auto max-w-[300px] h-[250px]">
       <ResponsiveContainer width="100%">
         <Chart>
           <Pie

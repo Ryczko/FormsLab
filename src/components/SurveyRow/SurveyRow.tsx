@@ -53,7 +53,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
   };
 
   return (
-    <div className="flex max-w-full flex-col w-[600px] mb-4 md:flex-row">
+    <div className="flex flex-col mb-4 w-[600px] max-w-full md:flex-row">
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
           <Transition.Child
@@ -68,8 +68,8 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
             <div className="fixed inset-0 bg-zinc-900 bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="overflow-y-auto fixed inset-0">
+            <div className="flex justify-center items-center p-4 min-h-full text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -79,7 +79,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="justify-center flex flex-col w-auto max-w-md transform overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all">
+                <Dialog.Panel className="flex overflow-hidden flex-col justify-center p-6 w-auto max-w-md text-left bg-white rounded-md shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-zinc-900"
@@ -93,7 +93,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
                     </p>
                   </div>
 
-                  <div className="mt-6 flex justify-between">
+                  <div className="flex justify-between mt-6">
                     <Button
                       variant={ButtonVariant.SECONDARY}
                       onClick={closeDeleteModal}
@@ -116,8 +116,8 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
           </div>
         </Dialog>
       </Transition>
-      <div className="flex items-center justify-between w-full px-4 py-3 bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
-        <div title={question} className="text-left truncate w-36">
+      <div className="flex justify-between items-center py-3 px-4 w-full bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
+        <div title={question} className="w-36 text-left truncate">
           {question}
         </div>
         <div className="flex items-center space-x-2">
@@ -126,10 +126,10 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
           <div>{endDate}</div>
         </div>
       </div>
-      <div className="flex w-full md:w-auto md:ml-2">
+      <div className="flex w-full md:ml-2 md:w-auto">
         <Button
           variant={ButtonVariant.OUTLINE}
-          className="px-4 mr-2 sm:mt-0 mt-2 w-full md:w-auto"
+          className="px-4 mt-2 mr-2 w-full sm:mt-0 md:w-auto"
           onClick={handleOnMoreButton}
         >
           More
@@ -138,7 +138,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
         <IconButton
           variant={IconButtonVariant.PRIMARY}
           className={
-            'px-3 sm:mt-0 mt-2 text-center w-full justify-center md:w-auto'
+            'justify-center px-3 mt-2 w-full text-center sm:mt-0 md:w-auto'
           }
           title="Copy link to clipboard"
           icon={<LinkIcon className="w-5 h-5" />}
@@ -147,7 +147,7 @@ export default function SurveyRow({ question, startDate, endDate, id }: Props) {
         <IconButton
           variant={IconButtonVariant.DANGER}
           title="Delete survey"
-          className="px-3 ml-2 sm:mt-0 mt-2 w-full justify-center md:w-auto"
+          className="justify-center px-3 mt-2 ml-2 w-full sm:mt-0 md:w-auto"
           onClick={openDeleteModal}
           icon={<TrashIcon className="w-5 h-5" />}
         />

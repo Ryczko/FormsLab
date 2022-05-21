@@ -156,7 +156,7 @@ function SurveyAnswerPage() {
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId!)}
               variant={IconButtonVariant.PRIMARY}
-              className="w-full sm:w-[170px] mb-2 sm:mr-2 sm:mb-0 justify-center"
+              className="justify-center mb-2 w-full sm:mr-2 sm:mb-0 sm:w-[170px]"
               icon={<LinkIcon className="w-5 h-5" />}
             >
               Copy link
@@ -168,7 +168,7 @@ function SurveyAnswerPage() {
             >
               <IconButton
                 title="Download as CSV file"
-                className="w-full sm:w-[170px] justify-center"
+                className="justify-center w-full sm:w-[170px]"
                 variant={IconButtonVariant.OUTLINE}
                 icon={<DownloadIcon className="w-5 h-5" />}
               >
@@ -180,7 +180,7 @@ function SurveyAnswerPage() {
               title="Refresh data"
               onClick={() => getSurveyData(true)}
               variant={IconButtonVariant.OUTLINE}
-              className="w-full sm:w-[170px] mt-2 sm:ml-2 sm:mt-0 justify-center"
+              className="justify-center mt-2 w-full sm:mt-0 sm:ml-2 sm:w-[170px]"
               icon={<RefreshIcon className="w-5 h-5" />}
             >
               Refresh

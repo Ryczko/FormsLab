@@ -1,7 +1,7 @@
 export default function Background() {
   return (
     <div
-      className="fixed hidden overflow-hidden  left-1/2 transform -translate-x-1/2 -z-10 pointer-events-none xl:block opacity-70"
+      className="hidden overflow-hidden fixed  left-1/2 -z-10 opacity-70 -translate-x-1/2 pointer-events-none xl:block"
       aria-hidden="true"
     >
       <svg

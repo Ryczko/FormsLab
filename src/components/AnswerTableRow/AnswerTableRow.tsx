@@ -8,7 +8,7 @@ interface AnswerTableRowProps {
 
 function AnswerTableRow({ time, selectedIcon, text }: AnswerTableRowProps) {
   return (
-    <div className="bg-white py-3 shadow-sm max-w-[800px] mx-auto px-3 grid grid-cols-6 my-2 rounded-md">
+    <div className="grid grid-cols-6 p-3 my-2 mx-auto max-w-[800px] bg-white rounded-md shadow-sm">
       <div className="col-span-2">{time}</div>
       <div>
         <Emoji symbol={selectedIcon} />

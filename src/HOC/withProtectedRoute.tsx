@@ -1,10 +1,10 @@
 import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { ComponentType, useEffect } from 'react';
 
-const withProtectedRoute = (WrappedComponent) => {
-  const hocComponent = ({ ...props }) => {
+const withProtectedRoute = (WrappedComponent: ComponentType) => {
+  const HocComponent = ({ ...props }) => {
     const [user, loading, error] = useAuthState(auth);
     const isLoggedIn = user && !error;
     const location = useRouter();
@@ -26,7 +26,7 @@ const withProtectedRoute = (WrappedComponent) => {
     return null;
   };
 
-  return hocComponent;
+  return HocComponent;
 };
 
 export default withProtectedRoute;

@@ -9,12 +9,7 @@ import {
   sendPasswordResetEmail,
   signOut,
 } from 'firebase/auth';
-import {
-  getFirestore,
-  getDoc,
-  setDoc,
-  doc,
-} from 'firebase/firestore';
+import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyD1Y1Jb33a-DecxVe64bcIymPTpK-rzA7g',
@@ -70,7 +65,7 @@ const signInWithGithub = async () => {
   }
 };
 
-const logInWithEmailAndPassword = async (email, password) => {
+const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
@@ -78,7 +73,7 @@ const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (name: string, email: string, password: string) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
@@ -93,7 +88,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   }
 };
 
-const sendPasswordReset = async (email) => {
+const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
     console.log('Password reset link sent!');

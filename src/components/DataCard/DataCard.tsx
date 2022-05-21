@@ -5,8 +5,8 @@ type Props = {
 
 export default function DataCard({ title, value }: Props) {
   return (
-    <div className="px-6 m-1 py-2 w-[200px] bg-white rounded-lg border border-zinc-200 shadow-md">
-      <h3 className="font-semibold mb-1">{title}</h3>
+    <div className="py-2 px-6 m-1 w-[200px] bg-white rounded-lg border border-zinc-200 shadow-md">
+      <h3 className="mb-1 font-semibold">{title}</h3>
       {value}
     </div>
   );

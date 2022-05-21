@@ -5,7 +5,7 @@ type Props = {
 export default function Loader({ isLoading }: Props) {
   if (isLoading)
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col justify-center items-center">
         <svg
           className="mr-1 w-5 h-5 animate-spin"
           xmlns="http://www.w3.org/2000/svg"

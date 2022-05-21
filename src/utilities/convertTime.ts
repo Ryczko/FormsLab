@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+import type { Timestamp } from 'firebase/firestore';
 
 const formatFirebaseDateWithHours = (date: Timestamp) => {
   return date.toDate().toLocaleString('pl-PL', {

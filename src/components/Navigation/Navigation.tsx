@@ -24,12 +24,12 @@ function Navigation() {
     setIsOpen(!isOpen);
   };
   return (
-    <nav className="py-5 fixed z-10 w-full border-b bg-zinc-100 border-neutral-200">
+    <nav className="fixed z-10 py-5 w-full bg-zinc-100 border-b border-neutral-200">
       <div className="flex justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
-            <div className="none hidden space-x-4 lg:flex">
+            <div className="hidden space-x-4 lg:flex none">
               <Link href={'/survey/create'} passHref>
                 <ButtonLink variant={ButtonVariant.FLAT}>
                   Create Survey
@@ -39,22 +39,22 @@ function Navigation() {
                 <ButtonLink variant={ButtonVariant.FLAT}>My Surveys</ButtonLink>
               </Link>
             </div>
-            <div className="lg:flex justify-center items-center hidden">
+            <div className="hidden justify-center items-center lg:flex">
               <Menu
                 as="div"
-                className="relative inline-block text-left rounded-md"
+                className="inline-block relative text-left rounded-md"
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex w-full justify-center hover:bg-zinc-200 py-1 rounded-md px-4 font-medium"
+                  className="flex justify-center py-1 px-4 w-full font-medium hover:bg-zinc-200 rounded-md"
                 >
-                  <p className="truncate items-center hidden justify-left sm:flex ml-2">
+                  <p className="hidden items-center ml-2 truncate sm:flex justify-left">
                     {user.displayName}
                     {user.photoURL && (
                       <img
                         src={user.photoURL}
                         alt="user photo"
-                        className="ml-4 h-8 w-8 rounded-full"
+                        className="ml-4 w-8 h-8 rounded-full"
                       />
                     )}
                   </p>
@@ -68,13 +68,13 @@ function Navigation() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-zinc-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="px-1 py-1 flex justify-end">
+                  <Menu.Items className="absolute right-0 mt-2 bg-white rounded-md divide-y divide-zinc-100 focus:outline-none ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
+                    <div className="flex justify-end p-1">
                       <Menu.Item>
                         <IconButton
                           onClick={logoutDesktop}
                           variant={IconButtonVariant.FLAT}
-                          className="hover:bg-red-100 text-red-600 w-40"
+                          className="w-40 text-red-600 hover:bg-red-100"
                           icon={<LogoutIcon className="w-5 h-5" />}
                         >
                           Sign Out
@@ -120,7 +120,7 @@ function Navigation() {
         <IconButton
           onClick={logoutMobile}
           variant={IconButtonVariant.FLAT}
-          className="hover:bg-red-100 text-red-600 w-[95%] lg:w-auto justify-center"
+          className="justify-center w-[95%] text-red-600 hover:bg-red-100 lg:w-auto"
           icon={<LogoutIcon className="w-5 h-5" />}
         >
           Sign Out

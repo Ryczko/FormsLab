@@ -21,7 +21,7 @@ function AnswerHeader({
 
       <div
         className={clsx(
-          'mb-12 mt-6 md:mb-0 md:mt-0 md:ml-6 flex flex-col items-center justify-center md:-translate-y-4',
+          'flex flex-col justify-center items-center mt-6 mb-12 md:my-0 md:ml-6 md:-translate-y-4',
           !chartData.length ? 'md:flex-row' : ''
         )}
       >

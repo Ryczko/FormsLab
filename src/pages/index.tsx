@@ -15,22 +15,22 @@ function IndexPage() {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="flex flex-col overflow-hidden">
+      <div className="flex overflow-hidden flex-col">
         <section className="relative">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="px-4 mx-auto max-w-6xl sm:px-6">
             <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-              <div className="text-center pb-12 md:pb-16">
-                <h1 className="text-4xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4">
+              <div className="pb-12 text-center md:pb-16">
+                <h1 className="mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl leading-tighter">
                   How are you&nbsp;
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-100">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-100">
                     feeling?
                   </span>
                 </h1>
-                <div className="max-w-3xl mx-auto">
-                  <p className="text-xl text-zinc-600 mb-8">
+                <div className="mx-auto max-w-3xl">
+                  <p className="mb-8 text-xl text-zinc-600">
                     There is no better way to find out than Employee Pulse
                   </p>
-                  <div className="max-w-xs mx-auto sm:max-w-none flex flex-col sm:flex-row sm:space-y-0 space-y-2 sm:justify-center sm:space-x-4">
+                  <div className="flex flex-col mx-auto space-y-2 max-w-xs sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4 sm:max-w-none">
                     {!loading && !user && (
                       <Link href={'/login'} passHref>
                         <ButtonLink
