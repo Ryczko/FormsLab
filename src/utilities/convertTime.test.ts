@@ -1,8 +1,9 @@
-import { Timestamp } from 'firebase/firestore';
 import {
   formatFirebaseDateWithHours,
   formatFirebaseDateWithoutHours,
 } from './convertTime';
+import { Timestamp } from 'firestore-jest-mock/mocks/timestamp';
+import type { Timestamp as TimestampType } from 'firebase/firestore';
 
 describe('convertTime', () => {
   it('should return correct date with hours', () => {
@@ -15,14 +16,14 @@ describe('convertTime', () => {
     } else {
       expected = '5.05.2022, 18:33';
     }
-    const result = formatFirebaseDateWithHours(timestamp);
+    const result = formatFirebaseDateWithHours(timestamp as TimestampType);
     expect(result).toEqual(expected);
   });
 
   it('should return correct date without hours', () => {
     const timestamp: Timestamp = new Timestamp(1651768396, 0);
     const expected = '5.05.2022';
-    const result = formatFirebaseDateWithoutHours(timestamp);
+    const result = formatFirebaseDateWithoutHours(timestamp as TimestampType);
     expect(result).toEqual(expected);
   });
 });
