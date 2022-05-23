@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import type { ComponentType } from 'react';
 
-export default (WrappedComponent) => {
+export default (WrappedComponent: ComponentType) => {
   const hocComponent = ({ ...props }) => (
     <motion.div
       initial={{ opacity: 0, y: 16 }}

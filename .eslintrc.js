@@ -6,8 +6,12 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'react-app',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+    'plugin:@next/next/recommended',
+    'plugin:testing-library/react',
+    'plugin:tailwindcss/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
@@ -24,12 +28,20 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: [
+    'react',
+    'react-hooks',
+    'testing-library',
+    'tailwindcss',
+    '@typescript-eslint',
+    'prettier',
+  ],
   rules: {
     indent: ['error', 2],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'tailwindcss/no-custom-classname': 'off',
   },
 };

@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 .dccache
 .vercel
+
+.next
