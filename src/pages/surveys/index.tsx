@@ -83,6 +83,8 @@ function SurveyListPage() {
                   className="mt-2 w-[200px] -translate-x-3"
                   src={'/no-surveys.svg'}
                   alt="no surveys"
+                  width="200"
+                  height="125"
                 />
                 <p className="mt-8">No surveys yet </p>
               </>
