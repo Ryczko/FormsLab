@@ -1,0 +1,94 @@
+@tailwind components;
+@tailwind utilities;
+
+@import 'node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+
+.react-datepicker {
+  @apply rounded-md shadow-md border-none font-sans;
+}
+.react-datepicker-popper,
+.react-datepicker__month-container {
+  @apply rounded-md border-none;
+}
+.react-datepicker > * {
+  @apply bg-white text-zinc-900;
+}
+
+.react-datepicker__header {
+  @apply bg-white rounded-md border-none;
+}
+
+.react-datepicker__day,
+.react-datepicker__month,
+.react-datepicker__year,
+.react-datepicker__day--weekend {
+  @apply bg-white text-zinc-900;
+}
+
+.react-datepicker-time__input:focus-visible {
+  outline: none;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  background: none;
+  display: none;
+}
+
+.react-datepicker input[type='time'] {
+  margin-right: 5px;
+}
+
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected {
+  @apply bg-indigo-200 text-indigo-900;
+}
+
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list
+  li.react-datepicker__time-list-item--selected:hover {
+  @apply bg-indigo-200 text-indigo-900;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-indigo-500;
+}
+
+.react-datepicker__day:hover {
+  @apply bg-indigo-200 text-indigo-900;
+}
+
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-range:hover,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range, .react-datepicker__month-text--in-range, .react-datepicker__month-text--quarter-in-range, .react-datepicker__year-text--in-range),
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--range-end,
+.react-datepicker__day--range-end:hover,
+.react-datepicker__day--selecting-range-end,
+.react-datepicker__day--selecting-range-end:hover,
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-start:hover {
+  @apply bg-indigo-100;
+}
+
+.react-datepicker__day--disabled,
+.react-datepicker__day--disabled:hover {
+  @apply bg-zinc-100 cursor-not-allowed;
+}
+
+.react-datepicker__input-time-container {
+  @apply text-sm w-fit;
+}
+
+.react-datepicker-time__input {
+  @apply p-1 rounded-md bg-zinc-100 border-none;
+}
