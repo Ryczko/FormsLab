@@ -3,8 +3,10 @@ import { useCloseComponent } from '../../hooks/useCloseComponent';
 import Emoji from '../Emoji';
 
 import dynamic from 'next/dynamic';
+import Loader from '../Loader';
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
+  loading: () => <Loader isLoading={true} />,
 });
 
 interface EmojiPickerProps {
@@ -21,7 +23,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
 
   useCloseComponent(wrapperRef, () => setDisplayPicker(false));
 
-  const onEmojiClick = (_event: unknown, emojiObject: { emoji: string; }) => {
+  const onEmojiClick = (_event: unknown, emojiObject: { emoji: string }) => {
     setChosenEmoji(emojiObject);
     onEmotePick(index, emojiObject.emoji as string);
     setDisplayPicker(!displayPicker);
@@ -42,28 +44,23 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
         />
       )}
       {displayPicker && (
-        <Picker
-          native
-          onEmojiClick={onEmojiClick}
-          disableAutoFocus
-          disableSearchBar
-          disableSkinTonePicker
-          groupVisibility={{
-            flags: false,
-            symbols: false,
-          }}
-          pickerStyle={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: '99',
-            boxShadow: 'none',
-            maxWidth: '90%',
-            width: '400px',
-            height: '400px',
-          }}
-        />
+        <div className="flex overflow-hidden fixed top-1/2 left-1/2 z-20 justify-center items-center w-[400px] max-w-[90%] h-[400px] max-h-[90%] bg-white rounded-md -translate-x-1/2 -translate-y-1/2">
+          <Picker
+            native
+            onEmojiClick={onEmojiClick}
+            disableAutoFocus
+            disableSearchBar
+            disableSkinTonePicker
+            groupVisibility={{
+              flags: false,
+              symbols: false,
+            }}
+            pickerStyle={{
+              width: '400px',
+              height: '400px',
+            }}
+          />
+        </div>
       )}
     </div>
   );
