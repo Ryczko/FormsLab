@@ -1,20 +1,12 @@
-# Employee-pulse
+# Employee Pulse
 
-Prosta web aplikacja zbierajaca feedback ad. Pulsu/samopoczucia pracownika w skali 4 stopniowej.
+Web application to create surveys using emojis 😍<br>
+It can be used to collect information about the well-being of employees or to collect feedback from users.<br>
 
-[Projekt graficzny](https://www.figma.com/file/SmUMZwFiyCR2iFJfm41Wh4/Employee-Pulse)
+Live: https://employee-pulse.vercel.app
 
-## 💪 Team
+Tech stack: React, Typescript, Tailwind, Firebase
 
--   Konrad Ryczko
--   Paweł Kałdus
--   Piotr Matyjasik
--   Mariusz Lubowicki
-
-## 🚀 Technologie
-
--   React
--   Typescript
--   Firebase
--   Sass
--   Tailwind
+## Screenshots
+![image (2)](https://user-images.githubusercontent.com/51440879/216818006-c03d9d02-516b-4687-840e-909d7fdfd0fb.png)
+![image (3)](https://user-images.githubusercontent.com/51440879/216818010-05d4a331-2a70-4040-856d-a57bdda5b65f.png)
