@@ -9,11 +9,11 @@ function Input({
   ...props
 }: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
-    <div className="m-auto max-w-lg font-semibold text-left">
+    <div className="m-auto max-w-lg text-left font-semibold">
       <label className="block">{label}</label>
       <input
         {...props}
-        className="block py-3 px-4 mt-2 w-full rounded-lg focus:outline-none shadow"
+        className="mt-2 block w-full rounded-lg py-3 px-4 shadow focus:outline-none"
       />
     </div>
   );

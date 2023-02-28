@@ -1,5 +1,5 @@
 import React from 'react';
-import Emoji from '../Emoji';
+import Emoji from '../Emoji/Emoji';
 
 interface EmojiButtonProps {
   icon: string;
@@ -14,7 +14,7 @@ function EmojiButton({
 }: EmojiButtonProps & React.HTMLProps<HTMLButtonElement>) {
   return (
     <button
-      className={`bg-white text-3xl p-3 border-4 border-transparent rounded-lg duration-100  shadow ${
+      className={`rounded-lg border-4 border-transparent bg-white p-3 text-3xl shadow  duration-100 ${
         selected ? 'scale-90 border-slate-300' : ''
       }`}
       onClick={onClick}

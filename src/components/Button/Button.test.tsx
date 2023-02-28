@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Button, { ButtonVariant, ButtonSize } from '.';
+import Button, { ButtonVariant, ButtonSize } from './Button';
 
 describe('Button', () => {
   it('should render without crashing', () => {

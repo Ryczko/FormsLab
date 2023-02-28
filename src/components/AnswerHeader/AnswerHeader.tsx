@@ -1,6 +1,7 @@
 import clsx from 'clsx';
-import BarChart, { BarChartData } from '../BarChart';
-import DataCard from '../DataCard';
+import BarChart, { BarChartData } from '../BarChart/BarChart';
+import DataCard from '../DataCard/DataCard';
+
 
 interface AnswerHeaderProps {
   totalVotes: number;
@@ -16,12 +17,12 @@ function AnswerHeader({
   chartData,
 }: AnswerHeaderProps) {
   return (
-    <div className="flex flex-col-reverse justify-center items-center md:flex-row">
+    <div className="flex flex-col-reverse items-center justify-center md:flex-row">
       {chartData.length ? <BarChart data={chartData} /> : null}
 
       <div
         className={clsx(
-          'flex flex-col justify-center items-center mt-6 mb-12 md:my-0 md:ml-6 md:-translate-y-4',
+          'mt-6 mb-12 flex flex-col items-center justify-center md:my-0 md:ml-6 md:-translate-y-4',
           !chartData.length ? 'md:flex-row' : ''
         )}
       >

@@ -19,20 +19,19 @@ import toast from 'react-hot-toast';
 import CsvDownload from 'react-json-to-csv';
 
 import { useRouter } from 'next/router';
-import AnswerHeader from '../../../../components/AnswerHeader';
-import AnswerTableRow from '../../../../components/AnswerTableRow';
-import { BarChartData } from '../../../../components/BarChart';
-import Header from '../../../../components/Header';
-import IconButton, {
-  IconButtonVariant,
-} from '../../../../components/IconButton';
-import Loader from '../../../../components/Loader';
+
 import { db } from '../../../../firebase';
 import withAnimation from '../../../../HOC/withAnimation';
 import useCopyToClipboard from '../../../../hooks/useCopyToClipboard';
 import { formatFirebaseDateWithHours } from '../../../../utilities/convertTime';
 import withProtectedRoute from '../../../../HOC/withProtectedRoute';
 import Head from 'next/head';
+import AnswerHeader from 'src/components/AnswerHeader/AnswerHeader';
+import AnswerTableRow from 'src/components/AnswerTableRow/AnswerTableRow';
+import { BarChartData } from 'src/components/BarChart/BarChart';
+import Header from 'src/components/Header/Header';
+import IconButton, { IconButtonVariant } from 'src/components/IconButton/IconButton';
+import Loader from 'src/components/Loader/Loader';
 
 interface AnswerData {
   id: string;
@@ -151,13 +150,13 @@ function SurveyAnswerPage() {
       {!isLoading && (
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
-          <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
+          <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-10">
             <IconButton
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId!)}
               variant={IconButtonVariant.PRIMARY}
-              className="justify-center mb-2 w-full sm:mr-2 sm:mb-0 sm:w-[170px]"
-              icon={<LinkIcon className="w-5 h-5" />}
+              className="mb-2 w-full justify-center sm:mr-2 sm:mb-0 sm:w-[170px]"
+              icon={<LinkIcon className="h-5 w-5" />}
             >
               Copy link
             </IconButton>
@@ -168,9 +167,9 @@ function SurveyAnswerPage() {
             >
               <IconButton
                 title="Download as CSV file"
-                className="justify-center w-full sm:w-[170px]"
+                className="w-full justify-center sm:w-[170px]"
                 variant={IconButtonVariant.OUTLINE}
-                icon={<DownloadIcon className="w-5 h-5" />}
+                icon={<DownloadIcon className="h-5 w-5" />}
               >
                 Download
               </IconButton>
@@ -180,8 +179,8 @@ function SurveyAnswerPage() {
               title="Refresh data"
               onClick={() => getSurveyData(true)}
               variant={IconButtonVariant.OUTLINE}
-              className="justify-center mt-2 w-full sm:mt-0 sm:ml-2 sm:w-[170px]"
-              icon={<RefreshIcon className="w-5 h-5" />}
+              className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
+              icon={<RefreshIcon className="h-5 w-5" />}
             >
               Refresh
             </IconButton>

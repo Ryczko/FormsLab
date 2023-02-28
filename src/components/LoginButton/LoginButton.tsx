@@ -17,11 +17,11 @@ function LoginButton({
     <button
       type={type}
       onClick={onClick}
-      className="flex justify-center items-center py-2 pr-4 pl-2 w-full font-semibold text-zinc-900 bg-white hover:bg-zinc-50 active:bg-zinc-50 rounded-lg border shadow sm:w-[240px]"
+      className="flex w-full items-center justify-center rounded-lg border bg-white py-2 pr-4 pl-2 font-semibold text-zinc-900 shadow hover:bg-zinc-50 active:bg-zinc-50 sm:w-[240px]"
       {...props}
     >
       <Image
-        className="block mr-6 ml-2"
+        className="mr-6 ml-2 block"
         width="45px"
         height="24px"
         src={image}

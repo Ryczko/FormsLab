@@ -1,11 +1,11 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
 
-import { ButtonVariant } from '../components/Button';
 import { auth } from '../firebase';
 import withAnimation from '../HOC/withAnimation';
 import ButtonLink from '../components/ButtonLink/ButtonLink';
 import Head from 'next/head';
+import { ButtonVariant } from 'src/components/Button/Button';
 
 function IndexPage() {
   const [user, loading] = useAuthState(auth);
@@ -15,14 +15,14 @@ function IndexPage() {
       <Head>
         <title>Home</title>
       </Head>
-      <div className="flex overflow-hidden flex-col">
+      <div className="flex flex-col overflow-hidden">
         <section className="relative">
-          <div className="px-4 mx-auto max-w-6xl sm:px-6">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="pt-32 pb-12 md:pt-40 md:pb-20">
               <div className="pb-12 text-center md:pb-16">
-                <h1 className="mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl leading-tighter">
+                <h1 className="leading-tighter mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl">
                   How are you&nbsp;
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-100">
+                  <span className="bg-gradient-to-r from-indigo-600 to-indigo-100 bg-clip-text text-transparent">
                     feeling?
                   </span>
                 </h1>
@@ -30,7 +30,7 @@ function IndexPage() {
                   <p className="mb-8 text-xl text-zinc-600">
                     There is no better way to find out than Employee Pulse
                   </p>
-                  <div className="flex flex-col mx-auto space-y-2 max-w-xs sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4 sm:max-w-none">
+                  <div className="mx-auto flex max-w-xs flex-col space-y-2 sm:max-w-none sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                     {!loading && !user && (
                       <Link href={'/login'} passHref>
                         <ButtonLink

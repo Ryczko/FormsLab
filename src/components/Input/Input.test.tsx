@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import Input from '.';
+import Input from './Input';
+
 
 describe('Input', () => {
   it('should render only with a label', () => {
