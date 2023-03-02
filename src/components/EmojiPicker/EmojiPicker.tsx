@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { useCloseComponent } from '../../hooks/useCloseComponent';
-import Emoji from '../Emoji';
 
 import dynamic from 'next/dynamic';
-import Loader from '../Loader';
+import Emoji from '../Emoji/Emoji';
+import Loader from '../Loader/Loader';
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
   loading: () => <Loader isLoading={true} />,
@@ -31,7 +31,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
   return (
     <div ref={wrapperRef}>
       <button
-        className="p-3 w-16 text-3xl bg-white rounded-lg shadow transition hover:scale-95 label-text"
+        className="label-text w-16 rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         <Emoji symbol={chosenEmoji?.emoji || defaultEmote} />
@@ -40,11 +40,11 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
       {displayPicker && (
         <div
           onClick={() => setDisplayPicker(false)}
-          className="fixed top-0 left-0 z-10 w-full h-full bg-black opacity-60"
+          className="fixed top-0 left-0 z-10 h-full w-full bg-black opacity-60"
         />
       )}
       {displayPicker && (
-        <div className="flex overflow-hidden fixed top-1/2 left-1/2 z-20 justify-center items-center w-[400px] max-w-[90%] h-[400px] max-h-[90%] bg-white rounded-md -translate-x-1/2 -translate-y-1/2">
+        <div className="fixed top-1/2 left-1/2 z-20 flex h-[400px] max-h-[90%] w-[400px] max-w-[90%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-white">
           <Picker
             native
             onEmojiClick={onEmojiClick}

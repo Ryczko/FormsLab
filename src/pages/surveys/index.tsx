@@ -9,9 +9,7 @@ import {
   DocumentData,
   Query,
 } from 'firebase/firestore';
-import Header from '../../components/Header';
-import SurveyRow from '../../components/SurveyRow';
-import Loader from '../../components/Loader';
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { formatFirebaseDateWithoutHours } from '../../utilities/convertTime';
 import withAnimation from '../../HOC/withAnimation';
@@ -19,6 +17,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import withProtectedRoute from '../../HOC/withProtectedRoute';
 import Head from 'next/head';
+import Header from 'src/components/Header/Header';
+import Loader from 'src/components/Loader/Loader';
+import SurveyRow from 'src/components/SurveyRow/SurveyRow';
 
 function SurveyListPage() {
   const [user] = useAuthState(auth);
@@ -48,7 +49,7 @@ function SurveyListPage() {
       <div className="container m-auto text-center md:px-8">
         <Header>Surveys</Header>
 
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center">
           <div>
             {
               // TODO: add user friendly error message

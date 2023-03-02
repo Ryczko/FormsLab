@@ -2,14 +2,14 @@ import { LogoutIcon, MenuIcon } from '@heroicons/react/outline';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
-import { ButtonVariant } from '../Button';
 import { signOut } from 'firebase/auth';
-import IconButton, { IconButtonVariant } from '../IconButton';
 import { auth } from '../../firebase';
 import Logo from '../Logo/Logo';
-import BurgerMenu from '../BurgerMenu';
 import { Menu, Transition } from '@headlessui/react';
 import ButtonLink from '../ButtonLink/ButtonLink';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import { ButtonVariant } from '../Button/Button';
+import IconButton, { IconButtonVariant } from '../IconButton/IconButton';
 
 function Navigation() {
   const [user, loading] = useAuthState(auth);
@@ -24,12 +24,12 @@ function Navigation() {
     setIsOpen(!isOpen);
   };
   return (
-    <nav className="fixed z-10 py-5 w-full bg-zinc-100 border-b border-neutral-200">
+    <nav className="fixed z-10 w-full border-b border-neutral-200 bg-zinc-100 py-5">
       <div className="flex justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
-            <div className="hidden space-x-4 lg:flex none">
+            <div className="none hidden space-x-4 lg:flex">
               <Link href={'/survey/create'} passHref>
                 <ButtonLink variant={ButtonVariant.FLAT}>
                   Create Survey
@@ -39,22 +39,22 @@ function Navigation() {
                 <ButtonLink variant={ButtonVariant.FLAT}>My Surveys</ButtonLink>
               </Link>
             </div>
-            <div className="hidden justify-center items-center lg:flex">
+            <div className="hidden items-center justify-center lg:flex">
               <Menu
                 as="div"
-                className="inline-block relative text-left rounded-md"
+                className="relative inline-block rounded-md text-left"
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex justify-center py-1 px-4 w-full font-medium hover:bg-zinc-200 rounded-md"
+                  className="flex w-full justify-center rounded-md py-1 px-4 font-medium hover:bg-zinc-200"
                 >
-                  <p className="hidden items-center ml-2 truncate sm:flex justify-left">
+                  <p className="justify-left ml-2 hidden items-center truncate sm:flex">
                     {user.displayName}
                     {user.photoURL && (
                       <img
                         src={user.photoURL}
                         alt="user photo"
-                        className="ml-4 w-8 h-8 rounded-full"
+                        className="ml-4 h-8 w-8 rounded-full"
                       />
                     )}
                   </p>
@@ -68,14 +68,14 @@ function Navigation() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 mt-2 bg-white rounded-md divide-y divide-zinc-100 focus:outline-none ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
+                  <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-zinc-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="flex justify-end p-1">
                       <Menu.Item>
                         <IconButton
                           onClick={logoutDesktop}
                           variant={IconButtonVariant.FLAT}
                           className="w-40 text-red-600 hover:bg-red-100"
-                          icon={<LogoutIcon className="w-5 h-5" />}
+                          icon={<LogoutIcon className="h-5 w-5" />}
                         >
                           Sign Out
                         </IconButton>
@@ -87,7 +87,7 @@ function Navigation() {
             </div>
             <MenuIcon
               onClick={() => setIsOpen(!isOpen)}
-              className="z-50 w-8 h-8 cursor-pointer lg:hidden"
+              className="z-50 h-8 w-8 cursor-pointer lg:hidden"
             />
           </div>
         ) : (
@@ -120,8 +120,8 @@ function Navigation() {
         <IconButton
           onClick={logoutMobile}
           variant={IconButtonVariant.FLAT}
-          className="justify-center w-[95%] text-red-600 hover:bg-red-100 lg:w-auto"
-          icon={<LogoutIcon className="w-5 h-5" />}
+          className="w-[95%] justify-center text-red-600 hover:bg-red-100 lg:w-auto"
+          icon={<LogoutIcon className="h-5 w-5" />}
         >
           Sign Out
         </IconButton>
