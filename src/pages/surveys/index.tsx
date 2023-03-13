@@ -49,7 +49,7 @@ function SurveyListPage() {
       <div className="container m-auto text-center md:px-8">
         <Header>Surveys</Header>
 
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col justify-center items-center">
           <div>
             {
               // TODO: add user friendly error message

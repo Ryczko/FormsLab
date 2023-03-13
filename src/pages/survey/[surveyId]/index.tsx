@@ -6,7 +6,10 @@ import { useRouter } from 'next/router';
 
 import { db } from '../../../firebase';
 import Head from 'next/head';
-import Button, { ButtonVariant, ButtonSize } from 'src/components/Button/Button';
+import Button, {
+  ButtonVariant,
+  ButtonSize,
+} from 'src/components/Button/Button';
 import EmojiButton from 'src/components/EmojiButton/EmojiButton';
 import Header from 'src/components/Header/Header';
 import Loader from 'src/components/Loader/Loader';
@@ -99,10 +102,10 @@ function SurveyPage() {
       </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (
-        <div className="container m-auto mb-6 px-4 text-center md:px-8">
+        <div className="container px-4 m-auto mb-6 text-center md:px-8">
           <Header>{question}</Header>
 
-          <div className="mx-auto grid max-w-[500px]  grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="grid  grid-cols-2  gap-2 mx-auto max-w-[500px] sm:grid-cols-4">
             {icons.map((icon, idx) => (
               <EmojiButton
                 icon={icon}
@@ -114,7 +117,7 @@ function SurveyPage() {
           </div>
           <div className="mt-8">
             <textarea
-              className="h-56 w-[500px] max-w-[100%] resize-none rounded-lg p-4 shadow focus:outline-none"
+              className="p-4 w-[500px] max-w-[100%] h-56 rounded-lg focus:outline-none shadow resize-none"
               placeholder="Tell Us More"
               value={answer}
               onChange={handleInputAnswer}

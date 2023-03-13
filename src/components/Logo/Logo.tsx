@@ -7,7 +7,8 @@ interface LogoProps {
 
 function Logo({ classNames = '' }: LogoProps) {
   return (
-    <Link href={'/'} className={'flex items-center'} passHref>
+    <Link href={'/'} passHref>
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         className={clsx('block font-serif text-2xl text-zinc-600', classNames)}
       >
