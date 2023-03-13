@@ -92,7 +92,7 @@ function SurveyCreatePage() {
       <Head>
         <title>Create Survey</title>
       </Head>
-      <div className="container m-auto px-4 text-center md:px-8">
+      <div className="container px-4 m-auto text-center md:px-8">
         <Header>Create new survey</Header>
 
         <div className="mx-auto max-w-lg">
@@ -102,12 +102,12 @@ function SurveyCreatePage() {
             value={title}
             onChange={handleChangeTitle}
           />
-          <label className="mt-10 mb-4 block text-left font-semibold">
+          <label className="block mt-10 mb-4 font-semibold text-left">
             Select duration of survey
           </label>
-          <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0">
+          <div className="flex flex-col justify-center items-center space-y-4 md:flex-row md:space-y-0">
             <DatePicker
-              className="focus:shadow-outline mr-auto block w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow-sm focus:outline-none md:w-52"
+              className="block py-3 px-4 mr-auto w-full font-medium leading-none text-center text-zinc-600 rounded-lg focus:outline-none shadow-sm cursor-pointer md:w-52 focus:shadow-outline"
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               calendarStartDay={1}
@@ -124,7 +124,7 @@ function SurveyCreatePage() {
             />
             <p>to</p>
             <DatePicker
-              className="focus:shadow-outline ml-auto block w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow-sm focus:outline-none md:w-52"
+              className="block py-3 px-4 ml-auto w-full font-medium leading-none text-center text-zinc-600 rounded-lg focus:outline-none shadow-sm cursor-pointer md:w-52 focus:shadow-outline"
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               calendarStartDay={1}
@@ -142,11 +142,11 @@ function SurveyCreatePage() {
           </div>
 
           <div className="mt-10">
-            <label className="mb-4 block text-left font-semibold">
+            <label className="block mb-4 font-semibold text-left">
               Click on icon to change
             </label>
 
-            <div className="flex w-full justify-between">
+            <div className="flex justify-between w-full">
               {pack.map((emote, idx) => (
                 <EmojiPicker
                   key={idx}

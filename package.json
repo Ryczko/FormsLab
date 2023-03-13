@@ -36,7 +36,7 @@
     "test": "jest",
     "test-ci": "cross-env CI=1 jest --ci",
     "test-watch": "jest test --watch",
-    "lint": "eslint --ext .js,.ts,.tsx src/",
+    "lint": "eslint --max-warnings=0 --ext  .js,.ts,.tsx src/",
     "lint-fix": "eslint --ext .js,.ts,.tsx src/ --fix"
   },
   "devDependencies": {

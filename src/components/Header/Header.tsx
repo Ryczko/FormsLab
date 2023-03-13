@@ -4,7 +4,7 @@ type Props = {
 
 export default function Header({ children }: Props) {
   return (
-    <h1 className="mx-auto max-w-4xl pb-8 text-center text-3xl font-bold md:text-4xl">
+    <h1 className="pb-8 mx-auto max-w-4xl text-3xl font-bold text-center md:text-4xl">
       {children}
     </h1>
   );

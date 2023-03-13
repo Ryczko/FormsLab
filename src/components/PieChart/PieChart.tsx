@@ -17,7 +17,7 @@ interface PieChartProps {
 
 export default function PieChart({ data }: PieChartProps) {
   return data ? (
-    <div className="mx-auto h-[250px] max-w-[300px]">
+    <div className="mx-auto max-w-[300px] h-[250px]">
       <ResponsiveContainer width="100%">
         <Chart>
           <Pie

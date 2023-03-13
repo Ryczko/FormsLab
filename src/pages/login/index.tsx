@@ -22,9 +22,9 @@ function LoginPage() {
       <Head>
         <title>Login</title>
       </Head>
-      <div className="container m-auto px-4 text-center md:px-8">
+      <div className="container px-4 m-auto text-center md:px-8">
         <Header>Sign in</Header>
-        <div className="flex flex-col items-center justify-center space-y-2">
+        <div className="flex flex-col justify-center items-center space-y-2">
           <LoginButton image={'/google.svg'} onClick={signInWithGoogle}>
             Sign in with Google
           </LoginButton>
@@ -33,10 +33,10 @@ function LoginPage() {
           </LoginButton>
         </div>
         {loading && (
-          <div className="text-center text-sm text-zinc-600">Loading...</div>
+          <div className="text-sm text-center text-zinc-600">Loading...</div>
         )}
         {error && (
-          <div className="text-center text-sm text-red-600">
+          <div className="text-sm text-center text-red-600">
             Error: {error.message}
           </div>
         )}

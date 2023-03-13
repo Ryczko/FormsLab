@@ -16,7 +16,7 @@ const BurgerMenu = ({ isOpen, children }: BurgerMenuProps) => {
       initial="closed"
       variants={variants}
       id="burger_menu"
-      className="fixed top-20 left-0 z-10 flex w-screen flex-col items-center justify-center bg-zinc-100 pb-2 shadow-md lg:hidden"
+      className="flex fixed top-20 left-0 z-10 flex-col justify-center items-center pb-2 w-screen bg-zinc-100 shadow-md lg:hidden"
     >
       {children}
     </motion.div>
