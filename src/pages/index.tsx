@@ -1,14 +1,13 @@
-import { useAuthState } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
 
-import { auth } from '../firebase';
-import withAnimation from '../HOC/withAnimation';
-import ButtonLink from '../components/ButtonLink/ButtonLink';
+import withAnimation from '../shared/HOC/withAnimation';
+import ButtonLink from '../shared/components/ButtonLink/ButtonLink';
 import Head from 'next/head';
-import { ButtonVariant } from 'src/components/Button/Button';
+import { ButtonVariant } from 'src/shared/components/Button/Button';
+import { useApplicationContext } from 'src/features/application/context';
 
 function IndexPage() {
-  const [user, loading] = useAuthState(auth);
+  const { user, loading } = useApplicationContext();
 
   return (
     <>

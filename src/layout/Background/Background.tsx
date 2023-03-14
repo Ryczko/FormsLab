@@ -33,7 +33,7 @@ export default function Background() {
           x={1100}
           width="200"
           height="200"
-          xlinkHref={'/emote2.svg'}
+          xlinkHref={'/images/emote2.svg'}
         />
         <image
           className="opacity-80 -rotate-6"
@@ -41,7 +41,7 @@ export default function Background() {
           x={50}
           width="200"
           height="200"
-          xlinkHref={'/emote.svg'}
+          xlinkHref={'/images/emote.svg'}
         />
       </svg>
     </div>

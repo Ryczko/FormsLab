@@ -1,91 +1,29 @@
-import { addDoc, collection } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-import toast from 'react-hot-toast';
-
 import DatePicker from 'react-datepicker';
-import { useRouter } from 'next/router';
 
-import { auth, db } from '../../../firebase';
-import withAnimation from '../../../HOC/withAnimation';
-import useCopyToClipboard from '../../../hooks/useCopyToClipboard';
-import withProtectedRoute from '../../../HOC/withProtectedRoute';
+import withAnimation from '../../../shared/HOC/withAnimation';
+import withProtectedRoute from '../../../shared/HOC/withProtectedRoute';
 import Head from 'next/head';
-import Button, { ButtonVariant } from 'src/components/Button/Button';
-import Header from 'src/components/Header/Header';
-import Input from 'src/components/Input/Input';
-import EmojiPicker from 'src/components/EmojiPicker/EmojiPicker';
+import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
+import Header from 'src/shared/components/Header/Header';
+import Input from 'src/shared/components/Input/Input';
+import EmojiPicker from 'src/features/surveys/components/EmojiPicker/EmojiPicker';
+import { useCreateSurveyManager } from 'src/features/surveys/managers/createSurveyManager';
 
 function SurveyCreatePage() {
-  const [title, setTitle] = useState('');
-  const [pack, setPack] = useState(['😃', '🙂', '🙁', '😡']);
-
-  const [user] = useAuthState(auth);
-  const [buttonDisable, setButtonDisable] = useState(false);
-
-  const router = useRouter();
-  const [, copy] = useCopyToClipboard();
-
-  const handleChangeTitle = (e: any) => {
-    setTitle(e.target.value);
-  };
-
-  const handleEmotePick = (index: number, newEmote: string) => {
-    setPack((oldPack) => {
-      oldPack.splice(index, 1, newEmote);
-      return oldPack;
-    });
-  };
-
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(
-    new Date(new Date().setDate(new Date().getDate() + 1)) as any
-  );
-
-  useEffect(() => {
-    if (startDate! > endDate!) {
-      setStartDate(endDate);
-      setEndDate(startDate);
-    }
-  }, [startDate, endDate]);
-
-  const createSurvey = async () => {
-    setButtonDisable(true);
-    try {
-      const newSurvey = await addDoc(collection(db, 'surveys'), {
-        title,
-        pack,
-        creatorId: user?.uid,
-        startDate,
-        endDate,
-      });
-      const domain =
-        window.location.hostname === 'localhost' ? 'http://' : 'https://';
-      const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
-      copy(link);
-      toast.success('Survey created and link copied to clipboard');
-
-      router.push(`/survey/answer/${newSurvey.id}`);
-    } catch (error) {
-      toast.error('Survey creation failed');
-    }
-    setButtonDisable(false);
-  };
-
-  const filterPassedTime = (time: string | number | Date) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(time);
-
-    return currentDate.getTime() < selectedDate.getTime();
-  };
-
-  const filterPassedSelectedTime = (time: string | number | Date) => {
-    const currentDate = startDate;
-    const selectedDate = new Date(time);
-
-    return currentDate!.getTime() < selectedDate.getTime();
-  };
+  const {
+    title,
+    pack,
+    handleChangeTitle,
+    startDate,
+    setStartDate,
+    endDate,
+    filterPassedTime,
+    setEndDate,
+    filterPassedSelectedTime,
+    handleEmotePick,
+    createSurvey,
+    buttonDisable,
+  } = useCreateSurveyManager();
 
   return (
     <>

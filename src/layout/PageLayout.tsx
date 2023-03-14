@@ -1,17 +1,17 @@
-
 import { AnimatePresence } from 'framer-motion';
-import Background from '../components/Background/Background';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
+import Background from './Background/Background';
+
 import GlobalLoader from './GlobalLoader/GlobalLoader';
-import Navigation from 'src/components/Navigation/Navigation';
+import Navigation from 'src/layout/Navigation/Navigation';
+import { useApplicationContext } from 'src/features/application/context';
 
 interface PageLayoutProps {
   children: React.ReactNode;
 }
 
 function PageLayout({ children }: PageLayoutProps) {
-  const [, loading] = useAuthState(auth);
+  const { loading } = useApplicationContext();
+
   return (
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>

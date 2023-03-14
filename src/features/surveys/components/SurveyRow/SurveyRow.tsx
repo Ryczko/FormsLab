@@ -2,13 +2,17 @@ import { useState, Fragment } from 'react';
 import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 
 import toast from 'react-hot-toast';
-import useCopyToClipboard from '../../hooks/useCopyToClipboard';
+import useCopyToClipboard from '../../../../shared/hooks/useCopyToClipboard';
 import { Dialog, Transition } from '@headlessui/react';
-import { db } from '../../firebase';
+import { db } from '../../../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import Button, { ButtonVariant } from '../Button/Button';
-import IconButton, { IconButtonVariant } from '../IconButton/IconButton';
+import Button, {
+  ButtonVariant,
+} from '../../../../shared/components/Button/Button';
+import IconButton, {
+  IconButtonVariant,
+} from '../../../../shared/components/IconButton/IconButton';
 
 type Props = {
   question: string;

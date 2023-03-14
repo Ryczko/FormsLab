@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import BarChart, { BarChartData } from '../BarChart/BarChart';
 import DataCard from '../DataCard/DataCard';
 
-
 interface AnswerHeaderProps {
   totalVotes: number;
   startDate: string;

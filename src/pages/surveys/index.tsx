@@ -1,45 +1,17 @@
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { db, auth } from '../../firebase';
-import {
-  collection,
-  query,
-  Timestamp,
-  where,
-  orderBy,
-  DocumentData,
-  Query,
-} from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { formatFirebaseDateWithoutHours } from '../../utilities/convertTime';
-import withAnimation from '../../HOC/withAnimation';
-import { useEffect, useState } from 'react';
+import { formatFirebaseDateWithoutHours } from '../../shared/utilities/convertTime';
+import withAnimation from '../../shared/HOC/withAnimation';
 import Image from 'next/image';
-import withProtectedRoute from '../../HOC/withProtectedRoute';
+import withProtectedRoute from '../../shared/HOC/withProtectedRoute';
 import Head from 'next/head';
-import Header from 'src/components/Header/Header';
-import Loader from 'src/components/Loader/Loader';
-import SurveyRow from 'src/components/SurveyRow/SurveyRow';
+import Header from 'src/shared/components/Header/Header';
+import Loader from 'src/shared/components/Loader/Loader';
+import SurveyRow from 'src/features/surveys/components/SurveyRow/SurveyRow';
+import { useSurveyListManager } from 'src/features/surveys/managers/surveyListManager';
 
 function SurveyListPage() {
-  const [user] = useAuthState(auth);
-
-  const [q, setQ] = useState<Query<DocumentData>>();
-
-  useEffect(() => {
-    if (user?.uid) {
-      const surveysCollectionRef = collection(db, 'surveys');
-      setQ(
-        query(
-          surveysCollectionRef,
-          where('creatorId', '==', user?.uid),
-          orderBy('startDate', 'desc')
-        )
-      );
-    }
-  }, [user]);
-
-  const [surveysCollection, loading, error] = useCollection(q);
+  const { error, loading, surveysCollection } = useSurveyListManager();
 
   return (
     <>
@@ -82,7 +54,7 @@ function SurveyListPage() {
               <>
                 <Image
                   className="mt-2 w-[200px] -translate-x-3"
-                  src={'/no-surveys.svg'}
+                  src={'/images/no-surveys.svg'}
                   alt="no surveys"
                   width="200"
                   height="125"
