@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
-import { auth, signInWithGoogle, signInWithGithub } from '../../firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import withAnimation from '../../HOC/withAnimation';
-import { useRouter } from 'next/router';
+import { signInWithGoogle, signInWithGithub } from '../../firebase';
+import withAnimation from '../../shared/HOC/withAnimation';
 import Head from 'next/head';
-import Header from 'src/components/Header/Header';
-import LoginButton from 'src/components/LoginButton/LoginButton';
+import Header from 'src/shared/components/Header/Header';
+import LoginButton from 'src/shared/components/LoginButton/LoginButton';
+import { useApplicationContext } from 'src/features/application/context';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 function LoginPage() {
-  const [user, loading, error] = useAuthState(auth);
+  const { loading, error, user } = useApplicationContext();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -25,10 +26,10 @@ function LoginPage() {
       <div className="container px-4 m-auto text-center md:px-8">
         <Header>Sign in</Header>
         <div className="flex flex-col justify-center items-center space-y-2">
-          <LoginButton image={'/google.svg'} onClick={signInWithGoogle}>
+          <LoginButton image={'/images/google.svg'} onClick={signInWithGoogle}>
             Sign in with Google
           </LoginButton>
-          <LoginButton image={'/github.svg'} onClick={signInWithGithub}>
+          <LoginButton image={'/images/github.svg'} onClick={signInWithGithub}>
             Sign in with Github
           </LoginButton>
         </div>

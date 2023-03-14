@@ -1,19 +1,22 @@
 import { LogoutIcon, MenuIcon } from '@heroicons/react/outline';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import Logo from '../Logo/Logo';
 import { Menu, Transition } from '@headlessui/react';
-import ButtonLink from '../ButtonLink/ButtonLink';
+import ButtonLink from '../../shared/components/ButtonLink/ButtonLink';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
-import { ButtonVariant } from '../Button/Button';
-import IconButton, { IconButtonVariant } from '../IconButton/IconButton';
+import { ButtonVariant } from '../../shared/components/Button/Button';
+import IconButton, {
+  IconButtonVariant,
+} from '../../shared/components/IconButton/IconButton';
 import Image from 'next/image';
+import { useApplicationContext } from 'src/features/application/context';
 
 function Navigation() {
-  const [user, loading] = useAuthState(auth);
+  const { user, loading } = useApplicationContext();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const logoutDesktop = () => {
@@ -24,6 +27,7 @@ function Navigation() {
     signOut(auth);
     setIsOpen(!isOpen);
   };
+
   return (
     <nav className="fixed z-10 py-5 w-full bg-zinc-100 border-b border-neutral-200">
       <div className="flex justify-between px-4 md:px-8">

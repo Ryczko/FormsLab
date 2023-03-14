@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
-import { useCloseComponent } from '../../hooks/useCloseComponent';
+import { useCloseComponent } from '../../../../shared/hooks/useCloseComponent';
 
 import dynamic from 'next/dynamic';
 import Emoji from '../Emoji/Emoji';
-import Loader from '../Loader/Loader';
+import Loader from '../../../../shared/components/Loader/Loader';
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
   loading: () => <Loader isLoading={true} />,
