@@ -12,7 +12,7 @@ export const useSurveyAnswerManager = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
-  const [selectedIcon, setSelectedIcon] = useState<string | null>('');
+  const [selectedIcon, setSelectedIcon] = useState('');
   const [buttonDisable, setButtonDisable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

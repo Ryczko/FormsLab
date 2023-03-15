@@ -15,13 +15,13 @@ export enum ButtonSize {
   MEDIUM = 'w-32',
   LARGE = 'w-40',
 }
-export type ButtonProps = {
+export interface ButtonProps {
   variant?: ButtonVariant;
   disabled?: boolean;
   sizeType?: ButtonSize;
   className?: string | undefined;
   type?: 'button' | 'submit' | 'reset' | undefined;
-};
+}
 
 const Button = ({
   children,
