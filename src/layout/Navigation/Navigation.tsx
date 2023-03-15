@@ -124,11 +124,20 @@ function Navigation() {
         </Link>
         <Link href={'/surveys'} passHref>
           <ButtonLink
-            className="mb-3  w-[95%] lg:w-auto"
+            className="mb-3 w-[95%] lg:w-auto"
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
           >
             My Surveys
+          </ButtonLink>
+        </Link>
+        <Link href={'/settings'} passHref>
+          <ButtonLink
+            className="mb-3 w-[95%] lg:w-auto"
+            onClick={() => setIsOpen(!isOpen)}
+            variant={ButtonVariant.FLAT}
+          >
+            Settings
           </ButtonLink>
         </Link>
         <IconButton
