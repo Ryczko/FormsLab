@@ -46,6 +46,13 @@ export const useSettingsManager = (): SettingsManager => {
       surveysCollection.forEach(async (survey) => {
         await deleteDoc(doc(db, 'surveys', survey.id));
       });
+      const answersCollection = await getDocs(
+        query(collection(db, 'answers'), where('creatorId', '==', user?.uid))
+      );
+      answersCollection.forEach(async (answer) => {
+        await deleteDoc(doc(db, 'answers', answer.id));
+      });
+
       await deleteDoc(doc(db, 'users', user.uid));
 
       closeDeleteModal();
