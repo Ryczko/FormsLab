@@ -76,7 +76,14 @@ function Navigation() {
                   leaveTo="transform opacity-0 scale-95"
                 >
                   <Menu.Items className="absolute right-0 mt-2 bg-white rounded-md divide-y divide-zinc-100 focus:outline-none ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
-                    <div className="flex justify-end p-1">
+                    <div className="flex flex-col justify-end p-1">
+                      <Menu.Item>
+                        <Link href={'/settings'} passHref>
+                          <ButtonLink variant={ButtonVariant.FLAT}>
+                            Settings
+                          </ButtonLink>
+                        </Link>
+                      </Menu.Item>
                       <Menu.Item>
                         <IconButton
                           onClick={logoutDesktop}
