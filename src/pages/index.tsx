@@ -12,7 +12,8 @@ function IndexPage() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Employee Pulse</title>
+        <meta name="description" content="Homepage - Employee Pulse" />
       </Head>
       <div className="flex overflow-hidden flex-col">
         <section className="relative">
