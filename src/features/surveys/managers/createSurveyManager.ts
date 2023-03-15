@@ -27,9 +27,9 @@ export const useCreateSurveyManager = () => {
     });
   };
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(
-    new Date(new Date().setDate(new Date().getDate() + 1)) as Date
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(
+    new Date(new Date().setDate(new Date().getDate() + 1))
   );
 
   useEffect(() => {
