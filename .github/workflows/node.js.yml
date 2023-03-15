@@ -12,6 +12,7 @@ on:
     branches-ignore:
       - main
       - dev
+    branches: '*'
 
 jobs:
   build:
