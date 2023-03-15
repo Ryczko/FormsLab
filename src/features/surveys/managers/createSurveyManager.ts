@@ -16,7 +16,7 @@ export const useCreateSurveyManager = () => {
   const router = useRouter();
   const [, copy] = useCopyToClipboard();
 
-  const handleChangeTitle = (e: any) => {
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
@@ -29,7 +29,7 @@ export const useCreateSurveyManager = () => {
 
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(
-    new Date(new Date().setDate(new Date().getDate() + 1)) as any
+    new Date(new Date().setDate(new Date().getDate() + 1)) as Date
   );
 
   useEffect(() => {

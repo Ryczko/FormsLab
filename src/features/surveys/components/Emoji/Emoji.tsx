@@ -1,7 +1,7 @@
-type EmojiProps = {
+interface EmojiProps {
   symbol: string;
   label?: string;
-};
+}
 
 export default function Emoji({ symbol, label }: EmojiProps) {
   return (

@@ -3,7 +3,7 @@ import Image from 'next/image';
 interface LoginButtonProps {
   image: string;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 function LoginButton({
