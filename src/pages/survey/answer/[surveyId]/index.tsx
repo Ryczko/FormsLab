@@ -32,6 +32,7 @@ function SurveyResultsPage() {
     <>
       <Head>
         <title>Survey Answers</title>
+        <meta name="description" content="Survey Answers - Employee Pulse" />
       </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (

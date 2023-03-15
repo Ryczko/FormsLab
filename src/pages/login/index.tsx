@@ -22,6 +22,7 @@ function LoginPage() {
     <>
       <Head>
         <title>Login</title>
+        <meta name="description" content="Login - Employee Pulse" />
       </Head>
       <div className="container px-4 m-auto text-center md:px-8">
         <Header>Sign in</Header>

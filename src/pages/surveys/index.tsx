@@ -17,6 +17,7 @@ function SurveyListPage() {
     <>
       <Head>
         <title>Surveys</title>
+        <meta name="description" content="Surveys - Employee Pulse" />
       </Head>
       <div className="container m-auto text-center md:px-8">
         <Header>Surveys</Header>
