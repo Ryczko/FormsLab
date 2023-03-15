@@ -1,56 +1,26 @@
 import withAnimation from '../../shared/HOC/withAnimation';
 import Head from 'next/head';
 import Header from 'src/shared/components/Header/Header';
-import { useApplicationContext } from 'src/features/application/context';
-import { Fragment, useState } from 'react';
-import { useRouter } from 'next/router';
+import { Fragment } from 'react';
 import withProtectedRoute from 'src/shared/HOC/withProtectedRoute';
 import IconButton, {
   IconButtonVariant,
 } from 'src/shared/components/IconButton/IconButton';
 import { TrashIcon } from '@heroicons/react/outline';
-import toast from 'react-hot-toast';
-import { auth, db } from '../../firebase';
-import { deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { Dialog, Transition } from '@headlessui/react';
 import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
-import { collection, query, where } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
+import { useSettingsManager } from 'src/features/settings/settingsManager';
 
 function SettingsPage() {
-  const { loading, error, user } = useApplicationContext();
-  const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-
-  function closeDeleteModal() {
-    setIsOpen(false);
-  }
-
-  function openDeleteModal() {
-    setIsOpen(true);
-  }
-
-  const handleOnAccountDelete = async () => {
-    try {
-      const q = query(
-        collection(db, 'surveys'),
-        where('creatorId', '==', user?.uid)
-      );
-      const surveysCollection = await getDocs(q);
-      surveysCollection.forEach(async (survey) => {
-        await deleteDoc(doc(db, 'surveys', survey.id));
-      });
-      await deleteDoc(doc(db, 'users', user.uid));
-
-      closeDeleteModal();
-      toast.success('Account deleted');
-      signOut(auth);
-      router.replace('/');
-    } catch (error) {
-      toast.error('Error deleting account');
-      console.error(error);
-    }
-  };
+  const {
+    user,
+    loading,
+    error,
+    isOpen,
+    openDeleteModal,
+    closeDeleteModal,
+    handleOnAccountDelete,
+  } = useSettingsManager();
 
   return (
     <>
