@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { signOut, User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
-type SettingsManager = {
+interface SettingsManager {
   loading: boolean;
   error: Error;
   user: User;
@@ -21,7 +21,7 @@ type SettingsManager = {
   closeDeleteModal: () => void;
   openDeleteModal: () => void;
   handleOnAccountDelete: () => void;
-};
+}
 
 export const useSettingsManager = (): SettingsManager => {
   const { loading, error, user } = useApplicationContext();

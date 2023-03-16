@@ -1,4 +1,4 @@
-import { LogoutIcon, MenuIcon } from '@heroicons/react/outline';
+import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
@@ -13,6 +13,7 @@ import IconButton, {
 } from '../../shared/components/IconButton/IconButton';
 import Image from 'next/image';
 import { useApplicationContext } from 'src/features/application/context';
+import IconButtonLink from 'src/shared/components/IconButtonLink/IconButtonLink';
 
 function Navigation() {
   const { user, loading } = useApplicationContext();
@@ -79,9 +80,12 @@ function Navigation() {
                     <div className="flex flex-col justify-end p-1">
                       <Menu.Item>
                         <Link href={'/settings'} passHref>
-                          <ButtonLink variant={ButtonVariant.FLAT}>
+                          <IconButtonLink
+                            variant={ButtonVariant.FLAT}
+                            icon={<CogIcon className="w-5 h-5" />}
+                          >
                             Settings
-                          </ButtonLink>
+                          </IconButtonLink>
                         </Link>
                       </Menu.Item>
                       <Menu.Item>
@@ -132,13 +136,14 @@ function Navigation() {
           </ButtonLink>
         </Link>
         <Link href={'/settings'} passHref>
-          <ButtonLink
+          <IconButtonLink
             className="mb-3 w-[95%] lg:w-auto"
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
+            icon={<CogIcon className="w-5 h-5" />}
           >
             Settings
-          </ButtonLink>
+          </IconButtonLink>
         </Link>
         <IconButton
           onClick={logoutMobile}
