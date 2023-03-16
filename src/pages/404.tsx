@@ -1,8 +1,8 @@
-import useRedirect from 'src/shared/hooks/useRedirect';
+import useRedirectWithTimeout from 'src/shared/hooks/useRedirectWithTimeout';
 import Head from 'next/head';
 
 export default function FourOhFour() {
-  const { secondsRemaining } = useRedirect('/', 5);
+  const { secondsRemaining } = useRedirectWithTimeout('/', 5);
   return (
     <>
       <Head>

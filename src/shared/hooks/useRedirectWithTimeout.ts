@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export default function useRedirect(redirectTo: string, seconds: number) {
+export default function useRedirectWithTimeout(
+  redirectTo: string,
+  seconds: number
+) {
   const [secondsRemaining, setSecondsRemaining] = useState(seconds);
   const router = useRouter();
 
