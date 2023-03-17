@@ -74,7 +74,13 @@ const signInWithGithub = async () => {
   }
 };
 
-const logInWithEmailAndPassword = async (email: string, password: string) => {
+const logInWithEmailAndPassword = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
