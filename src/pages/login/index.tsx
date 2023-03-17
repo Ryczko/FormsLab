@@ -16,7 +16,7 @@ function LoginPage() {
     if (user) {
       router.push('/');
     }
-  }, [user, loading]);
+  }, [user, loading, router]);
 
   return (
     <>
