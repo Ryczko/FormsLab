@@ -17,7 +17,7 @@ function Input({
   required,
   onChange,
   error,
-}: InputProps) {
+}: InputProps & React.HTMLProps<HTMLButtonElement>) {
   return (
     <div className="mb-4">
       <input
