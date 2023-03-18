@@ -1,9 +1,10 @@
 import { FormikHelpers } from 'formik';
-import { logInWithEmailAndPassword } from 'src/firebase';
 import * as Yup from 'yup';
+import { registerWithEmailAndPassword } from 'src/firebase';
 
-export const useLoginManager = () => {
+export const useRegisterManager = () => {
   const initialValues = {
+    name: '',
     email: '',
     password: '',
     message: '',
@@ -11,14 +12,15 @@ export const useLoginManager = () => {
 
   type FormValues = typeof initialValues;
 
-  const LoginSchema = Yup.object().shape({
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string().required('Required field'),
     email: Yup.string()
       .email('Incorrect email address')
       .required('Required field'),
     password: Yup.string()
       .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-        'Enter correct password'
+        /^[a-zA-Z0-9!@#$%^&*()_+]{8,20}$/,
+        'The password must contain at least 8 characters.'
       )
       .required('Required field'),
   });
@@ -28,7 +30,8 @@ export const useLoginManager = () => {
     { resetForm, setFieldError }: FormikHelpers<FormValues>
   ) => {
     try {
-      await logInWithEmailAndPassword({
+      await registerWithEmailAndPassword({
+        name: values.name,
         email: values.email,
         password: values.password,
       });
@@ -39,8 +42,8 @@ export const useLoginManager = () => {
   };
 
   return {
-    initialValues,
-    LoginSchema,
     onSubmit,
+    SignupSchema,
+    initialValues,
   };
 };

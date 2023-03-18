@@ -1,62 +1,23 @@
-import { registerWithEmailAndPassword } from '../../firebase';
-import { Form, Formik, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
 import withAnimation from '../../shared/HOC/withAnimation';
 import Head from 'next/head';
 import Header from 'src/shared/components/Header/Header';
 import LoginButton from 'src/shared/components/LoginButton/LoginButton';
-import { useApplicationContext } from 'src/features/application/context';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Input from 'src/shared/components/Input/Input';
-
-const initialValues = {
-  name: '',
-  email: '',
-  password: '',
-  message: '',
-};
-
-type FormValues = typeof initialValues;
-
-const SignupSchema = Yup.object().shape({
-  name: Yup.string().required('Required field'),
-  email: Yup.string()
-    .email('Incorrect email address')
-    .required('Required field'),
-  password: Yup.string()
-    .matches(
-      /^[a-zA-Z0-9!@#$%^&*()_+]{8,20}$/,
-      'The password must contain at least 8 characters.'
-    )
-    .required('Required field'),
-});
+import { useRegisterManager } from 'src/features/authorization/managers/registerManager';
+import { useApplicationContext } from 'src/features/application/context';
+import router from 'next/router';
+import { useEffect } from 'react';
 
 function SignupPage() {
   const { loading, error, user } = useApplicationContext();
-  const router = useRouter();
+  const { initialValues, onSubmit, SignupSchema } = useRegisterManager();
 
   useEffect(() => {
     if (user) {
       router.push('/');
     }
-  }, [router, user, loading]);
-
-  const onSubmit = async (
-    values: FormValues,
-    { resetForm, setFieldError }: FormikHelpers<FormValues>
-  ) => {
-    try {
-      await registerWithEmailAndPassword({
-        name: values.name,
-        email: values.email,
-        password: values.password,
-      });
-      resetForm();
-    } catch (e) {
-      setFieldError('message', 'Error while signing in!');
-    }
-  };
+  }, [user, loading]);
 
   return (
     <>

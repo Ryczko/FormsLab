@@ -8,11 +8,18 @@ import { useApplicationContext } from 'src/features/application/context';
 import Input from 'src/shared/components/Input/Input';
 import Link from 'next/link';
 import { useLoginManager } from 'src/features/authorization/managers/loginManager';
+import router from 'next/router';
+import { useEffect } from 'react';
 
 function LoginPage() {
-  const { loading, error } = useApplicationContext();
-
+  const { loading, error, user } = useApplicationContext();
   const { initialValues, LoginSchema, onSubmit } = useLoginManager();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, loading]);
 
   return (
     <>
