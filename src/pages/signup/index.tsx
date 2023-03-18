@@ -25,7 +25,10 @@ const SignupSchema = Yup.object().shape({
     .email('Incorrect email address')
     .required('Required field'),
   password: Yup.string()
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Enter correct password')
+    .matches(
+      /^[a-zA-Z0-9!@#$%^&*()_+]{8,20}$/,
+      'The password must contain at least 8 characters.'
+    )
     .required('Required field'),
 });
 
