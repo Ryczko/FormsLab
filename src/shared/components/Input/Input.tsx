@@ -3,11 +3,11 @@ import React from 'react';
 interface InputProps {
   label?: string;
   type?: React.HTMLInputTypeAttribute;
-  value: string | number;
+  value?: string | number;
   required?: boolean;
   placeholder?: string;
   error?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 function Input({
