@@ -1,7 +1,8 @@
 import React from 'react';
 
 interface InputProps {
-  type: React.HTMLInputTypeAttribute;
+  label?: string;
+  type?: React.HTMLInputTypeAttribute;
   value: string | number;
   required?: boolean;
   placeholder?: string;
