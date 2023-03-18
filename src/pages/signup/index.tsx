@@ -37,7 +37,7 @@ function SignupPage() {
     if (user) {
       router.push('/');
     }
-  }, [user, loading]);
+  }, [router, user, loading]);
 
   const onSubmit = async (
     values: FormValues,
