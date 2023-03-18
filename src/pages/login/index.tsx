@@ -40,7 +40,7 @@ function LoginPage() {
     if (user) {
       router.push('/');
     }
-  }, [user, loading]);
+  }, [user, loading, router]);
 
   const onSubmit = async (
     values: FormValues,
