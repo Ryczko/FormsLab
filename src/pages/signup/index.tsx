@@ -1,8 +1,4 @@
-import {
-  logInWithEmailAndPassword,
-  signInWithGoogle,
-  signInWithGithub,
-} from '../../firebase';
+import { registerWithEmailAndPassword } from '../../firebase';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import withAnimation from '../../shared/HOC/withAnimation';
@@ -13,9 +9,9 @@ import { useApplicationContext } from 'src/features/application/context';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Input from 'src/shared/components/Input/Input';
-import Link from 'next/link';
 
 const initialValues = {
+  name: '',
   email: '',
   password: '',
   message: '',
@@ -23,7 +19,8 @@ const initialValues = {
 
 type FormValues = typeof initialValues;
 
-const LoginSchema = Yup.object().shape({
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().required('Required field'),
   email: Yup.string()
     .email('Incorrect email address')
     .required('Required field'),
@@ -32,7 +29,7 @@ const LoginSchema = Yup.object().shape({
     .required('Required field'),
 });
 
-function LoginPage() {
+function SignupPage() {
   const { loading, error, user } = useApplicationContext();
   const router = useRouter();
 
@@ -47,7 +44,8 @@ function LoginPage() {
     { resetForm, setFieldError }: FormikHelpers<FormValues>
   ) => {
     try {
-      await logInWithEmailAndPassword({
+      await registerWithEmailAndPassword({
+        name: values.name,
         email: values.email,
         password: values.password,
       });
@@ -60,19 +58,27 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login</title>
-        <meta name="description" content="Login - Employee Pulse" />
+        <title>Sign up</title>
+        <meta name="description" content="Sign up - Employee Pulse" />
       </Head>
       <div className="container px-4 m-auto text-center md:px-8">
-        <Header>Sign in</Header>
+        <Header>Sign up</Header>
         <div className="flex flex-col justify-center items-center space-y-2">
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={LoginSchema}
+            validationSchema={SignupSchema}
           >
             {({ values, errors, handleChange, handleSubmit, touched }) => (
               <Form className="flex flex-col w-64 sm:w-80">
+                <Input
+                  type="text"
+                  value={values.name}
+                  required
+                  error={touched.name ? errors.name : undefined}
+                  placeholder="Name"
+                  onChange={handleChange('name')}
+                />
                 <Input
                   type="text"
                   value={values.email}
@@ -89,30 +95,12 @@ function LoginPage() {
                   placeholder="Password"
                   onChange={handleChange('password')}
                 />
-                <Link href={'/signup'} passHref>
-                  <p className="max-w-sm text-sm text-right text-zinc-600 underline hover:cursor-pointer">
-                    {'Don\'t have an account?'}
-                  </p>
-                </Link>
                 <p className="self-center mb-4 max-w-sm text-sm text-center text-red-300">
                   {errors.message}
                 </p>
                 <div className="flex flex-col justify-center items-center">
                   <LoginButton type="submit" onClick={handleSubmit}>
-                    Sign in with credentials
-                  </LoginButton>
-                  <p>OR</p>
-                  <LoginButton
-                    image={'/images/google.svg'}
-                    onClick={signInWithGoogle}
-                  >
-                    Sign in with Google
-                  </LoginButton>
-                  <LoginButton
-                    image={'/images/github.svg'}
-                    onClick={signInWithGithub}
-                  >
-                    Sign in with Github
+                    Sign up
                   </LoginButton>
                 </div>
               </Form>
@@ -132,4 +120,4 @@ function LoginPage() {
   );
 }
 
-export default withAnimation(LoginPage);
+export default withAnimation(SignupPage);

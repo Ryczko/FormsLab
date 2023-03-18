@@ -88,11 +88,15 @@ const logInWithEmailAndPassword = async ({
   }
 };
 
-const registerWithEmailAndPassword = async (
-  name: string,
-  email: string,
-  password: string
-) => {
+const registerWithEmailAndPassword = async ({
+  name,
+  email,
+  password,
+}: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
