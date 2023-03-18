@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
 
@@ -100,12 +101,27 @@ const registerWithEmailAndPassword = async ({
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+
+    await updateProfile(user, { displayName: name });
     await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       name,
       authProvider: 'local',
       email,
     });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getUserData = async () => {
+  const userUID = auth.currentUser?.uid;
+  if (!userUID) {
+    return;
+  }
+  try {
+    const docs = await getDoc(doc(db, 'users', userUID));
+    return docs;
   } catch (err) {
     console.error(err);
   }
@@ -132,5 +148,6 @@ export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
+  getUserData,
   logout,
 };

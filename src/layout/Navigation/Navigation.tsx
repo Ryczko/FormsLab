@@ -13,6 +13,7 @@ import IconButton, {
 } from '../../shared/components/IconButton/IconButton';
 import Image from 'next/image';
 import { useApplicationContext } from 'src/features/application/context';
+import AvatarIcon from '../../../public/images/avatar.svg';
 
 function Navigation() {
   const { user, loading } = useApplicationContext();
@@ -56,9 +57,17 @@ function Navigation() {
                   <p className="hidden items-center mr-4 ml-2 truncate sm:block">
                     {user.displayName}
                   </p>
-                  {user.photoURL && (
+                  {user.photoURL ? (
                     <Image
                       src={user.photoURL}
+                      alt="user photo"
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <Image
+                      src={AvatarIcon}
                       alt="user photo"
                       width={32}
                       height={32}
