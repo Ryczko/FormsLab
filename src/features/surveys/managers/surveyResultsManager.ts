@@ -1,4 +1,4 @@
-// export interface SurveyResultsManager {}
+import { useCallback } from 'react';
 
 import {
   getDoc,
@@ -30,6 +30,52 @@ export const useSurveyResultsManager = () => {
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
   const [, copy] = useCopyToClipboard();
 
+  const getSurveyData = useCallback(
+    async (displayMessages = false) => {
+      const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
+      if (!surveyData.exists()) {
+        router.replace('/');
+        return;
+      }
+      const anserwsCollectionRef = collection(
+        db,
+        'surveys',
+        surveyId!,
+        'answers'
+      );
+      const anserwsQuery = query(
+        anserwsCollectionRef,
+        orderBy('answerDate', 'desc')
+      );
+
+      const answersData = await getDocs(anserwsQuery);
+      setVotes(answersData.docs.length);
+
+      setStartDate(
+        formatFirebaseDateWithHours(surveyData.data()?.startDate as Timestamp)
+      );
+      setEndDate(
+        formatFirebaseDateWithHours(surveyData.data()?.endDate as Timestamp)
+      );
+
+      setTitle(surveyData.data()?.title);
+      const data = answersData.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+        answerDate: formatFirebaseDateWithHours(
+          doc.data().answerDate as Timestamp
+        ),
+      })) as AnswerData[];
+
+      if (displayMessages) {
+        toast.success('Data has been refreshed');
+      }
+      setAnswersData(data);
+      setIsLoading(false);
+    },
+    [surveyId, router]
+  );
+
   useEffect(() => {
     if (!surveyId) {
       router.replace('/');
@@ -37,50 +83,7 @@ export const useSurveyResultsManager = () => {
     }
 
     getSurveyData();
-  }, [surveyId]);
-
-  const getSurveyData = async (displayMessages = false) => {
-    const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
-    if (!surveyData.exists()) {
-      router.replace('/');
-      return;
-    }
-    const anserwsCollectionRef = collection(
-      db,
-      'surveys',
-      surveyId!,
-      'answers'
-    );
-    const anserwsQuery = query(
-      anserwsCollectionRef,
-      orderBy('answerDate', 'desc')
-    );
-
-    const answersData = await getDocs(anserwsQuery);
-    setVotes(answersData.docs.length);
-
-    setStartDate(
-      formatFirebaseDateWithHours(surveyData.data()?.startDate as Timestamp)
-    );
-    setEndDate(
-      formatFirebaseDateWithHours(surveyData.data()?.endDate as Timestamp)
-    );
-
-    setTitle(surveyData.data()?.title);
-    const data = answersData.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-      answerDate: formatFirebaseDateWithHours(
-        doc.data().answerDate as Timestamp
-      ),
-    })) as AnswerData[];
-
-    if (displayMessages) {
-      toast.success('Data has been refreshed');
-    }
-    setAnswersData(data);
-    setIsLoading(false);
-  };
+  }, [surveyId, getSurveyData, router]);
 
   const getDataToChart = (): BarChartData[] => {
     if (!answersData.length) {
