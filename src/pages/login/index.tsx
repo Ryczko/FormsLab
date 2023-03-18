@@ -1,61 +1,18 @@
-import {
-  logInWithEmailAndPassword,
-  signInWithGoogle,
-  signInWithGithub,
-} from '../../firebase';
-import { Form, Formik, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
+import { signInWithGoogle, signInWithGithub } from '../../firebase';
+import { Form, Formik } from 'formik';
 import withAnimation from '../../shared/HOC/withAnimation';
 import Head from 'next/head';
 import Header from 'src/shared/components/Header/Header';
 import LoginButton from 'src/shared/components/LoginButton/LoginButton';
 import { useApplicationContext } from 'src/features/application/context';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Input from 'src/shared/components/Input/Input';
 import Link from 'next/link';
-
-const initialValues = {
-  email: '',
-  password: '',
-  message: '',
-};
-
-type FormValues = typeof initialValues;
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Incorrect email address')
-    .required('Required field'),
-  password: Yup.string()
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Enter correct password')
-    .required('Required field'),
-});
+import { useLoginManager } from 'src/features/authorization/managers/loginManager';
 
 function LoginPage() {
-  const { loading, error, user } = useApplicationContext();
-  const router = useRouter();
+  const { loading, error } = useApplicationContext();
 
-  useEffect(() => {
-    if (user) {
-      router.push('/');
-    }
-  }, [user, loading, router]);
-
-  const onSubmit = async (
-    values: FormValues,
-    { resetForm, setFieldError }: FormikHelpers<FormValues>
-  ) => {
-    try {
-      await logInWithEmailAndPassword({
-        email: values.email,
-        password: values.password,
-      });
-      resetForm();
-    } catch (e) {
-      setFieldError('message', 'Error while signing in!');
-    }
-  };
+  const { initialValues, LoginSchema, onSubmit } = useLoginManager();
 
   return (
     <>
