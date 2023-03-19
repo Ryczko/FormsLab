@@ -10,7 +10,7 @@ import router from 'next/router';
 import { useEffect } from 'react';
 
 function SignupPage() {
-  const { loading, error, user } = useApplicationContext();
+  const { loading, user } = useApplicationContext();
   const { initialValues, onSubmit, SignupSchema } = useRegisterManager();
 
   useEffect(() => {
@@ -73,11 +73,6 @@ function SignupPage() {
         </div>
         {loading && (
           <div className="text-sm text-center text-zinc-600">Loading...</div>
-        )}
-        {error && (
-          <div className="text-sm text-center text-red-600">
-            Error: {error.message}
-          </div>
         )}
       </div>
     </>

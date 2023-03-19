@@ -12,7 +12,7 @@ import router from 'next/router';
 import { useEffect } from 'react';
 
 function LoginPage() {
-  const { loading, error, user } = useApplicationContext();
+  const { loading, user } = useApplicationContext();
   const { initialValues, LoginSchema, onSubmit } = useLoginManager();
 
   useEffect(() => {
@@ -85,11 +85,6 @@ function LoginPage() {
         </div>
         {loading && (
           <div className="text-sm text-center text-zinc-600">Loading...</div>
-        )}
-        {error && (
-          <div className="text-sm text-center text-red-600">
-            Error: {error.message}
-          </div>
         )}
       </div>
     </>
