@@ -64,40 +64,6 @@ export default function SurveyRow({
 
   return (
     <div className="flex flex-col mb-4 w-[600px] max-w-full md:flex-row">
-      <StyledDialog
-        isOpen={isOpen}
-        onClose={closeDeleteModal}
-        title="Delete survey"
-        content={
-          <>
-            <div className="mt-2">
-              <p className="text-sm text-red-500">
-                Are you sure you want to&nbsp;
-                <span className="font-bold">delete</span> this survey?
-              </p>
-            </div>
-
-            <div className="flex justify-between mt-6">
-              <Button
-                variant={ButtonVariant.SECONDARY}
-                onClick={closeDeleteModal}
-                className="uppercase"
-              >
-                Cancel
-              </Button>
-              <IconButton
-                variant={IconButtonVariant.DANGER}
-                onClick={handleOnDelete(id)}
-                icon={<TrashIcon className="w-5 h-5" />}
-                className="uppercase"
-              >
-                Delete
-              </IconButton>
-            </div>
-          </>
-        }
-      />
-
       <div className="flex justify-between items-center py-3 px-4 w-full bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
         <div title={question} className="w-36 text-left truncate">
           {question}
@@ -134,6 +100,39 @@ export default function SurveyRow({
           icon={<TrashIcon className="w-5 h-5" />}
         />
       </div>
+      <StyledDialog
+        isOpen={isOpen}
+        onClose={closeDeleteModal}
+        title="Delete survey"
+        content={
+          <>
+            <div className="mt-2">
+              <p className="text-sm text-red-500">
+                Are you sure you want to&nbsp;
+                <span className="font-bold">delete</span> this survey?
+              </p>
+            </div>
+
+            <div className="flex justify-between mt-6">
+              <Button
+                variant={ButtonVariant.SECONDARY}
+                onClick={closeDeleteModal}
+                className="uppercase"
+              >
+                Cancel
+              </Button>
+              <IconButton
+                variant={IconButtonVariant.DANGER}
+                onClick={handleOnDelete(id)}
+                icon={<TrashIcon className="w-5 h-5" />}
+                className="uppercase"
+              >
+                Delete
+              </IconButton>
+            </div>
+          </>
+        }
+      />
     </div>
   );
 }

@@ -29,39 +29,6 @@ function SettingsPage() {
       <div className="container px-4 m-auto text-center md:px-8">
         <Header>Hi {user.displayName}!</Header>
         <div className="flex flex-col justify-center items-center space-y-2">
-          <StyledDialog
-            isOpen={isOpen}
-            onClose={closeDeleteModal}
-            title="Delete my account"
-            content={
-              <>
-                <div className="mt-2">
-                  <p className="text-sm text-red-500">
-                    Are you sure you want to&nbsp;
-                    <span className="font-bold">delete</span> your account?
-                  </p>
-                </div>
-                <div className="flex justify-between mt-6 space-x-3">
-                  <Button
-                    variant={ButtonVariant.SECONDARY}
-                    onClick={closeDeleteModal}
-                    className="uppercase"
-                  >
-                    Cancel
-                  </Button>
-                  <IconButton
-                    variant={IconButtonVariant.DANGER}
-                    onClick={handleOnAccountDelete}
-                    icon={<TrashIcon className="w-5 h-5" />}
-                    className="uppercase"
-                  >
-                    Delete my account
-                  </IconButton>
-                </div>
-              </>
-            }
-          />
-
           <div className="flex w-full md:ml-2 md:w-auto">
             <IconButton
               variant={IconButtonVariant.DANGER}
@@ -74,6 +41,38 @@ function SettingsPage() {
             </IconButton>
           </div>
         </div>
+        <StyledDialog
+          isOpen={isOpen}
+          onClose={closeDeleteModal}
+          title="Delete my account"
+          content={
+            <>
+              <div className="mt-2">
+                <p className="text-sm text-red-500">
+                  Are you sure you want to&nbsp;
+                  <span className="font-bold">delete</span> your account?
+                </p>
+              </div>
+              <div className="flex justify-between mt-6 space-x-3">
+                <Button
+                  variant={ButtonVariant.SECONDARY}
+                  onClick={closeDeleteModal}
+                  className="uppercase"
+                >
+                  Cancel
+                </Button>
+                <IconButton
+                  variant={IconButtonVariant.DANGER}
+                  onClick={handleOnAccountDelete}
+                  icon={<TrashIcon className="w-5 h-5" />}
+                  className="uppercase"
+                >
+                  Delete my account
+                </IconButton>
+              </div>
+            </>
+          }
+        />
         {loading && (
           <div className="text-sm text-center text-zinc-600">Loading...</div>
         )}
