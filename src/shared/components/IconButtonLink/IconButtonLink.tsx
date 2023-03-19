@@ -29,7 +29,7 @@ const IconButtonLink = forwardRef(function ButtonLink(
       className={clsx(
         'btn',
         'hover:no-underline',
-        'flex items-center w-fit',
+        'flex items-center',
         variant,
         sizeType,
         className
