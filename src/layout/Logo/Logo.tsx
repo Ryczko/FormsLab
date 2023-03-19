@@ -11,7 +11,7 @@ function Logo({ classNames = '' }: LogoProps) {
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         className={clsx(
-          'block ml-14 font-serif text-2xl text-zinc-600 translate-y-[-2px] md:ml-11',
+          'block font-serif text-2xl text-zinc-600 translate-y-[-2px] md:ml-11 small-sm:ml-14',
           classNames
         )}
       >
