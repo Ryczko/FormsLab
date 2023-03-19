@@ -1,4 +1,6 @@
 import { LinkIcon, RefreshIcon, TrashIcon } from '@heroicons/react/outline';
+import { useState } from 'react';
+
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
@@ -36,6 +38,13 @@ function SurveyResultsPage() {
     () => router.push('/surveys'),
     [router]
   );
+
+  const [showOnlyWrittenResponses, setShowOnlyWrittenResponses] =
+    useState(false);
+
+  const filteredAnswersData = showOnlyWrittenResponses
+    ? answersData.filter((answer) => answer.answer.trim() !== '')
+    : answersData;
 
   return (
     <>
@@ -81,9 +90,24 @@ function SurveyResultsPage() {
             totalVotes={votes}
             createDate={createDate}
           />
-          {answersData.length > 0 ? (
+          <div className="mt-4 flex items-center" style={{ marginLeft: '24%' }}>
+            <input
+              type="checkbox"
+              id="filter-written-responses"
+              checked={showOnlyWrittenResponses}
+              onChange={(e) => setShowOnlyWrittenResponses(e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <label
+              htmlFor="filter-written-responses"
+              className="ml-2 text-sm text-gray-900"
+            >
+              Show only responses with written field
+            </label>
+          </div>
+          {filteredAnswersData.length > 0 ? (
             <div className="mt-8 mb-6">
-              {answersData.map((answer) => (
+              {filteredAnswersData.map((answer) => (
                 <AnswerTableRow
                   key={answer.id}
                   time={answer.answerDate}
