@@ -5,18 +5,9 @@ import ButtonLink from '../shared/components/ButtonLink/ButtonLink';
 import Head from 'next/head';
 import { ButtonVariant } from 'src/shared/components/Button/Button';
 import { useApplicationContext } from 'src/features/application/context';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 function IndexPage() {
   const { user, loading } = useApplicationContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (user && !user.displayName) {
-      router.reload();
-    }
-  }, [router, user]);
 
   return (
     <>

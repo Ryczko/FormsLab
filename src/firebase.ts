@@ -108,14 +108,18 @@ const registerWithEmailAndPassword = async ({
   name,
   email,
   password,
+  changeDisplayName,
 }: {
   name: string;
   email: string;
   password: string;
+  changeDisplayName: (userName: string) => void;
 }) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+
+    changeDisplayName(name);
 
     await updateProfile(user, { displayName: name });
     await setDoc(doc(db, 'users', user.uid), {

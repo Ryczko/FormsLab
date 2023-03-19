@@ -16,7 +16,7 @@ import { useApplicationContext } from 'src/features/application/context';
 import AvatarIcon from '../../../public/images/avatar.svg';
 
 function Navigation() {
-  const { user, loading } = useApplicationContext();
+  const { user, loading, displayName } = useApplicationContext();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,7 +55,7 @@ function Navigation() {
                   className="flex justify-center items-center py-1 px-4 w-full font-medium hover:bg-zinc-200 rounded-md"
                 >
                   <p className="hidden items-center mr-4 ml-2 truncate sm:block">
-                    {user.displayName}
+                    {displayName}
                   </p>
                   {user.photoURL ? (
                     <Image

@@ -15,12 +15,7 @@ export const useLoginManager = () => {
     email: Yup.string()
       .email('Incorrect email address')
       .required('Required field'),
-    password: Yup.string()
-      .matches(
-        /^[a-zA-Z0-9!@#$%^&*()_+]{8,50}$/,
-        'The password must contain at least 8 characters.'
-      )
-      .required('Required field'),
+    password: Yup.string().required('Required field'),
   });
 
   const onSubmit = async (

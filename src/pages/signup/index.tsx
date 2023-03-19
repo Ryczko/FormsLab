@@ -71,7 +71,7 @@ function SignupPage() {
 
                 <div className="flex flex-col justify-center items-center">
                   <LoginButton
-                    className="mt-1 text-indigo-900 bg-indigo-200 hover:bg-indigo-300"
+                    className="mt-1 mb-2 text-indigo-900 bg-indigo-200 hover:!bg-indigo-300"
                     type="submit"
                     onClick={handleSubmit}
                   >

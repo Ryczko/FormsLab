@@ -1,8 +1,11 @@
+import { useApplicationContext } from './../../application/context';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { registerWithEmailAndPassword } from 'src/firebase';
 
 export const useRegisterManager = () => {
+  const { changeDisplayName } = useApplicationContext();
+
   const initialValues = {
     name: '',
     email: '',
@@ -34,6 +37,7 @@ export const useRegisterManager = () => {
         name: values.name,
         email: values.email,
         password: values.password,
+        changeDisplayName,
       });
       resetForm();
     } catch (e) {
