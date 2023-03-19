@@ -39,7 +39,8 @@
     "test-ci": "cross-env CI=1 jest --ci",
     "test-watch": "jest test --watch",
     "lint": "eslint --max-warnings=0 --ext  .js,.ts,.tsx src/",
-    "lint-fix": "eslint --ext .js,.ts,.tsx src/ --fix"
+    "lint-fix": "eslint --ext .js,.ts,.tsx src/ --fix",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -62,6 +63,7 @@
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "postcss": "^8.4.14",
-    "tailwindcss": "^3.0.24"
+    "tailwindcss": "^3.0.24",
+    "husky": "^8.0.0"
   }
 }
