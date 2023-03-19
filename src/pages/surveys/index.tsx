@@ -1,33 +1,30 @@
 import { Timestamp } from 'firebase/firestore';
-
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { formatFirebaseDateWithoutHours } from '../../shared/utilities/convertTime';
 import withAnimation from '../../shared/HOC/withAnimation';
 import Image from 'next/image';
 import withProtectedRoute from '../../shared/HOC/withProtectedRoute';
 import Head from 'next/head';
 import Header from 'src/shared/components/Header/Header';
-import Loader from 'src/shared/components/Loader/Loader';
 import SurveyRow from 'src/features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'src/features/surveys/managers/surveyListManager';
 
 function SurveyListPage() {
-    const { error, loading, surveysCollection } = useSurveyListManager();
-    const [showOnlyWithFeedback, setShowOnlyWithFeedback] = useState(false);
-  
-    const handleCheckboxChange = (event) => {
-      setShowOnlyWithFeedback(event.target.checked);
-    };
-  
-    const filteredSurveys = (surveys) => {
-      return showOnlyWithFeedback
-        ? surveys.filter((doc) => {
-            const survey = doc.data();
-            return survey.additionalFeedback;
-          })
-        : surveys;
-    };  
+  const { error, loading, surveysCollection } = useSurveyListManager();
+  const [showOnlyWithFeedback, setShowOnlyWithFeedback] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setShowOnlyWithFeedback(event.target.checked);
+  };
+
+  const filteredSurveys = (surveys) => {
+    return showOnlyWithFeedback
+      ? surveys.filter((doc) => {
+        const survey = doc.data();
+        return survey.additionalFeedback;
+      })
+      : surveys;
+  };
 
   return (
     <>
@@ -39,19 +36,23 @@ function SurveyListPage() {
         <Header>Surveys</Header>
 
         <div className="flex flex-col justify-center items-center">
-        <label htmlFor="showOnlyWithFeedback" className="mb-4">
-          <input
-            type="checkbox"
-            id="showOnlyWithFeedback"
-            name="showOnlyWithFeedback"
-            checked={showOnlyWithFeedback}
-            onChange={handleCheckboxChange}
-          />
-          {' '}Show only surveys with additional feedback
-        </label>
+          <label htmlFor="showOnlyWithFeedback" className="mb-4">
+            <input
+              type="checkbox"
+              id="showOnlyWithFeedback"
+              name="showOnlyWithFeedback"
+              checked={showOnlyWithFeedback}
+              onChange={handleCheckboxChange}
+            />
+            {' '}Show only surveys with additional feedback
+          </label>
+          
+          {error && <p className="text-red-500">Error: {JSON.stringify(error)}</p>}
+          {loading && <p>Loading...</p>}
+
           {surveysCollection &&
-            (surveysCollection.docs?.length > 0 ? (
-              surveysCollection.docs.map((doc) => {
+            (filteredSurveys(surveysCollection.docs)?.length > 0 ? (
+              filteredSurveys(surveysCollection.docs).map((doc) => {
                 const survey = doc.data();
                 return (
                   <SurveyRow
@@ -85,3 +86,4 @@ function SurveyListPage() {
   );
 }
 export default withProtectedRoute(withAnimation(SurveyListPage));
+
