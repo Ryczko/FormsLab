@@ -8,12 +8,8 @@ on:
     branches:
       - main
       - dev
+      - '*'
   pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
-  pull_request_target:
     types:
       - opened
       - edited
