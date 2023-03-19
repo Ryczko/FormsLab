@@ -14,6 +14,8 @@ import IconButton, {
 import Image from 'next/image';
 import { useApplicationContext } from 'src/features/application/context';
 import AvatarIcon from '../../../public/images/avatar.svg';
+import GithubCorner from '../GithubCorner/GithubCorner';
+
 
 function Navigation() {
   const { user, loading, displayName } = useApplicationContext();
@@ -30,8 +32,10 @@ function Navigation() {
   };
 
   return (
-    <nav className="fixed z-10 py-5 w-full bg-zinc-100 border-b border-neutral-200">
-      <div className="flex justify-between px-4 md:px-8">
+    <nav className="flex fixed z-10 items-center  w-full h-[70px] bg-zinc-100 border-b border-neutral-200">
+      <GithubCorner />
+
+      <div className="flex grow justify-between items-center px-4 md:px-8">
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
