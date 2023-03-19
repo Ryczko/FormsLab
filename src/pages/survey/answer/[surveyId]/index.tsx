@@ -89,35 +89,35 @@ function SurveyResultsPage() {
             endDate={endDate}
           />
           <div className="flex items-center mt-4" style={{marginLeft: '24%'}}>
-  <input
-    type="checkbox"
-    id="filter-written-responses"
-    checked={showOnlyWrittenResponses}
-    onChange={e => setShowOnlyWrittenResponses(e.target.checked)}
-    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-  />
-  <label
-    htmlFor="filter-written-responses"
-    className="ml-2 text-sm text-gray-900"
-  >
+            <input
+              type="checkbox"
+              id="filter-written-responses"
+              checked={showOnlyWrittenResponses}
+              onChange={e => setShowOnlyWrittenResponses(e.target.checked)}
+              className="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
+            />
+            <label
+              htmlFor="filter-written-responses"
+              className="ml-2 text-sm text-gray-900"
+            >
     Show only responses with written field
-  </label>
-</div>
-{filteredAnswersData.length > 0 ? (
-  <div className="mt-8 mb-6">
-    {filteredAnswersData.map((answer) => (
-      <AnswerTableRow
-        key={answer.id}
-        time={answer.answerDate}
-        selectedIcon={answer.selectedIcon}
-        text={answer.answer}
-      />
-    ))}
-  </div>
-) : (
-  <div className="mt-4">No answers yet</div>
-)}
-</div>
+            </label>
+          </div>
+          {filteredAnswersData.length > 0 ? (
+            <div className="mt-8 mb-6">
+              {filteredAnswersData.map((answer) => (
+                <AnswerTableRow
+                  key={answer.id}
+                  time={answer.answerDate}
+                  selectedIcon={answer.selectedIcon}
+                  text={answer.answer}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-4">No answers yet</div>
+          )}
+        </div>
       )}
     </>
   );
