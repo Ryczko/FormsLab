@@ -8,6 +8,7 @@ import { useRegisterManager } from 'src/features/authorization/managers/register
 import { useApplicationContext } from 'src/features/application/context';
 import router from 'next/router';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 function SignupPage() {
   const { loading, user } = useApplicationContext();
@@ -42,9 +43,11 @@ function SignupPage() {
                   error={touched.name ? errors.name : undefined}
                   placeholder="Name"
                   onChange={handleChange('name')}
+                  className="!my-1"
                 />
                 <Input
                   type="text"
+                  className="!my-1"
                   value={values.email}
                   required
                   error={touched.email ? errors.email : undefined}
@@ -53,20 +56,33 @@ function SignupPage() {
                 />
                 <Input
                   type="password"
+                  className="!my-1"
                   value={values.password}
                   error={touched.password ? errors.password : undefined}
                   required
                   placeholder="Password"
                   onChange={handleChange('password')}
                 />
-                <p className="self-center mb-4 max-w-sm text-sm text-center text-red-300">
-                  {errors.message}
-                </p>
+                {!!errors.message && (
+                  <p className="self-center mb-4 max-w-sm text-sm text-center text-red-300">
+                    {errors.message}
+                  </p>
+                )}
+
                 <div className="flex flex-col justify-center items-center">
-                  <LoginButton type="submit" onClick={handleSubmit}>
+                  <LoginButton
+                    className="mt-1 text-indigo-900 bg-indigo-200 hover:bg-indigo-300"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
                     Sign up
                   </LoginButton>
                 </div>
+                <Link href={'/login'} passHref>
+                  <p className="mt-2 max-w-sm text-sm text-center text-zinc-600 underline hover:cursor-pointer">
+                    Already have an account?
+                  </p>
+                </Link>
               </Form>
             )}
           </Formik>

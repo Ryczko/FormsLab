@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 
 interface InputProps {
@@ -8,6 +9,7 @@ interface InputProps {
   placeholder?: string;
   error?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  className?: string;
 }
 
 function Input({
@@ -17,22 +19,27 @@ function Input({
   required,
   onChange,
   error,
+  className,
 }: InputProps & React.HTMLProps<HTMLButtonElement>) {
   return (
-    <div className="mb-4">
+    <>
       <input
         type={type}
         value={value}
         required={required}
         placeholder={placeholder}
         onChange={onChange}
-        className="block py-2 pr-4 pl-2 mt-2 w-full rounded-lg focus:outline-none shadow"
+        className={clsx(
+          className,
+          'block py-2 px-4 mt-2 mb-4 w-full rounded-lg focus:outline-none shadow',
+          error ? 'border border-red-400' : ''
+        )}
       />
 
-      <p className="self-center max-w-sm text-sm text-center text-red-300">
-        {error}
-      </p>
-    </div>
+      {!!error && (
+        <p className="mb-2 max-w-sm text-sm text-right text-red-400">{error}</p>
+      )}
+    </>
   );
 }
 
