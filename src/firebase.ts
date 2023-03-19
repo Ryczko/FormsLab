@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 const firebaseConfig = {
   apiKey:
@@ -52,7 +53,14 @@ const signInWithGoogle = async () => {
       });
     }
   } catch (err) {
-    console.error(err);
+    if (
+      err.code === 'auth/account-exists-with-different-credential' &&
+      err instanceof Error
+    ) {
+      toast.error('The account already exists for that email.');
+    } else {
+      toast.error('Authentication failed!');
+    }
   }
 };
 
@@ -71,7 +79,14 @@ const signInWithGithub = async () => {
       });
     }
   } catch (err) {
-    console.error(err);
+    if (
+      err.code === 'auth/account-exists-with-different-credential' &&
+      err instanceof Error
+    ) {
+      toast.error('The account already exists for that email.');
+    } else {
+      toast.error('Authentication failed!');
+    }
   }
 };
 
@@ -85,7 +100,7 @@ const logInWithEmailAndPassword = async ({
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) toast.error('Authentication failed!');
   }
 };
 
@@ -106,33 +121,24 @@ const registerWithEmailAndPassword = async ({
     await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       name,
-      authProvider: 'local',
+      authProvider: 'email',
       email,
     });
   } catch (err) {
-    console.error(err);
-  }
-};
-
-const getUserData = async () => {
-  const userUID = auth.currentUser?.uid;
-  if (!userUID) {
-    return;
-  }
-  try {
-    const docs = await getDoc(doc(db, 'users', userUID));
-    return docs;
-  } catch (err) {
-    console.error(err);
+    if (err.code === 'auth/email-already-in-use' && err instanceof Error) {
+      toast.error('The account already exists for that email.');
+    } else {
+      toast.error('Registration failed!');
+    }
   }
 };
 
 const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    console.log('Password reset link sent!');
+    toast.success('Password reset link sent!');
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) toast.error('Password reset failed!');
   }
 };
 
@@ -148,6 +154,5 @@ export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
-  getUserData,
   logout,
 };
