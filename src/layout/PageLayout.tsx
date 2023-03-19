@@ -18,9 +18,7 @@ function PageLayout({ children }: PageLayoutProps) {
       <Navigation />
       <div className="overflow-hidden px-6 pt-32 m-auto min-h-screen sm:px-4">
         <Background />
-        <AnimatePresence exitBeforeEnter initial={false}>
-          {children}
-        </AnimatePresence>
+        <AnimatePresence initial={false}>{children}</AnimatePresence>
       </div>
     </>
   );
