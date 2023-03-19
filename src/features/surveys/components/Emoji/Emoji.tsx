@@ -1,7 +1,9 @@
 import dynamic from 'next/dynamic';
 import { EMOJI_STYLE } from 'src/shared/constants/emojisConfig';
 
-const LibEmoji = dynamic(
+import { Emoji as StaticLibEmoji } from 'emoji-picker-react';
+
+const LibEmoji = dynamic<React.ComponentProps<typeof StaticLibEmoji>>(
   () => import('emoji-picker-react').then((mod) => mod.Emoji),
   {
     ssr: false,
