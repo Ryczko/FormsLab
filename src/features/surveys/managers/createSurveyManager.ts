@@ -8,13 +8,19 @@ import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
-  const [pack, setPack] = useState(['😃', '🙂', '🙁', '😡']);
+  const [pack, setPack] = useState([]);
 
   const { user } = useApplicationContext();
   const [buttonDisable, setButtonDisable] = useState(false);
 
   const router = useRouter();
   const [, copy] = useCopyToClipboard();
+
+  // Move to useState initial value when bug in emoji library will be solved:
+  // https://github.com/ealush/emoji-picker-react/issues/329
+  useEffect(() => {
+    setPack(['1f603', '1f642', '1f641', '1f621']);
+  }, []);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);

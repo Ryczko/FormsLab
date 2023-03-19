@@ -52,9 +52,8 @@ export const useSurveyAnswerManager = () => {
     }
   }, [surveyId, getSurveyData]);
 
-  const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.target as HTMLElement;
-    setSelectedIcon(target.textContent);
+  const handleIconClick = (icon: string) => {
+    setSelectedIcon(icon);
   };
 
   const handleSave = async () => {
