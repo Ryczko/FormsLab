@@ -1,19 +1,18 @@
-import { signInWithGoogle, signInWithGithub } from '../../firebase';
 import { Form, Formik } from 'formik';
 import withAnimation from '../../shared/HOC/withAnimation';
 import Head from 'next/head';
 import Header from 'src/shared/components/Header/Header';
 import LoginButton from 'src/shared/components/LoginButton/LoginButton';
-import { useApplicationContext } from 'src/features/application/context';
 import Input from 'src/shared/components/Input/Input';
-import Link from 'next/link';
-import { useLoginManager } from 'src/features/authorization/managers/loginManager';
+import { useRegisterManager } from 'src/features/authorization/managers/registerManager';
+import { useApplicationContext } from 'src/features/application/context';
 import router from 'next/router';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
-function LoginPage() {
+function SignupPage() {
   const { loading, user } = useApplicationContext();
-  const { initialValues, LoginSchema, onSubmit } = useLoginManager();
+  const { initialValues, onSubmit, SignupSchema } = useRegisterManager();
 
   useEffect(() => {
     if (user) {
@@ -24,70 +23,64 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login</title>
-        <meta name="description" content="Login - Employee Pulse" />
+        <title>Sign up</title>
+        <meta name="description" content="Sign up - Employee Pulse" />
       </Head>
       <div className="container px-4 m-auto text-center md:px-8">
-        <Header>Sign in</Header>
+        <Header>Sign up</Header>
         <div className="flex flex-col justify-center items-center space-y-2">
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={LoginSchema}
+            validationSchema={SignupSchema}
           >
             {({ values, errors, handleChange, handleSubmit, touched }) => (
               <Form className="flex flex-col w-64 sm:w-80">
-                <LoginButton
-                  image={'/images/google.svg'}
-                  onClick={signInWithGoogle}
-                >
-                  Sign in with Google
-                </LoginButton>
-                <LoginButton
-                  image={'/images/github.svg'}
-                  onClick={signInWithGithub}
-                  className="mb-3"
-                >
-                  Sign in with Github
-                </LoginButton>
-                <p>OR</p>
-
                 <Input
                   type="text"
+                  value={values.name}
+                  required
+                  error={touched.name ? errors.name : undefined}
+                  placeholder="Name"
+                  onChange={handleChange('name')}
+                  className="!my-1"
+                />
+                <Input
+                  type="text"
+                  className="!my-1"
                   value={values.email}
                   required
                   error={touched.email ? errors.email : undefined}
                   placeholder="E-mail"
-                  className="mt-3 mb-1"
                   onChange={handleChange('email')}
                 />
                 <Input
                   type="password"
+                  className="!my-1"
                   value={values.password}
                   error={touched.password ? errors.password : undefined}
                   required
                   placeholder="Password"
-                  className="!my-1"
                   onChange={handleChange('password')}
                 />
-
                 {!!errors.message && (
                   <p className="self-center mb-4 max-w-sm text-sm text-center text-red-300">
                     {errors.message}
                   </p>
                 )}
+
                 <div className="flex flex-col justify-center items-center">
                   <LoginButton
                     className="mt-1 mb-2 text-indigo-900 bg-indigo-200 hover:!bg-indigo-300"
                     type="submit"
                     onClick={handleSubmit}
                   >
-                    Sign in
+                    Sign up
                   </LoginButton>
                 </div>
-                <Link href={'/signup'} passHref>
+                <Link href={'/login'} passHref>
                   <p className="mt-2 max-w-sm text-sm text-center text-zinc-600 underline hover:cursor-pointer">
-                    Don&apos;t have an account?
+                    Already have an account?
                   </p>
                 </Link>
               </Form>
@@ -102,4 +95,4 @@ function LoginPage() {
   );
 }
 
-export default withAnimation(LoginPage);
+export default withAnimation(SignupPage);

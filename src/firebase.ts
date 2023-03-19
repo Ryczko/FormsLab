@@ -8,8 +8,10 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 const firebaseConfig = {
   apiKey:
@@ -51,7 +53,14 @@ const signInWithGoogle = async () => {
       });
     }
   } catch (err) {
-    console.error(err);
+    if (
+      err.code === 'auth/account-exists-with-different-credential' &&
+      err instanceof Error
+    ) {
+      toast.error('The account already exists for that email.');
+    } else {
+      toast.error('Authentication failed!');
+    }
   }
 };
 
@@ -70,43 +79,70 @@ const signInWithGithub = async () => {
       });
     }
   } catch (err) {
-    console.error(err);
+    if (
+      err.code === 'auth/account-exists-with-different-credential' &&
+      err instanceof Error
+    ) {
+      toast.error('The account already exists for that email.');
+    } else {
+      toast.error('Authentication failed!');
+    }
   }
 };
 
-const logInWithEmailAndPassword = async (email: string, password: string) => {
+const logInWithEmailAndPassword = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) toast.error('Authentication failed!');
   }
 };
 
-const registerWithEmailAndPassword = async (
-  name: string,
-  email: string,
-  password: string
-) => {
+const registerWithEmailAndPassword = async ({
+  name,
+  email,
+  password,
+  changeDisplayName,
+}: {
+  name: string;
+  email: string;
+  password: string;
+  changeDisplayName: (userName: string) => void;
+}) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+
+    changeDisplayName(name);
+
+    await updateProfile(user, { displayName: name });
     await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       name,
-      authProvider: 'local',
+      authProvider: 'email',
       email,
     });
   } catch (err) {
-    console.error(err);
+    if (err.code === 'auth/email-already-in-use' && err instanceof Error) {
+      toast.error('The account already exists for that email.');
+    } else {
+      toast.error('Registration failed!');
+    }
   }
 };
 
 const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    console.log('Password reset link sent!');
+    toast.success('Password reset link sent!');
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) toast.error('Password reset failed!');
   }
 };
 
