@@ -14,9 +14,11 @@ import IconButton, {
 import Image from 'next/image';
 import { useApplicationContext } from 'src/features/application/context';
 import IconButtonLink from 'src/shared/components/IconButtonLink/IconButtonLink';
+import AvatarIcon from '../../../public/images/avatar.svg';
+import GithubCorner from '../GithubCorner/GithubCorner';
 
 function Navigation() {
-  const { user, loading } = useApplicationContext();
+  const { user, loading, displayName } = useApplicationContext();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,8 +32,10 @@ function Navigation() {
   };
 
   return (
-    <nav className="fixed z-10 py-5 w-full bg-zinc-100 border-b border-neutral-200">
-      <div className="flex justify-between px-4 md:px-8">
+    <nav className="flex fixed z-10 items-center  w-full h-[70px] bg-zinc-100 border-b border-neutral-200">
+      <GithubCorner />
+
+      <div className="flex grow justify-between items-center px-4 md:px-8">
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
@@ -55,11 +59,19 @@ function Navigation() {
                   className="flex justify-center items-center py-1 px-4 w-full font-medium hover:bg-zinc-200 rounded-md"
                 >
                   <p className="hidden items-center mr-4 ml-2 truncate sm:block">
-                    {user.displayName}
+                    {displayName}
                   </p>
-                  {user.photoURL && (
+                  {user.photoURL ? (
                     <Image
                       src={user.photoURL}
+                      alt="user photo"
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <Image
+                      src={AvatarIcon}
                       alt="user photo"
                       width={32}
                       height={32}

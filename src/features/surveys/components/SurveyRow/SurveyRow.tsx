@@ -14,14 +14,19 @@ import IconButton, {
 } from '../../../../shared/components/IconButton/IconButton';
 import StyledDialog from 'src/shared/components/StyledDialog/StyledDialog';
 
-type Props = {
+interface SurveyRowProps {
   question: string;
   startDate: string;
   endDate: string;
   id: string;
-};
+}
 
-export default function SurveyRow({ question, startDate, endDate, id }: Props) {
+export default function SurveyRow({
+  question,
+  startDate,
+  endDate,
+  id,
+}: SurveyRowProps) {
   const [, copy] = useCopyToClipboard();
   const navigate = useRouter();
   const [isOpen, setIsOpen] = useState(false);

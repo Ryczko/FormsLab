@@ -1,21 +1,45 @@
+import clsx from 'clsx';
 import React from 'react';
 
 interface InputProps {
-  label: string;
+  label?: string;
+  type?: React.HTMLInputTypeAttribute;
+  value?: string | number;
+  required?: boolean;
+  placeholder?: string;
+  error?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  className?: string;
 }
 
 function Input({
-  label,
-  ...props
-}: InputProps & React.HTMLProps<HTMLInputElement>) {
+  type,
+  value,
+  placeholder,
+  required,
+  onChange,
+  error,
+  className,
+}: InputProps & React.HTMLProps<HTMLButtonElement>) {
   return (
-    <div className="m-auto max-w-lg font-semibold text-left">
-      <label className="block">{label}</label>
+    <>
       <input
-        {...props}
-        className="block py-3 px-4 mt-2 w-full rounded-lg focus:outline-none shadow"
+        type={type}
+        value={value}
+        required={required}
+        placeholder={placeholder}
+        onChange={onChange}
+        className={clsx(
+          className,
+          'block py-2 px-4 mt-2 mb-4 w-full rounded-lg focus:outline-none shadow',
+          error ? 'border border-red-400' : ''
+        )}
       />
-    </div>
+
+      {!!error && (
+        <p className="mb-2 max-w-sm text-sm text-right text-red-400">{error}</p>
+      )}
+    </>
   );
 }
 

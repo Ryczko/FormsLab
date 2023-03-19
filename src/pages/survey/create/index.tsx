@@ -29,6 +29,7 @@ function SurveyCreatePage() {
     <>
       <Head>
         <title>Create Survey</title>
+        <meta name="description" content="Create Survey - Employee Pulse" />
       </Head>
       <div className="container px-4 m-auto text-center md:px-8">
         <Header>Create new survey</Header>

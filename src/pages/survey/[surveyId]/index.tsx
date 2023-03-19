@@ -25,6 +25,7 @@ function AnswerPage() {
     <>
       <Head>
         <title>Survey</title>
+        <meta name="description" content="Survey - Employee Pulse" />
       </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (

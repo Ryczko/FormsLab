@@ -44,6 +44,5 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'tailwindcss/no-custom-classname': 'off',
     'tailwindcss/migration-from-tailwind-2': 'off',
-    'react-hooks/exhaustive-deps': 'off',
   },
 };

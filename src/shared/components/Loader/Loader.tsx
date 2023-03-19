@@ -1,8 +1,8 @@
-type Props = {
+interface LoaderProps {
   isLoading: boolean;
-};
+}
 
-export default function Loader({ isLoading }: Props) {
+export default function Loader({ isLoading }: LoaderProps) {
   if (isLoading)
     return (
       <div className="flex flex-col justify-center items-center">

@@ -1,6 +1,6 @@
 import { getDoc, doc, addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { db } from 'src/firebase';
 
@@ -12,17 +12,11 @@ export const useSurveyAnswerManager = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
-  const [selectedIcon, setSelectedIcon] = useState<string | null>('');
+  const [selectedIcon, setSelectedIcon] = useState('');
   const [buttonDisable, setButtonDisable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (surveyId) {
-      getSurveyData();
-    }
-  }, [surveyId]);
-
-  const getSurveyData = async () => {
+  const getSurveyData = useCallback(async () => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
     if (!surveyData.exists()) {
       router.replace('/');
@@ -50,7 +44,13 @@ export const useSurveyAnswerManager = () => {
     setQuestion(surveyData.data()?.title);
     setIcons(surveyData.data()?.pack);
     setIsLoading(false);
-  };
+  }, [router, surveyId]);
+
+  useEffect(() => {
+    if (surveyId) {
+      getSurveyData();
+    }
+  }, [surveyId, getSurveyData]);
 
   const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLElement;

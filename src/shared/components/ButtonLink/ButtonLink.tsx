@@ -5,15 +5,13 @@ import { ButtonProps, ButtonSize, ButtonVariant } from '../Button/Button';
 export const ButtonLinkVariant = ButtonVariant;
 export const ButtonLinkSize = ButtonSize;
 
-type ButtonLinkProps = ButtonProps;
-
 const ButtonLink = forwardRef(function ButtonLink({
   children,
   className,
   variant = ButtonLinkVariant.SECONDARY,
   sizeType = ButtonLinkSize.DEFAULT,
   ...props
-}: ButtonLinkProps & React.HTMLProps<HTMLAnchorElement>) {
+}: ButtonProps & React.HTMLProps<HTMLAnchorElement>) {
   return (
     <a
       {...props}

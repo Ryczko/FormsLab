@@ -16,7 +16,7 @@ interface EmojiPickerProps {
 }
 
 function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
-  const [chosenEmoji, setChosenEmoji] = useState<any>(null);
+  const [chosenEmoji, setChosenEmoji] = useState(null);
   const [displayPicker, setDisplayPicker] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
