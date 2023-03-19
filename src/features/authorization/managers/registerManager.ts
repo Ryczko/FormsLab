@@ -19,7 +19,7 @@ export const useRegisterManager = () => {
       .required('Required field'),
     password: Yup.string()
       .matches(
-        /^[a-zA-Z0-9!@#$%^&*()_+]{8,20}$/,
+        /^[a-zA-Z0-9!@#$%^&*()_+]{8,50}$/,
         'The password must contain at least 8 characters.'
       )
       .required('Required field'),
