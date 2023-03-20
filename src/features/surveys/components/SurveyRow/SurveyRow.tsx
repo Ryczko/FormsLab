@@ -1,9 +1,8 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 
 import toast from 'react-hot-toast';
 import useCopyToClipboard from '../../../../shared/hooks/useCopyToClipboard';
-import { Dialog, Transition } from '@headlessui/react';
 import { db } from '../../../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
@@ -13,6 +12,7 @@ import Button, {
 import IconButton, {
   IconButtonVariant,
 } from '../../../../shared/components/IconButton/IconButton';
+import StyledDialog from 'src/shared/components/StyledDialog/StyledDialog';
 
 interface SurveyRowProps {
   question: string;
@@ -64,68 +64,6 @@ export default function SurveyRow({
 
   return (
     <div className="flex flex-col mb-4 w-[600px] max-w-full md:flex-row">
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-zinc-900 bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="overflow-y-auto fixed inset-0">
-            <div className="flex justify-center items-center p-4 min-h-full text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="flex overflow-hidden flex-col justify-center p-6 w-auto max-w-md text-left bg-white rounded-md shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-zinc-900"
-                  >
-                    Delete survey
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-red-500">
-                      Are you sure you want to&nbsp;
-                      <span className="font-bold">delete</span> this survey?
-                    </p>
-                  </div>
-
-                  <div className="flex justify-between mt-6">
-                    <Button
-                      variant={ButtonVariant.SECONDARY}
-                      onClick={closeDeleteModal}
-                      className="uppercase"
-                    >
-                      Cancel
-                    </Button>
-                    <IconButton
-                      variant={IconButtonVariant.DANGER}
-                      onClick={handleOnDelete(id)}
-                      icon={<TrashIcon className="w-5 h-5" />}
-                      className="uppercase"
-                    >
-                      Delete
-                    </IconButton>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
       <div className="flex justify-between items-center py-3 px-4 w-full bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
         <div title={question} className="w-36 text-left truncate">
           {question}
@@ -162,6 +100,39 @@ export default function SurveyRow({
           icon={<TrashIcon className="w-5 h-5" />}
         />
       </div>
+      <StyledDialog
+        isOpen={isOpen}
+        onClose={closeDeleteModal}
+        title="Delete survey"
+        content={
+          <>
+            <div className="mt-2">
+              <p className="text-sm text-red-500">
+                Are you sure you want to&nbsp;
+                <span className="font-bold">delete</span> this survey?
+              </p>
+            </div>
+
+            <div className="flex justify-between mt-6">
+              <Button
+                variant={ButtonVariant.SECONDARY}
+                onClick={closeDeleteModal}
+                className="uppercase"
+              >
+                Cancel
+              </Button>
+              <IconButton
+                variant={IconButtonVariant.DANGER}
+                onClick={handleOnDelete(id)}
+                icon={<TrashIcon className="w-5 h-5" />}
+                className="uppercase"
+              >
+                Delete
+              </IconButton>
+            </div>
+          </>
+        }
+      />
     </div>
   );
 }

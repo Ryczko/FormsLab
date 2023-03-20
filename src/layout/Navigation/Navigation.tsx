@@ -1,4 +1,4 @@
-import { LogoutIcon, MenuIcon } from '@heroicons/react/outline';
+import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
@@ -13,9 +13,9 @@ import IconButton, {
 } from '../../shared/components/IconButton/IconButton';
 import Image from 'next/image';
 import { useApplicationContext } from 'src/features/application/context';
+import IconButtonLink from 'src/shared/components/IconButtonLink/IconButtonLink';
 import AvatarIcon from '../../../public/images/avatar.svg';
 import GithubCorner from '../GithubCorner/GithubCorner';
-
 
 function Navigation() {
   const { user, loading, displayName } = useApplicationContext();
@@ -89,7 +89,17 @@ function Navigation() {
                   leaveTo="transform opacity-0 scale-95"
                 >
                   <Menu.Items className="absolute right-0 mt-2 bg-white rounded-md divide-y divide-zinc-100 focus:outline-none ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
-                    <div className="flex justify-end p-1">
+                    <div className="flex flex-col justify-end p-1">
+                      <Menu.Item>
+                        <Link href={'/settings'} passHref>
+                          <IconButtonLink
+                            variant={ButtonVariant.FLAT}
+                            icon={<CogIcon className="w-5 h-5" />}
+                          >
+                            Settings
+                          </IconButtonLink>
+                        </Link>
+                      </Menu.Item>
                       <Menu.Item>
                         <IconButton
                           onClick={logoutDesktop}
@@ -130,12 +140,22 @@ function Navigation() {
         </Link>
         <Link href={'/surveys'} passHref>
           <ButtonLink
-            className="mb-3  w-[95%] lg:w-auto"
+            className="mb-3 w-[95%] lg:w-auto"
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
           >
             My Surveys
           </ButtonLink>
+        </Link>
+        <Link href={'/settings'} passHref>
+          <IconButtonLink
+            className="justify-center mb-3 w-[95%] lg:w-auto"
+            onClick={() => setIsOpen(!isOpen)}
+            variant={ButtonVariant.FLAT}
+            icon={<CogIcon className="w-5 h-5" />}
+          >
+            Settings
+          </IconButtonLink>
         </Link>
         <IconButton
           onClick={logoutMobile}
