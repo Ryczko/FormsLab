@@ -10,7 +10,7 @@ module.exports = {
         body: ['Montserrat', 'system-ui', 'sans-serif'],
       },
       screens: {
-        'small-sm': '300px',
+        'small-sm': '370px',
       },
     },
   },
