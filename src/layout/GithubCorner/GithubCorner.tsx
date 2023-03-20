@@ -3,7 +3,7 @@ export default function GithubCorner() {
     <a
       href="https://github.com/Ryczko/Employee-pulse"
       target="_blank"
-      className="github-corner"
+      className="hidden small-sm:block github-corner"
       aria-label="View source on GitHub"
       rel="noreferrer"
     >

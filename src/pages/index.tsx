@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 import Head from 'next/head';
 import withAnimation from '../shared/HOC/withAnimation';
 import ButtonLink from '../shared/components/ButtonLink/ButtonLink';
@@ -17,8 +16,8 @@ function IndexPage() {
       </Head>
       <div className="flex flex-col overflow-hidden">
         <section className="relative">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+          <div className="px-4 mx-auto max-w-6xl sm:px-6">
+            <div className="pt-28 pb-12 md:pt-40 md:pb-20 md:32">
               <div className="pb-12 text-center md:pb-16">
                 <h1 className="leading-tighter mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl">
                   How are you&nbsp;

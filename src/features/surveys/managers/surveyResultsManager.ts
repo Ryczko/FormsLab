@@ -9,13 +9,12 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-
 import toast from 'react-hot-toast';
 import type { BarChartData } from '../components/BarChart/BarChart';
 import type { AnswerData } from '../interfaces/AnswerData';
-import { db } from 'src/firebase';
-import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
 import { formatFirebaseDateWithHours } from 'src/shared/utilities/convertTime';
+import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
+import { db } from 'src/firebase';
 
 export const useSurveyResultsManager = () => {
   const router = useRouter();
