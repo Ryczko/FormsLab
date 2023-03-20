@@ -25,6 +25,7 @@ function SettingsPage() {
     <>
       <Head>
         <title>Settings</title>
+        <meta name="description" content="Settings - Employee Pulse" />
       </Head>
       <div className="container px-4 m-auto text-center md:px-8">
         <Header>Hi {user.displayName}!</Header>
