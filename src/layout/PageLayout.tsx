@@ -19,7 +19,7 @@ function PageLayout({ children }: PageLayoutProps) {
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
       <Navigation />
-      <div className="overflow-hidden px-6 pt-32 m-auto min-h-screen sm:px-4">
+      <div className="overflow-hidden px-6 pt-24 m-auto mb-8 min-h-full sm:px-4 md:pt-32">
         <Background />
         <AnimatePresence exitBeforeEnter initial={false}>
           <Fragment key={router.asPath}>{children}</Fragment>

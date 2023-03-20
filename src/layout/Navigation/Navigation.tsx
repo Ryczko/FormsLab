@@ -35,7 +35,11 @@ function Navigation() {
     <nav className="flex fixed z-10 items-center  w-full h-[70px] bg-zinc-100 border-b border-neutral-200">
       <GithubCorner />
 
-      <div className="flex grow justify-between items-center px-4 md:px-8">
+      <div
+        className={`flex grow ${
+          user ? 'justify-between' : 'justify-center small-sm:justify-between'
+        } items-center px-4 md:px-8`}
+      >
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
@@ -122,7 +126,10 @@ function Navigation() {
           </div>
         ) : (
           <Link href={'/login'} passHref>
-            <ButtonLink variant={ButtonVariant.OUTLINE_PRIMARY}>
+            <ButtonLink
+              className="hidden px-4 sm:px-6 small-sm:block"
+              variant={ButtonVariant.OUTLINE_PRIMARY}
+            >
               Sign In
             </ButtonLink>
           </Link>

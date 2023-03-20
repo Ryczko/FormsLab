@@ -18,7 +18,7 @@ function IndexPage() {
       <div className="flex overflow-hidden flex-col">
         <section className="relative">
           <div className="px-4 mx-auto max-w-6xl sm:px-6">
-            <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+            <div className="pt-28 pb-12 md:pt-40 md:pb-20 md:32">
               <div className="pb-12 text-center md:pb-16">
                 <h1 className="mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl leading-tighter">
                   How are you&nbsp;
