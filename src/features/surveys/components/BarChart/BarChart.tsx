@@ -8,6 +8,9 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+import { CustomTooltip } from './CustomTooltip';
+import { CustomXAxisTick } from './CustomXAxisTick';
+
 interface BarChartProps {
   data: BarChartData[];
 }
@@ -44,14 +47,23 @@ export default function BarChart({ data }: BarChartProps) {
             bottom: 5,
           }}
         >
-          <XAxis dataKey="name" />
+          <XAxis
+            dataKey="name"
+            interval={0}
+            tick={(props) => <CustomXAxisTick {...props} />}
+          />
+
           <YAxis
             domain={[0, getMaxValue()]}
             dataKey="value"
             allowDecimals={false}
           />
-          <Tooltip cursor={{ fill: '#eeeeee' }} />
-          <Bar dataKey="value" fill="#8884d8">
+          <Tooltip
+            wrapperStyle={{ outline: 'none' }}
+            cursor={false}
+            content={(props) => <CustomTooltip {...props} />}
+          />
+          <Bar dataKey="value" fill="#8884d8" radius={[8, 8, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
             ))}
