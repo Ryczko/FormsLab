@@ -14,7 +14,6 @@ function SettingsPage() {
   const {
     user,
     loading,
-    error,
     isOpen,
     openDeleteModal,
     closeDeleteModal,
