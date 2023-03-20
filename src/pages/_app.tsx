@@ -7,14 +7,14 @@ import PageLayout from '../layout/PageLayout';
 import { ApplicationContext } from 'src/features/application/context';
 import { useApplicationManager } from 'src/features/application/manager';
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   const manager = useApplicationManager();
 
   return (
     <ApplicationContext.Provider value={manager}>
       <PageLayout>
         <Toaster position="bottom-center" />
-        <Component {...pageProps} key={router.asPath} />
+        <Component {...pageProps} />
       </PageLayout>
     </ApplicationContext.Provider>
   );

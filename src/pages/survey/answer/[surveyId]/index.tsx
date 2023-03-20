@@ -1,6 +1,4 @@
-import { DownloadIcon, LinkIcon, RefreshIcon } from '@heroicons/react/outline';
-
-import CsvDownload from 'react-json-to-csv';
+import { LinkIcon, RefreshIcon } from '@heroicons/react/outline';
 
 import withAnimation from '../../../../shared/HOC/withAnimation';
 import withProtectedRoute from '../../../../shared/HOC/withProtectedRoute';
@@ -48,20 +46,6 @@ function SurveyResultsPage() {
             >
               Copy link
             </IconButton>
-            <CsvDownload
-              className="block"
-              data={answersData}
-              filename={`${title}.csv`}
-            >
-              <IconButton
-                title="Download as CSV file"
-                className="justify-center w-full sm:w-[170px]"
-                variant={IconButtonVariant.OUTLINE}
-                icon={<DownloadIcon className="w-5 h-5" />}
-              >
-                Download
-              </IconButton>
-            </CsvDownload>
 
             <IconButton
               title="Refresh data"
