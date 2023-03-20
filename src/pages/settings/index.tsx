@@ -67,7 +67,7 @@ function SettingsPage() {
                   icon={<TrashIcon className="w-5 h-5" />}
                   className="uppercase"
                 >
-                  Delete my account
+                  Confirm
                 </IconButton>
               </div>
             </>

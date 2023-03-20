@@ -55,6 +55,8 @@ export const useSettingsManager = (): SettingsManager => {
 
       await deleteDoc(doc(db, 'users', user.uid));
 
+      await user.delete();
+
       closeDeleteModal();
       toast.success('Account deleted');
       signOut(auth);

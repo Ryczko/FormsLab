@@ -149,7 +149,7 @@ function Navigation() {
         </Link>
         <Link href={'/settings'} passHref>
           <IconButtonLink
-            className="mb-3 w-[95%] lg:w-auto"
+            className="justify-center mb-3 w-[95%] lg:w-auto"
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
             icon={<CogIcon className="w-5 h-5" />}
