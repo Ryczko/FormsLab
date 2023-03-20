@@ -8,8 +8,8 @@ interface LogoProps {
 function Logo({ classNames = '' }: LogoProps) {
   return (
     <Link href={'/'} passHref>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
+        href={'/'}
         className={clsx(
           'block ml-14 font-serif text-2xl text-zinc-600 translate-y-[-2px] md:ml-11',
           classNames
