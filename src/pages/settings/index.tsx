@@ -77,11 +77,6 @@ function SettingsPage() {
         {loading && (
           <div className="text-sm text-center text-zinc-600">Loading...</div>
         )}
-        {error && (
-          <div className="text-sm text-center text-red-600">
-            Error: {error.message}
-          </div>
-        )}
       </div>
     </>
   );
