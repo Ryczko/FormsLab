@@ -8,7 +8,7 @@ import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
-  const [pack, setPack] = useState([]);
+  const [pack, setPack] = useState<string[]>([]);
 
   const { user } = useApplicationContext();
   const [buttonDisable, setButtonDisable] = useState(false);
@@ -22,7 +22,7 @@ export const useCreateSurveyManager = () => {
     setPack(['1f603', '1f642', '1f641', '1f621']);
   }, []);
 
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.target.value);
   };
 
@@ -39,7 +39,7 @@ export const useCreateSurveyManager = () => {
   );
 
   useEffect(() => {
-    if (startDate! > endDate!) {
+    if (startDate > endDate) {
       setStartDate(endDate);
       setEndDate(startDate);
     }
@@ -79,7 +79,7 @@ export const useCreateSurveyManager = () => {
     const currentDate = startDate;
     const selectedDate = new Date(time);
 
-    return currentDate!.getTime() < selectedDate.getTime();
+    return currentDate.getTime() < selectedDate.getTime();
   };
   return {
     title,

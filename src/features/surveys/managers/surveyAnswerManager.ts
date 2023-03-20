@@ -17,7 +17,7 @@ export const useSurveyAnswerManager = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getSurveyData = useCallback(async () => {
-    const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
+    const surveyData = await getDoc(doc(db, 'surveys', surveyId));
     if (!surveyData.exists()) {
       router.replace('/');
       return;

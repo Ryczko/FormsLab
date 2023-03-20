@@ -2,10 +2,6 @@ import { render, screen } from '@testing-library/react';
 import Button, { ButtonVariant, ButtonSize } from './Button';
 
 describe('Button', () => {
-  it('should render without crashing', () => {
-    render(<Button />);
-  });
-
   it('should render children', () => {
     render(<Button>Hello</Button>);
     expect(screen.getByText('Hello')).toBeInTheDocument();

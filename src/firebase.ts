@@ -54,6 +54,8 @@ const signInWithGoogle = async () => {
     }
   } catch (err) {
     if (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       err.code === 'auth/account-exists-with-different-credential' &&
       err instanceof Error
     ) {
@@ -80,6 +82,8 @@ const signInWithGithub = async () => {
     }
   } catch (err) {
     if (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       err.code === 'auth/account-exists-with-different-credential' &&
       err instanceof Error
     ) {
@@ -129,7 +133,12 @@ const registerWithEmailAndPassword = async ({
       email,
     });
   } catch (err) {
-    if (err.code === 'auth/email-already-in-use' && err instanceof Error) {
+    if (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      err.code === 'auth/email-already-in-use' &&
+      err instanceof Error
+    ) {
       toast.error('The account already exists for that email.');
     } else {
       toast.error('Registration failed!');

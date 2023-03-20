@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-
+import { useCallback, useState, useEffect } from 'react';
+import type { Timestamp } from 'firebase/firestore';
 import {
   getDoc,
   doc,
@@ -7,16 +7,15 @@ import {
   query,
   orderBy,
   getDocs,
-  Timestamp,
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+
 import toast from 'react-hot-toast';
+import type { BarChartData } from '../components/BarChart/BarChart';
+import type { AnswerData } from '../interfaces/AnswerData';
 import { db } from 'src/firebase';
 import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
 import { formatFirebaseDateWithHours } from 'src/shared/utilities/convertTime';
-import { BarChartData } from '../components/BarChart/BarChart';
-import { AnswerData } from '../interfaces/AnswerData';
 
 export const useSurveyResultsManager = () => {
   const router = useRouter();
@@ -32,7 +31,7 @@ export const useSurveyResultsManager = () => {
 
   const getSurveyData = useCallback(
     async (displayMessages = false) => {
-      const surveyData = await getDoc(doc(db, 'surveys', surveyId!));
+      const surveyData = await getDoc(doc(db, 'surveys', surveyId));
       if (!surveyData.exists()) {
         router.replace('/');
         return;
@@ -40,7 +39,7 @@ export const useSurveyResultsManager = () => {
       const anserwsCollectionRef = collection(
         db,
         'surveys',
-        surveyId!,
+        surveyId,
         'answers'
       );
       const anserwsQuery = query(
@@ -94,7 +93,9 @@ export const useSurveyResultsManager = () => {
       new Set(answersData.map((a) => a.selectedIcon))
     );
 
-    const result = {};
+    const result: {
+      [key: string]: number;
+    } = {};
 
     uniqueAnswers.forEach((answer) => {
       result[answer] = 0;

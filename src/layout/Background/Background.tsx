@@ -1,7 +1,7 @@
 export default function Background() {
   return (
     <div
-      className="hidden overflow-hidden fixed  left-1/2 -z-10 opacity-70 -translate-x-1/2 pointer-events-none xl:block"
+      className="pointer-events-none fixed left-1/2  -z-10 hidden -translate-x-1/2 overflow-hidden opacity-70 xl:block"
       aria-hidden="true"
     >
       <svg
@@ -28,7 +28,7 @@ export default function Background() {
           <circle cx="155" cy="443" r="64" />
         </g>
         <image
-          className="opacity-80 rotate-6"
+          className="rotate-6 opacity-80"
           y={180}
           x={1100}
           width="200"
@@ -36,7 +36,7 @@ export default function Background() {
           xlinkHref={'/images/emote2.svg'}
         />
         <image
-          className="opacity-80 -rotate-6"
+          className="-rotate-6 opacity-80"
           y={100}
           x={50}
           width="200"

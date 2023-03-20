@@ -19,20 +19,22 @@ function LoginButton({
 }: LoginButtonProps) {
   return (
     <button
+      // eslint-disable-next-line react/button-has-type
       type={type}
       onClick={onClick}
       className={clsx(
         className,
-        'flex justify-center items-center py-2 pr-4 pl-2 my-1 w-full font-semibold text-zinc-900 bg-white hover:bg-zinc-50 active:bg-zinc-50 rounded-lg  shadow'
+        'my-1 flex w-full items-center justify-center rounded-lg bg-white py-2 pr-4 pl-2 font-semibold text-zinc-900 shadow hover:bg-zinc-50  active:bg-zinc-50'
       )}
       {...props}
     >
       {image && (
         <Image
-          className="block mr-6 ml-2"
+          className="mr-6 ml-2 block"
           width="45px"
           height="24px"
           src={image}
+          alt={image}
         />
       )}
       {children}

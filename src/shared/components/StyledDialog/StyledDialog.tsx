@@ -29,8 +29,8 @@ export default function StyledDialog({
           <div className="fixed inset-0 bg-zinc-900 bg-opacity-25" />
         </Transition.Child>
 
-        <div className="overflow-y-auto fixed inset-0">
-          <div className="flex justify-center items-center p-4 min-h-full text-center">
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -40,7 +40,7 @@ export default function StyledDialog({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="flex overflow-hidden flex-col justify-center p-6 w-auto max-w-md text-left bg-white rounded-md shadow-xl transition-all">
+              <Dialog.Panel className="flex w-auto max-w-md flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-zinc-900"

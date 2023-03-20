@@ -1,10 +1,10 @@
-import { Timestamp } from 'firebase/firestore';
+import type { Timestamp } from 'firebase/firestore';
 
+import Image from 'next/image';
+import Head from 'next/head';
 import { formatFirebaseDateWithoutHours } from '../../shared/utilities/convertTime';
 import withAnimation from '../../shared/HOC/withAnimation';
-import Image from 'next/image';
 import withProtectedRoute from '../../shared/HOC/withProtectedRoute';
-import Head from 'next/head';
 import Header from 'src/shared/components/Header/Header';
 import Loader from 'src/shared/components/Loader/Loader';
 import SurveyRow from 'src/features/surveys/components/SurveyRow/SurveyRow';
@@ -22,7 +22,7 @@ function SurveyListPage() {
       <div className="container m-auto text-center md:px-8">
         <Header>Surveys</Header>
 
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center">
           <div>
             {
               // TODO: add user friendly error message

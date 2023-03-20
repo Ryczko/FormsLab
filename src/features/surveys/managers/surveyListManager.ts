@@ -1,9 +1,10 @@
+import type {
+  DocumentData,
+  Query} from 'firebase/firestore';
 import {
   collection,
-  DocumentData,
   orderBy,
   query,
-  Query,
   where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';

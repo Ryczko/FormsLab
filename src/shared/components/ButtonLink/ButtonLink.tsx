@@ -1,6 +1,8 @@
-import React, { forwardRef } from 'react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import clsx from 'clsx';
-import { ButtonProps, ButtonSize, ButtonVariant } from '../Button/Button';
+import type { ButtonProps} from '../Button/Button';
+import { ButtonSize, ButtonVariant } from '../Button/Button';
 
 export const ButtonLinkVariant = ButtonVariant;
 export const ButtonLinkSize = ButtonSize;

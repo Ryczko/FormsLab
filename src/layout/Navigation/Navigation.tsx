@@ -2,20 +2,20 @@ import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
+import { Menu, Transition } from '@headlessui/react';
+import Image from 'next/image';
 import { auth } from '../../firebase';
 import Logo from '../Logo/Logo';
-import { Menu, Transition } from '@headlessui/react';
 import ButtonLink from '../../shared/components/ButtonLink/ButtonLink';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import { ButtonVariant } from '../../shared/components/Button/Button';
 import IconButton, {
   IconButtonVariant,
 } from '../../shared/components/IconButton/IconButton';
-import Image from 'next/image';
-import { useApplicationContext } from 'src/features/application/context';
-import IconButtonLink from 'src/shared/components/IconButtonLink/IconButtonLink';
 import AvatarIcon from '../../../public/images/avatar.svg';
 import GithubCorner from '../GithubCorner/GithubCorner';
+import { useApplicationContext } from 'src/features/application/context';
+import IconButtonLink from 'src/shared/components/IconButtonLink/IconButtonLink';
 
 function Navigation() {
   const { user, loading, displayName } = useApplicationContext();
@@ -32,14 +32,14 @@ function Navigation() {
   };
 
   return (
-    <nav className="flex fixed z-10 items-center  w-full h-[70px] bg-zinc-100 border-b border-neutral-200">
+    <nav className="fixed z-10 flex h-[70px]  w-full items-center border-b border-neutral-200 bg-zinc-100">
       <GithubCorner />
 
-      <div className="flex grow justify-between items-center px-4 md:px-8">
+      <div className="flex grow items-center justify-between px-4 md:px-8">
         <Logo />
         {!loading && user ? (
           <div className="flex md:space-x-4">
-            <div className="hidden space-x-4 lg:flex none">
+            <div className="none hidden space-x-4 lg:flex">
               <Link href={'/survey/create'} passHref>
                 <ButtonLink variant={ButtonVariant.FLAT}>
                   Create Survey
@@ -49,16 +49,16 @@ function Navigation() {
                 <ButtonLink variant={ButtonVariant.FLAT}>My Surveys</ButtonLink>
               </Link>
             </div>
-            <div className="hidden justify-center items-center lg:flex">
+            <div className="hidden items-center justify-center lg:flex">
               <Menu
                 as="div"
-                className="inline-block relative text-left rounded-md"
+                className="relative inline-block rounded-md text-left"
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex justify-center items-center py-1 px-4 w-full font-medium hover:bg-zinc-200 rounded-md"
+                  className="flex w-full items-center justify-center rounded-md py-1 px-4 font-medium hover:bg-zinc-200"
                 >
-                  <p className="hidden items-center mr-4 ml-2 truncate sm:block">
+                  <p className="mr-4 ml-2 hidden items-center truncate sm:block">
                     {displayName}
                   </p>
                   {user.photoURL ? (
@@ -88,13 +88,13 @@ function Navigation() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 mt-2 bg-white rounded-md divide-y divide-zinc-100 focus:outline-none ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
+                  <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-zinc-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="flex flex-col justify-end p-1">
                       <Menu.Item>
                         <Link href={'/settings'} passHref>
                           <IconButtonLink
                             variant={ButtonVariant.FLAT}
-                            icon={<CogIcon className="w-5 h-5" />}
+                            icon={<CogIcon className="h-5 w-5" />}
                           >
                             Settings
                           </IconButtonLink>
@@ -105,7 +105,7 @@ function Navigation() {
                           onClick={logoutDesktop}
                           variant={IconButtonVariant.FLAT}
                           className="w-40 text-red-600 hover:bg-red-100"
-                          icon={<LogoutIcon className="w-5 h-5" />}
+                          icon={<LogoutIcon className="h-5 w-5" />}
                         >
                           Sign Out
                         </IconButton>
@@ -117,7 +117,7 @@ function Navigation() {
             </div>
             <MenuIcon
               onClick={() => setIsOpen(!isOpen)}
-              className="z-50 w-8 h-8 cursor-pointer lg:hidden"
+              className="z-50 h-8 w-8 cursor-pointer lg:hidden"
             />
           </div>
         ) : (
@@ -149,10 +149,10 @@ function Navigation() {
         </Link>
         <Link href={'/settings'} passHref>
           <IconButtonLink
-            className="justify-center mb-3 w-[95%] lg:w-auto"
+            className="mb-3 w-[95%] justify-center lg:w-auto"
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
-            icon={<CogIcon className="w-5 h-5" />}
+            icon={<CogIcon className="h-5 w-5" />}
           >
             Settings
           </IconButtonLink>
@@ -160,8 +160,8 @@ function Navigation() {
         <IconButton
           onClick={logoutMobile}
           variant={IconButtonVariant.FLAT}
-          className="justify-center w-[95%] text-red-600 hover:bg-red-100 lg:w-auto"
-          icon={<LogoutIcon className="w-5 h-5" />}
+          className="w-[95%] justify-center text-red-600 hover:bg-red-100 lg:w-auto"
+          icon={<LogoutIcon className="h-5 w-5" />}
         >
           Sign Out
         </IconButton>

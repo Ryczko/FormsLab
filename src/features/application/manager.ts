@@ -1,13 +1,13 @@
-import { User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'src/firebase';
 
 export interface ApplicationManager {
-  user: User;
+  user: User | null | undefined;
   displayName: string;
   loading: boolean;
-  error: Error;
+  error: Error | undefined;
   changeDisplayName: (userName: string) => void;
 }
 

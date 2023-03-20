@@ -1,9 +1,9 @@
+import { Timestamp } from 'firestore-jest-mock/mocks/timestamp';
+import type { Timestamp as TimestampType } from 'firebase/firestore';
 import {
   formatFirebaseDateWithHours,
   formatFirebaseDateWithoutHours,
 } from './convertTime';
-import { Timestamp } from 'firestore-jest-mock/mocks/timestamp';
-import type { Timestamp as TimestampType } from 'firebase/firestore';
 
 describe('convertTime', () => {
   it('should return correct date with hours', () => {

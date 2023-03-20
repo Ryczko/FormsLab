@@ -1,14 +1,14 @@
 import { Form, Formik } from 'formik';
-import withAnimation from '../../shared/HOC/withAnimation';
 import Head from 'next/head';
+import router from 'next/router';
+import { useEffect } from 'react';
+import Link from 'next/link';
+import withAnimation from '../../shared/HOC/withAnimation';
 import Header from 'src/shared/components/Header/Header';
 import LoginButton from 'src/shared/components/LoginButton/LoginButton';
 import Input from 'src/shared/components/Input/Input';
 import { useRegisterManager } from 'src/features/authorization/managers/registerManager';
 import { useApplicationContext } from 'src/features/application/context';
-import router from 'next/router';
-import { useEffect } from 'react';
-import Link from 'next/link';
 
 function SignupPage() {
   const { loading, user } = useApplicationContext();
@@ -26,16 +26,16 @@ function SignupPage() {
         <title>Sign up</title>
         <meta name="description" content="Sign up - Employee Pulse" />
       </Head>
-      <div className="container px-4 m-auto text-center md:px-8">
+      <div className="container m-auto px-4 text-center md:px-8">
         <Header>Sign up</Header>
-        <div className="flex flex-col justify-center items-center space-y-2">
+        <div className="flex flex-col items-center justify-center space-y-2">
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
             validationSchema={SignupSchema}
           >
             {({ values, errors, handleChange, handleSubmit, touched }) => (
-              <Form className="flex flex-col w-64 sm:w-80">
+              <Form className="flex w-64 flex-col sm:w-80">
                 <Input
                   type="text"
                   value={values.name}
@@ -64,14 +64,14 @@ function SignupPage() {
                   onChange={handleChange('password')}
                 />
                 {!!errors.message && (
-                  <p className="self-center mb-4 max-w-sm text-sm text-center text-red-300">
+                  <p className="mb-4 max-w-sm self-center text-center text-sm text-red-300">
                     {errors.message}
                   </p>
                 )}
 
-                <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col items-center justify-center">
                   <LoginButton
-                    className="mt-1 mb-2 text-indigo-900 bg-indigo-200 hover:!bg-indigo-300"
+                    className="mt-1 mb-2 bg-indigo-200 text-indigo-900 hover:!bg-indigo-300"
                     type="submit"
                     onClick={handleSubmit}
                   >
@@ -79,7 +79,7 @@ function SignupPage() {
                   </LoginButton>
                 </div>
                 <Link href={'/login'} passHref>
-                  <p className="mt-2 max-w-sm text-sm text-center text-zinc-600 underline hover:cursor-pointer">
+                  <p className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer">
                     Already have an account?
                   </p>
                 </Link>
@@ -88,7 +88,7 @@ function SignupPage() {
           </Formik>
         </div>
         {loading && (
-          <div className="text-sm text-center text-zinc-600">Loading...</div>
+          <div className="text-center text-sm text-zinc-600">Loading...</div>
         )}
       </div>
     </>

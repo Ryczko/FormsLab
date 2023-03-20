@@ -1,8 +1,9 @@
 import type React from 'react';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
+import type {
+  IconButtonProps} from '../IconButton/IconButton';
 import {
-  IconButtonProps,
   IconButtonSize,
   IconButtonVariant,
 } from '../IconButton/IconButton';

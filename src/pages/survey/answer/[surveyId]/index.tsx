@@ -1,10 +1,8 @@
 import { DownloadIcon, LinkIcon, RefreshIcon } from '@heroicons/react/outline';
-
 import CsvDownload from 'react-json-to-csv';
-
+import Head from 'next/head';
 import withAnimation from '../../../../shared/HOC/withAnimation';
 import withProtectedRoute from '../../../../shared/HOC/withProtectedRoute';
-import Head from 'next/head';
 import AnswerHeader from 'src/features/surveys/components/AnswerHeader/AnswerHeader';
 import Header from 'src/shared/components/Header/Header';
 import IconButton, {
@@ -38,13 +36,13 @@ function SurveyResultsPage() {
       {!isLoading && (
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
-          <div className="flex flex-col justify-center mb-6 sm:flex-row md:mb-10">
+          <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-10">
             <IconButton
               title="Copy link to clipboard"
-              onClick={handleCopyLink(surveyId!)}
+              onClick={handleCopyLink(surveyId)}
               variant={IconButtonVariant.PRIMARY}
-              className="justify-center mb-2 w-full sm:mr-2 sm:mb-0 sm:w-[170px]"
-              icon={<LinkIcon className="w-5 h-5" />}
+              className="mb-2 w-full justify-center sm:mr-2 sm:mb-0 sm:w-[170px]"
+              icon={<LinkIcon className="h-5 w-5" />}
             >
               Copy link
             </IconButton>
@@ -55,9 +53,9 @@ function SurveyResultsPage() {
             >
               <IconButton
                 title="Download as CSV file"
-                className="justify-center w-full sm:w-[170px]"
+                className="w-full justify-center sm:w-[170px]"
                 variant={IconButtonVariant.OUTLINE}
-                icon={<DownloadIcon className="w-5 h-5" />}
+                icon={<DownloadIcon className="h-5 w-5" />}
               >
                 Download
               </IconButton>
@@ -67,8 +65,8 @@ function SurveyResultsPage() {
               title="Refresh data"
               onClick={() => getSurveyData(true)}
               variant={IconButtonVariant.OUTLINE}
-              className="justify-center mt-2 w-full sm:mt-0 sm:ml-2 sm:w-[170px]"
-              icon={<RefreshIcon className="w-5 h-5" />}
+              className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
+              icon={<RefreshIcon className="h-5 w-5" />}
             >
               Refresh
             </IconButton>

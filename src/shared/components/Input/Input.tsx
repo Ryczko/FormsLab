@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React from 'react';
+import type React from 'react';
 
 interface InputProps {
   label?: string;
@@ -8,7 +8,7 @@ interface InputProps {
   required?: boolean;
   placeholder?: string;
   error?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }
 
@@ -20,7 +20,7 @@ function Input({
   onChange,
   error,
   className,
-}: InputProps & React.HTMLProps<HTMLButtonElement>) {
+}: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
     <>
       <input
@@ -31,13 +31,12 @@ function Input({
         onChange={onChange}
         className={clsx(
           className,
-          'block py-2 px-4 mt-2 mb-4 w-full rounded-lg focus:outline-none shadow',
+          'mt-2 mb-4 block w-full rounded-lg py-2 px-4 shadow focus:outline-none',
           error ? 'border border-red-400' : ''
         )}
       />
-
       {!!error && (
-        <p className="mb-2 max-w-sm text-sm text-right text-red-400">{error}</p>
+        <p className="mb-2 max-w-sm text-right text-sm text-red-400">{error}</p>
       )}
     </>
   );
