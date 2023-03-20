@@ -9,7 +9,6 @@ interface CustomXAxisTickProps {
 }
 
 export const CustomXAxisTick = ({ x, y, payload }: CustomXAxisTickProps) => {
-  console.log('custom tick', x, y, payload);
   return (
     <g transform={`translate(${x - 10},${y})`}>
       <foreignObject width={20} height={20}>
