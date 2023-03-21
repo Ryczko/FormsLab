@@ -83,7 +83,9 @@ export const useSurveyResultsManager = () => {
     }
 
     getSurveyData();
-  }, [surveyId, getSurveyData, router]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getDataToChart = (): BarChartData[] => {
     if (!answersData.length) {

@@ -50,7 +50,9 @@ export const useSurveyAnswerManager = () => {
     if (surveyId) {
       getSurveyData();
     }
-  }, [surveyId, getSurveyData]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleIconClick = (icon: string) => {
     setSelectedIcon(icon);
