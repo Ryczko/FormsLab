@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { ComponentType, useCallback, useEffect } from 'react';
+import { ComponentType } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useApplicationContext } from 'src/features/application/context';
 
 const withProtectedRoute = (WrappedComponent: ComponentType) => {

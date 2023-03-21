@@ -1,11 +1,8 @@
-import type React from 'react';
+import React from 'react';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
-import {
-  IconButtonProps,
-  IconButtonSize,
-  IconButtonVariant,
-} from '../IconButton/IconButton';
+import { IconButtonProps } from '../IconButton/IconButton';
+import { IconButtonSize, IconButtonVariant } from '../IconButton/IconButton';
 
 export const IconButtonLinkVariant = IconButtonVariant;
 export const IconButtonLinkSize = IconButtonSize;

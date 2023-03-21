@@ -1,4 +1,3 @@
-import { auth, db } from 'src/firebase';
 import {
   collection,
   deleteDoc,
@@ -8,15 +7,17 @@ import {
   where,
 } from 'firebase/firestore';
 import toast from 'react-hot-toast';
-import { useApplicationContext } from 'src/features/application/context';
 import { useState } from 'react';
-import { signOut, User } from 'firebase/auth';
+import { User } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { useApplicationContext } from 'src/features/application/context';
+import { auth, db } from 'src/firebase';
 
 interface SettingsManager {
   loading: boolean;
-  error: Error;
-  user: User;
+  error: Error | undefined;
+  user: User | null | undefined;
   isOpen: boolean;
   closeDeleteModal: () => void;
   openDeleteModal: () => void;
@@ -38,6 +39,9 @@ export const useSettingsManager = (): SettingsManager => {
 
   const handleOnAccountDelete = async () => {
     try {
+      if (!user) {
+        return;
+      }
       const q = query(
         collection(db, 'surveys'),
         where('creatorId', '==', user?.uid)

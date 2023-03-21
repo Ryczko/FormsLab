@@ -1,8 +1,7 @@
 import DatePicker from 'react-datepicker';
-
+import Head from 'next/head';
 import withAnimation from '../../../shared/HOC/withAnimation';
 import withProtectedRoute from '../../../shared/HOC/withProtectedRoute';
-import Head from 'next/head';
 import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
 import Header from 'src/shared/components/Header/Header';
 import Input from 'src/shared/components/Input/Input';
@@ -31,7 +30,7 @@ function SurveyCreatePage() {
         <title>Create Survey</title>
         <meta name="description" content="Create Survey - Employee Pulse" />
       </Head>
-      <div className="container px-4 m-auto text-center md:px-8">
+      <div className="container m-auto px-4 text-center md:px-8">
         <Header>Create new survey</Header>
 
         <div className="mx-auto max-w-lg">
@@ -41,14 +40,17 @@ function SurveyCreatePage() {
             value={title}
             onChange={handleChangeTitle}
           />
-          <label className="block mt-10 mb-4 font-semibold text-left">
+          <div className="mt-10 mb-4 block text-left font-semibold">
             Select duration of survey
-          </label>
-          <div className="flex flex-col justify-center items-center space-y-4 md:flex-row md:space-y-0">
+          </div>
+          <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0">
             <DatePicker
-              className="block py-3 px-4 mr-auto w-full font-medium leading-none text-center text-zinc-600 rounded-lg focus:outline-none shadow-sm cursor-pointer md:w-52 focus:shadow-outline"
+              className="focus:shadow-outline mr-auto block w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow-sm focus:outline-none md:w-52"
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => {
+                if (!date) return;
+                return setStartDate(date);
+              }}
               calendarStartDay={1}
               dateFormat="dd/MM/yyyy HH:mm"
               timeFormat="HH:mm"
@@ -63,9 +65,12 @@ function SurveyCreatePage() {
             />
             <p>to</p>
             <DatePicker
-              className="block py-3 px-4 ml-auto w-full font-medium leading-none text-center text-zinc-600 rounded-lg focus:outline-none shadow-sm cursor-pointer md:w-52 focus:shadow-outline"
+              className="focus:shadow-outline ml-auto block w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow-sm focus:outline-none md:w-52"
               selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              onChange={(date) => {
+                if (!date) return;
+                return setEndDate(date);
+              }}
               calendarStartDay={1}
               dateFormat="dd/MM/yyyy HH:mm"
               timeFormat="HH:mm"
@@ -81,11 +86,11 @@ function SurveyCreatePage() {
           </div>
 
           <div className="mt-10">
-            <label className="block mb-4 font-semibold text-left">
+            <div className="mb-4 block text-left font-semibold">
               Click on icon to change
-            </label>
+            </div>
 
-            <div className="flex justify-between w-full">
+            <div className="flex w-full justify-between">
               {pack.map((emote, idx) => (
                 <EmojiPicker
                   key={idx}

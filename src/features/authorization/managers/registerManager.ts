@@ -1,6 +1,6 @@
-import { useApplicationContext } from './../../application/context';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useApplicationContext } from './../../application/context';
 import { registerWithEmailAndPassword } from 'src/firebase';
 
 export const useRegisterManager = () => {

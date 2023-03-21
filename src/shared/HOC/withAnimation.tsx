@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { ComponentType } from 'react';
+import { ComponentType } from 'react';
 
 const withAnimation = (WrappedComponent: ComponentType) => {
   const hocComponent = ({ ...props }) => (

@@ -1,6 +1,6 @@
 import { FormikHelpers } from 'formik';
-import { logInWithEmailAndPassword } from 'src/firebase';
 import * as Yup from 'yup';
+import { logInWithEmailAndPassword } from 'src/firebase';
 
 export const useLoginManager = () => {
   const initialValues = {

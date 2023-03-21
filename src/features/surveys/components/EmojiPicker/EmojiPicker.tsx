@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
-import { useCloseComponent } from '../../../../shared/hooks/useCloseComponent';
-
 import dynamic from 'next/dynamic';
+import { EmojiClickData } from 'emoji-picker-react';
+import { Categories } from 'emoji-picker-react';
+import { useCloseComponent } from '../../../../shared/hooks/useCloseComponent';
 import Loader from '../../../../shared/components/Loader/Loader';
-import { Categories, EmojiClickData } from 'emoji-picker-react';
-import { EMOJI_STYLE } from 'src/shared/constants/emojisConfig';
 import Emoji from '../Emoji/Emoji';
+import { EMOJI_STYLE } from 'src/shared/constants/emojisConfig';
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
@@ -15,7 +15,7 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
 interface EmojiPickerProps {
   index: number;
   defaultEmote?: string;
-  onEmotePick: (idx: number, newValue: number | string) => void;
+  onEmotePick: (idx: number, newValue: string) => void;
 }
 
 function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
@@ -35,20 +35,22 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
   return (
     <div ref={wrapperRef}>
       <button
-        className="flex justify-center items-center p-3 w-16 text-3xl bg-white rounded-lg shadow transition hover:scale-95 label-text"
+        type="button"
+        className="label-text flex w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
-        <Emoji unified={chosenEmoji?.unified || defaultEmote} />
+        <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
       </button>
 
       {displayPicker && (
-        <div
+        <button
+          type="button"
           onClick={() => setDisplayPicker(false)}
-          className="fixed top-0 left-0 z-10 w-full h-full bg-black opacity-60"
+          className="fixed top-0 left-0 z-10 h-full w-full bg-black opacity-60"
         />
       )}
       {displayPicker && (
-        <div className="flex overflow-hidden fixed top-1/2 left-1/2 z-20 justify-center items-center w-[400px] max-w-[90%] h-[400px] max-h-[90%] bg-white rounded-md -translate-x-1/2 -translate-y-1/2">
+        <div className="fixed top-1/2 left-1/2 z-20 flex h-[400px] max-h-[90%] w-[400px] max-w-[90%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-white">
           <Picker
             onEmojiClick={onEmojiClick}
             autoFocusSearch={false}
