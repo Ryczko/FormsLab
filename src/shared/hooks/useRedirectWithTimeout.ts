@@ -19,7 +19,9 @@ export default function useRedirectWithTimeout(
     return () => {
       clearInterval(timer);
     };
-  }, [router, secondsRemaining, redirectTo]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [secondsRemaining, redirectTo]);
 
   return { secondsRemaining };
 }
