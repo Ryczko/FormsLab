@@ -22,6 +22,7 @@ function SurveyCreatePage() {
     handleEmotePick,
     createSurvey,
     buttonDisable,
+    isCreating,
   } = useCreateSurveyManager();
 
   return (
@@ -101,15 +102,19 @@ function SurveyCreatePage() {
               ))}
             </div>
           </div>
+          <div className="flex justify-center">
+            <Button
+              onClick={createSurvey}
+              className="z-0 mt-12 w-full sm:w-auto"
+              disabled={!title.length || buttonDisable}
+              variant={ButtonVariant.PRIMARY}
+              isLoading={isCreating}
+            >
+              Create
+            </Button>
+          </div>
 
-          <Button
-            onClick={createSurvey}
-            className="z-0 mt-12 w-full sm:w-auto"
-            disabled={!title.length || buttonDisable}
-            variant={ButtonVariant.PRIMARY}
-          >
-            Create
-          </Button>
+          {/* <div className="fixed top-0 left-0 z-50 h-full w-full bg-slate-400 opacity-40"></div> */}
         </div>
       </div>
     </>
