@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { BarChartData } from '../BarChart/BarChart';
+import { BarChartData } from '../BarChart/BarChart';
 import BarChart from '../BarChart/BarChart';
 import DataCard from '../DataCard/DataCard';
 

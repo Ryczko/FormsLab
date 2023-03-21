@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import type { ComponentType} from 'react';
+import { ComponentType } from 'react';
 import { useCallback, useEffect } from 'react';
 import { useApplicationContext } from 'src/features/application/context';
 

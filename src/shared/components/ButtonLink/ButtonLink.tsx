@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import type { LegacyRef } from 'react';
+import { LegacyRef } from 'react';
 import { forwardRef } from 'react';
-import type { ButtonProps } from '../Button/Button';
+import { ButtonProps } from '../Button/Button';
 import { ButtonSize, ButtonVariant } from '../Button/Button';
 
 export const ButtonLinkVariant = ButtonVariant;

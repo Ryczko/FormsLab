@@ -1,7 +1,7 @@
 import '../styles/index.scss';
 import '../styles/datepicker.scss';
 import '../styles/github-corner.scss';
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
 import PageLayout from '../layout/PageLayout';
 import { ApplicationContext } from 'src/features/application/context';

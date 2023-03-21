@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import clsx from 'clsx';
 
 export enum ButtonVariant {
@@ -35,7 +35,6 @@ const Button = ({
   <button
     className={clsx('btn', variant, sizeType, className)}
     disabled={disabled}
-    // eslint-disable-next-line react/button-has-type
     type={type}
     {...props}
   >

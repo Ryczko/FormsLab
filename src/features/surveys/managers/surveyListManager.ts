@@ -1,12 +1,5 @@
-import type {
-  DocumentData,
-  Query} from 'firebase/firestore';
-import {
-  collection,
-  orderBy,
-  query,
-  where,
-} from 'firebase/firestore';
+import { DocumentData, Query } from 'firebase/firestore';
+import { collection, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useApplicationContext } from 'src/features/application/context';

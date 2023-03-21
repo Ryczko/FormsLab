@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import type { EmojiClickData } from 'emoji-picker-react';
+import { EmojiClickData } from 'emoji-picker-react';
 import { Categories } from 'emoji-picker-react';
 import { useCloseComponent } from '../../../../shared/hooks/useCloseComponent';
 import Loader from '../../../../shared/components/Loader/Loader';

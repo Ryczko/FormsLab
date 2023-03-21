@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type React from 'react';
+import React from 'react';
 
 interface InputProps {
   label?: string;
@@ -30,9 +30,9 @@ function Input({
         placeholder={placeholder}
         onChange={onChange}
         className={clsx(
-          className,
           'mt-2 mb-4 block w-full rounded-lg py-2 px-4 shadow focus:outline-none',
-          error ? 'border border-red-400' : ''
+          error ? 'border border-red-400' : '',
+          className
         )}
       />
       {!!error && (

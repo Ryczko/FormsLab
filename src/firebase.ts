@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { FirebaseError, initializeApp } from 'firebase/app';
 import {
   GoogleAuthProvider,
   GithubAuthProvider,
@@ -54,10 +54,8 @@ const signInWithGoogle = async () => {
     }
   } catch (err) {
     if (
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      err.code === 'auth/account-exists-with-different-credential' &&
-      err instanceof Error
+      err instanceof FirebaseError &&
+      err.code === 'auth/account-exists-with-different-credential'
     ) {
       toast.error('The account already exists for that email.');
     } else {
@@ -82,10 +80,8 @@ const signInWithGithub = async () => {
     }
   } catch (err) {
     if (
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      err.code === 'auth/account-exists-with-different-credential' &&
-      err instanceof Error
+      err instanceof FirebaseError &&
+      err.code === 'auth/account-exists-with-different-credential'
     ) {
       toast.error('The account already exists for that email.');
     } else {
@@ -134,10 +130,8 @@ const registerWithEmailAndPassword = async ({
     });
   } catch (err) {
     if (
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      err.code === 'auth/email-already-in-use' &&
-      err instanceof Error
+      err instanceof FirebaseError &&
+      err.code === 'auth/email-already-in-use'
     ) {
       toast.error('The account already exists for that email.');
     } else {

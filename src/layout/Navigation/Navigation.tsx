@@ -127,7 +127,7 @@ function Navigation() {
         ) : (
           <Link href={'/login'} passHref>
             <ButtonLink
-              className="hidden px-4 sm:px-6 small-sm:block"
+              className="hidden px-4 small-sm:block sm:px-6"
               variant={ButtonVariant.OUTLINE_PRIMARY}
             >
               Sign In

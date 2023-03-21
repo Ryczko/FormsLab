@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import { PropsWithChildren } from 'react';
 
 interface LoginButtonProps {
   image?: string;
   onClick?: () => void;
-  children: string;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
 }
@@ -16,15 +16,14 @@ function LoginButton({
   type = 'button',
   className,
   ...props
-}: LoginButtonProps) {
+}: PropsWithChildren<LoginButtonProps>) {
   return (
     <button
-      // eslint-disable-next-line react/button-has-type
       type={type}
       onClick={onClick}
       className={clsx(
-        className,
-        'my-1 flex w-full items-center justify-center rounded-lg bg-white py-2 pr-4 pl-2 font-semibold text-zinc-900 shadow hover:bg-zinc-50  active:bg-zinc-50'
+        'my-1 flex w-full items-center justify-center rounded-lg bg-white py-2 pr-4 pl-2 font-semibold text-zinc-900 shadow hover:bg-zinc-50  active:bg-zinc-50',
+        className
       )}
       {...props}
     >

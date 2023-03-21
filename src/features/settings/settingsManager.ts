@@ -8,7 +8,7 @@ import {
 } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import type { User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useApplicationContext } from 'src/features/application/context';

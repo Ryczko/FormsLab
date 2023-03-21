@@ -1,4 +1,4 @@
-import type { User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'src/firebase';

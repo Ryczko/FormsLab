@@ -1,6 +1,6 @@
-import type React from 'react';
+import React from 'react';
 import clsx from 'clsx';
-import type { ButtonProps } from '../Button/Button';
+import { ButtonProps } from '../Button/Button';
 import { ButtonSize, ButtonVariant } from '../Button/Button';
 
 export const IconButtonVariant = ButtonVariant;
@@ -23,7 +23,6 @@ const IconButton = ({
   <button
     className={clsx('btn', variant, sizeType, className, 'flex items-center')}
     disabled={disabled}
-    // eslint-disable-next-line react/button-has-type
     type={type}
     {...props}
   >

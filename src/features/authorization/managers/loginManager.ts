@@ -1,4 +1,4 @@
-import type { FormikHelpers } from 'formik';
+import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { logInWithEmailAndPassword } from 'src/firebase';
 

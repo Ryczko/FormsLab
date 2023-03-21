@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-import type { Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import {
   getDoc,
   doc,
@@ -10,8 +10,8 @@ import {
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
-import type { BarChartData } from '../components/BarChart/BarChart';
-import type { AnswerData } from '../interfaces/AnswerData';
+import { BarChartData } from '../components/BarChart/BarChart';
+import { AnswerData } from '../interfaces/AnswerData';
 import { formatFirebaseDateWithHours } from 'src/shared/utilities/convertTime';
 import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
 import { db } from 'src/firebase';
