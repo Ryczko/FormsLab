@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 
 import toast from 'react-hot-toast';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import { db } from 'firebaseConfiguration';
@@ -51,6 +51,15 @@ export default function SurveyRow({
     setIsRemoving(true);
     try {
       await deleteDoc(doc(db, 'surveys', id));
+
+      const answersCollection = await getDocs(
+        query(collection(db, 'surveys', id, 'answers'))
+      );
+
+      answersCollection.forEach(async (answer) => {
+        await deleteDoc(answer.ref);
+      });
+
       closeDeleteModal();
       toast.success('Survey deleted');
     } catch (error) {
