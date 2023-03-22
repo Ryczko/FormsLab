@@ -67,7 +67,6 @@ export const useSettingsManager = (): SettingsManager => {
       router.replace('/');
     } catch (error) {
       toast.error('Error deleting account');
-      console.error(error);
     }
   };
 

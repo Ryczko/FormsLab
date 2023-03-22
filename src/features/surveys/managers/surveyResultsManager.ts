@@ -121,7 +121,6 @@ export const useSurveyResultsManager = () => {
       window.location.hostname === 'localhost' ? 'http://' : 'https://';
     const link = `${domain}${window.location.host}/survey/${id}`;
     copy(link);
-    toast.success('Link copied to clipboard');
   };
 
   return {

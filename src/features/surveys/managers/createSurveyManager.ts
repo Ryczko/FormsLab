@@ -60,8 +60,7 @@ export const useCreateSurveyManager = () => {
       const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
       copy(link);
       router.push(`/survey/answer/${newSurvey.id}`);
-
-      toast.success('Survey created and link copied to clipboard');
+      toast.success('Survey created succesfully');
     } catch (error) {
       toast.error('Survey creation failed');
     }
