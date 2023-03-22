@@ -1,5 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import Button, { ButtonVariant, ButtonSize } from './Button';
+import Button, {
+  ButtonVariant,
+  ButtonSize,
+} from 'shared/components/Button/Button';
 
 describe('Button', () => {
   it('should render children', () => {

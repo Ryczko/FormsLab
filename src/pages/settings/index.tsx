@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { TrashIcon } from '@heroicons/react/outline';
-import withAnimation from '../../shared/HOC/withAnimation';
-import Header from 'src/shared/components/Header/Header';
-import withProtectedRoute from 'src/shared/HOC/withProtectedRoute';
+import withAnimation from 'shared/HOC/withAnimation';
+import Header from 'shared/components/Header/Header';
+import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 
-import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
-import { useSettingsManager } from 'src/features/settings/settingsManager';
-import StyledDialog from 'src/shared/components/StyledDialog/StyledDialog';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
+import { useSettingsManager } from 'features/settings/settingsManager';
+import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 
 function SettingsPage() {
   const {

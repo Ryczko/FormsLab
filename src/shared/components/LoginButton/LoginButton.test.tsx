@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import LoginButton from './LoginButton';
+import LoginButton from 'shared/components/LoginButton/LoginButton';
 
 describe('LoginButton', () => {
   it('should render only with a image', () => {

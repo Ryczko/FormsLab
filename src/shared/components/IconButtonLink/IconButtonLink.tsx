@@ -1,7 +1,7 @@
 import React, { LegacyRef, PropsWithChildren } from 'react';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
-import { ButtonVariant, ButtonSize, ButtonProps } from '../Button/Button';
+import { ButtonProps, ButtonSize, ButtonVariant } from '../Button/Button';
 
 export const IconButtonLinkVariant = ButtonVariant;
 export const IconButtonLinkSize = ButtonSize;

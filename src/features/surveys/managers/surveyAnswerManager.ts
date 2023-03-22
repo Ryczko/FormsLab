@@ -2,7 +2,7 @@ import { getDoc, doc, addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
-import { db } from 'src/firebase';
+import { db } from 'firebaseConfiguration';
 
 export const useSurveyAnswerManager = () => {
   const router = useRouter();

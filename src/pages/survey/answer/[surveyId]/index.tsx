@@ -1,14 +1,13 @@
 import { LinkIcon, RefreshIcon } from '@heroicons/react/outline';
 import Head from 'next/head';
-import withAnimation from '../../../../shared/HOC/withAnimation';
-import withProtectedRoute from '../../../../shared/HOC/withProtectedRoute';
-import AnswerHeader from 'src/features/surveys/components/AnswerHeader/AnswerHeader';
-import Header from 'src/shared/components/Header/Header';
-
-import Loader from 'src/shared/components/Loader/Loader';
-import AnswerTableRow from 'src/features/surveys/components/AnswerTableRow/AnswerTableRow';
-import { useSurveyResultsManager } from 'src/features/surveys/managers/surveyResultsManager';
-import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
+import withAnimation from 'shared/HOC/withAnimation';
+import withProtectedRoute from 'shared/HOC/withProtectedRoute';
+import AnswerHeader from 'features/surveys/components/AnswerHeader/AnswerHeader';
+import Header from 'shared/components/Header/Header';
+import Loader from 'shared/components/Loader/Loader';
+import AnswerTableRow from 'features/surveys/components/AnswerTableRow/AnswerTableRow';
+import { useSurveyResultsManager } from 'features/surveys/managers/surveyResultsManager';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 function SurveyResultsPage() {
   const {

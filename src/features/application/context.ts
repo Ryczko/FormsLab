@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { useDefinedContext } from './../../shared/context/useDefinedContext';
-import { ApplicationManager } from './manager';
+import { useDefinedContext } from 'shared/context/useDefinedContext';
+import { ApplicationManager } from 'features/application/manager';
 
 export const ApplicationContext = createContext<ApplicationManager | undefined>(
   undefined

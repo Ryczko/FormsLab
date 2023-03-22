@@ -2,11 +2,11 @@ import Head from 'next/head';
 import Button, {
   ButtonVariant,
   ButtonSize,
-} from 'src/shared/components/Button/Button';
-import EmojiButton from 'src/features/surveys/components/EmojiButton/EmojiButton';
-import Header from 'src/shared/components/Header/Header';
-import Loader from 'src/shared/components/Loader/Loader';
-import { useSurveyAnswerManager } from 'src/features/surveys/managers/surveyAnswerManager';
+} from 'shared/components/Button/Button';
+import EmojiButton from 'features/surveys/components/EmojiButton/EmojiButton';
+import Header from 'shared/components/Header/Header';
+import Loader from 'shared/components/Loader/Loader';
+import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
 
 function AnswerPage() {
   const {

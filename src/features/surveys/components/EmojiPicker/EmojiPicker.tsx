@@ -2,10 +2,10 @@ import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { EmojiClickData } from 'emoji-picker-react';
 import { Categories } from 'emoji-picker-react';
-import { useCloseComponent } from '../../../../shared/hooks/useCloseComponent';
-import Loader from '../../../../shared/components/Loader/Loader';
-import Emoji from '../Emoji/Emoji';
-import { EMOJI_STYLE } from 'src/shared/constants/emojisConfig';
+import { useCloseComponent } from 'shared/hooks/useCloseComponent';
+import Loader from 'shared/components/Loader/Loader';
+import Emoji from 'features/surveys/components/Emoji/Emoji';
+import { EMOJI_STYLE } from 'shared/constants/emojisConfig';
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,

@@ -1,4 +1,4 @@
-import Emoji from '../Emoji/Emoji';
+import Emoji from 'features/surveys/components/Emoji/Emoji';
 
 interface EmojiButtonProps {
   icon: string;

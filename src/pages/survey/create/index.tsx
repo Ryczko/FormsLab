@@ -1,12 +1,12 @@
 import DatePicker from 'react-datepicker';
 import Head from 'next/head';
-import withAnimation from '../../../shared/HOC/withAnimation';
-import withProtectedRoute from '../../../shared/HOC/withProtectedRoute';
-import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
-import Header from 'src/shared/components/Header/Header';
-import Input from 'src/shared/components/Input/Input';
-import EmojiPicker from 'src/features/surveys/components/EmojiPicker/EmojiPicker';
-import { useCreateSurveyManager } from 'src/features/surveys/managers/createSurveyManager';
+import withAnimation from 'shared/HOC/withAnimation';
+import withProtectedRoute from 'shared/HOC/withProtectedRoute';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
+import Header from 'shared/components/Header/Header';
+import Input from 'shared/components/Input/Input';
+import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
+import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
 
 function SurveyCreatePage() {
   const {

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Input from './Input';
+import Input from 'shared/components/Input/Input';
 
 describe('Input', () => {
   it('should render with a placeholder', () => {

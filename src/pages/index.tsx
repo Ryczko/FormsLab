@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Head from 'next/head';
-import withAnimation from '../shared/HOC/withAnimation';
-import ButtonLink from '../shared/components/ButtonLink/ButtonLink';
-import { ButtonVariant } from 'src/shared/components/Button/Button';
-import { useApplicationContext } from 'src/features/application/context';
+import withAnimation from 'shared/HOC/withAnimation';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import { ButtonVariant } from 'shared/components/Button/Button';
+import { useApplicationContext } from 'features/application/context';
 
 function IndexPage() {
   const { user, loading } = useApplicationContext();
