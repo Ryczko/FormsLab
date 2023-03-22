@@ -61,9 +61,9 @@ export default function SurveyRow({
   };
 
   return (
-    <div className="flex flex-col mb-4 w-[600px] max-w-full md:flex-row">
-      <div className="flex justify-between items-center py-3 px-4 w-full bg-white rounded-md rounded-b-none shadow-sm md:rounded-b-md">
-        <div title={question} className="w-36 text-left truncate">
+    <div className="mb-4 flex w-[600px] max-w-full flex-col md:flex-row">
+      <div className="flex w-full items-center justify-between rounded-md rounded-b-none bg-white py-3 px-4 shadow-sm md:rounded-b-md">
+        <div title={question} className="w-36 truncate text-left">
           {question}
         </div>
         <div className="flex items-center space-x-2">
@@ -75,7 +75,7 @@ export default function SurveyRow({
       <div className="flex w-full md:ml-2 md:w-auto">
         <Button
           variant={ButtonVariant.OUTLINE}
-          className="px-4 mt-2 mr-2 w-full sm:mt-0 md:w-auto"
+          className="mt-2 mr-2 w-full px-4 sm:mt-0 md:w-auto"
           onClick={handleOnMoreButton}
         >
           More
@@ -84,18 +84,18 @@ export default function SurveyRow({
         <IconButton
           variant={IconButtonVariant.PRIMARY}
           className={
-            'justify-center px-3 mt-2 w-full text-center sm:mt-0 md:w-auto'
+            'mt-2 w-full justify-center px-3 text-center sm:mt-0 md:w-auto'
           }
           title="Copy link to clipboard"
-          icon={<LinkIcon className="w-5 h-5" />}
+          icon={<LinkIcon className="h-5 w-5" />}
           onClick={handleCopyLink}
         />
         <IconButton
           variant={IconButtonVariant.DANGER}
           title="Delete survey"
-          className="justify-center px-3 mt-2 ml-2 w-full sm:mt-0 md:w-auto"
+          className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
           onClick={openDeleteModal}
-          icon={<TrashIcon className="w-5 h-5" />}
+          icon={<TrashIcon className="h-5 w-5" />}
         />
       </div>
       <StyledDialog
@@ -111,7 +111,7 @@ export default function SurveyRow({
               </p>
             </div>
 
-            <div className="flex justify-between mt-6">
+            <div className="mt-6 flex justify-between">
               <Button
                 variant={ButtonVariant.SECONDARY}
                 onClick={closeDeleteModal}
@@ -122,7 +122,7 @@ export default function SurveyRow({
               <IconButton
                 variant={IconButtonVariant.DANGER}
                 onClick={handleOnDelete(id)}
-                icon={<TrashIcon className="w-5 h-5" />}
+                icon={<TrashIcon className="h-5 w-5" />}
                 className="uppercase"
               >
                 Delete
