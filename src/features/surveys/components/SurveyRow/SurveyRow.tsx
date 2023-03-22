@@ -25,7 +25,7 @@ export default function SurveyRow({
   endDate,
   id,
 }: SurveyRowProps) {
-  const [, copy] = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
   const navigate = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
@@ -43,7 +43,6 @@ export default function SurveyRow({
       window.location.hostname === 'localhost' ? 'http://' : 'https://';
     const link = `${domain}${window.location.host}/survey/${id}`;
     copy(link);
-    toast.success('Link copied to clipboard');
   };
 
   const handleOnMoreButton = () => {
@@ -58,7 +57,6 @@ export default function SurveyRow({
       toast.success('Survey deleted');
     } catch (error) {
       toast.error('Error deleting survey');
-      console.error(error);
     }
     setIsRemoving(false);
   };

@@ -24,14 +24,12 @@ function SurveyListPage() {
 
         <div className="flex flex-col items-center justify-center">
           <div>
-            {
-              // TODO: add user friendly error message
-              error && <strong>Error: {JSON.stringify(error)}</strong>
-            }
-            {
-              // TODO: add fancy loading
-              loading && <Loader isLoading={true} />
-            }
+            {error && (
+              <strong>
+                There is a problem - your surveys cannot be viewed.
+              </strong>
+            )}
+            {loading && <Loader isLoading={true} />}
           </div>
           {surveysCollection &&
             (surveysCollection.docs?.length > 0 ? (

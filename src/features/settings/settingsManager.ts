@@ -57,7 +57,6 @@ export const useSettingsManager = () => {
       signOut(auth);
     } catch (error) {
       toast.error('Error deleting account');
-      console.error(error);
     }
     setIsRemoving(false);
   };

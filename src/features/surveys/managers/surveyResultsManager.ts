@@ -26,7 +26,7 @@ export const useSurveyResultsManager = () => {
   const [startDate, setStartDate] = useState('-');
   const [endDate, setEndDate] = useState('-');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
-  const [, copy] = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
 
   const getSurveyData = useCallback(
     async (displayMessages = false) => {
@@ -121,7 +121,6 @@ export const useSurveyResultsManager = () => {
       window.location.hostname === 'localhost' ? 'http://' : 'https://';
     const link = `${domain}${window.location.host}/survey/${id}`;
     copy(link);
-    toast.success('Link copied to clipboard');
   };
 
   return {

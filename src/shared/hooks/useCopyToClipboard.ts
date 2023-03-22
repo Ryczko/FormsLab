@@ -1,29 +1,30 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
-type CopiedValue = string | null;
-type CopyFn = (text: string) => Promise<boolean>;
+function useCopyToClipboard() {
+  const [copiedText, setCopiedText] = useState<string | null>(null);
 
-function useCopyToClipboard(): [CopiedValue, CopyFn] {
-  const [copiedText, setCopiedText] = useState<CopiedValue>(null);
-
-  const copy: CopyFn = async (text) => {
+  const copy = async (text: string, silient = false) => {
     if (!navigator?.clipboard) {
-      console.warn('Clipboard not supported');
+      toast.error('Clipboard not supported');
       return false;
     }
 
     try {
       await navigator.clipboard.writeText(text);
       setCopiedText(text);
+      if (!silient) {
+        toast.success('Copied to clipboard');
+      }
       return true;
     } catch (error) {
-      console.warn('Copy failed', error);
+      toast.error('Copy failed');
       setCopiedText(null);
       return false;
     }
   };
 
-  return [copiedText, copy];
+  return { copiedText, copy };
 }
 
 export default useCopyToClipboard;
