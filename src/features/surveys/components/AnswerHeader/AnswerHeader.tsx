@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import { BarChartData } from '../BarChart/BarChart';
-import BarChart from '../BarChart/BarChart';
-import DataCard from '../DataCard/DataCard';
+import { BarChartData } from 'features/surveys/components/BarChart/BarChart';
+import BarChart from 'features/surveys/components/BarChart/BarChart';
+import DataCard from 'features/surveys/components/DataCard/DataCard';
 
 interface AnswerHeaderProps {
   totalVotes: number;

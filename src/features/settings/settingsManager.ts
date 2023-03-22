@@ -10,8 +10,8 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { useApplicationContext } from 'src/features/application/context';
-import { auth, db } from 'src/firebase';
+import { useApplicationContext } from 'features/application/context';
+import { auth, db } from 'firebaseConfiguration';
 
 export const useSettingsManager = () => {
   const { loading, error, user } = useApplicationContext();

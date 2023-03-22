@@ -1,10 +1,10 @@
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { Fragment, PropsWithChildren } from 'react';
-import Background from './Background/Background';
-import GlobalLoader from './GlobalLoader/GlobalLoader';
-import Navigation from 'src/layout/Navigation/Navigation';
-import { useApplicationContext } from 'src/features/application/context';
+import Background from 'layout/Background/Background';
+import GlobalLoader from 'layout/GlobalLoader/GlobalLoader';
+import Navigation from 'layout/Navigation/Navigation';
+import { useApplicationContext } from 'features/application/context';
 
 function PageLayout({ children }: PropsWithChildren) {
   const { loading } = useApplicationContext();

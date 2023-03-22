@@ -4,13 +4,11 @@ import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 import toast from 'react-hot-toast';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
-import useCopyToClipboard from '../../../../shared/hooks/useCopyToClipboard';
-import { db } from '../../../../firebase';
-import Button, {
-  ButtonVariant,
-} from '../../../../shared/components/Button/Button';
+import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
+import { db } from 'firebaseConfiguration';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
-import StyledDialog from 'src/shared/components/StyledDialog/StyledDialog';
+import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 
 interface SurveyRowProps {
   question: string;

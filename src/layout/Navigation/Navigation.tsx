@@ -4,16 +4,15 @@ import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { auth } from '../../firebase';
-import Logo from '../Logo/Logo';
-import ButtonLink from '../../shared/components/ButtonLink/ButtonLink';
-import BurgerMenu from '../BurgerMenu/BurgerMenu';
-import Button, { ButtonVariant } from '../../shared/components/Button/Button';
-
+import { auth } from 'firebaseConfiguration';
+import Logo from 'layout/Logo/Logo';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import BurgerMenu from 'layout/BurgerMenu/BurgerMenu';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import AvatarIcon from '../../../public/images/avatar.svg';
-import GithubCorner from '../GithubCorner/GithubCorner';
-import { useApplicationContext } from 'src/features/application/context';
-import IconButtonLink from 'src/shared/components/IconButtonLink/IconButtonLink';
+import GithubCorner from 'layout/GithubCorner/GithubCorner';
+import { useApplicationContext } from 'features/application/context';
+import IconButtonLink from 'shared/components/IconButtonLink/IconButtonLink';
 
 function Navigation() {
   const { user, loading, displayName } = useApplicationContext();

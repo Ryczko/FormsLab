@@ -3,7 +3,7 @@ import {
   ValueType,
   NameType,
 } from 'recharts/types/component/DefaultTooltipContent';
-import Emoji from '../Emoji/Emoji';
+import Emoji from 'features/surveys/components/Emoji/Emoji';
 
 export const CustomTooltip = ({
   active,

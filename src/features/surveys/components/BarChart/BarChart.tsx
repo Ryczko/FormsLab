@@ -8,8 +8,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { CustomTooltip } from './CustomTooltip';
-import { CustomXAxisTick } from './CustomXAxisTick';
+import { CustomTooltip } from 'features/surveys/components/BarChart/CustomTooltip';
+import { CustomXAxisTick } from 'features/surveys/components/BarChart/CustomXAxisTick';
 
 interface BarChartProps {
   data: BarChartData[];

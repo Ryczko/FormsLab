@@ -2,9 +2,9 @@ import { addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useApplicationContext } from 'src/features/application/context';
-import { db } from 'src/firebase';
-import useCopyToClipboard from 'src/shared/hooks/useCopyToClipboard';
+import { useApplicationContext } from 'features/application/context';
+import { db } from 'firebaseConfiguration';
+import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');

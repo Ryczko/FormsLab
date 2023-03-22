@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import { useState, useEffect, useCallback } from 'react';
+import { auth } from 'firebaseConfiguration';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from 'src/firebase';
 
 export interface ApplicationManager {
   user: User | null | undefined;

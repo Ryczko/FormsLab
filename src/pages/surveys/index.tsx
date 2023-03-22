@@ -2,13 +2,14 @@ import { Timestamp } from 'firebase/firestore';
 
 import Image from 'next/image';
 import Head from 'next/head';
-import { formatFirebaseDateWithoutHours } from '../../shared/utilities/convertTime';
-import withAnimation from '../../shared/HOC/withAnimation';
-import withProtectedRoute from '../../shared/HOC/withProtectedRoute';
-import Header from 'src/shared/components/Header/Header';
-import Loader from 'src/shared/components/Loader/Loader';
-import SurveyRow from 'src/features/surveys/components/SurveyRow/SurveyRow';
-import { useSurveyListManager } from 'src/features/surveys/managers/surveyListManager';
+import { formatFirebaseDateWithoutHours } from 'shared/utilities/convertTime';
+import withAnimation from 'shared/HOC/withAnimation';
+import withProtectedRoute from 'shared/HOC/withProtectedRoute';
+import Header from 'shared/components/Header/Header';
+import Loader from 'shared/components/Loader/Loader';
+import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
+import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
+import NoSurveys from '../../../public/images/no-surveys.svg';
 
 function SurveyListPage() {
   const { error, loading, surveysCollection } = useSurveyListManager();
@@ -53,7 +54,7 @@ function SurveyListPage() {
               <>
                 <Image
                   className="mt-2 w-[200px] -translate-x-3"
-                  src={'/images/no-surveys.svg'}
+                  src={NoSurveys}
                   alt="no surveys"
                   width="200"
                   height="125"

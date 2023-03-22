@@ -3,13 +3,15 @@ import Head from 'next/head';
 import Link from 'next/link';
 import router from 'next/router';
 import { useEffect } from 'react';
-import { signInWithGoogle, signInWithGithub } from '../../firebase';
-import withAnimation from '../../shared/HOC/withAnimation';
-import Header from 'src/shared/components/Header/Header';
-import LoginButton from 'src/shared/components/LoginButton/LoginButton';
-import { useApplicationContext } from 'src/features/application/context';
-import Input from 'src/shared/components/Input/Input';
-import { useLoginManager } from 'src/features/authorization/managers/loginManager';
+import { signInWithGoogle, signInWithGithub } from 'firebaseConfiguration';
+import withAnimation from 'shared/HOC/withAnimation';
+import Header from 'shared/components/Header/Header';
+import LoginButton from 'shared/components/LoginButton/LoginButton';
+import { useApplicationContext } from 'features/application/context';
+import Input from 'shared/components/Input/Input';
+import { useLoginManager } from 'features/authorization/managers/loginManager';
+import Github from '../../../public/images/github.svg';
+import Google from '../../../public/images/google.svg';
 
 function LoginPage() {
   const { loading, user } = useApplicationContext();
@@ -37,14 +39,11 @@ function LoginPage() {
           >
             {({ values, errors, handleChange, handleSubmit, touched }) => (
               <Form className="flex w-64 flex-col sm:w-80">
-                <LoginButton
-                  image={'/images/google.svg'}
-                  onClick={signInWithGoogle}
-                >
+                <LoginButton image={Google} onClick={signInWithGoogle}>
                   Sign in with Google
                 </LoginButton>
                 <LoginButton
-                  image={'/images/github.svg'}
+                  image={Github}
                   onClick={signInWithGithub}
                   className="mb-3"
                 >

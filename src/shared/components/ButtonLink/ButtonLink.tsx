@@ -1,8 +1,11 @@
 import clsx from 'clsx';
 import { LegacyRef, PropsWithChildren } from 'react';
 import { forwardRef } from 'react';
-import { ButtonProps } from '../Button/Button';
-import { ButtonSize, ButtonVariant } from '../Button/Button';
+import {
+  ButtonProps,
+  ButtonSize,
+  ButtonVariant,
+} from 'shared/components/Button/Button';
 
 export const ButtonLinkVariant = ButtonVariant;
 export const ButtonLinkSize = ButtonSize;

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ComponentType } from 'react';
 import { useCallback, useEffect } from 'react';
-import { useApplicationContext } from 'src/features/application/context';
+import { useApplicationContext } from 'features/application/context';
 
 const withProtectedRoute = (WrappedComponent: ComponentType) => {
   const HocComponent = ({ ...props }) => {

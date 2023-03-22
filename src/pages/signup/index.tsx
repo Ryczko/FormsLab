@@ -3,12 +3,12 @@ import Head from 'next/head';
 import router from 'next/router';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import withAnimation from '../../shared/HOC/withAnimation';
-import Header from 'src/shared/components/Header/Header';
-import LoginButton from 'src/shared/components/LoginButton/LoginButton';
-import Input from 'src/shared/components/Input/Input';
-import { useRegisterManager } from 'src/features/authorization/managers/registerManager';
-import { useApplicationContext } from 'src/features/application/context';
+import withAnimation from 'shared/HOC/withAnimation';
+import Header from 'shared/components/Header/Header';
+import LoginButton from 'shared/components/LoginButton/LoginButton';
+import Input from 'shared/components/Input/Input';
+import { useRegisterManager } from 'features/authorization/managers/registerManager';
+import { useApplicationContext } from 'features/application/context';
 
 function SignupPage() {
   const { loading, user } = useApplicationContext();
