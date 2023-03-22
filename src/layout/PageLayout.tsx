@@ -1,16 +1,12 @@
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Fragment } from 'react';
+import { Fragment, PropsWithChildren } from 'react';
 import Background from './Background/Background';
 import GlobalLoader from './GlobalLoader/GlobalLoader';
 import Navigation from 'src/layout/Navigation/Navigation';
 import { useApplicationContext } from 'src/features/application/context';
 
-interface PageLayoutProps {
-  children: React.ReactNode;
-}
-
-function PageLayout({ children }: PageLayoutProps) {
+function PageLayout({ children }: PropsWithChildren) {
   const { loading } = useApplicationContext();
   const router = useRouter();
 

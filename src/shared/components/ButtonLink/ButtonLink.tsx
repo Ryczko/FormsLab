@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { LegacyRef } from 'react';
+import { LegacyRef, PropsWithChildren } from 'react';
 import { forwardRef } from 'react';
 import { ButtonProps } from '../Button/Button';
 import { ButtonSize, ButtonVariant } from '../Button/Button';
@@ -8,7 +8,6 @@ export const ButtonLinkVariant = ButtonVariant;
 export const ButtonLinkSize = ButtonSize;
 
 interface ButtonLinkProps extends ButtonProps {
-  children: React.ReactNode;
   onClick?: () => void;
 }
 
@@ -19,7 +18,7 @@ const ButtonLink = (
     variant = ButtonLinkVariant.SECONDARY,
     sizeType = ButtonLinkSize.DEFAULT,
     ...props
-  }: ButtonLinkProps,
+  }: PropsWithChildren<ButtonLinkProps>,
   ref: LegacyRef<HTMLAnchorElement>
 ) => (
   <a
