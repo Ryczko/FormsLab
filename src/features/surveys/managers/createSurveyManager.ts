@@ -65,7 +65,6 @@ export const useCreateSurveyManager = () => {
       await router.push(`/survey/answer/${newSurvey.id}`);
 
       toast.success('Survey created and link copied to clipboard');
-      console.log('akcja');
     } catch (error) {
       toast.error('Survey creation failed');
     }
