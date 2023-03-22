@@ -14,7 +14,7 @@ export const useCreateSurveyManager = () => {
   const [buttonDisable, setButtonDisable] = useState(false);
 
   const router = useRouter();
-  const [, copy] = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
 
   // Move to useState initial value when bug in emoji library will be solved:
   // https://github.com/ealush/emoji-picker-react/issues/329
@@ -58,9 +58,14 @@ export const useCreateSurveyManager = () => {
       const domain =
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
       const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
-      copy(link);
+      const copiedCorrectly = await copy(link, true);
       router.push(`/survey/answer/${newSurvey.id}`);
-      toast.success('Survey created succesfully');
+
+      toast.success(
+        `Survey created succesfully ${
+          copiedCorrectly ? 'and link copied to clipboard' : ''
+        }`
+      );
     } catch (error) {
       toast.error('Survey creation failed');
     }

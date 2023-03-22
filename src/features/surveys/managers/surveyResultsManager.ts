@@ -26,7 +26,7 @@ export const useSurveyResultsManager = () => {
   const [startDate, setStartDate] = useState('-');
   const [endDate, setEndDate] = useState('-');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
-  const [, copy] = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
 
   const getSurveyData = useCallback(
     async (displayMessages = false) => {

@@ -27,7 +27,7 @@ export default function SurveyRow({
   endDate,
   id,
 }: SurveyRowProps) {
-  const [, copy] = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
   const navigate = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
