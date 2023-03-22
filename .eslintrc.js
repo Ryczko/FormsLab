@@ -40,6 +40,7 @@ module.exports = {
     'tailwindcss',
     '@typescript-eslint',
     'prettier',
+    'no-relative-import-paths',
   ],
   rules: {
     indent: ['error', 2],
@@ -47,5 +48,9 @@ module.exports = {
     semi: ['error', 'always'],
     'tailwindcss/no-custom-classname': 'off',
     'tailwindcss/migration-from-tailwind-2': 'off',
+    'no-relative-import-paths/no-relative-import-paths': [
+      'warn',
+      { allowSameFolder: false, rootDir: 'src', prefix: '' },
+    ],
   },
 };

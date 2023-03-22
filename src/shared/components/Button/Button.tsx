@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import Loader from '../Loader/Loader';
+import Loader from 'shared/components/Loader/Loader';
 
 export enum ButtonVariant {
   PRIMARY = 'btn-primary',

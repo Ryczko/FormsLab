@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
-import Loader from '../Loader/Loader';
+import Loader from 'shared/components/Loader/Loader';
 
 interface LoginButtonProps {
   image?: string;

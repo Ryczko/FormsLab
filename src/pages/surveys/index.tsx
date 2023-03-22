@@ -2,9 +2,9 @@ import { Timestamp } from 'firebase/firestore';
 
 import Image from 'next/image';
 import Head from 'next/head';
-import { formatFirebaseDateWithoutHours } from '../../shared/utilities/convertTime';
-import withAnimation from '../../shared/HOC/withAnimation';
-import withProtectedRoute from '../../shared/HOC/withProtectedRoute';
+import { formatFirebaseDateWithoutHours } from 'shared/utilities/convertTime';
+import withAnimation from 'shared/HOC/withAnimation';
+import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import Header from 'shared/components/Header/Header';
 import Loader from 'shared/components/Loader/Loader';
 import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
