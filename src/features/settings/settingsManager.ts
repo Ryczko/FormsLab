@@ -8,25 +8,15 @@ import {
 } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { User } from 'firebase/auth';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useApplicationContext } from 'src/features/application/context';
 import { auth, db } from 'src/firebase';
 
-interface SettingsManager {
-  loading: boolean;
-  error: Error | undefined;
-  user: User | null | undefined;
-  isOpen: boolean;
-  closeDeleteModal: () => void;
-  openDeleteModal: () => void;
-  handleOnAccountDelete: () => void;
-}
-
-export const useSettingsManager = (): SettingsManager => {
+export const useSettingsManager = () => {
   const { loading, error, user } = useApplicationContext();
   const [isOpen, setIsOpen] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
   const router = useRouter();
 
   function closeDeleteModal() {
@@ -42,6 +32,8 @@ export const useSettingsManager = (): SettingsManager => {
       if (!user) {
         return;
       }
+      setIsRemoving(true);
+      await user.delete();
       const q = query(
         collection(db, 'surveys'),
         where('creatorId', '==', user?.uid)
@@ -59,15 +51,14 @@ export const useSettingsManager = (): SettingsManager => {
 
       await deleteDoc(doc(db, 'users', user.uid));
 
-      await user.delete();
-
       closeDeleteModal();
+      await router.replace('/login');
       toast.success('Account deleted');
       signOut(auth);
-      router.replace('/');
     } catch (error) {
       toast.error('Error deleting account');
     }
+    setIsRemoving(false);
   };
 
   return {
@@ -78,5 +69,6 @@ export const useSettingsManager = (): SettingsManager => {
     closeDeleteModal,
     openDeleteModal,
     handleOnAccountDelete,
+    isRemoving,
   };
 };

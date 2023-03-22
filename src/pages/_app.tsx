@@ -12,8 +12,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApplicationContext.Provider value={manager}>
+      <Toaster position="bottom-center" />
       <PageLayout>
-        <Toaster position="bottom-center" />
         <Component {...pageProps} />
       </PageLayout>
     </ApplicationContext.Provider>

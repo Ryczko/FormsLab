@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useApplicationContext } from './../../application/context';
@@ -5,6 +6,7 @@ import { registerWithEmailAndPassword } from 'src/firebase';
 
 export const useRegisterManager = () => {
   const { changeDisplayName } = useApplicationContext();
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const initialValues = {
     name: '',
@@ -32,6 +34,7 @@ export const useRegisterManager = () => {
     values: FormValues,
     { resetForm, setFieldError }: FormikHelpers<FormValues>
   ) => {
+    setIsRegistering(true);
     try {
       await registerWithEmailAndPassword({
         name: values.name,
@@ -43,11 +46,13 @@ export const useRegisterManager = () => {
     } catch (e) {
       setFieldError('message', 'Error while signing in!');
     }
+    setIsRegistering(false);
   };
 
   return {
     onSubmit,
     SignupSchema,
     initialValues,
+    isRegistering,
   };
 };

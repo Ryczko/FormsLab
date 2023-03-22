@@ -3,9 +3,7 @@ import { TrashIcon } from '@heroicons/react/outline';
 import withAnimation from '../../shared/HOC/withAnimation';
 import Header from 'src/shared/components/Header/Header';
 import withProtectedRoute from 'src/shared/HOC/withProtectedRoute';
-import IconButton, {
-  IconButtonVariant,
-} from 'src/shared/components/IconButton/IconButton';
+
 import Button, { ButtonVariant } from 'src/shared/components/Button/Button';
 import { useSettingsManager } from 'src/features/settings/settingsManager';
 import StyledDialog from 'src/shared/components/StyledDialog/StyledDialog';
@@ -18,6 +16,7 @@ function SettingsPage() {
     openDeleteModal,
     closeDeleteModal,
     handleOnAccountDelete,
+    isRemoving,
   } = useSettingsManager();
 
   return (
@@ -30,15 +29,15 @@ function SettingsPage() {
         <Header>Hi {user?.displayName}!</Header>
         <div className="flex flex-col items-center justify-center space-y-2">
           <div className="flex w-full md:ml-2 md:w-auto">
-            <IconButton
-              variant={IconButtonVariant.DANGER}
+            <Button
+              variant={ButtonVariant.DANGER}
               title="Delete my account"
               className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
               onClick={openDeleteModal}
               icon={<TrashIcon className="h-5 w-5" />}
             >
               Delete my account
-            </IconButton>
+            </Button>
           </div>
         </div>
         <StyledDialog
@@ -58,17 +57,19 @@ function SettingsPage() {
                   variant={ButtonVariant.SECONDARY}
                   onClick={closeDeleteModal}
                   className="uppercase"
+                  disabled={isRemoving}
                 >
                   Cancel
                 </Button>
-                <IconButton
-                  variant={IconButtonVariant.DANGER}
+                <Button
+                  variant={ButtonVariant.DANGER}
                   onClick={handleOnAccountDelete}
                   icon={<TrashIcon className="h-5 w-5" />}
                   className="uppercase"
+                  isLoading={isRemoving}
                 >
                   Confirm
-                </IconButton>
+                </Button>
               </div>
             </>
           }

@@ -12,6 +12,7 @@ export const useCreateSurveyManager = () => {
 
   const { user } = useApplicationContext();
   const [buttonDisable, setButtonDisable] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   const router = useRouter();
   const { copy } = useCopyToClipboard();
@@ -47,6 +48,8 @@ export const useCreateSurveyManager = () => {
 
   const createSurvey = async () => {
     setButtonDisable(true);
+    setIsCreating(true);
+
     try {
       const newSurvey = await addDoc(collection(db, 'surveys'), {
         title,
@@ -59,8 +62,7 @@ export const useCreateSurveyManager = () => {
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
       const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
       const copiedCorrectly = await copy(link, true);
-      router.push(`/survey/answer/${newSurvey.id}`);
-
+      await router.push(`/survey/answer/${newSurvey.id}`);
       toast.success(
         `Survey created succesfully ${
           copiedCorrectly ? 'and link copied to clipboard' : ''
@@ -69,6 +71,7 @@ export const useCreateSurveyManager = () => {
     } catch (error) {
       toast.error('Survey creation failed');
     }
+    setIsCreating(false);
     setButtonDisable(false);
   };
 
@@ -98,5 +101,6 @@ export const useCreateSurveyManager = () => {
     handleEmotePick,
     createSurvey,
     buttonDisable,
+    isCreating,
   };
 };

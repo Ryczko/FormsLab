@@ -1,13 +1,12 @@
 import React from 'react';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
-import { IconButtonProps } from '../IconButton/IconButton';
-import { IconButtonSize, IconButtonVariant } from '../IconButton/IconButton';
+import { ButtonProps, ButtonSize, ButtonVariant } from '../Button/Button';
 
-export const IconButtonLinkVariant = IconButtonVariant;
-export const IconButtonLinkSize = IconButtonSize;
+export const IconButtonLinkVariant = ButtonVariant;
+export const IconButtonLinkSize = ButtonSize;
 
-type IconButtonLinkProps = IconButtonProps;
+type IconButtonLinkProps = ButtonProps;
 
 const IconButtonLink = forwardRef(function ButtonLink(
   {
@@ -26,7 +25,7 @@ const IconButtonLink = forwardRef(function ButtonLink(
       className={clsx(
         'btn',
         'hover:no-underline',
-        'flex items-center',
+        'flex items-center justify-center',
         variant,
         sizeType,
         className
