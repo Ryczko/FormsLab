@@ -9,9 +9,7 @@ import { db } from '../../../../firebase';
 import Button, {
   ButtonVariant,
 } from '../../../../shared/components/Button/Button';
-import IconButton, {
-  IconButtonVariant,
-} from '../../../../shared/components/IconButton/IconButton';
+
 import StyledDialog from 'src/shared/components/StyledDialog/StyledDialog';
 
 interface SurveyRowProps {
@@ -30,6 +28,7 @@ export default function SurveyRow({
   const [, copy] = useCopyToClipboard();
   const navigate = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
 
   function closeDeleteModal() {
     setIsOpen(false);
@@ -52,6 +51,7 @@ export default function SurveyRow({
   };
 
   const handleOnDelete = (id: string) => async () => {
+    setIsRemoving(true);
     try {
       await deleteDoc(doc(db, 'surveys', id));
       closeDeleteModal();
@@ -60,6 +60,7 @@ export default function SurveyRow({
       toast.error('Error deleting survey');
       console.error(error);
     }
+    setIsRemoving(false);
   };
 
   return (
@@ -83,8 +84,8 @@ export default function SurveyRow({
           More
         </Button>
 
-        <IconButton
-          variant={IconButtonVariant.PRIMARY}
+        <Button
+          variant={ButtonVariant.PRIMARY}
           className={
             'mt-2 w-full justify-center px-3 text-center sm:mt-0 md:w-auto'
           }
@@ -92,8 +93,8 @@ export default function SurveyRow({
           icon={<LinkIcon className="h-5 w-5" />}
           onClick={handleCopyLink}
         />
-        <IconButton
-          variant={IconButtonVariant.DANGER}
+        <Button
+          variant={ButtonVariant.DANGER}
           title="Delete survey"
           className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
           onClick={openDeleteModal}
@@ -118,17 +119,19 @@ export default function SurveyRow({
                 variant={ButtonVariant.SECONDARY}
                 onClick={closeDeleteModal}
                 className="uppercase"
+                disabled={isRemoving}
               >
                 Cancel
               </Button>
-              <IconButton
-                variant={IconButtonVariant.DANGER}
+              <Button
+                variant={ButtonVariant.DANGER}
                 onClick={handleOnDelete(id)}
                 icon={<TrashIcon className="h-5 w-5" />}
                 className="uppercase"
+                isLoading={isRemoving}
               >
                 Delete
-              </IconButton>
+              </Button>
             </div>
           </>
         }

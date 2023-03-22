@@ -12,7 +12,8 @@ import { useApplicationContext } from 'src/features/application/context';
 
 function SignupPage() {
   const { loading, user } = useApplicationContext();
-  const { initialValues, onSubmit, SignupSchema } = useRegisterManager();
+  const { initialValues, onSubmit, SignupSchema, isRegistering } =
+    useRegisterManager();
 
   useEffect(() => {
     if (user) {
@@ -74,6 +75,7 @@ function SignupPage() {
                     className="mt-1 mb-2 !bg-indigo-200 !text-indigo-900 hover:!bg-indigo-300"
                     type="submit"
                     onClick={handleSubmit}
+                    isLoading={isRegistering}
                   >
                     Sign up
                   </LoginButton>

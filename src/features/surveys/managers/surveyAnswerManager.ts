@@ -15,6 +15,7 @@ export const useSurveyAnswerManager = () => {
   const [selectedIcon, setSelectedIcon] = useState('');
   const [buttonDisable, setButtonDisable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAnswering, setIsAnswering] = useState(false);
 
   const getSurveyData = useCallback(async () => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId));
@@ -60,7 +61,7 @@ export const useSurveyAnswerManager = () => {
 
   const handleSave = async () => {
     setButtonDisable(true);
-    setIsLoading(true);
+    setIsAnswering(true);
 
     try {
       if (!surveyId) {
@@ -72,13 +73,13 @@ export const useSurveyAnswerManager = () => {
         answer,
         answerDate: new Date(),
       });
+      await router.replace('/');
       toast.success('The reply has been sent');
-      router.replace('/');
     } catch (error) {
       toast.error('Error occured');
     } finally {
       setButtonDisable(false);
-      setIsLoading(false);
+      setIsAnswering(false);
     }
   };
 
@@ -96,5 +97,6 @@ export const useSurveyAnswerManager = () => {
     handleInputAnswer,
     buttonDisable,
     handleSave,
+    isAnswering,
   };
 };

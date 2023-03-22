@@ -8,10 +8,8 @@ import { auth } from '../../firebase';
 import Logo from '../Logo/Logo';
 import ButtonLink from '../../shared/components/ButtonLink/ButtonLink';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
-import { ButtonVariant } from '../../shared/components/Button/Button';
-import IconButton, {
-  IconButtonVariant,
-} from '../../shared/components/IconButton/IconButton';
+import Button, { ButtonVariant } from '../../shared/components/Button/Button';
+
 import AvatarIcon from '../../../public/images/avatar.svg';
 import GithubCorner from '../GithubCorner/GithubCorner';
 import { useApplicationContext } from 'src/features/application/context';
@@ -105,14 +103,14 @@ function Navigation() {
                         </Link>
                       </Menu.Item>
                       <Menu.Item>
-                        <IconButton
+                        <Button
                           onClick={logoutDesktop}
-                          variant={IconButtonVariant.FLAT}
+                          variant={ButtonVariant.FLAT}
                           className="w-40 text-red-600 hover:bg-red-100"
                           icon={<LogoutIcon className="h-5 w-5" />}
                         >
                           Sign Out
-                        </IconButton>
+                        </Button>
                       </Menu.Item>
                     </div>
                   </Menu.Items>
@@ -164,14 +162,14 @@ function Navigation() {
             Settings
           </IconButtonLink>
         </Link>
-        <IconButton
+        <Button
           onClick={logoutMobile}
-          variant={IconButtonVariant.FLAT}
+          variant={ButtonVariant.FLAT}
           className="w-[95%] justify-center text-red-600 hover:bg-red-100 lg:w-auto"
           icon={<LogoutIcon className="h-5 w-5" />}
         >
           Sign Out
-        </IconButton>
+        </Button>
       </BurgerMenu>
     </nav>
   );

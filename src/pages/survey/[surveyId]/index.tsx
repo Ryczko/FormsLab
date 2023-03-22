@@ -19,6 +19,7 @@ function AnswerPage() {
     handleInputAnswer,
     buttonDisable,
     handleSave,
+    isAnswering,
   } = useSurveyAnswerManager();
 
   return (
@@ -50,15 +51,18 @@ function AnswerPage() {
               onChange={handleInputAnswer}
             ></textarea>
           </div>
-          <Button
-            disabled={!selectedIcon || buttonDisable}
-            onClick={handleSave}
-            className="mt-6 w-full sm:w-auto"
-            variant={ButtonVariant.PRIMARY}
-            sizeType={ButtonSize.MEDIUM}
-          >
-            Send
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              disabled={!selectedIcon || buttonDisable}
+              onClick={handleSave}
+              className="mt-6 w-full sm:w-auto"
+              variant={ButtonVariant.PRIMARY}
+              sizeType={ButtonSize.MEDIUM}
+              isLoading={isAnswering}
+            >
+              Send
+            </Button>
+          </div>
         </div>
       )}
     </>

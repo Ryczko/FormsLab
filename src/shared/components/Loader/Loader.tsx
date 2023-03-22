@@ -1,11 +1,16 @@
+import clsx from 'clsx';
+
 interface LoaderProps {
   isLoading: boolean;
+  className?: string;
 }
 
-export default function Loader({ isLoading }: LoaderProps) {
+export default function Loader({ isLoading, className }: LoaderProps) {
   if (isLoading)
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div
+        className={clsx('flex flex-col items-center justify-center', className)}
+      >
         <svg
           className="mr-1 h-5 w-5 animate-spin"
           xmlns="http://www.w3.org/2000/svg"
