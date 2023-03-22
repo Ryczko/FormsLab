@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
+import { PropsWithChildren } from 'react';
 
 interface BurgerMenuProps {
   isOpen: boolean;
-  children: JSX.Element | JSX.Element[];
 }
 
-const BurgerMenu = ({ isOpen, children }: BurgerMenuProps) => {
+const BurgerMenu = ({
+  isOpen,
+  children,
+}: PropsWithChildren<BurgerMenuProps>) => {
   const variants = {
     open: { x: 0, transition: { type: 'linear' } },
     closed: { x: '100%', transition: { type: 'linear' } },

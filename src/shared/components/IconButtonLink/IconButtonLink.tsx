@@ -1,14 +1,15 @@
-import React, { LegacyRef } from 'react';
+import React, { LegacyRef, PropsWithChildren } from 'react';
 import { forwardRef } from 'react';
 import clsx from 'clsx';
-import { ButtonProps, ButtonSize, ButtonVariant } from '../Button/Button';
+import { ButtonVariant, ButtonSize, ButtonProps } from '../Button/Button';
 
 export const IconButtonLinkVariant = ButtonVariant;
 export const IconButtonLinkSize = ButtonSize;
+interface IconButtonLinkProps extends ButtonProps {
+  onClick?: () => void;
+}
 
-type IconButtonLinkProps = ButtonProps;
-
-const IconButtonLink = forwardRef(function ButtonLink(
+const IconButtonLink = (
   {
     children,
     className,
@@ -16,7 +17,7 @@ const IconButtonLink = forwardRef(function ButtonLink(
     sizeType = IconButtonLinkSize.DEFAULT,
     icon,
     ...props
-  }: IconButtonLinkProps,
+  }: PropsWithChildren<IconButtonLinkProps>,
   ref: LegacyRef<HTMLAnchorElement>
 ) => {
   return (
@@ -26,7 +27,7 @@ const IconButtonLink = forwardRef(function ButtonLink(
       className={clsx(
         'btn',
         'hover:no-underline',
-        'flex items-center justify-center',
+        'flex items-center',
         variant,
         sizeType,
         className
