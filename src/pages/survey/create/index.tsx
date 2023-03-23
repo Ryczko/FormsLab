@@ -12,6 +12,7 @@ function SurveyCreatePage() {
   const {
     title,
     pack,
+    error,
     handleChangeTitle,
     startDate,
     setStartDate,
@@ -21,7 +22,6 @@ function SurveyCreatePage() {
     filterPassedSelectedTime,
     handleEmotePick,
     createSurvey,
-    buttonDisable,
     isCreating,
   } = useCreateSurveyManager();
 
@@ -39,6 +39,7 @@ function SurveyCreatePage() {
             label="Survey title"
             placeholder="Title..."
             value={title}
+            error={!title ? error : undefined}
             onChange={handleChangeTitle}
           />
           <div className="mt-10 mb-4 block text-left font-semibold">
@@ -106,7 +107,6 @@ function SurveyCreatePage() {
             <Button
               onClick={createSurvey}
               className="z-0 mt-12 w-full sm:w-auto"
-              disabled={!title.length || buttonDisable}
               variant={ButtonVariant.PRIMARY}
               isLoading={isCreating}
             >

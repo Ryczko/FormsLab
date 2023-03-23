@@ -9,9 +9,9 @@ import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
   const [pack, setPack] = useState<string[]>([]);
+  const [error, setError] = useState('');
 
   const { user } = useApplicationContext();
-  const [buttonDisable, setButtonDisable] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
   const router = useRouter();
@@ -47,7 +47,8 @@ export const useCreateSurveyManager = () => {
   }, [startDate, endDate]);
 
   const createSurvey = async () => {
-    setButtonDisable(true);
+    if (!title) return setError('Required field');
+
     setIsCreating(true);
 
     try {
@@ -72,7 +73,6 @@ export const useCreateSurveyManager = () => {
       toast.error('Survey creation failed');
     }
     setIsCreating(false);
-    setButtonDisable(false);
   };
 
   const filterPassedTime = (time: string | number | Date) => {
@@ -90,6 +90,7 @@ export const useCreateSurveyManager = () => {
   };
   return {
     title,
+    error,
     pack,
     handleChangeTitle,
     startDate,
@@ -100,7 +101,6 @@ export const useCreateSurveyManager = () => {
     filterPassedSelectedTime,
     handleEmotePick,
     createSurvey,
-    buttonDisable,
     isCreating,
   };
 };
