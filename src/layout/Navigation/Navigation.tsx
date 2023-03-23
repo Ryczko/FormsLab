@@ -91,16 +91,18 @@ function Navigation() {
                 >
                   <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-zinc-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="flex flex-col justify-end p-1">
-                      <Menu.Item>
-                        <Link href={'/settings'} passHref>
-                          <IconButtonLink
-                            variant={ButtonVariant.FLAT}
-                            icon={<CogIcon className="h-5 w-5" />}
-                          >
-                            Settings
-                          </IconButtonLink>
-                        </Link>
-                      </Menu.Item>
+                      {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
+                        <Menu.Item>
+                          <Link href={'/settings'} passHref>
+                            <IconButtonLink
+                              variant={ButtonVariant.FLAT}
+                              icon={<CogIcon className="h-5 w-5" />}
+                            >
+                              Settings
+                            </IconButtonLink>
+                          </Link>
+                        </Menu.Item>
+                      )}
                       <Menu.Item>
                         <Button
                           onClick={logoutDesktop}
@@ -151,16 +153,18 @@ function Navigation() {
             My Surveys
           </ButtonLink>
         </Link>
-        <Link href={'/settings'} passHref>
-          <IconButtonLink
-            className="mb-3 w-[95%] justify-center lg:w-auto"
-            onClick={() => setIsOpen(!isOpen)}
-            variant={ButtonVariant.FLAT}
-            icon={<CogIcon className="h-5 w-5" />}
-          >
-            Settings
-          </IconButtonLink>
-        </Link>
+        {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
+          <Link href={'/settings'} passHref>
+            <IconButtonLink
+              className="mb-3 w-[95%] justify-center lg:w-auto"
+              onClick={() => setIsOpen(!isOpen)}
+              variant={ButtonVariant.FLAT}
+              icon={<CogIcon className="h-5 w-5" />}
+            >
+              Settings
+            </IconButtonLink>
+          </Link>
+        )}
         <Button
           onClick={logoutMobile}
           variant={ButtonVariant.FLAT}
