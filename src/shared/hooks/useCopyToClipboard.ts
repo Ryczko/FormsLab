@@ -6,7 +6,9 @@ function useCopyToClipboard() {
 
   const copy = async (text: string, silient = false) => {
     if (!navigator?.clipboard) {
-      toast.error('Clipboard not supported');
+      if (!silient) {
+        toast.error('Clipboard not supported');
+      }
       return false;
     }
 
@@ -18,7 +20,9 @@ function useCopyToClipboard() {
       }
       return true;
     } catch (error) {
-      toast.error('Copy failed');
+      if (!silient) {
+        toast.error('Copy failed');
+      }
       setCopiedText(null);
       return false;
     }

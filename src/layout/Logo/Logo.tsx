@@ -11,7 +11,7 @@ function Logo({ classNames = '' }: LogoProps) {
       <a
         href={'/'}
         className={clsx(
-          'block translate-y-[-2px] font-serif text-2xl text-zinc-600 small-sm:ml-14 md:ml-11',
+          'block translate-y-[-2px] font-serif text-2xl text-zinc-600 xsm:ml-14 md:ml-11',
           classNames
         )}
       >

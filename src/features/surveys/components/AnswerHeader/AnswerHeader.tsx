@@ -22,7 +22,7 @@ function AnswerHeader({
 
       <div
         className={clsx(
-          'mt-6 mb-12 flex flex-col items-center justify-center md:my-0 md:ml-6 md:-translate-y-4',
+          'mt-6 mb-12 flex w-full flex-col items-center justify-center md:my-0 md:ml-6 md:w-auto md:-translate-y-4',
           !chartData.length ? 'md:flex-row' : ''
         )}
       >

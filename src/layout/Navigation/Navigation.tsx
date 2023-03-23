@@ -19,13 +19,9 @@ function Navigation() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const logoutDesktop = () => {
+  const logout = async () => {
     signOut(auth);
-  };
-
-  const logoutMobile = () => {
-    signOut(auth);
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
 
   return (
@@ -34,7 +30,7 @@ function Navigation() {
 
       <div
         className={`flex grow ${
-          user ? 'justify-between' : 'justify-center small-sm:justify-between'
+          user ? 'justify-between' : 'small-sm:justify-between justify-center'
         } items-center px-4 md:px-8`}
       >
         <Logo />
@@ -103,7 +99,7 @@ function Navigation() {
                       </Menu.Item>
                       <Menu.Item>
                         <Button
-                          onClick={logoutDesktop}
+                          onClick={logout}
                           variant={ButtonVariant.FLAT}
                           className="w-40 text-red-600 hover:bg-red-100"
                           icon={<LogoutIcon className="h-5 w-5" />}
@@ -124,7 +120,7 @@ function Navigation() {
         ) : (
           <Link href={'/login'} passHref>
             <ButtonLink
-              className="hidden px-4 small-sm:block sm:px-6"
+              className="small-sm:block hidden px-4 sm:px-6"
               variant={ButtonVariant.OUTLINE_PRIMARY}
             >
               Sign In
@@ -162,7 +158,7 @@ function Navigation() {
           </IconButtonLink>
         </Link>
         <Button
-          onClick={logoutMobile}
+          onClick={logout}
           variant={ButtonVariant.FLAT}
           className="w-[95%] justify-center text-red-600 hover:bg-red-100 lg:w-auto"
           icon={<LogoutIcon className="h-5 w-5" />}
