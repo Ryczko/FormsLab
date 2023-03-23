@@ -30,7 +30,7 @@ function Navigation() {
 
       <div
         className={`flex grow ${
-          user ? 'justify-between' : 'small-sm:justify-between justify-center'
+          user ? 'justify-between' : 'justify-center xsm:justify-between'
         } items-center px-4 md:px-8`}
       >
         <Logo />
@@ -120,7 +120,7 @@ function Navigation() {
         ) : (
           <Link href={'/login'} passHref>
             <ButtonLink
-              className="small-sm:block hidden px-4 sm:px-6"
+              className="hidden px-4 xsm:block sm:px-6"
               variant={ButtonVariant.OUTLINE_PRIMARY}
             >
               Sign In

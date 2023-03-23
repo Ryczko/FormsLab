@@ -40,7 +40,7 @@ function Input({
         )}
       />
       {!!error && (
-        <p className="mb-2 text-right text-sm text-red-400">{error}</p>
+        <p className="mb-1 text-right text-sm text-red-400">{error}</p>
       )}
     </>
   );

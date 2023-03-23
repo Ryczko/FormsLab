@@ -40,7 +40,7 @@ function SurveyCreatePage() {
             placeholder="Title..."
             value={title}
             error={!title ? error : undefined}
-            className="py-3"
+            className="!mb-1 py-3"
             onChange={handleChangeTitle}
           />
           <div className="mt-10 mb-2 block text-left font-semibold">
