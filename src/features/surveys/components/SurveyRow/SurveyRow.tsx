@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 
-import toast from 'react-hot-toast';
-import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
-import { db } from 'firebaseConfiguration';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
-import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
+import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 
 interface SurveyRowProps {
   question: string;
@@ -26,7 +23,6 @@ export default function SurveyRow({
   const { copy } = useCopyToClipboard();
   const navigate = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isRemoving, setIsRemoving] = useState(false);
 
   function closeDeleteModal() {
     setIsOpen(false);
@@ -45,27 +41,6 @@ export default function SurveyRow({
 
   const handleOnMoreButton = () => {
     navigate.push(`/survey/answer/${id}`);
-  };
-
-  const handleOnDelete = (id: string) => async () => {
-    setIsRemoving(true);
-    try {
-      await deleteDoc(doc(db, 'surveys', id));
-
-      const answersCollection = await getDocs(
-        query(collection(db, 'surveys', id, 'answers'))
-      );
-
-      answersCollection.forEach(async (answer) => {
-        await deleteDoc(answer.ref);
-      });
-
-      closeDeleteModal();
-      toast.success('Survey deleted');
-    } catch (error) {
-      toast.error('Error deleting survey');
-    }
-    setIsRemoving(false);
   };
 
   return (
@@ -106,40 +81,10 @@ export default function SurveyRow({
           icon={<TrashIcon className="h-5 w-5" />}
         />
       </div>
-      <StyledDialog
-        isOpen={isOpen}
-        onClose={closeDeleteModal}
-        title="Delete survey"
-        content={
-          <>
-            <div className="mt-2">
-              <p className="text-sm text-red-500">
-                Are you sure you want to&nbsp;
-                <span className="font-bold">delete</span> this survey?
-              </p>
-            </div>
-
-            <div className="mt-6 flex justify-between">
-              <Button
-                variant={ButtonVariant.SECONDARY}
-                onClick={closeDeleteModal}
-                className="uppercase"
-                disabled={isRemoving}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant={ButtonVariant.DANGER}
-                onClick={handleOnDelete(id)}
-                icon={<TrashIcon className="h-5 w-5" />}
-                className="uppercase"
-                isLoading={isRemoving}
-              >
-                Delete
-              </Button>
-            </div>
-          </>
-        }
+      <DeleteSurveyModal
+        surveyId={id}
+        closeModal={closeDeleteModal}
+        isOpened={isOpen}
       />
     </div>
   );
