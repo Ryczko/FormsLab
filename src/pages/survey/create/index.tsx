@@ -43,7 +43,7 @@ function SurveyCreatePage() {
               Click on icon to change
             </div>
 
-            <div className="flex w-full justify-between">
+            <div className="flex w-full flex-col items-center justify-between gap-y-2 xsm:flex-row">
               {pack.map((emote, idx) => (
                 <EmojiPicker
                   key={idx}
