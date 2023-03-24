@@ -19,8 +19,7 @@ function SurveyResultsPage() {
     getSurveyData,
     chartData,
     votes,
-    startDate,
-    endDate,
+    createDate,
   } = useSurveyResultsManager();
 
   return (
@@ -38,10 +37,10 @@ function SurveyResultsPage() {
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId)}
               variant={ButtonVariant.PRIMARY}
-              className="mb-2 w-full justify-center sm:mr-2 sm:mb-0 sm:w-[170px]"
+              className="mb-2 w-full justify-center sm:mr-2 sm:mb-0 sm:w-[260px]"
               icon={<LinkIcon className="h-5 w-5" />}
             >
-              Copy link
+              Copy link to survey
             </Button>
             <Button
               title="Refresh data"
@@ -58,8 +57,7 @@ function SurveyResultsPage() {
           <AnswerHeader
             chartData={chartData}
             totalVotes={votes}
-            startDate={startDate}
-            endDate={endDate}
+            createDate={createDate}
           />
           {answersData.length > 0 ? (
             <div className="mt-8 mb-6">

@@ -9,15 +9,13 @@ import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/Del
 
 interface SurveyRowProps {
   question: string;
-  startDate: string;
-  endDate: string;
+  createDate: string;
   id: string;
 }
 
 export default function SurveyRow({
   question,
-  startDate,
-  endDate,
+  createDate,
   id,
 }: SurveyRowProps) {
   const { copy } = useCopyToClipboard();
@@ -50,9 +48,7 @@ export default function SurveyRow({
           {question}
         </div>
         <div className="flex items-center space-x-2">
-          <div>{startDate}</div>
-          <div>-</div>
-          <div>{endDate}</div>
+          <div>{createDate}</div>
         </div>
       </div>
       <div className="flex w-full md:ml-2 md:w-auto">

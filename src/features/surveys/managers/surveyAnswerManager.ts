@@ -24,24 +24,6 @@ export const useSurveyAnswerManager = () => {
       return;
     }
 
-    if (
-      surveyData.data()?.startDate.toDate().toISOString() >
-      new Date().toISOString()
-    ) {
-      toast.error('Survey is not opened yet');
-      router.replace('/');
-      return;
-    }
-
-    if (
-      surveyData.data()?.endDate.toDate().toISOString() <
-      new Date().toISOString()
-    ) {
-      toast.error('Survey is closed');
-      router.replace('/');
-      return;
-    }
-
     setQuestion(surveyData.data()?.title);
     setIcons(surveyData.data()?.pack);
     setIsLoading(false);

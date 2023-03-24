@@ -1,4 +1,3 @@
-import DatePicker from 'react-datepicker';
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
@@ -14,12 +13,6 @@ function SurveyCreatePage() {
     pack,
     error,
     handleChangeTitle,
-    startDate,
-    setStartDate,
-    endDate,
-    filterPassedTime,
-    setEndDate,
-    filterPassedSelectedTime,
     handleEmotePick,
     createSurvey,
     isCreating,
@@ -42,53 +35,10 @@ function SurveyCreatePage() {
             error={!title ? error : undefined}
             className="!mb-1 py-3"
             onChange={handleChangeTitle}
+            absoluteError
           />
-          <div className="mt-10 mb-2 block text-left font-semibold">
-            Select duration of survey
-          </div>
-          <div className="flex flex-col items-center justify-center md:flex-row">
-            <DatePicker
-              className="focus:shadow-outline mb-2 mr-auto block h-[48px] w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow  focus:outline-none md:mb-0 md:w-52"
-              selected={startDate}
-              onChange={(date) => {
-                if (!date) return;
-                return setStartDate(date);
-              }}
-              calendarStartDay={1}
-              dateFormat="dd/MM/yyyy HH:mm"
-              timeFormat="HH:mm"
-              showTimeSelect
-              timeIntervals={5}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-              minDate={new Date()}
-              showPreviousMonths={false}
-              filterTime={filterPassedTime}
-            />
-            <p>to</p>
-            <DatePicker
-              className="focus:shadow-outline mt-2 ml-auto block h-[48px] w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow focus:outline-none md:mt-0 md:w-52"
-              selected={endDate}
-              onChange={(date) => {
-                if (!date) return;
-                return setEndDate(date);
-              }}
-              calendarStartDay={1}
-              dateFormat="dd/MM/yyyy HH:mm"
-              timeFormat="HH:mm"
-              showTimeSelect
-              timeIntervals={5}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-              showPreviousMonths={false}
-              filterTime={filterPassedSelectedTime}
-            />
-          </div>
 
-          <div className="mt-10">
+          <div className="mt-8">
             <div className="mb-3 block text-left font-semibold">
               Click on icon to change
             </div>

@@ -34,18 +34,6 @@ export const useCreateSurveyManager = () => {
     });
   };
 
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(
-    new Date(new Date().setDate(new Date().getDate() + 1))
-  );
-
-  useEffect(() => {
-    if (startDate > endDate) {
-      setStartDate(endDate);
-      setEndDate(startDate);
-    }
-  }, [startDate, endDate]);
-
   const createSurvey = async () => {
     if (!title) return setError('Required field');
 
@@ -56,8 +44,7 @@ export const useCreateSurveyManager = () => {
         title,
         pack,
         creatorId: user?.uid,
-        startDate,
-        endDate,
+        createDate: new Date(),
       });
       const domain =
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
@@ -75,30 +62,11 @@ export const useCreateSurveyManager = () => {
     setIsCreating(false);
   };
 
-  const filterPassedTime = (time: string | number | Date) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(time);
-
-    return currentDate.getTime() < selectedDate.getTime();
-  };
-
-  const filterPassedSelectedTime = (time: string | number | Date) => {
-    const currentDate = startDate;
-    const selectedDate = new Date(time);
-
-    return currentDate.getTime() < selectedDate.getTime();
-  };
   return {
     title,
     error,
     pack,
     handleChangeTitle,
-    startDate,
-    setStartDate,
-    endDate,
-    filterPassedTime,
-    setEndDate,
-    filterPassedSelectedTime,
     handleEmotePick,
     createSurvey,
     isCreating,

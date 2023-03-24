@@ -10,6 +10,7 @@ interface InputProps {
   error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  absoluteError?: boolean;
 }
 
 function Input({
@@ -21,9 +22,10 @@ function Input({
   onChange,
   error,
   className,
+  absoluteError,
 }: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
-    <>
+    <div className="relative">
       {label && (
         <label className="block text-left font-semibold">{label}</label>
       )}
@@ -34,15 +36,22 @@ function Input({
         placeholder={placeholder}
         onChange={onChange}
         className={clsx(
-          'mt-2 mb-4 block w-full rounded-lg py-2 px-4 shadow focus:outline-none',
-          error ? 'border border-red-400' : '',
+          'mt-2 mb-4 block w-full rounded-lg border py-2 px-4 shadow focus:outline-none',
+          error ? ' border-red-400' : ' border-transparent',
           className
         )}
       />
       {!!error && (
-        <p className="mb-1 text-right text-sm text-red-400">{error}</p>
+        <p
+          className={clsx(
+            'mb-1 text-right text-sm text-red-400',
+            absoluteError ? 'absolute top-full right-0 my-1' : ''
+          )}
+        >
+          {error}
+        </p>
       )}
-    </>
+    </div>
   );
 }
 
