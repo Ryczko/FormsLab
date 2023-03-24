@@ -28,6 +28,8 @@ export const useSettingsManager = () => {
   }
 
   const handleOnAccountDelete = async () => {
+    // TO DO: this is not working properly to run user.delete(); we need to force to reauthenticate again.
+    // when the user is logged in for more than 5 minutes, an error will be returned
     try {
       if (!user) {
         return;

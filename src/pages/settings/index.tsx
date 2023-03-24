@@ -7,6 +7,7 @@ import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import { useSettingsManager } from 'features/settings/settingsManager';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
+import withFeatureToggles from 'shared/HOC/withFeatureToggles';
 
 function SettingsPage() {
   const {
@@ -82,4 +83,7 @@ function SettingsPage() {
   );
 }
 
-export default withProtectedRoute(withAnimation(SettingsPage));
+export default withFeatureToggles(
+  withProtectedRoute(withAnimation(SettingsPage)),
+  [process.env.NEXT_PUBLIC_REMOVE_ACCOUNT]
+);
