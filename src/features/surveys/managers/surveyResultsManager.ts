@@ -23,8 +23,7 @@ export const useSurveyResultsManager = () => {
   const [votes, setVotes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState('-');
-  const [endDate, setEndDate] = useState('-');
+  const [createDate, setCreateDate] = useState<string>('');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
   const { copy } = useCopyToClipboard();
 
@@ -49,11 +48,8 @@ export const useSurveyResultsManager = () => {
       const answersData = await getDocs(anserwsQuery);
       setVotes(answersData.docs.length);
 
-      setStartDate(
-        formatFirebaseDateWithHours(surveyData.data()?.startDate as Timestamp)
-      );
-      setEndDate(
-        formatFirebaseDateWithHours(surveyData.data()?.endDate as Timestamp)
+      setCreateDate(
+        formatFirebaseDateWithHours(surveyData.data()?.createDate as Timestamp)
       );
 
       setTitle(surveyData.data()?.title);
@@ -132,7 +128,6 @@ export const useSurveyResultsManager = () => {
     getSurveyData,
     chartData,
     votes,
-    startDate,
-    endDate,
+    createDate,
   };
 };

@@ -5,15 +5,13 @@ import DataCard from 'features/surveys/components/DataCard/DataCard';
 
 interface AnswerHeaderProps {
   totalVotes: number;
-  startDate: string;
-  endDate: string;
+  createDate: string;
   chartData: BarChartData[];
 }
 
 function AnswerHeader({
   totalVotes,
-  startDate,
-  endDate,
+  createDate,
   chartData,
 }: AnswerHeaderProps) {
   return (
@@ -26,9 +24,8 @@ function AnswerHeader({
           !chartData.length ? 'md:flex-row' : ''
         )}
       >
+        <DataCard title="Create Date" value={createDate} />
         <DataCard title="Total Votes" value={totalVotes.toString()} />
-        <DataCard title="Start Date" value={startDate} />
-        <DataCard title="End Date" value={endDate} />
       </div>
     </div>
   );

@@ -44,11 +44,8 @@ function SurveyListPage() {
                     key={doc.id}
                     id={doc.id}
                     question={survey.title}
-                    startDate={formatFirebaseDateWithoutHours(
-                      survey.startDate as Timestamp
-                    )}
-                    endDate={formatFirebaseDateWithoutHours(
-                      survey.endDate as Timestamp
+                    createDate={formatFirebaseDateWithoutHours(
+                      survey.createDate as Timestamp
                     )}
                   ></SurveyRow>
                 );

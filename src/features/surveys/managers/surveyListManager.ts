@@ -16,7 +16,7 @@ export const useSurveyListManager = () => {
         query(
           surveysCollectionRef,
           where('creatorId', '==', user?.uid),
-          orderBy('startDate', 'desc')
+          orderBy('createDate', 'desc')
         )
       );
     }
