@@ -38,7 +38,7 @@ function LoginPage() {
             validationSchema={LoginSchema}
           >
             {({ values, errors, handleChange, handleSubmit, touched }) => (
-              <Form className="flex w-64 flex-col sm:w-80">
+              <Form className="flex w-full flex-col sm:w-80">
                 <LoginButton image={Google} onClick={signInWithGoogle}>
                   Sign in with Google
                 </LoginButton>

@@ -14,6 +14,7 @@ interface InputProps {
 
 function Input({
   type,
+  label,
   value,
   placeholder,
   required,
@@ -23,6 +24,9 @@ function Input({
 }: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
     <>
+      {label && (
+        <label className="block text-left font-semibold">{label}</label>
+      )}
       <input
         type={type}
         value={value}
@@ -36,7 +40,7 @@ function Input({
         )}
       />
       {!!error && (
-        <p className="mb-2 text-right text-sm text-red-400">{error}</p>
+        <p className="mb-1 text-right text-sm text-red-400">{error}</p>
       )}
     </>
   );

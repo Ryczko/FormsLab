@@ -36,7 +36,7 @@ function SignupPage() {
             validationSchema={SignupSchema}
           >
             {({ values, errors, handleChange, handleSubmit, touched }) => (
-              <Form className="flex w-64 flex-col sm:w-80">
+              <Form className="flex w-full flex-col sm:w-80">
                 <Input
                   type="text"
                   value={values.name}

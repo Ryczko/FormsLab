@@ -9,11 +9,13 @@ interface AnswerTableRowProps {
 function AnswerTableRow({ time, selectedIcon, text }: AnswerTableRowProps) {
   return (
     <div className="my-2 mx-auto grid max-w-[800px] grid-cols-6 rounded-md bg-white p-3 shadow-sm">
-      <div className="col-span-2">{time}</div>
-      <div className="flex items-center">
+      <div className="col-span-2 hidden xsm:block">{time}</div>
+      <div className="col-span-2 mt-[1px] ml-[4px] mr-2 flex justify-center xsm:col-span-1 xsm:justify-start">
         <Emoji unified={selectedIcon} size={22} />
       </div>
-      <div className="col-span-3 break-words text-left">{text || '-'}</div>
+      <div className="col-span-4 break-words text-left xsm:col-span-3">
+        {text || '-'}
+      </div>
     </div>
   );
 }

@@ -10,6 +10,9 @@ import Loader from 'shared/components/Loader/Loader';
 import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
+import Link from 'next/link';
+import { ButtonVariant } from 'shared/components/Button/Button';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 
 function SurveyListPage() {
   const { error, loading, surveysCollection } = useSurveyListManager();
@@ -59,7 +62,15 @@ function SurveyListPage() {
                   width="200"
                   height="125"
                 />
-                <p className="mt-8">No surveys yet </p>
+                <p className="my-8">No surveys yet </p>
+                <Link href={'/survey/create'} passHref>
+                  <ButtonLink
+                    variant={ButtonVariant.OUTLINE_PRIMARY}
+                    className="w-full sm:w-auto"
+                  >
+                    Create Survey
+                  </ButtonLink>
+                </Link>
               </>
             ))}
         </div>

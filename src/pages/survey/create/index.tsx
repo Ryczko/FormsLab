@@ -40,14 +40,15 @@ function SurveyCreatePage() {
             placeholder="Title..."
             value={title}
             error={!title ? error : undefined}
+            className="!mb-1 py-3"
             onChange={handleChangeTitle}
           />
-          <div className="mt-10 mb-4 block text-left font-semibold">
+          <div className="mt-10 mb-2 block text-left font-semibold">
             Select duration of survey
           </div>
-          <div className="flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0">
+          <div className="flex flex-col items-center justify-center md:flex-row">
             <DatePicker
-              className="focus:shadow-outline mr-auto block w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow-sm focus:outline-none md:w-52"
+              className="focus:shadow-outline mb-2 mr-auto block h-[48px] w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow  focus:outline-none md:mb-0 md:w-52"
               selected={startDate}
               onChange={(date) => {
                 if (!date) return;
@@ -67,7 +68,7 @@ function SurveyCreatePage() {
             />
             <p>to</p>
             <DatePicker
-              className="focus:shadow-outline ml-auto block w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow-sm focus:outline-none md:w-52"
+              className="focus:shadow-outline mt-2 ml-auto block h-[48px] w-full cursor-pointer rounded-lg py-3 px-4 text-center font-medium leading-none text-zinc-600 shadow focus:outline-none md:mt-0 md:w-52"
               selected={endDate}
               onChange={(date) => {
                 if (!date) return;
@@ -88,7 +89,7 @@ function SurveyCreatePage() {
           </div>
 
           <div className="mt-10">
-            <div className="mb-4 block text-left font-semibold">
+            <div className="mb-3 block text-left font-semibold">
               Click on icon to change
             </div>
 

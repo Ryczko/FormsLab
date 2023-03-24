@@ -48,7 +48,7 @@ const Button = ({
     type={type}
     {...props}
   >
-    {!!icon && <div className="px-1">{icon}</div>}
+    {!!icon && <div className={children ? 'pr-1' : 'px-1'}>{icon}</div>}
     {children}
     {isLoading && (
       <Loader
