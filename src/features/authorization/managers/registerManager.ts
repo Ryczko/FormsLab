@@ -23,10 +23,8 @@ export const useRegisterManager = () => {
       .email('Incorrect email address')
       .required('Required field'),
     password: Yup.string()
-      .matches(
-        /^[a-zA-Z0-9!@#$%^&*()_+]{8,50}$/,
-        'The password must contain at least 8 characters.'
-      )
+      .min(8, 'Password must be at least 8 characters long')
+      .max(64, 'Password can be up to 64 characters long')
       .required('Required field'),
   });
 
