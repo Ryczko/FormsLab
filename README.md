@@ -1,7 +1,7 @@
 
 
 <h1 align="center">
-<img src="https://user-images.githubusercontent.com/51440879/227772127-51b6984b-f2e4-4731-b391-1c4fcf2cfb11.png" alt="Employee Pulse logo" width="300"/>
+<img src="https://user-images.githubusercontent.com/73366069/227785106-441ef2e3-1fab-467e-96dd-edd543be0be7.png" alt="Employee Pulse logo" width="350"/>
 </h1>
 
 <p align="center">Simple surveys creator and feedback app. Create surveys using emojis 😍. </br>
