@@ -1,4 +1,4 @@
-import { LinkIcon, RefreshIcon } from '@heroicons/react/outline';
+import { LinkIcon, RefreshIcon, TrashIcon } from '@heroicons/react/outline';
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
@@ -8,8 +8,13 @@ import Loader from 'shared/components/Loader/Loader';
 import AnswerTableRow from 'features/surveys/components/AnswerTableRow/AnswerTableRow';
 import { useSurveyResultsManager } from 'features/surveys/managers/surveyResultsManager';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
+import useModal from 'features/surveys/hooks/useModal';
+import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 
 function SurveyResultsPage() {
+  const router = useRouter();
   const {
     isLoading,
     title,
@@ -21,6 +26,16 @@ function SurveyResultsPage() {
     votes,
     createDate,
   } = useSurveyResultsManager();
+  const {
+    isModalOpen: isDeleteSurveyModalOpen,
+    closeModal: closeDeleteSurveyModal,
+    openModal: openDeleteSurveyModal,
+  } = useModal();
+
+  const navigateToSurveys = useCallback(
+    () => router.push('/surveys'),
+    [router]
+  );
 
   return (
     <>
@@ -51,6 +66,13 @@ function SurveyResultsPage() {
             >
               Refresh
             </Button>
+            <Button
+              variant={ButtonVariant.DANGER}
+              title="Delete survey"
+              className="mt-2 justify-center px-3 sm:ml-4 sm:mt-0"
+              onClick={openDeleteSurveyModal}
+              icon={<TrashIcon className="h-5 w-5" />}
+            />
           </div>
 
           <hr className=" md:hidden" />
@@ -75,6 +97,12 @@ function SurveyResultsPage() {
           )}
         </div>
       )}
+      <DeleteSurveyModal
+        surveyId={surveyId}
+        closeModal={closeDeleteSurveyModal}
+        isOpened={isDeleteSurveyModalOpen}
+        onSuccess={navigateToSurveys}
+      />
     </>
   );
 }
