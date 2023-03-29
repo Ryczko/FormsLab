@@ -6,14 +6,19 @@ import Header from 'shared/components/Header/Header';
 import Input from 'shared/components/Input/Input';
 import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
 import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
+import EmojiAdd from 'features/surveys/components/EmojiAdd/EmojiAdd';
 
 function SurveyCreatePage() {
   const {
     title,
     pack,
     error,
+    allowAdd,
+    allowRemove,
     handleChangeTitle,
     handleEmotePick,
+    handleEmoteRemove,
+    handleAddingNewEmote,
     createSurvey,
     isCreating,
   } = useCreateSurveyManager();
@@ -42,22 +47,25 @@ function SurveyCreatePage() {
             <div className="mb-3 block text-left font-semibold">
               Click on icon to change
             </div>
-
-            <div className="flex w-full flex-col items-center justify-between gap-y-2 xsm:flex-row">
-              {pack.map((emote, idx) => (
-                <EmojiPicker
-                  key={idx}
-                  index={idx}
-                  defaultEmote={emote}
-                  onEmotePick={handleEmotePick}
-                />
-              ))}
+            <div className="flex w-full overflow-auto pb-4 sm:overflow-x-auto">
+              <div className="m-auto flex gap-x-6">
+                {pack.map((emote, idx) => (
+                  <EmojiPicker
+                    key={idx}
+                    index={idx}
+                    defaultEmote={emote}
+                    onEmotePick={handleEmotePick}
+                    onEmoteRemove={allowRemove ? handleEmoteRemove : undefined}
+                  />
+                ))}
+                {allowAdd && <EmojiAdd onEmotePick={handleAddingNewEmote} />}
+              </div>
             </div>
           </div>
           <div className="flex justify-center">
             <Button
               onClick={createSurvey}
-              className="z-0 mt-12 w-full sm:w-auto"
+              className="z-0 mt-6 w-full sm:w-auto"
               variant={ButtonVariant.PRIMARY}
               isLoading={isCreating}
             >
