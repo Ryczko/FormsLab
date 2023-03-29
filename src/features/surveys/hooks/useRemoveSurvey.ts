@@ -8,28 +8,28 @@ export const useRemoveSurvey = () => {
 
   const deleteSurvey =
     (id: string, closeDeleteModal: () => void, onSuccess?: () => void) =>
-    async () => {
-      setIsRemoving(true);
-      try {
-        await deleteDoc(doc(db, 'surveys', id));
+      async () => {
+        setIsRemoving(true);
+        try {
+          await deleteDoc(doc(db, 'surveys', id));
 
-        const answersCollection = await getDocs(
-          query(collection(db, 'surveys', id, 'answers'))
-        );
+          const answersCollection = await getDocs(
+            query(collection(db, 'surveys', id, 'answers'))
+          );
 
-        answersCollection.forEach(async (answer) => {
-          await deleteDoc(answer.ref);
-        });
+          answersCollection.forEach(async (answer) => {
+            await deleteDoc(answer.ref);
+          });
 
-        if (onSuccess) onSuccess();
-        toast.success('Survey deleted');
-      } catch (error) {
-        toast.error('Error deleting survey');
-      } finally {
-        closeDeleteModal();
-        setIsRemoving(false);
-      }
-    };
+          if (onSuccess) onSuccess();
+          toast.success('Survey deleted');
+        } catch (error) {
+          toast.error('Error deleting survey');
+        } finally {
+          closeDeleteModal();
+          setIsRemoving(false);
+        }
+      };
 
   return {
     deleteSurvey,
