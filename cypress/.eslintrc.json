@@ -1,0 +1,8 @@
+{
+  "extends": ["plugin:cypress/recommended"],
+  "plugins": ["cypress"],
+  "rules": {
+    "jest/expect-expect": "off",
+    "no-relative-import-paths/no-relative-import-paths": "off"
+  }
+}
