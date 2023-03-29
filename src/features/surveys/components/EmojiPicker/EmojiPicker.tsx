@@ -6,6 +6,7 @@ import { useCloseComponent } from 'shared/hooks/useCloseComponent';
 import Loader from 'shared/components/Loader/Loader';
 import Emoji from 'features/surveys/components/Emoji/Emoji';
 import { EMOJI_STYLE } from 'shared/constants/emojisConfig';
+import { TrashIcon } from '@heroicons/react/outline';
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
@@ -16,9 +17,15 @@ interface EmojiPickerProps {
   index: number;
   defaultEmote?: string;
   onEmotePick: (idx: number, newValue: string) => void;
+  onEmoteRemove?: (idx: number) => void;
 }
 
-function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
+function EmojiPicker({
+  defaultEmote,
+  index,
+  onEmotePick,
+  onEmoteRemove,
+}: EmojiPickerProps) {
   const [chosenEmoji, setChosenEmoji] = useState<EmojiClickData>();
   const [displayPicker, setDisplayPicker] = useState(false);
 
@@ -41,7 +48,14 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
       >
         <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
       </button>
-
+      {onEmoteRemove && (
+        <button
+          className="mt-3 flex w-16 items-center justify-center rounded-lg bg-red-300"
+          onClick={() => onEmoteRemove(index)}
+        >
+          <TrashIcon className="my-2 h-5 w-5" />
+        </button>
+      )}
       {displayPicker && (
         <button
           type="button"
