@@ -101,7 +101,7 @@ function SurveyResultsPage() {
         surveyId={surveyId}
         closeModal={closeDeleteSurveyModal}
         isOpened={isDeleteSurveyModalOpen}
-        cb={navigateToSurveys}
+        onSuccess={navigateToSurveys}
       />
     </>
   );
