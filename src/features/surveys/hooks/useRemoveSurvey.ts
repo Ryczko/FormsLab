@@ -7,7 +7,7 @@ export const useRemoveSurvey = () => {
   const [isRemoving, setIsRemoving] = useState(false);
 
   const deleteSurvey =
-    (id: string, closeDeleteModal: () => void) => async () => {
+    (id: string, closeDeleteModal: () => void, cb?: () => void) => async () => {
       setIsRemoving(true);
       try {
         await deleteDoc(doc(db, 'surveys', id));
@@ -20,12 +20,14 @@ export const useRemoveSurvey = () => {
           await deleteDoc(answer.ref);
         });
 
-        closeDeleteModal();
         toast.success('Survey deleted');
       } catch (error) {
         toast.error('Error deleting survey');
+      } finally {
+        setIsRemoving(false);
+        closeDeleteModal();
+        if (cb) cb();
       }
-      setIsRemoving(false);
     };
 
   return {
