@@ -5,7 +5,7 @@ import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
-import useDeleteSurveyModal from 'features/surveys/hooks/useDeleteSurveyModal';
+import useModal from 'features/surveys/hooks/useModal';
 
 interface SurveyRowProps {
   question: string;
@@ -21,10 +21,10 @@ export default function SurveyRow({
   const { copy } = useCopyToClipboard();
   const navigate = useRouter();
   const {
-    isDeleteSurveyModalOpen,
-    closeDeleteSurveyModal,
-    openDeleteSurveyModal,
-  } = useDeleteSurveyModal();
+    isModalOpen: isDeleteSurveyModalOpen,
+    closeModal: closeDeleteSurveyModal,
+    openModal: openDeleteSurveyModal,
+  } = useModal();
 
   const handleCopyLink = () => {
     const domain =

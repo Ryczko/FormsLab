@@ -8,7 +8,7 @@ import Loader from 'shared/components/Loader/Loader';
 import AnswerTableRow from 'features/surveys/components/AnswerTableRow/AnswerTableRow';
 import { useSurveyResultsManager } from 'features/surveys/managers/surveyResultsManager';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
-import useDeleteSurveyModal from 'features/surveys/hooks/useDeleteSurveyModal';
+import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -27,10 +27,10 @@ function SurveyResultsPage() {
     createDate,
   } = useSurveyResultsManager();
   const {
-    isDeleteSurveyModalOpen,
-    closeDeleteSurveyModal,
-    openDeleteSurveyModal,
-  } = useDeleteSurveyModal();
+    isModalOpen: isDeleteSurveyModalOpen,
+    closeModal: closeDeleteSurveyModal,
+    openModal: openDeleteSurveyModal,
+  } = useModal();
 
   const navigateToSurveys = useCallback(
     () => router.push('/surveys'),
