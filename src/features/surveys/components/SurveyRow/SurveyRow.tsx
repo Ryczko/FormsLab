@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { useRouter } from 'next/router';
@@ -6,6 +5,7 @@ import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
+import useDeleteSurveyModal from 'features/surveys/hooks/useDeleteSurveyModal';
 
 interface SurveyRowProps {
   question: string;
@@ -20,15 +20,11 @@ export default function SurveyRow({
 }: SurveyRowProps) {
   const { copy } = useCopyToClipboard();
   const navigate = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-
-  function closeDeleteModal() {
-    setIsOpen(false);
-  }
-
-  function openDeleteModal() {
-    setIsOpen(true);
-  }
+  const {
+    isDeleteSurveyModalOpen,
+    closeDeleteSurveyModal,
+    openDeleteSurveyModal,
+  } = useDeleteSurveyModal();
 
   const handleCopyLink = () => {
     const domain =
@@ -73,14 +69,14 @@ export default function SurveyRow({
           variant={ButtonVariant.DANGER}
           title="Delete survey"
           className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
-          onClick={openDeleteModal}
+          onClick={openDeleteSurveyModal}
           icon={<TrashIcon className="h-5 w-5" />}
         />
       </div>
       <DeleteSurveyModal
         surveyId={id}
-        closeModal={closeDeleteModal}
-        isOpened={isOpen}
+        closeModal={closeDeleteSurveyModal}
+        isOpened={isDeleteSurveyModalOpen}
       />
     </div>
   );
