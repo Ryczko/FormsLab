@@ -69,7 +69,7 @@ function SurveyResultsPage() {
             <Button
               variant={ButtonVariant.DANGER}
               title="Delete survey"
-              className="mt-2 ml-4 w-full justify-center px-3 sm:mt-0 md:w-auto"
+              className="mt-2 justify-center px-3 sm:ml-4 sm:mt-0"
               onClick={openDeleteSurveyModal}
               icon={<TrashIcon className="h-5 w-5" />}
             />
