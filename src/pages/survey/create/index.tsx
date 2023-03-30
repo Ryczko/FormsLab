@@ -47,19 +47,17 @@ function SurveyCreatePage() {
             <div className="mb-3 block text-left font-semibold">
               Click on icon to change
             </div>
-            <div className="flex w-full overflow-auto pb-4 sm:overflow-x-auto">
-              <div className="m-auto flex gap-x-6">
-                {pack.map((emote, idx) => (
-                  <EmojiPicker
-                    key={idx}
-                    index={idx}
-                    defaultEmote={emote}
-                    onEmotePick={handleEmotePick}
-                    onEmoteRemove={allowRemove ? handleEmoteRemove : undefined}
-                  />
-                ))}
-                {allowAdd && <EmojiAdd onEmotePick={handleAddingNewEmote} />}
-              </div>
+            <div className="grid w-full grid-cols-4 items-start justify-items-center gap-y-4">
+              {pack.map((emote, idx) => (
+                <EmojiPicker
+                  key={idx}
+                  index={idx}
+                  defaultEmote={emote}
+                  onEmotePick={handleEmotePick}
+                  onEmoteRemove={allowRemove ? handleEmoteRemove : undefined}
+                />
+              ))}
+              {allowAdd && <EmojiAdd onEmotePick={handleAddingNewEmote} />}
             </div>
           </div>
           <div className="flex justify-center">

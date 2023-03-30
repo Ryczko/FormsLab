@@ -11,11 +11,11 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
   loading: () => <Loader isLoading={true} />,
 });
 
-interface EmojiPickerProps {
+interface EmojiAddProps {
   onEmotePick: (newValue: string) => void;
 }
 
-function EmojiPicker({ onEmotePick }: EmojiPickerProps) {
+function EmojiAdd({ onEmotePick }: EmojiAddProps) {
   const [displayPicker, setDisplayPicker] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -97,4 +97,4 @@ function EmojiPicker({ onEmotePick }: EmojiPickerProps) {
   );
 }
 
-export default EmojiPicker;
+export default EmojiAdd;
