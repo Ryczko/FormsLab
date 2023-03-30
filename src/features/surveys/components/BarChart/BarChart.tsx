@@ -20,7 +20,16 @@ export interface BarChartData {
   value: number;
 }
 
-const COLORS = ['#A5B4FC', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = [
+  '#A5B4FC',
+  '#00C49F',
+  '#FFBB28',
+  '#FF8042',
+  '#FFB480',
+  '#59ADF6',
+  '#006986',
+  '#52525B',
+];
 
 export default function BarChart({ data }: BarChartProps) {
   const getMaxValue = () => {
