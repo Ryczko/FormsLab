@@ -16,7 +16,7 @@
     "cypress:headless": "cypress run",
     "e2e": "start-server-and-test dev http://localhost:3000 cypress",
     "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
-    "e2e:headless:ci": "start-server-and-test start:emulator http://localhost:3000 cypress:headless",
+    "e2e:headless:ci": "start-server-and-test dev:emulator http://localhost:3000 cypress:headless",
     "dev:emulator": "firebase emulators:exec 'npm run dev'",
     "build:emulator": "firebase emulators:exec 'npm run build'",
     "start:emulator": "firebase emulators:exec 'npm start'"
