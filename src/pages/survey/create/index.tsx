@@ -47,7 +47,7 @@ function SurveyCreatePage() {
             <div className="mb-3 block text-left font-semibold">
               Click on icon to change
             </div>
-            <div className="grid w-full grid-cols-4 items-start justify-items-center gap-y-4">
+            <div className="grid w-full grid-cols-4 items-start justify-items-center gap-y-4 max-[400px]:grid-cols-2">
               {pack.map((emote, idx) => (
                 <EmojiPicker
                   key={idx}
