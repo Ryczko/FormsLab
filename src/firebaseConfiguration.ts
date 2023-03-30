@@ -9,9 +9,17 @@ import {
   sendPasswordResetEmail,
   signOut,
   updateProfile,
+  connectAuthEmulator,
 } from 'firebase/auth';
-import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
+import {
+  getFirestore,
+  getDoc,
+  setDoc,
+  doc,
+  connectFirestoreEmulator,
+} from 'firebase/firestore';
 import toast from 'react-hot-toast';
+import firebaseEmulatorConfig from '../firebase.json';
 
 const firebaseConfig = {
   apiKey:
@@ -35,6 +43,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_USE_EMULATORS === 'true') {
+  connectAuthEmulator(
+    auth,
+    `http://localhost:${firebaseEmulatorConfig.emulators.auth.port}`
+  );
+  connectFirestoreEmulator(
+    db,
+    'localhost',
+    firebaseEmulatorConfig.emulators.firestore.port
+  );
+}
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();

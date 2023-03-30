@@ -30,8 +30,15 @@ jobs:
       NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID }}
       NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID }}
       NEXT_PUBLIC_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_MEASUREMENT_ID }}
+      NEXT_PUBLIC_USE_EMULATORS: true
     steps:
       - uses: actions/checkout@v3
+        # Setup Java for firebase CLI
+      - name: Install Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -40,7 +47,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
-      - run: npm run build
+      - run: npm run build:emulator
       - name: Run E2E tests
         uses: cypress-io/github-action@v4
         with:
