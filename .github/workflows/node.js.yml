@@ -44,6 +44,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - name: Install Firebase Emulator Suite
+        run: npm install -g firebase-tools
       - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
