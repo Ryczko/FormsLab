@@ -34,7 +34,7 @@ export const useCreateSurveyManager = () => {
     }
 
     setAllowRemove(true);
-    setAllowRemove(true);
+    setAllowAdd(true);
   }, [pack]);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -49,7 +49,9 @@ export const useCreateSurveyManager = () => {
   };
 
   const handleAddingNewEmote = (newEmote: string) => {
-    if (pack.includes(newEmote)) return;
+    if (pack.includes(newEmote)) {
+      return toast.error('Emoji already selected');
+    }
     setPack((oldPack) => [...oldPack, newEmote]);
   };
 
