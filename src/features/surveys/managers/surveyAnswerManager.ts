@@ -6,7 +6,7 @@ import { db } from 'firebaseConfiguration';
 
 export const useSurveyAnswerManager = () => {
   const router = useRouter();
-
+  const [showEmojiError, setShowEmojiError] = useState(false);
   const { surveyId } = router.query as { surveyId: string };
 
   const [question, setQuestion] = useState('');
@@ -42,8 +42,14 @@ export const useSurveyAnswerManager = () => {
   };
 
   const handleSave = async () => {
-    setButtonDisable(true);
-    setIsAnswering(true);
+    if (!selectedIcon) {
+      setShowEmojiError(true);
+      return;
+    } else {
+      setShowEmojiError(false);
+      setButtonDisable(true);
+      setIsAnswering(true);
+    }
 
     try {
       if (!surveyId) {
@@ -80,5 +86,6 @@ export const useSurveyAnswerManager = () => {
     buttonDisable,
     handleSave,
     isAnswering,
+    showEmojiError,
   };
 };
