@@ -11,7 +11,10 @@ interface ToggleProps {
 function Toggle({ classNames, isEnabled, onToggle, label }: ToggleProps) {
   return (
     <Switch.Group>
-      <div className={clsx('flex items-center', classNames)}>
+      <div
+        className={clsx('flex items-center', classNames)}
+        data-test-id="toggle-wrapper"
+      >
         <Switch
           checked={isEnabled}
           onChange={onToggle}
