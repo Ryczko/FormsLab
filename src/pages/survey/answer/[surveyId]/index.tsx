@@ -1,4 +1,5 @@
 import { LinkIcon, RefreshIcon, TrashIcon } from '@heroicons/react/outline';
+
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
@@ -10,32 +11,29 @@ import { useSurveyResultsManager } from 'features/surveys/managers/surveyResults
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
-import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import Toggle from 'shared/components/Toggle/Toggle';
 
 function SurveyResultsPage() {
-  const router = useRouter();
   const {
     isLoading,
     title,
     handleCopyLink,
     surveyId,
-    answersData,
     getSurveyData,
     chartData,
     votes,
     createDate,
+    showOnlyWithExtraFeedback,
+    filteredAnswersData,
+    setShowOnlyWithExtraFeedback,
+    navigateToSurveys,
   } = useSurveyResultsManager();
+
   const {
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
     openModal: openDeleteSurveyModal,
   } = useModal();
-
-  const navigateToSurveys = useCallback(
-    () => router.push('/surveys'),
-    [router]
-  );
 
   return (
     <>
@@ -81,9 +79,17 @@ function SurveyResultsPage() {
             totalVotes={votes}
             createDate={createDate}
           />
-          {answersData.length > 0 ? (
-            <div className="mt-8 mb-6">
-              {answersData.map((answer) => (
+
+          <div className="mt-10 mb-4 flex justify-center">
+            <Toggle
+              isEnabled={showOnlyWithExtraFeedback}
+              onToggle={(isChecked) => setShowOnlyWithExtraFeedback(isChecked)}
+              label="With extra feedback only"
+            />
+          </div>
+          {filteredAnswersData.length > 0 ? (
+            <div className="mb-6">
+              {filteredAnswersData.map((answer) => (
                 <AnswerTableRow
                   key={answer.id}
                   time={answer.answerDate}
