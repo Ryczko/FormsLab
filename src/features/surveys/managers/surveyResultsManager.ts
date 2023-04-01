@@ -25,6 +25,14 @@ export const useSurveyResultsManager = () => {
   const [title, setTitle] = useState('');
   const [createDate, setCreateDate] = useState<string>('');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
+  const [chartData, setChartData] = useState<BarChartData[]>([]);
+  const [showOnlyWithExtraFeedback, setShowOnlyWithExtraFeedback] =
+    useState(false);
+
+  const [filteredAnswersData, setFilteredAnswersData] = useState<AnswerData[]>(
+    []
+  );
+
   const { copy } = useCopyToClipboard();
 
   const getSurveyData = useCallback(
@@ -81,7 +89,7 @@ export const useSurveyResultsManager = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getDataToChart = (): BarChartData[] => {
+  const getDataToChart = useCallback((): BarChartData[] => {
     if (!answersData.length) {
       return [];
     }
@@ -108,9 +116,23 @@ export const useSurveyResultsManager = () => {
         value: result[key],
       }))
       .sort((a, b) => b.value - a.value);
-  };
+  }, [answersData]);
 
-  const chartData = getDataToChart();
+  useEffect(() => {
+    setChartData(getDataToChart());
+  }, [answersData, getDataToChart]);
+
+  useEffect(() => {
+    const filtered = showOnlyWithExtraFeedback
+      ? answersData.filter((answer) => answer.answer.trim() !== '')
+      : answersData;
+    setFilteredAnswersData(filtered);
+  }, [answersData, showOnlyWithExtraFeedback]);
+
+  const navigateToSurveys = useCallback(
+    () => router.push('/surveys'),
+    [router]
+  );
 
   const handleCopyLink = (id: string) => () => {
     const domain =
@@ -124,10 +146,13 @@ export const useSurveyResultsManager = () => {
     title,
     handleCopyLink,
     surveyId,
-    answersData,
     getSurveyData,
     chartData,
     votes,
     createDate,
+    showOnlyWithExtraFeedback,
+    filteredAnswersData,
+    setShowOnlyWithExtraFeedback,
+    navigateToSurveys,
   };
 };
