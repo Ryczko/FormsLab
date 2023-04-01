@@ -13,6 +13,7 @@ export const useSurveyAnswerManager = () => {
   const [showEmojiError, setShowEmojiError] = useState(false);
   const { surveyId } = router.query as { surveyId: string };
 
+  const [isSurveyActive, setIsSurveyActive] = useState<boolean>(false);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
@@ -32,9 +33,15 @@ export const useSurveyAnswerManager = () => {
       return;
     }
 
-    setQuestion(surveyData.data()?.title);
-    setIcons(surveyData.data()?.pack);
-    setIsLoading(false);
+    if (!surveyData.data()?.isActive) {
+      setIsSurveyActive(false);
+      setIsLoading(false);
+    } else {
+      setIsSurveyActive(true);
+      setQuestion(surveyData.data()?.title);
+      setIcons(surveyData.data()?.pack);
+      setIsLoading(false);
+    }
   }, [router, surveyId]);
 
   useEffect(() => {
@@ -90,6 +97,7 @@ export const useSurveyAnswerManager = () => {
 
   return {
     isLoading,
+    isSurveyActive,
     question,
     icons,
     selectedIcon,

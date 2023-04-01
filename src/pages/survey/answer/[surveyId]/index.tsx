@@ -21,6 +21,8 @@ function SurveyResultsPage() {
     surveyId,
     getSurveyData,
     chartData,
+    isSurveyActive,
+    setIsSurveyActive,
     votes,
     createDate,
     showOnlyWithExtraFeedback,
@@ -72,6 +74,15 @@ function SurveyResultsPage() {
               icon={<TrashIcon className="h-5 w-5" />}
             />
           </div>
+
+          <div className="mb-10 mt-5 flex justify-center">
+            <Toggle
+              isEnabled={isSurveyActive}
+              onToggle={(isChecked) => setIsSurveyActive(isChecked)}
+              label="Is survey active"
+            />
+          </div>
+
 
           <hr className=" md:hidden" />
           <AnswerHeader

@@ -7,6 +7,7 @@ import {
   orderBy,
   getDocs,
   Timestamp,
+  updateDoc,
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
@@ -29,6 +30,7 @@ export const useSurveyResultsManager = () => {
   const [createDate, setCreateDate] = useState<string>('');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
   const [chartData, setChartData] = useState<BarChartData[]>([]);
+  const [isSurveyActive, setIsSurveyActive] = useState<boolean>(false);
   const [showOnlyWithExtraFeedback, setShowOnlyWithExtraFeedback] =
     useState(false);
 
@@ -59,6 +61,7 @@ export const useSurveyResultsManager = () => {
       const answersData = await getDocs(anserwsQuery);
       setVotes(answersData.docs.length);
 
+      setIsSurveyActive(surveyData.data()?.isActive);
       setCreateDate(
         formatFirebaseDateWithHours(surveyData.data()?.createDate as Timestamp)
       );
@@ -89,6 +92,18 @@ export const useSurveyResultsManager = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const updateSurveyStatus = async () => {
+      await updateDoc(doc(db, 'surveys', surveyId), {
+        isActive: isSurveyActive,
+      });
+    };
+
+    updateSurveyStatus();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSurveyActive]);
 
   const getDataToChart = useCallback((): BarChartData[] => {
     if (!answersData.length) {
@@ -149,6 +164,8 @@ export const useSurveyResultsManager = () => {
     surveyId,
     getSurveyData,
     chartData,
+    isSurveyActive,
+    setIsSurveyActive,
     votes,
     createDate,
     showOnlyWithExtraFeedback,
