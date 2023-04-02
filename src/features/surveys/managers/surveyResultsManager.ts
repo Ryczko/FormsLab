@@ -12,7 +12,10 @@ import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { BarChartData } from 'features/surveys/components/BarChart/BarChart';
 import { AnswerData } from 'features/surveys/interfaces/AnswerData';
-import { formatFirebaseDateWithHours } from 'shared/utilities/convertTime';
+import {
+  formatDateDistance,
+  formatFirebaseDateWithHours,
+} from 'shared/utilities/convertTime';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import { db } from 'firebaseConfiguration';
 
@@ -64,9 +67,7 @@ export const useSurveyResultsManager = () => {
       const data = answersData.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-        answerDate: formatFirebaseDateWithHours(
-          doc.data().answerDate as Timestamp
-        ),
+        answerDate: formatDateDistance(doc.data().answerDate as Timestamp),
       })) as AnswerData[];
 
       if (displayMessages) {
