@@ -3,6 +3,10 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { db } from 'firebaseConfiguration';
+import { LocalStorageKeys } from 'features/surveys/constants/types';
+import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
+
+const DEFAULT_VALUE: string[] = [];
 
 export const useSurveyAnswerManager = () => {
   const router = useRouter();
@@ -16,6 +20,10 @@ export const useSurveyAnswerManager = () => {
   const [buttonDisable, setButtonDisable] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isAnswering, setIsAnswering] = useState(false);
+  const [localStorageValue, setLocalStorageValue] = useLocalStorage<string[]>(
+    DEFAULT_VALUE,
+    LocalStorageKeys.LocalStorageKey
+  );
 
   const getSurveyData = useCallback(async () => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId));
@@ -33,9 +41,12 @@ export const useSurveyAnswerManager = () => {
     if (surveyId) {
       getSurveyData();
     }
-
+    if (localStorageValue.includes(surveyId) && !isAnswering) {
+      router.replace('/');
+      toast.success('You have answered this survey');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [localStorageValue]);
 
   const handleIconClick = (icon: string) => {
     setSelectedIcon(icon);
@@ -62,6 +73,7 @@ export const useSurveyAnswerManager = () => {
         answer,
         answerDate: new Date(),
       });
+      setLocalStorageValue([...localStorageValue, surveyId]);
       await router.replace('/');
       toast.success('The reply has been sent');
     } catch (error) {
