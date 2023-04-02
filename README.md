@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/51440879/227773762-fea8a39f-0ea2-4543-
 </br>
 
 
-## Usefull commands
+## Useful commands
 - `npm install` - install project
 - `npm run dev` - run project locally
 - `npm run test` - run all tests
@@ -22,7 +22,7 @@ https://user-images.githubusercontent.com/51440879/227773762-fea8a39f-0ea2-4543-
 - `npm run lint-fix` - try to solve lints errors automatically
 
 
-## Colaborators
+## Collaborators
 <a href="https://github.com/Ryczko"><img src="https://user-images.githubusercontent.com/51440879/227775234-34c2cfc7-52d4-416a-b622-1aa66821b621.png" alt="Ryczko" width="80"/> </a>
 <a href="https://github.com/xdk78"><img src="https://user-images.githubusercontent.com/51440879/227775337-4e022e1b-a0a6-4d6a-a685-d46ad639012d.png" alt="xdk78" width="80"/> </a>
 <a href="https://github.com/pmatyjasik"><img src="https://user-images.githubusercontent.com/51440879/227775392-b5694304-6e59-4b33-bd1b-4eb596610915.png" alt="pmatyjasik" width="80"/> </a>
