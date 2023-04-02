@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/51440879/227773762-fea8a39f-0ea2-4543-
 </br>
 
 
-## Usefull commands
+## Useful commands
 - `npm install` - install project
 - `npm run dev` - run project locally
 - `npm run test` - run all tests
