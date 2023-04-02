@@ -17,9 +17,9 @@ function AnswerPage() {
     handleIconClick,
     answer,
     handleInputAnswer,
-    buttonDisable,
     handleSave,
     isAnswering,
+    showEmojiError,
   } = useSurveyAnswerManager();
 
   return (
@@ -43,6 +43,8 @@ function AnswerPage() {
               />
             ))}
           </div>
+          {showEmojiError && (
+            <div className="mt-2 text-red-500">Please select an emoji before sending.</div>)}
           <div className="mt-8">
             <textarea
               className="h-56 w-[500px] max-w-[100%] resize-none rounded-lg p-4 shadow focus:outline-none"
@@ -53,7 +55,6 @@ function AnswerPage() {
           </div>
           <div className="flex justify-center">
             <Button
-              disabled={!selectedIcon || buttonDisable}
               onClick={handleSave}
               className="mt-6 w-full sm:w-auto"
               variant={ButtonVariant.PRIMARY}
