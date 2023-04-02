@@ -35,13 +35,12 @@ export const useSurveyAnswerManager = () => {
 
     if (!surveyData.data()?.isActive) {
       setIsSurveyActive(false);
-      setIsLoading(false);
     } else {
       setIsSurveyActive(true);
       setQuestion(surveyData.data()?.title);
       setIcons(surveyData.data()?.pack);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [router, surveyId]);
 
   useEffect(() => {
@@ -75,14 +74,22 @@ export const useSurveyAnswerManager = () => {
         toast.error('Survey ID not found');
         throw new Error('Survey ID not found');
       }
-      await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
-        selectedIcon,
-        answer,
-        answerDate: new Date(),
-      });
-      setLocalStorageValue([...localStorageValue, surveyId]);
-      await router.replace('/');
-      toast.success('The reply has been sent');
+
+      const survey = await getDoc(doc(db, 'surveys', surveyId));
+
+      if (survey.data()?.isActive) {
+        await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
+          selectedIcon,
+          answer,
+          answerDate: new Date(),
+        });
+        setLocalStorageValue([...localStorageValue, surveyId]);
+        await router.replace('/');
+        toast.success('The reply has been sent');
+      } else {
+        await router.replace('/');
+        toast.error('The survey is no longer active.');
+      }
     } catch (error) {
       toast.error('Error occured');
     } finally {

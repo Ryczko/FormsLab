@@ -7,6 +7,8 @@ import EmojiButton from 'features/surveys/components/EmojiButton/EmojiButton';
 import Header from 'shared/components/Header/Header';
 import Loader from 'shared/components/Loader/Loader';
 import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
+import Link from 'next/link';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 
 function AnswerPage() {
   const {
@@ -74,9 +76,15 @@ function AnswerPage() {
           ) : (
             <div className="container m-auto mb-6 px-4 text-center md:px-8">
               <h1 className="text-5xl">🙁</h1>
-              <h1 className="mt-5 text-xl">
-                Oops,, Survey is no longer active
-              </h1>
+              <h1 className="my-5 text-xl">Oops Survey is no longer active</h1>
+              <Link href={'/'}>
+                <ButtonLink
+                  variant={ButtonVariant.PRIMARY}
+                  className="w-full sm:w-auto"
+                >
+                  Go back to home
+                </ButtonLink>
+              </Link>
             </div>
           )}
         </>

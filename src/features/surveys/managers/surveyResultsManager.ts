@@ -97,8 +97,16 @@ export const useSurveyResultsManager = () => {
     const updateSurveyStatus = async () => {
       await updateDoc(doc(db, 'surveys', surveyId), {
         isActive: isSurveyActive,
-      });
-    };
+      })
+        .then(() => {
+          toast.success(
+            `Survey status changed to ${isSurveyActive ? 'Active' : 'Inactive'}`
+          );
+        })
+        .catch((err) => {
+          toast.error("Can't update survey status");
+        });
+      }
 
     updateSurveyStatus();
 
