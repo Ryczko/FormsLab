@@ -6,19 +6,27 @@ type Options = {
    * @default 20
    */
   size?: number;
+
+  /**
+   * The current page index
+   * @default 0
+   */
+  pageIndex?: number;
 };
 
 export default function usePagination<T>(
   items: T[],
-  { size = 20 }: Options = {}
+  { size = 20, pageIndex: initialPageIndex = 0 }: Options = {}
 ) {
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(initialPageIndex);
+
+  const numOfPages = Math.ceil(items.length / size);
 
   const paginatedItems = items.slice(pageIndex * size, (pageIndex + 1) * size);
 
   const canGoPrev = pageIndex > 0;
 
-  const canGoNext = items.length > (pageIndex + 1) * size;
+  const canGoNext = pageIndex < numOfPages - 1;
 
   const goNext = () => {
     if (!canGoNext) return;
@@ -43,6 +51,8 @@ export default function usePagination<T>(
     goNext,
     goPrev,
     pageIndex,
-    reset
+    reset,
+    size,
+    numOfPages
   };
 }
