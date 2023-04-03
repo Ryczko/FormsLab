@@ -6,7 +6,6 @@ import Header from 'shared/components/Header/Header';
 import Input from 'shared/components/Input/Input';
 import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
 import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
-import EmojiAdd from 'features/surveys/components/EmojiAdd/EmojiAdd';
 
 function SurveyCreatePage() {
   const {
@@ -57,7 +56,12 @@ function SurveyCreatePage() {
                   onEmoteRemove={allowRemove ? handleEmoteRemove : undefined}
                 />
               ))}
-              {allowAdd && <EmojiAdd onEmotePick={handleAddingNewEmote} />}
+              {allowAdd && (
+                <EmojiPicker
+                  addEmoji={allowAdd}
+                  onEmoteAdd={handleAddingNewEmote}
+                />
+              )}
             </div>
           </div>
           <div className="flex justify-center">

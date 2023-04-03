@@ -14,16 +14,20 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
 });
 
 interface EmojiPickerProps {
-  index: number;
+  index?: number;
   defaultEmote?: string;
-  onEmotePick: (idx: number, newValue: string) => void;
+  addEmoji?: boolean;
+  onEmotePick?: (idx: number, newValue: string) => void;
+  onEmoteAdd?: (newValue: string) => void;
   onEmoteRemove?: (idx: number) => void;
 }
 
 function EmojiPicker({
+  index = 0,
   defaultEmote,
-  index,
+  addEmoji,
   onEmotePick,
+  onEmoteAdd,
   onEmoteRemove,
 }: EmojiPickerProps) {
   const [chosenEmoji, setChosenEmoji] = useState<EmojiClickData>();
@@ -35,7 +39,12 @@ function EmojiPicker({
 
   const onEmojiClick = (emojiObject: EmojiClickData) => {
     setChosenEmoji(emojiObject);
-    onEmotePick(index, emojiObject.unified);
+    onEmotePick?.(index, emojiObject.unified);
+    setDisplayPicker(!displayPicker);
+  };
+
+  const onEmojiClickAdd = (emojiObject: EmojiClickData) => {
+    onEmoteAdd?.(emojiObject.unified);
     setDisplayPicker(!displayPicker);
   };
 
@@ -46,7 +55,11 @@ function EmojiPicker({
         className="label-text flex w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
-        <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
+        {!addEmoji ? (
+          <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
+        ) : (
+          <p className="pt-1 text-xl">+</p>
+        )}
       </button>
       {onEmoteRemove && (
         <button
@@ -66,7 +79,7 @@ function EmojiPicker({
       {displayPicker && (
         <div className="fixed top-1/2 left-1/2 z-20 flex h-[400px] max-h-[90%] w-[400px] max-w-[90%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-white">
           <Picker
-            onEmojiClick={onEmojiClick}
+            onEmojiClick={!addEmoji ? onEmojiClick : onEmojiClickAdd}
             autoFocusSearch={false}
             emojiStyle={EMOJI_STYLE}
             searchDisabled
