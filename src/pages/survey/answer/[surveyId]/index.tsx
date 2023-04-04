@@ -1,4 +1,10 @@
-import { LinkIcon, RefreshIcon, TrashIcon } from '@heroicons/react/outline';
+import {
+  LinkIcon,
+  RefreshIcon,
+  TrashIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+} from '@heroicons/react/outline';
 
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
@@ -12,6 +18,7 @@ import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import Toggle from 'shared/components/Toggle/Toggle';
+import usePagination from 'features/surveys/hooks/usePagination';
 
 function SurveyResultsPage() {
   const {
@@ -31,11 +38,28 @@ function SurveyResultsPage() {
     updateSurveyStatus,
   } = useSurveyResultsManager();
 
+  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex, reset } =
+    usePagination(filteredAnswersData);
+
   const {
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
     openModal: openDeleteSurveyModal,
   } = useModal();
+
+  const handleRefresh = () => {
+    getSurveyData(true);
+
+    // reset the pagination
+    reset();
+  };
+
+  const toggleShowOnlyWithExtraFeedback = (isChecked: boolean) => {
+    setShowOnlyWithExtraFeedback(isChecked);
+    
+    // reset the pagination
+    reset();
+  };
 
   return (
     <>
@@ -59,7 +83,7 @@ function SurveyResultsPage() {
             </Button>
             <Button
               title="Refresh data"
-              onClick={() => getSurveyData(true)}
+              onClick={handleRefresh}
               variant={ButtonVariant.OUTLINE}
               className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
               icon={<RefreshIcon className="h-5 w-5" />}
@@ -93,13 +117,13 @@ function SurveyResultsPage() {
           <div className="mt-10 mb-4 flex justify-center">
             <Toggle
               isEnabled={showOnlyWithExtraFeedback}
-              onToggle={(isChecked) => setShowOnlyWithExtraFeedback(isChecked)}
+              onToggle={toggleShowOnlyWithExtraFeedback}
               label="With extra feedback only"
             />
           </div>
-          {filteredAnswersData.length > 0 ? (
+          {items.length > 0 ? (
             <div className="mb-6">
-              {filteredAnswersData.map((answer) => (
+              {items.map((answer) => (
                 <AnswerTableRow
                   key={answer.id}
                   time={answer.answerDate}
@@ -111,6 +135,25 @@ function SurveyResultsPage() {
           ) : (
             <div className="mt-4">No answers yet</div>
           )}
+          <div className="flex justify-center">
+            <div className="flex flex-row items-center">
+              <Button
+                variant={ButtonVariant.OUTLINE_PRIMARY}
+                icon={<ArrowLeftIcon className="h-5 w-5" />}
+                disabled={!canGoPrev}
+                onClick={goPrev}
+              />
+              <div className="min-w-[100px]">
+                <p className="text-center">{pageIndex + 1}</p>
+              </div>
+              <Button
+                variant={ButtonVariant.OUTLINE_PRIMARY}
+                icon={<ArrowRightIcon className="h-5 w-5" />}
+                disabled={!canGoNext}
+                onClick={goNext}
+              />
+            </div>
+          </div>
         </div>
       )}
       <DeleteSurveyModal
