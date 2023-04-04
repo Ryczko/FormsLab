@@ -43,7 +43,7 @@ export default function SurveyRow({
         <div title={question} className="w-36 truncate text-left">
           {question}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="hidden items-center space-x-2 text-sm xsm:flex">
           <div>{createDate}</div>
         </div>
       </div>

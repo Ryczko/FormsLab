@@ -2,7 +2,7 @@ import { Timestamp } from 'firebase/firestore';
 
 import Image from 'next/image';
 import Head from 'next/head';
-import { formatFirebaseDateWithoutHours } from 'shared/utilities/convertTime';
+import { formatDateDistance } from 'shared/utilities/convertTime';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import Header from 'shared/components/Header/Header';
@@ -44,7 +44,7 @@ function SurveyListPage() {
                     key={doc.id}
                     id={doc.id}
                     question={survey.title}
-                    createDate={formatFirebaseDateWithoutHours(
+                    createDate={formatDateDistance(
                       survey.createDate as Timestamp
                     )}
                   ></SurveyRow>
