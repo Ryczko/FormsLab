@@ -67,6 +67,7 @@ export const useSurveyResultsManager = () => {
       );
 
       setTitle(surveyData.data()?.title);
+
       const data = answersData.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -93,25 +94,20 @@ export const useSurveyResultsManager = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const updateSurveyStatus = async () => {
+  const updateSurveyStatus = async (isActive: boolean) => {
+    try {
+      setIsSurveyActive(isActive);
       await updateDoc(doc(db, 'surveys', surveyId), {
-        isActive: isSurveyActive,
-      })
-        .then(() => {
-          toast.success(
-            `Survey status changed to ${isSurveyActive ? 'Active' : 'Inactive'}`
-          );
-        })
-        .catch((err) => {
-          toast.error("Can't update survey status");
-        });
-      }
+        isActive,
+      });
 
-    updateSurveyStatus();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSurveyActive]);
+      toast.success(
+        `Survey status changed to ${isActive ? 'Active' : 'Inactive'}`
+      );
+    } catch (error) {
+      toast.error('Can not update survey status');
+    }
+  };
 
   const getDataToChart = useCallback((): BarChartData[] => {
     if (!answersData.length) {
@@ -173,12 +169,12 @@ export const useSurveyResultsManager = () => {
     getSurveyData,
     chartData,
     isSurveyActive,
-    setIsSurveyActive,
     votes,
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
+    updateSurveyStatus,
   };
 };

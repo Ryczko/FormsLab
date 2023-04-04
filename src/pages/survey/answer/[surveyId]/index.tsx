@@ -22,13 +22,13 @@ function SurveyResultsPage() {
     getSurveyData,
     chartData,
     isSurveyActive,
-    setIsSurveyActive,
     votes,
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
+    updateSurveyStatus,
   } = useSurveyResultsManager();
 
   const {
@@ -47,7 +47,7 @@ function SurveyResultsPage() {
       {!isLoading && (
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
-          <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-10">
+          <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-6">
             <Button
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId)}
@@ -75,14 +75,13 @@ function SurveyResultsPage() {
             />
           </div>
 
-          <div className="mb-10 mt-5 flex justify-center">
+          <div className="mb-6 mt-3 flex justify-center md:mb-10">
             <Toggle
               isEnabled={isSurveyActive}
-              onToggle={(isChecked) => setIsSurveyActive(isChecked)}
+              onToggle={updateSurveyStatus}
               label="Is survey active"
             />
           </div>
-
 
           <hr className=" md:hidden" />
           <AnswerHeader
