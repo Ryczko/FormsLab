@@ -13,6 +13,7 @@ export const useSurveyAnswerManager = () => {
   const [showEmojiError, setShowEmojiError] = useState(false);
   const { surveyId } = router.query as { surveyId: string };
 
+  const [isSurveyActive, setIsSurveyActive] = useState<boolean>(false);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [icons, setIcons] = useState<string[]>([]);
@@ -32,8 +33,13 @@ export const useSurveyAnswerManager = () => {
       return;
     }
 
-    setQuestion(surveyData.data()?.title);
-    setIcons(surveyData.data()?.pack);
+    if (!surveyData.data()?.isActive) {
+      setIsSurveyActive(false);
+    } else {
+      setIsSurveyActive(true);
+      setQuestion(surveyData.data()?.title);
+      setIcons(surveyData.data()?.pack);
+    }
     setIsLoading(false);
   }, [router, surveyId]);
 
@@ -68,14 +74,22 @@ export const useSurveyAnswerManager = () => {
         toast.error('Survey ID not found');
         throw new Error('Survey ID not found');
       }
-      await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
-        selectedIcon,
-        answer,
-        answerDate: new Date(),
-      });
-      setLocalStorageValue([...localStorageValue, surveyId]);
-      await router.replace('/');
-      toast.success('The reply has been sent');
+
+      const survey = await getDoc(doc(db, 'surveys', surveyId));
+
+      if (survey.data()?.isActive) {
+        await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
+          selectedIcon,
+          answer,
+          answerDate: new Date(),
+        });
+        setLocalStorageValue([...localStorageValue, surveyId]);
+        await router.replace('/');
+        toast.success('The reply has been sent');
+      } else {
+        await router.replace('/');
+        toast.error('The survey is no longer active.');
+      }
     } catch (error) {
       toast.error('Error occured');
     } finally {
@@ -90,6 +104,7 @@ export const useSurveyAnswerManager = () => {
 
   return {
     isLoading,
+    isSurveyActive,
     question,
     icons,
     selectedIcon,

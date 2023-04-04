@@ -7,9 +7,12 @@ import EmojiButton from 'features/surveys/components/EmojiButton/EmojiButton';
 import Header from 'shared/components/Header/Header';
 import Loader from 'shared/components/Loader/Loader';
 import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
+import Link from 'next/link';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 
 function AnswerPage() {
   const {
+    isSurveyActive,
     isLoading,
     question,
     icons,
@@ -30,41 +33,61 @@ function AnswerPage() {
       </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (
-        <div className="container m-auto mb-6 px-4 text-center md:px-8">
-          <Header>{question}</Header>
+        <>
+          {isSurveyActive ? (
+            <div className="container m-auto mb-6 px-4 text-center md:px-8">
+              <Header>{question}</Header>
 
-          <div className="mx-auto  grid  max-w-[500px] grid-cols-2 gap-2 sm:grid-cols-4">
-            {icons.map((icon, idx) => (
-              <EmojiButton
-                icon={icon}
-                selected={selectedIcon === icon}
-                key={idx}
-                onClick={handleIconClick}
-              />
-            ))}
-          </div>
-          {showEmojiError && (
-            <div className="mt-2 text-red-500">Please select an emoji before sending.</div>)}
-          <div className="mt-8">
-            <textarea
-              className="h-56 w-[500px] max-w-[100%] resize-none rounded-lg p-4 shadow focus:outline-none"
-              placeholder="Tell Us More"
-              value={answer}
-              onChange={handleInputAnswer}
-            ></textarea>
-          </div>
-          <div className="flex justify-center">
-            <Button
-              onClick={handleSave}
-              className="mt-6 w-full sm:w-auto"
-              variant={ButtonVariant.PRIMARY}
-              sizeType={ButtonSize.MEDIUM}
-              isLoading={isAnswering}
-            >
-              Send
-            </Button>
-          </div>
-        </div>
+              <div className="mx-auto  grid  max-w-[500px] grid-cols-2 gap-2 sm:grid-cols-4">
+                {icons.map((icon, idx) => (
+                  <EmojiButton
+                    icon={icon}
+                    selected={selectedIcon === icon}
+                    key={idx}
+                    onClick={handleIconClick}
+                  />
+                ))}
+              </div>
+              {showEmojiError && (
+                <div className="mt-2 text-red-500">
+                  Please select an emoji before sending.
+                </div>
+              )}
+              <div className="mt-8">
+                <textarea
+                  className="h-56 w-[500px] max-w-[100%] resize-none rounded-lg p-4 shadow focus:outline-none"
+                  placeholder="Tell Us More"
+                  value={answer}
+                  onChange={handleInputAnswer}
+                ></textarea>
+              </div>
+              <div className="flex justify-center">
+                <Button
+                  onClick={handleSave}
+                  className="mt-6 w-full sm:w-auto"
+                  variant={ButtonVariant.PRIMARY}
+                  sizeType={ButtonSize.MEDIUM}
+                  isLoading={isAnswering}
+                >
+                  Send
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="container m-auto mb-6 px-4 text-center md:px-8">
+              <h1 className="text-5xl">🙁</h1>
+              <h1 className="my-5 text-xl">Oops Survey is no longer active</h1>
+              <Link href={'/'}>
+                <ButtonLink
+                  variant={ButtonVariant.PRIMARY}
+                  className="w-full sm:w-auto"
+                >
+                  Go back to home
+                </ButtonLink>
+              </Link>
+            </div>
+          )}
+        </>
       )}
     </>
   );

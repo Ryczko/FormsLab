@@ -21,12 +21,14 @@ function SurveyResultsPage() {
     surveyId,
     getSurveyData,
     chartData,
+    isSurveyActive,
     votes,
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
+    updateSurveyStatus,
   } = useSurveyResultsManager();
 
   const {
@@ -45,7 +47,7 @@ function SurveyResultsPage() {
       {!isLoading && (
         <div className="container mx-auto text-center">
           <Header>Answers for &quot;{title}&quot;</Header>
-          <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-10">
+          <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-6">
             <Button
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId)}
@@ -70,6 +72,14 @@ function SurveyResultsPage() {
               className="mt-2 justify-center px-3 sm:ml-4 sm:mt-0"
               onClick={openDeleteSurveyModal}
               icon={<TrashIcon className="h-5 w-5" />}
+            />
+          </div>
+
+          <div className="mb-6 mt-3 flex justify-center md:mb-10">
+            <Toggle
+              isEnabled={isSurveyActive}
+              onToggle={updateSurveyStatus}
+              label="Is survey active"
             />
           </div>
 

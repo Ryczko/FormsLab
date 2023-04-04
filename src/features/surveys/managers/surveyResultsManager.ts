@@ -7,6 +7,7 @@ import {
   orderBy,
   getDocs,
   Timestamp,
+  updateDoc,
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
@@ -29,6 +30,7 @@ export const useSurveyResultsManager = () => {
   const [createDate, setCreateDate] = useState<string>('');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
   const [chartData, setChartData] = useState<BarChartData[]>([]);
+  const [isSurveyActive, setIsSurveyActive] = useState<boolean>(false);
   const [showOnlyWithExtraFeedback, setShowOnlyWithExtraFeedback] =
     useState(false);
 
@@ -59,11 +61,13 @@ export const useSurveyResultsManager = () => {
       const answersData = await getDocs(anserwsQuery);
       setVotes(answersData.docs.length);
 
+      setIsSurveyActive(surveyData.data()?.isActive);
       setCreateDate(
         formatFirebaseDateWithHours(surveyData.data()?.createDate as Timestamp)
       );
 
       setTitle(surveyData.data()?.title);
+
       const data = answersData.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -89,6 +93,21 @@ export const useSurveyResultsManager = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const updateSurveyStatus = async (isActive: boolean) => {
+    try {
+      setIsSurveyActive(isActive);
+      await updateDoc(doc(db, 'surveys', surveyId), {
+        isActive,
+      });
+
+      toast.success(
+        `Survey status changed to ${isActive ? 'Active' : 'Inactive'}`
+      );
+    } catch (error) {
+      toast.error('Can not update survey status');
+    }
+  };
 
   const getDataToChart = useCallback((): BarChartData[] => {
     if (!answersData.length) {
@@ -149,11 +168,13 @@ export const useSurveyResultsManager = () => {
     surveyId,
     getSurveyData,
     chartData,
+    isSurveyActive,
     votes,
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
+    updateSurveyStatus,
   };
 };

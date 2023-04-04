@@ -43,6 +43,7 @@ export const useCreateSurveyManager = () => {
       const newSurvey = await addDoc(collection(db, 'surveys'), {
         title,
         pack,
+        isActive: true,
         creatorId: user?.uid,
         createDate: new Date(),
       });
