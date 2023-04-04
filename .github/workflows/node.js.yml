@@ -31,6 +31,7 @@ jobs:
       NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID }}
       NEXT_PUBLIC_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_MEASUREMENT_ID }}
       NEXT_PUBLIC_USE_EMULATORS: true
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         # Setup Java for firebase CLI
