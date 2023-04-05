@@ -33,6 +33,7 @@ function SurveyResultsPage() {
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
+    answersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
     updateSurveyStatus,
@@ -114,7 +115,7 @@ function SurveyResultsPage() {
             createDate={createDate}
           />
 
-          {filteredAnswersData.length >= 1 && (
+          {answersData.length > 0 && (
             <div className="mt-10 mb-4 flex justify-center">
               <Toggle
                 isEnabled={showOnlyWithExtraFeedback}
