@@ -114,13 +114,16 @@ function SurveyResultsPage() {
             createDate={createDate}
           />
 
-          <div className="mt-10 mb-4 flex justify-center">
-            <Toggle
-              isEnabled={showOnlyWithExtraFeedback}
-              onToggle={toggleShowOnlyWithExtraFeedback}
-              label="With extra feedback only"
-            />
-          </div>
+          {filteredAnswersData.length >= 1 && (
+            <div className="mt-10 mb-4 flex justify-center">
+              <Toggle
+                isEnabled={showOnlyWithExtraFeedback}
+                onToggle={toggleShowOnlyWithExtraFeedback}
+                label="With extra feedback only"
+              />
+            </div>
+          )}
+
           {items.length > 0 ? (
             <div className="mb-6">
               {items.map((answer) => (
