@@ -96,6 +96,11 @@ function SurveyCreatePage() {
               ))}
             </div>
           </div>
+          <Input
+            label="Tell Us More"
+            placeholder="Tell Us More"
+          />
+          
 
           <Button
             onClick={createSurvey}
