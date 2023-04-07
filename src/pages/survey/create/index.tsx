@@ -7,6 +7,9 @@ import Input from 'shared/components/Input/Input';
 import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
 import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
 
+const MIN_EMOJIS = 2;
+const MAX_EMOJIS = 8;
+
 function SurveyCreatePage() {
   const {
     title,
@@ -14,6 +17,8 @@ function SurveyCreatePage() {
     error,
     handleChangeTitle,
     handleEmotePick,
+    handleEmoteRemove,
+    handleAddingNewEmote,
     createSurvey,
     isCreating,
   } = useCreateSurveyManager();
@@ -27,7 +32,7 @@ function SurveyCreatePage() {
       <div className="container m-auto px-4 text-center md:px-8">
         <Header>Create new survey</Header>
 
-        <div className="mx-auto max-w-lg">
+        <div className="mx-auto max-w-xl">
           <Input
             label="Survey title"
             placeholder="Title..."
@@ -42,22 +47,37 @@ function SurveyCreatePage() {
             <div className="mb-3 block text-left font-semibold">
               Click on icon to change
             </div>
-
-            <div className="flex w-full flex-col items-center justify-between gap-y-2 xsm:flex-row">
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, 64px)',
+                justifyContent: 'space-between',
+                gridGap: '8px',
+              }}
+            >
               {pack.map((emote, idx) => (
                 <EmojiPicker
                   key={idx}
                   index={idx}
                   defaultEmote={emote}
                   onEmotePick={handleEmotePick}
+                  onEmoteRemove={
+                    pack.length > MIN_EMOJIS ? handleEmoteRemove : undefined
+                  }
                 />
               ))}
+              {pack.length < MAX_EMOJIS && (
+                <EmojiPicker
+                  addEmoji={true}
+                  onEmoteAdd={handleAddingNewEmote}
+                />
+              )}
             </div>
           </div>
           <div className="flex justify-center">
             <Button
               onClick={createSurvey}
-              className="z-0 mt-12 w-full sm:w-auto"
+              className="z-0 mt-8 w-full sm:w-auto"
               variant={ButtonVariant.PRIMARY}
               isLoading={isCreating}
             >

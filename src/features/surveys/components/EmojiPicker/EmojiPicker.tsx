@@ -6,6 +6,8 @@ import { useCloseComponent } from 'shared/hooks/useCloseComponent';
 import Loader from 'shared/components/Loader/Loader';
 import Emoji from 'features/surveys/components/Emoji/Emoji';
 import { EMOJI_STYLE } from 'shared/constants/emojisConfig';
+import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
@@ -13,12 +15,22 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
 });
 
 interface EmojiPickerProps {
-  index: number;
+  index?: number;
   defaultEmote?: string;
-  onEmotePick: (idx: number, newValue: string) => void;
+  addEmoji?: boolean;
+  onEmotePick?: (idx: number, newValue: string) => void;
+  onEmoteAdd?: (newValue: string) => void;
+  onEmoteRemove?: (idx: number) => void;
 }
 
-function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
+function EmojiPicker({
+  index = 0,
+  defaultEmote,
+  addEmoji,
+  onEmotePick,
+  onEmoteAdd,
+  onEmoteRemove,
+}: EmojiPickerProps) {
   const [chosenEmoji, setChosenEmoji] = useState<EmojiClickData>();
   const [displayPicker, setDisplayPicker] = useState(false);
 
@@ -28,7 +40,12 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
 
   const onEmojiClick = (emojiObject: EmojiClickData) => {
     setChosenEmoji(emojiObject);
-    onEmotePick(index, emojiObject.unified);
+    onEmotePick?.(index, emojiObject.unified);
+    setDisplayPicker(!displayPicker);
+  };
+
+  const onEmojiClickAdd = (emojiObject: EmojiClickData) => {
+    onEmoteAdd?.(emojiObject.unified);
     setDisplayPicker(!displayPicker);
   };
 
@@ -39,9 +56,22 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
         className="label-text flex w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
-        <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
+        {!addEmoji ? (
+          <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
+        ) : (
+          <div className="w-[32px]">
+            <PlusSmIcon />
+          </div>
+        )}
       </button>
-
+      {onEmoteRemove && (
+        <Button
+          onClick={() => onEmoteRemove(index)}
+          className="mt-1 w-[64px]"
+          variant={ButtonVariant.DANGER}
+          icon={<TrashIcon className="h-4 w-4" />}
+        />
+      )}
       {displayPicker && (
         <button
           type="button"
@@ -52,7 +82,7 @@ function EmojiPicker({ defaultEmote, index, onEmotePick }: EmojiPickerProps) {
       {displayPicker && (
         <div className="fixed top-1/2 left-1/2 z-20 flex h-[400px] max-h-[90%] w-[400px] max-w-[90%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-white">
           <Picker
-            onEmojiClick={onEmojiClick}
+            onEmojiClick={!addEmoji ? onEmojiClick : onEmojiClickAdd}
             autoFocusSearch={false}
             emojiStyle={EMOJI_STYLE}
             searchDisabled

@@ -34,6 +34,17 @@ export const useCreateSurveyManager = () => {
     });
   };
 
+  const handleAddingNewEmote = (newEmote: string) => {
+    if (pack.includes(newEmote)) {
+      return toast.error('Emoji already selected');
+    }
+    setPack((oldPack) => [...oldPack, newEmote]);
+  };
+
+  const handleEmoteRemove = (index: number) => {
+    setPack((oldPack) => oldPack.filter((pack, idx) => idx !== index));
+  };
+
   const createSurvey = async () => {
     if (!title) return setError('Required field');
 
@@ -69,6 +80,8 @@ export const useCreateSurveyManager = () => {
     pack,
     handleChangeTitle,
     handleEmotePick,
+    handleEmoteRemove,
+    handleAddingNewEmote,
     createSurvey,
     isCreating,
   };
