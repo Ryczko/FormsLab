@@ -173,6 +173,7 @@ export const useSurveyResultsManager = () => {
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
+    answersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
     updateSurveyStatus,

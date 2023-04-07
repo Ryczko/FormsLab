@@ -33,6 +33,7 @@ function SurveyResultsPage() {
     createDate,
     showOnlyWithExtraFeedback,
     filteredAnswersData,
+    answersData,
     setShowOnlyWithExtraFeedback,
     navigateToSurveys,
     updateSurveyStatus,
@@ -114,13 +115,16 @@ function SurveyResultsPage() {
             createDate={createDate}
           />
 
-          <div className="mt-10 mb-4 flex justify-center">
-            <Toggle
-              isEnabled={showOnlyWithExtraFeedback}
-              onToggle={toggleShowOnlyWithExtraFeedback}
-              label="With extra feedback only"
-            />
-          </div>
+          {answersData.length > 0 && (
+            <div className="mt-10 mb-4 flex justify-center">
+              <Toggle
+                isEnabled={showOnlyWithExtraFeedback}
+                onToggle={toggleShowOnlyWithExtraFeedback}
+                label="With extra feedback only"
+              />
+            </div>
+          )}
+
           {items.length > 0 ? (
             <div className="mb-6">
               {items.map((answer) => (
