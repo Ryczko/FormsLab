@@ -6,7 +6,8 @@ import { useCloseComponent } from 'shared/hooks/useCloseComponent';
 import Loader from 'shared/components/Loader/Loader';
 import Emoji from 'features/surveys/components/Emoji/Emoji';
 import { EMOJI_STYLE } from 'shared/constants/emojisConfig';
-import { TrashIcon } from '@heroicons/react/outline';
+import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
@@ -58,16 +59,18 @@ function EmojiPicker({
         {!addEmoji ? (
           <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
         ) : (
-          <p className="pt-1 text-xl">+</p>
+          <div className="w-[32px]">
+            <PlusSmIcon />
+          </div>
         )}
       </button>
       {onEmoteRemove && (
-        <button
-          className="mt-3 flex w-16 items-center justify-center rounded-lg bg-red-300"
+        <Button
           onClick={() => onEmoteRemove(index)}
-        >
-          <TrashIcon className="my-2 h-5 w-5" />
-        </button>
+          className="mt-1 w-[64px]"
+          variant={ButtonVariant.DANGER}
+          icon={<TrashIcon className="h-4 w-4" />}
+        />
       )}
       {displayPicker && (
         <button

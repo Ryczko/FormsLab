@@ -40,7 +40,7 @@ function SurveyResultsPage() {
   } = useSurveyResultsManager();
 
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex, reset } =
-    usePagination(filteredAnswersData);
+    usePagination(filteredAnswersData, { size: 10 });
 
   const {
     isModalOpen: isDeleteSurveyModalOpen,
@@ -57,7 +57,7 @@ function SurveyResultsPage() {
 
   const toggleShowOnlyWithExtraFeedback = (isChecked: boolean) => {
     setShowOnlyWithExtraFeedback(isChecked);
-    
+
     // reset the pagination
     reset();
   };
@@ -137,27 +137,31 @@ function SurveyResultsPage() {
               ))}
             </div>
           ) : (
-            <div className="mt-4">No answers yet</div>
+            <div className="my-4">No answers yet</div>
           )}
-          <div className="flex justify-center">
-            <div className="flex flex-row items-center">
-              <Button
-                variant={ButtonVariant.OUTLINE_PRIMARY}
-                icon={<ArrowLeftIcon className="h-5 w-5" />}
-                disabled={!canGoPrev}
-                onClick={goPrev}
-              />
-              <div className="min-w-[100px]">
-                <p className="text-center">{pageIndex + 1}</p>
+          {(canGoNext || canGoPrev) && (
+            <div className="flex justify-center">
+              <div className="flex flex-row items-center">
+                <Button
+                  variant={ButtonVariant.OUTLINE_PRIMARY}
+                  className="px-4"
+                  icon={<ArrowLeftIcon className="h-5 w-5" />}
+                  disabled={!canGoPrev}
+                  onClick={goPrev}
+                />
+                <div className="min-w-[100px]">
+                  <p className="text-center">{pageIndex + 1}</p>
+                </div>
+                <Button
+                  variant={ButtonVariant.OUTLINE_PRIMARY}
+                  className="px-4"
+                  icon={<ArrowRightIcon className="h-5 w-5" />}
+                  disabled={!canGoNext}
+                  onClick={goNext}
+                />
               </div>
-              <Button
-                variant={ButtonVariant.OUTLINE_PRIMARY}
-                icon={<ArrowRightIcon className="h-5 w-5" />}
-                disabled={!canGoNext}
-                onClick={goNext}
-              />
             </div>
-          </div>
+          )}
         </div>
       )}
       <DeleteSurveyModal
