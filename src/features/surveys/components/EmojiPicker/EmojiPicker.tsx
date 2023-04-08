@@ -16,7 +16,7 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
 
 interface EmojiPickerProps {
   index?: number;
-  defaultEmote?: string;
+  pickedEmoji?: string;
   addEmoji?: boolean;
   onEmotePick?: (idx: number, newValue: string) => void;
   onEmoteAdd?: (newValue: string) => void;
@@ -25,13 +25,12 @@ interface EmojiPickerProps {
 
 function EmojiPicker({
   index = 0,
-  defaultEmote,
+  pickedEmoji,
   addEmoji,
   onEmotePick,
   onEmoteAdd,
   onEmoteRemove,
 }: EmojiPickerProps) {
-  const [chosenEmoji, setChosenEmoji] = useState<EmojiClickData>();
   const [displayPicker, setDisplayPicker] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -39,7 +38,6 @@ function EmojiPicker({
   useCloseComponent(wrapperRef, () => setDisplayPicker(false));
 
   const onEmojiClick = (emojiObject: EmojiClickData) => {
-    setChosenEmoji(emojiObject);
     onEmotePick?.(index, emojiObject.unified);
     setDisplayPicker(!displayPicker);
   };
@@ -57,7 +55,7 @@ function EmojiPicker({
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (
-          <Emoji unified={chosenEmoji?.unified || defaultEmote || ''} />
+          <Emoji unified={pickedEmoji || ''} />
         ) : (
           <div className="w-[32px]">
             <PlusSmIcon />

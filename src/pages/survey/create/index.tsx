@@ -59,7 +59,7 @@ function SurveyCreatePage() {
                 <EmojiPicker
                   key={idx}
                   index={idx}
-                  defaultEmote={emote}
+                  pickedEmoji={emote}
                   onEmotePick={handleEmotePick}
                   onEmoteRemove={
                     pack.length > MIN_EMOJIS ? handleEmoteRemove : undefined
