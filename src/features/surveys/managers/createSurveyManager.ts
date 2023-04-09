@@ -27,18 +27,30 @@ export const useCreateSurveyManager = () => {
     setTitle(e.target.value);
   };
 
+  const isEmojiPicked = (emoji: string) => {
+    if (pack.includes(emoji)) {
+      toast.error('Emoji already selected');
+      return true;
+    }
+
+    return false;
+  };
+
   const handleEmotePick = (index: number, newEmote: string) => {
     setPack((oldPack) => {
-      oldPack.splice(index, 1, newEmote);
-      return oldPack;
+      const newPack = [...oldPack];
+
+      if (!isEmojiPicked(newEmote)) {
+        newPack.splice(index, 1, newEmote);
+      }
+      return newPack;
     });
   };
 
   const handleAddingNewEmote = (newEmote: string) => {
-    if (pack.includes(newEmote)) {
-      return toast.error('Emoji already selected');
+    if (!isEmojiPicked(newEmote)) {
+      setPack((oldPack) => [...oldPack, newEmote]);
     }
-    setPack((oldPack) => [...oldPack, newEmote]);
   };
 
   const handleEmoteRemove = (index: number) => {
