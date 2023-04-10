@@ -48,6 +48,7 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@next/eslint-plugin-next": "^12.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",

@@ -39,6 +39,7 @@ function SignupPage() {
               <Form className="flex w-full flex-col sm:w-80">
                 <Input
                   type="text"
+                  name="name"
                   value={values.name}
                   required
                   error={touched.name ? errors.name : undefined}
@@ -47,7 +48,7 @@ function SignupPage() {
                   className="!my-1"
                 />
                 <Input
-                  type="text"
+                  type="email"
                   className="!my-1"
                   value={values.email}
                   required

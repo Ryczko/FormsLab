@@ -23,6 +23,7 @@ function Input({
   error,
   className,
   absoluteError,
+  ...props
 }: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
     <div className="relative">
@@ -40,6 +41,7 @@ function Input({
           error ? ' border-red-400' : ' border-transparent',
           className
         )}
+        {...props}
       />
       {!!error && (
         <p
