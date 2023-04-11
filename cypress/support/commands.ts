@@ -1,11 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
-/// <reference types="cypress" />
-
-declare namespace Cypress {
-  interface Chainable {
-    clearIndexedDB(): void;
-  }
-}
+import { faker } from '@faker-js/faker';
 
 Cypress.Commands.add('clearIndexedDB', async () => {
   window.indexedDB
@@ -18,4 +11,20 @@ Cypress.Commands.add('clearIndexedDB', async () => {
     .catch((error) => {
       throw new Error(error);
     });
+});
+
+// TODO: find better way to do this
+Cypress.Commands.add('login', () => {
+  const name = faker.name.fullName();
+  const email = faker.internet.email();
+  const password = faker.internet.password();
+
+  cy.visit('/signup');
+  cy.get('input[name="name"]').type(name);
+  cy.get('input[type="email"]').type(email);
+  cy.get('input[type="password"]').type(password);
+
+  cy.get('form').submit();
+  cy.url().should('include', '/');
+  cy.get('[data-testid="loading"]').should('not.be.visible');
 });

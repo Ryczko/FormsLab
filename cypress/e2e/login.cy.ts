@@ -11,7 +11,7 @@ describe('Login Page', () => {
     cy.title().should('include', 'Sign up');
     cy.reload();
     cy.title().should('include', 'Sign up');
-    cy.get('input[name="name"]').type(faker.name.firstName());
+    cy.get('input[name="name"]').type(faker.name.fullName());
     cy.get('input[type="email"]').type(faker.internet.email());
     cy.get('input[type="password"]').type(faker.internet.password());
     cy.get('form').submit();

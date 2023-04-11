@@ -43,6 +43,7 @@ function IndexPage() {
 
                     <Link href={'/survey/create'} passHref>
                       <ButtonLink
+                        data-test-id="create-survey"
                         variant={ButtonVariant.OUTLINE_PRIMARY}
                         className="w-full sm:w-auto"
                       >

@@ -3,6 +3,7 @@
   "plugins": ["cypress"],
   "rules": {
     "jest/expect-expect": "off",
-    "no-relative-import-paths/no-relative-import-paths": "off"
+    "no-relative-import-paths/no-relative-import-paths": "off",
+    "@typescript-eslint/no-namespace": "off"
   }
 }
