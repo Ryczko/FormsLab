@@ -6,7 +6,7 @@ describe('Login Page', () => {
   it('should sign up via email and password and redirect to home page', () => {
     cy.visit('/login');
     cy.get('[data-test-id="signup-link"]').click();
-    cy.get('[data-testid="loading"]').should('not.be.visible');
+    cy.get('[data-test-id="loading"]').should('not.be.visible');
     cy.url().should('include', '/signup');
     cy.title().should('include', 'Sign up');
     cy.reload();
