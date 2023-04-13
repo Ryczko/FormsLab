@@ -77,24 +77,27 @@ function SurveyResultsPage() {
               title="Copy link to clipboard"
               onClick={handleCopyLink(surveyId)}
               variant={ButtonVariant.PRIMARY}
-              className="mb-2 w-full justify-center sm:mr-2 sm:mb-0 sm:w-[260px]"
+              className="mb-2 w-full justify-center sm:mb-0 sm:w-[260px]"
               icon={<LinkIcon className="h-5 w-5" />}
             >
               Copy link to survey
             </Button>
-            <Button
-              title="Refresh data"
-              onClick={handleRefresh}
-              variant={ButtonVariant.OUTLINE}
-              className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
-              icon={<RefreshIcon className="h-5 w-5" />}
-            >
-              Refresh
-            </Button>
+            {!process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE && (
+              <Button
+                title="Refresh data"
+                onClick={handleRefresh}
+                variant={ButtonVariant.OUTLINE}
+                className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
+                icon={<RefreshIcon className="h-5 w-5" />}
+              >
+                Refresh
+              </Button>
+            )}
+
             <Button
               variant={ButtonVariant.DANGER}
               title="Delete survey"
-              className="mt-2 justify-center px-3 sm:ml-4 sm:mt-0"
+              className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
               onClick={openDeleteSurveyModal}
               icon={<TrashIcon className="h-5 w-5" />}
             />
