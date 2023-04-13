@@ -68,9 +68,10 @@ function SurveyResultsPage() {
         <title>Survey Answers</title>
         <meta name="description" content="Survey Answers - Employee Pulse" />
       </Head>
+
       <Loader isLoading={isLoading} />
       {!isLoading && (
-        <div className="container mx-auto text-center">
+        <>
           <Header>Answers for &quot;{title}&quot;</Header>
           <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-6">
             <Button
@@ -165,7 +166,7 @@ function SurveyResultsPage() {
               </div>
             </div>
           )}
-        </div>
+        </>
       )}
       <DeleteSurveyModal
         surveyId={surveyId}
