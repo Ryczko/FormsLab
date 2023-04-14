@@ -1,5 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
-
+import { DocumentData, Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import Head from 'next/head';
 import { formatDateDistance } from 'shared/utilities/convertTime';
@@ -11,11 +10,14 @@ import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
 import Link from 'next/link';
-import { ButtonVariant } from 'shared/components/Button/Button';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import usePagination from 'features/surveys/hooks/usePagination';
+import { ArrowLeftIcon, ArrowRightIcon} from '@heroicons/react/outline';
 
 function SurveyListPage() {
   const { error, loading, surveysCollection } = useSurveyListManager();
+  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } = usePagination<DocumentData>(surveysCollection?.docs ?? [], { size: 10 });
 
   return (
     <>
@@ -34,8 +36,8 @@ function SurveyListPage() {
           {loading && <Loader isLoading={true} />}
         </div>
         {surveysCollection &&
-          (surveysCollection.docs?.length > 0 ? (
-            surveysCollection.docs.map((doc) => {
+          (items?.length > 0 ? (
+            items.map((doc) => {
               const survey = doc.data();
               return (
                 <SurveyRow
@@ -69,6 +71,29 @@ function SurveyListPage() {
             </>
           ))}
       </div>
+      {(canGoNext || canGoPrev) && (
+        <div className='flex justify-center'>
+          <div className='flex flex-row items-center'>
+            <Button
+              variant={ButtonVariant.OUTLINE_PRIMARY}
+              className='px-4'
+              icon={<ArrowLeftIcon className='h-5 w-5' />}
+              disabled={!canGoPrev}
+              onClick={goPrev}
+            />
+            <div className='min-w-[100px]'>
+              <p className='text-center'>{pageIndex + 1}</p>
+            </div>
+            <Button
+              variant={ButtonVariant.OUTLINE_PRIMARY}
+              className='px-4'
+              icon={<ArrowRightIcon className='h-5 w-5' />}
+              disabled={!canGoNext}
+              onClick={goNext}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
