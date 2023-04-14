@@ -17,7 +17,7 @@ import { ArrowLeftIcon, ArrowRightIcon} from '@heroicons/react/outline';
 
 function SurveyListPage() {
   const { error, loading, surveysCollection } = useSurveyListManager();
-  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } = usePagination(surveysCollection?.docs ?? [] as Array<DocumentData>, { size: 10 });
+  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } = usePagination<DocumentData>(surveysCollection?.docs ?? [], { size: 10 });
 
   return (
     <>
