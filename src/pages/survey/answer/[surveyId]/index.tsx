@@ -72,7 +72,7 @@ function SurveyResultsPage() {
       <Loader isLoading={isLoading} />
       {!isLoading && (
         <>
-          <Header>Answers for &quot;{title}&quot;</Header>
+          <Header>{title}</Header>
           <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-6">
             <Button
               title="Copy link to clipboard"
