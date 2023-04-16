@@ -5,6 +5,7 @@ import Background from 'layout/Background/Background';
 import GlobalLoader from 'layout/GlobalLoader/GlobalLoader';
 import Navigation from 'layout/Navigation/Navigation';
 import { useApplicationContext } from 'features/application/context';
+import GlobalProgressBar from './GlobalLoader/GlobalProgressBar';
 
 function PageLayout({ children }: PropsWithChildren) {
   const { loading } = useApplicationContext();
@@ -13,6 +14,7 @@ function PageLayout({ children }: PropsWithChildren) {
   return (
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
+      <GlobalProgressBar></GlobalProgressBar>
       <Navigation />
       <div className="m-auto mb-8 min-h-full max-w-2xl overflow-hidden px-6 pt-24 text-center sm:px-8 md:pt-32">
         <Background />
