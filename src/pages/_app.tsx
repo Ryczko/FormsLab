@@ -1,5 +1,6 @@
 import 'styles/index.scss';
 import 'styles/github-corner.scss';
+import 'styles/nprogress.scss';
 import { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
 import PageLayout from 'layout/PageLayout';
