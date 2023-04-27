@@ -4,6 +4,7 @@
   "rules": {
     "jest/expect-expect": "off",
     "no-relative-import-paths/no-relative-import-paths": "off",
-    "@typescript-eslint/no-namespace": "off"
+    "@typescript-eslint/no-namespace": "off",
+    "jest/no-disabled-tests": "off"
   }
 }

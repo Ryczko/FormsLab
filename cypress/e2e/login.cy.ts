@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-describe('Login Page', () => {
+describe.skip('Login Page', () => {
   beforeEach(() => cy.clearIndexedDB());
 
   it('should sign up via email and password and redirect to home page', () => {

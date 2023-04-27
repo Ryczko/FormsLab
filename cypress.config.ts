@@ -9,9 +9,4 @@ export default defineConfig({
     screenshotOnRunFailure: false,
     defaultCommandTimeout: 50000,
   },
-  env: {
-    browserPermissions: {
-      clipboard: 'allow',
-    },
-  },
 });
