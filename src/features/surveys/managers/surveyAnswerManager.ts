@@ -47,7 +47,11 @@ export const useSurveyAnswerManager = () => {
     if (surveyId) {
       getSurveyData();
     }
-    if (localStorageValue.includes(surveyId) && !isAnswering) {
+    if (
+      process.env.NEXT_PUBLIC_BLOCK_MULTIPLE_ANSWERS &&
+      localStorageValue.includes(surveyId) &&
+      !isAnswering
+    ) {
       router.replace('/');
       toast.success('You have answered this survey');
     }

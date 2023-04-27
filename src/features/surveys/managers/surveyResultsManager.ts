@@ -5,9 +5,12 @@ import {
   collection,
   query,
   orderBy,
-  getDocs,
   Timestamp,
   updateDoc,
+  onSnapshot,
+  QuerySnapshot,
+  DocumentData,
+  getDocs,
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
@@ -40,6 +43,20 @@ export const useSurveyResultsManager = () => {
 
   const { copy } = useCopyToClipboard();
 
+  const getAnswersData = useCallback(
+    async (answersCollection: QuerySnapshot<DocumentData>) => {
+      setVotes(answersCollection.docs.length);
+
+      const data = answersCollection.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+        answerDate: formatDateDistance(doc.data().answerDate as Timestamp),
+      })) as AnswerData[];
+      setAnswersData(data);
+    },
+    []
+  );
+
   const getSurveyData = useCallback(
     async (displayMessages = false) => {
       const surveyData = await getDoc(doc(db, 'surveys', surveyId));
@@ -47,19 +64,17 @@ export const useSurveyResultsManager = () => {
         router.replace('/');
         return;
       }
-      const anserwsCollectionRef = collection(
-        db,
-        'surveys',
-        surveyId,
-        'answers'
-      );
-      const anserwsQuery = query(
-        anserwsCollectionRef,
-        orderBy('answerDate', 'desc')
-      );
 
-      const answersData = await getDocs(anserwsQuery);
-      setVotes(answersData.docs.length);
+      if (!process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE) {
+        const answersQuery = await query(
+          collection(db, 'surveys', surveyId, 'answers'),
+          orderBy('answerDate', 'desc')
+        );
+
+        const answersData = await getDocs(answersQuery);
+
+        getAnswersData(answersData);
+      }
 
       setIsSurveyActive(surveyData.data()?.isActive);
       setCreateDate(
@@ -68,19 +83,13 @@ export const useSurveyResultsManager = () => {
 
       setTitle(surveyData.data()?.title);
 
-      const data = answersData.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        answerDate: formatDateDistance(doc.data().answerDate as Timestamp),
-      })) as AnswerData[];
-
       if (displayMessages) {
         toast.success('Data has been refreshed');
       }
-      setAnswersData(data);
+
       setIsLoading(false);
     },
-    [surveyId, router]
+    [surveyId, router, getAnswersData]
   );
 
   useEffect(() => {
@@ -90,6 +99,16 @@ export const useSurveyResultsManager = () => {
     }
 
     getSurveyData();
+
+    if (process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE) {
+      onSnapshot(
+        query(
+          collection(db, 'surveys', surveyId, 'answers'),
+          orderBy('answerDate', 'desc')
+        ),
+        getAnswersData
+      );
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

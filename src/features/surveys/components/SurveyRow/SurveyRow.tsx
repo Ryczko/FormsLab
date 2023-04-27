@@ -38,7 +38,7 @@ export default function SurveyRow({
   };
 
   return (
-    <div className="mb-4 flex w-full max-w-xl flex-col md:flex-row">
+    <div className="mb-4 flex w-full flex-col md:flex-row">
       <div className="flex w-full items-center justify-between rounded-md rounded-b-none bg-white py-3 px-4 shadow-sm md:rounded-b-md">
         <div title={question} className="w-36 truncate text-left">
           {question}

@@ -1,5 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
-
+import { DocumentData, Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import Head from 'next/head';
 import { formatDateDistance } from 'shared/utilities/convertTime';
@@ -11,11 +10,14 @@ import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
 import Link from 'next/link';
-import { ButtonVariant } from 'shared/components/Button/Button';
+import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import usePagination from 'features/surveys/hooks/usePagination';
+import { ArrowLeftIcon, ArrowRightIcon} from '@heroicons/react/outline';
 
 function SurveyListPage() {
   const { error, loading, surveysCollection } = useSurveyListManager();
+  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } = usePagination<DocumentData>(surveysCollection?.docs ?? [], { size: 10 });
 
   return (
     <>
@@ -23,55 +25,75 @@ function SurveyListPage() {
         <title>Surveys</title>
         <meta name="description" content="Surveys - Employee Pulse" />
       </Head>
-      <div className="container m-auto text-center md:px-8">
-        <Header>Surveys</Header>
 
-        <div className="flex flex-col items-center justify-center">
-          <div>
-            {error && (
-              <strong>
-                There is a problem - your surveys cannot be viewed.
-              </strong>
-            )}
-            {loading && <Loader isLoading={true} />}
-          </div>
-          {surveysCollection &&
-            (surveysCollection.docs?.length > 0 ? (
-              surveysCollection.docs.map((doc) => {
-                const survey = doc.data();
-                return (
-                  <SurveyRow
-                    key={doc.id}
-                    id={doc.id}
-                    question={survey.title}
-                    createDate={formatDateDistance(
-                      survey.createDate as Timestamp
-                    )}
-                  ></SurveyRow>
-                );
-              })
-            ) : (
-              <>
-                <Image
-                  className="mt-2 w-[200px] -translate-x-3"
-                  src={NoSurveys}
-                  alt="no surveys"
-                  width="200"
-                  height="125"
-                />
-                <p className="my-8">No surveys yet </p>
-                <Link href={'/survey/create'} passHref>
-                  <ButtonLink
-                    variant={ButtonVariant.OUTLINE_PRIMARY}
-                    className="w-full sm:w-auto"
-                  >
-                    Create Survey
-                  </ButtonLink>
-                </Link>
-              </>
-            ))}
+      <Header>Surveys</Header>
+
+      <div className="flex flex-col items-center justify-center">
+        <div>
+          {error && (
+            <strong>There is a problem - your surveys cannot be viewed.</strong>
+          )}
+          {loading && <Loader isLoading={true} />}
         </div>
+        {surveysCollection &&
+          (items?.length > 0 ? (
+            items.map((doc) => {
+              const survey = doc.data();
+              return (
+                <SurveyRow
+                  key={doc.id}
+                  id={doc.id}
+                  question={survey.title}
+                  createDate={formatDateDistance(
+                    survey.createDate as Timestamp
+                  )}
+                ></SurveyRow>
+              );
+            })
+          ) : (
+            <>
+              <Image
+                className="mt-2 w-[200px] -translate-x-3"
+                src={NoSurveys}
+                alt="no surveys"
+                width="200"
+                height="125"
+              />
+              <p className="my-8">No surveys yet </p>
+              <Link href={'/survey/create'} passHref>
+                <ButtonLink
+                  variant={ButtonVariant.OUTLINE_PRIMARY}
+                  className="w-full sm:w-auto"
+                >
+                  Create Survey
+                </ButtonLink>
+              </Link>
+            </>
+          ))}
       </div>
+      {(canGoNext || canGoPrev) && (
+        <div className='flex justify-center'>
+          <div className='flex flex-row items-center'>
+            <Button
+              variant={ButtonVariant.OUTLINE_PRIMARY}
+              className='px-4'
+              icon={<ArrowLeftIcon className='h-5 w-5' />}
+              disabled={!canGoPrev}
+              onClick={goPrev}
+            />
+            <div className='min-w-[100px]'>
+              <p className='text-center'>{pageIndex + 1}</p>
+            </div>
+            <Button
+              variant={ButtonVariant.OUTLINE_PRIMARY}
+              className='px-4'
+              icon={<ArrowRightIcon className='h-5 w-5' />}
+              disabled={!canGoNext}
+              onClick={goNext}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
