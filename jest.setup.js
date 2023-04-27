@@ -4,6 +4,7 @@
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import { configure } from '@testing-library/react';
 
 configure({ testIdAttribute: 'data-test-id' });

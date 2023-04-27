@@ -33,6 +33,7 @@ function SurveyCreatePage() {
       <Header>Create new survey</Header>
       <Input
         label="Survey title"
+        name="survey-title"
         placeholder="Title..."
         value={title}
         error={!title ? error : undefined}
@@ -70,6 +71,7 @@ function SurveyCreatePage() {
         </div>
         <div className="flex justify-center">
           <Button
+            name="create-survey"
             onClick={createSurvey}
             className="z-0 mt-9 w-full sm:w-auto"
             variant={ButtonVariant.PRIMARY}
