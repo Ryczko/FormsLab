@@ -85,10 +85,10 @@ function LoginPage() {
                 </LoginButton>
               </div>
               <Link href={'/signup'} passHref>
-                 <p
-                   data-test-id="signup-link"
-                   className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer"
-                 >
+                <p
+                  data-test-id="signup-link"
+                  className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer"
+                >
                   Don&apos;t have an account?
                 </p>
               </Link>
