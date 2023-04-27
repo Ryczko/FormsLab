@@ -7,7 +7,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: 'Pacifico',
         display: ['Montserrat', 'system-ui', 'sans-serif'],
         body: ['Montserrat', 'system-ui', 'sans-serif'],
       },

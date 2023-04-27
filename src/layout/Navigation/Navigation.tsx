@@ -31,7 +31,7 @@ function Navigation() {
       <div
         className={`flex grow ${
           user ? 'justify-between' : 'justify-center xsm:justify-between'
-        } items-center px-4 md:px-8`}
+        } items-center px-4 xsm:pl-20 md:pr-8`}
       >
         <Logo />
         {!loading && user ? (
