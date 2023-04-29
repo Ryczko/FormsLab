@@ -20,7 +20,7 @@ jobs:
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview'}}
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [18.x]
     env:
       CI: 1
       NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
