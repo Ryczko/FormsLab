@@ -53,14 +53,21 @@ export const useSettingsManager = () => {
       await deleteDoc(doc(db, 'users', user.uid));
 
       closeDeleteModal();
-      await router.replace('/login');
       toast.success('Account deleted');
       signOut(auth);
     } catch (error) {
-      if (error instanceof FirebaseError && error.code === 'auth/requires-recent-login') {
-        toast.error('For security reasons, please sign in again to delete your account');
+      if (
+        error instanceof FirebaseError &&
+        error.code === 'auth/requires-recent-login'
+      ) {
+        toast.error(
+          'For security reasons, please sign in and delete your account again'
+        );
         signOut(auth);
-        await router.replace('/login');
+        await router.replace({
+          pathname: '/login',
+          query: { redirect: '/settings' },
+        });
       }
     }
     setIsRemoving(false);

@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import Head from 'next/head';
 import Link from 'next/link';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { signInWithGoogle, signInWithGithub } from 'firebaseConfiguration';
 import withAnimation from 'shared/HOC/withAnimation';
@@ -16,11 +16,18 @@ import Google from '../../../public/images/google.svg';
 function LoginPage() {
   const { loading, user } = useApplicationContext();
   const { initialValues, LoginSchema, onSubmit } = useLoginManager();
+  const router = useRouter();
+  const { redirect } = router.query;
 
   useEffect(() => {
     if (user) {
-      router.push('/');
+      if (redirect === 'settings') {
+        router.push('/settings');
+      } else {
+        router.push('/');
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   return (
