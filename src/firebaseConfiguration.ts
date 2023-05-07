@@ -20,8 +20,6 @@ import {
 } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import firebaseEmulatorConfig from '../firebase.json';
-import getT from 'next-translate/getT';
-import withTranslation from 'next-translate/withTranslation';
 
 const firebaseConfig = {
   apiKey:
