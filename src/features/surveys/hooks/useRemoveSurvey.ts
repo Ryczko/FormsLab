@@ -2,9 +2,11 @@ import { deleteDoc, doc, getDocs, query, collection } from 'firebase/firestore';
 import { db } from 'firebaseConfiguration';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useRemoveSurvey = () => {
   const [isRemoving, setIsRemoving] = useState(false);
+  const { t } = useTranslation('surveysHooks');
 
   const deleteSurvey =
     (id: string, closeDeleteModal: () => void, onSuccess?: () => void) =>
@@ -22,9 +24,9 @@ export const useRemoveSurvey = () => {
           });
 
           if (onSuccess) onSuccess();
-          toast.success('Survey deleted');
+          toast.success(t('surveyDeleteSuccess'));
         } catch (error) {
-          toast.error('Error deleting survey');
+          toast.error(t('surveyDeleteError'));
         } finally {
           closeDeleteModal();
           setIsRemoving(false);

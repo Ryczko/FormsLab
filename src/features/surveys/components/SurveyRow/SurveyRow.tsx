@@ -6,6 +6,7 @@ import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import useModal from 'features/surveys/hooks/useModal';
+import useTranslation from 'next-translate/useTranslation';
 
 interface SurveyRowProps {
   question: string;
@@ -25,6 +26,7 @@ export default function SurveyRow({
     closeModal: closeDeleteSurveyModal,
     openModal: openDeleteSurveyModal,
   } = useModal();
+  const { t } = useTranslation('surveyComponents');
 
   const handleCopyLink = () => {
     const domain =
@@ -53,7 +55,7 @@ export default function SurveyRow({
           className="mt-2 mr-2 w-full px-4 sm:mt-0 md:w-auto"
           onClick={handleOnMoreButton}
         >
-          More
+          {t('moreButton')}
         </Button>
 
         <Button
@@ -61,13 +63,13 @@ export default function SurveyRow({
           className={
             'mt-2 w-full justify-center px-3 text-center sm:mt-0 md:w-auto'
           }
-          title="Copy link to clipboard"
+          title={t('copyLinkButtonTitle')}
           icon={<LinkIcon className="h-5 w-5" />}
           onClick={handleCopyLink}
         />
         <Button
           variant={ButtonVariant.DANGER}
-          title="Delete survey"
+          title={t('deleteSurveyButtonTitle')}
           className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
           onClick={openDeleteSurveyModal}
           icon={<TrashIcon className="h-5 w-5" />}

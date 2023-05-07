@@ -9,11 +9,13 @@ import LoginButton from 'shared/components/LoginButton/LoginButton';
 import Input from 'shared/components/Input/Input';
 import { useRegisterManager } from 'features/authorization/managers/registerManager';
 import { useApplicationContext } from 'features/application/context';
+import useTranslation from 'next-translate/useTranslation';
 
 function SignupPage() {
   const { loading, user } = useApplicationContext();
   const { initialValues, onSubmit, SignupSchema, isRegistering } =
     useRegisterManager();
+  const { t } = useTranslation('signup');
 
   useEffect(() => {
     if (user) {
@@ -24,11 +26,11 @@ function SignupPage() {
   return (
     <>
       <Head>
-        <title>Sign up</title>
-        <meta name="description" content="Sign up - Employee Pulse" />
+        <title>{t('title')}</title>
+        <meta name="description" content={t('content')} />
       </Head>
 
-      <Header>Sign up</Header>
+      <Header>{t('heading')}</Header>
       <div className="flex flex-col items-center justify-center space-y-2">
         <Formik
           initialValues={initialValues}
@@ -43,7 +45,7 @@ function SignupPage() {
                 value={values.name}
                 required
                 error={touched.name ? errors.name : undefined}
-                placeholder="Name"
+                placeholder={t('name')}
                 onChange={handleChange('name')}
                 className="!my-1"
               />
@@ -53,7 +55,7 @@ function SignupPage() {
                 value={values.email}
                 required
                 error={touched.email ? errors.email : undefined}
-                placeholder="E-mail"
+                placeholder={t('email')}
                 onChange={handleChange('email')}
               />
               <Input
@@ -62,7 +64,7 @@ function SignupPage() {
                 value={values.password}
                 error={touched.password ? errors.password : undefined}
                 required
-                placeholder="Password"
+                placeholder={t('password')}
                 onChange={handleChange('password')}
               />
               {!!errors.message && (
@@ -78,12 +80,12 @@ function SignupPage() {
                   onClick={handleSubmit}
                   isLoading={isRegistering}
                 >
-                  Sign up
+                  {t('signUpButton')}
                 </LoginButton>
               </div>
               <Link href={'/login'} passHref>
                 <p className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer">
-                  Already have an account?
+                  {t('alreadyHaveAccount')}
                 </p>
               </Link>
             </Form>
@@ -91,7 +93,7 @@ function SignupPage() {
         </Formik>
       </div>
       {loading && (
-        <div className="text-center text-sm text-zinc-600">Loading...</div>
+        <div className="text-center text-sm text-zinc-600">{t('loading')}</div>
       )}
     </>
   );

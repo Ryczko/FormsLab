@@ -1,0 +1,14 @@
+{
+  "title": "Create Survey",
+  "content": "Create Survey - Employee Pulse",
+  "heading": "Create new survey",
+  "buttonCreate": "Create",
+  "emojiPickingInformation": "Click on icon to change",
+  "surveyTitleLable": "Survey Title",
+  "surveyTitlePlaceholder": "Title...",
+  "duplicatingEmoji": "Emoji already selected",
+  "required": "Required field",
+  "surveyCreationFailed": "Survey creation failed",
+  "surveyCreationSuccess": "Survey created succesfully",
+  "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard"
+}

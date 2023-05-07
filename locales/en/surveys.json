@@ -1,0 +1,8 @@
+{
+  "title": "Surveys",
+  "content": "Surveys - Employee Pulse",
+  "heading": "Surveys",
+  "headingError": "There is a problem - your surveys cannot be viewed.",
+  "noSurveys": "No surveys yet",
+  "buttonCreateSurvey": "Create Survey"
+}

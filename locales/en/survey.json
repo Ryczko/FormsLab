@@ -1,0 +1,12 @@
+{
+  "title": "Survey",
+  "content": "Survey - Employee Pulse",
+  "sendButton": "Send",
+  "surveyNoLongerActive": "Oops Survey is no longer active",
+  "backHomeButton": "Go back to home",
+  "alreadyAnswered": "You have answered this survey",
+  "surveyIdNotFound": "Survey ID not found",
+  "successfullSubmit": "The reply has been sent",
+  "unSuccessfullSubmit": "Error occured",
+  "surveyInactive": "The survey is no longer active."
+}

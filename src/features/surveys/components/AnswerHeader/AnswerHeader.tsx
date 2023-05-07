@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { BarChartData } from 'features/surveys/components/BarChart/BarChart';
 import BarChart from 'features/surveys/components/BarChart/BarChart';
 import DataCard from 'features/surveys/components/DataCard/DataCard';
+import useTranslation from 'next-translate/useTranslation';
 
 interface AnswerHeaderProps {
   totalVotes: number;
@@ -14,6 +15,7 @@ function AnswerHeader({
   createDate,
   chartData,
 }: AnswerHeaderProps) {
+  const { t } = useTranslation('surveyComponents');
   return (
     <div className="flex flex-col-reverse items-center justify-center md:flex-row">
       {chartData.length ? <BarChart data={chartData} /> : null}
@@ -24,8 +26,11 @@ function AnswerHeader({
           !chartData.length ? 'md:flex-row' : ''
         )}
       >
-        <DataCard title="Create Date" value={createDate} />
-        <DataCard title="Total Votes" value={totalVotes.toString()} />
+        <DataCard title={t('createDateInformation')} value={createDate} />
+        <DataCard
+          title={t('totalVotesInformation')}
+          value={totalVotes.toString()}
+        />
       </div>
     </div>
   );

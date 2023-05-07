@@ -4,27 +4,26 @@ import withAnimation from 'shared/HOC/withAnimation';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import { ButtonVariant } from 'shared/components/Button/Button';
 import { useApplicationContext } from 'features/application/context';
+import useTranslation from 'next-translate/useTranslation';
 
 function IndexPage() {
   const { user, loading } = useApplicationContext();
+  const { t } = useTranslation('home');
 
   return (
     <>
       <Head>
-        <title>Employee Pulse</title>
-        <meta name="description" content="Homepage - Employee Pulse" />
+        <title>{t('title')}</title>
+        <meta name="description" content={t('content')} />
       </Head>
-
       <div className="mb-16 pt-28 md:pt-40">
         <h1 className="leading-tighter mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl">
-          How are you&nbsp;
+          {t('firstPartHeading')}&nbsp;
           <span className="bg-gradient-to-r from-indigo-600 to-indigo-100 bg-clip-text text-transparent">
-            feeling?
+            {t('secondPartHeading')}
           </span>
         </h1>
-        <p className="mb-8 text-xl text-zinc-600">
-          There is no better way to find out than Employee Pulse
-        </p>
+        <p className="mb-8 text-xl text-zinc-600">{t('Description')}</p>
         <div className="flex flex-col space-y-2 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
           {!loading && !user && (
             <Link href={'/login'} passHref>
@@ -32,7 +31,7 @@ function IndexPage() {
                 variant={ButtonVariant.PRIMARY}
                 className="w-full sm:w-auto"
               >
-                Sign In
+                {t('buttonSignIn')}
               </ButtonLink>
             </Link>
           )}
@@ -43,7 +42,7 @@ function IndexPage() {
               variant={ButtonVariant.OUTLINE_PRIMARY}
               className="w-full sm:w-auto"
             >
-              Create Survey
+              {t('buttonCreateSurvey')}
             </ButtonLink>
           </Link>
         </div>

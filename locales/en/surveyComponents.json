@@ -1,0 +1,16 @@
+{
+  "createDateInformation": "Create Date",
+  "totalVotesInformation": "Total Votes",
+  "sendFeedbackTellUsMore": "Tell us more",
+  "choseEmojiBeforeSend": "Please select an emoji before sending.",
+  "tooltipValue": "value:",
+  "modalContentFirst": "Are you sure you want to",
+  "modalContentSecond": "delete",
+  "modalContentThird": "this survey?",
+  "modalTitle": "Delete survey",
+  "modalDeleteButton": "Delete",
+  "modelCancelButton": "Cancel",
+  "moreButton": "More",
+  "copyLinkButtonTitle": "Copy link to clipboard",
+  "deleteSurveyButtonTitle": "Delete survey"
+}

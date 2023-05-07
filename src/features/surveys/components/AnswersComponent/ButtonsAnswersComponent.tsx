@@ -1,5 +1,6 @@
 import React from 'react';
 import EmojiButton from 'features/surveys/components/AnswersComponent/EmojiButton/EmojiButton';
+import useTranslation from 'next-translate/useTranslation';
 
 interface ButtonAnswersComponentProps {
   icons: string[];
@@ -18,6 +19,7 @@ export default function ButtonsAnswersComponent({
   selectedIcon,
   showEmojiError,
 }: ButtonAnswersComponentProps) {
+  const { t } = useTranslation('surveyComponents');
   return (
     <>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -31,14 +33,12 @@ export default function ButtonsAnswersComponent({
         ))}
       </div>
       {showEmojiError && (
-        <div className="mt-2 text-red-500">
-          Please select an emoji before sending.
-        </div>
+        <div className="mt-2 text-red-500">{t('choseEmojiBeforeSend')}</div>
       )}
       <div className="mt-8">
         <textarea
           className="h-52 w-full resize-none rounded-lg p-4 shadow focus:outline-none"
-          placeholder="Tell Us More"
+          placeholder={t('sendFeedbackTellUsMore')}
           value={answer}
           onChange={handleInputAnswer}
         ></textarea>

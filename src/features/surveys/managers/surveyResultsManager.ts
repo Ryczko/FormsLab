@@ -22,6 +22,7 @@ import {
 } from 'shared/utilities/convertTime';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import { db } from 'firebaseConfiguration';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useSurveyResultsManager = () => {
   const router = useRouter();
@@ -42,6 +43,7 @@ export const useSurveyResultsManager = () => {
   );
 
   const { copy } = useCopyToClipboard();
+  const { t } = useTranslation('surveyAnswer');
 
   const getAnswersData = useCallback(
     async (answersCollection: QuerySnapshot<DocumentData>) => {
@@ -84,12 +86,12 @@ export const useSurveyResultsManager = () => {
       setTitle(surveyData.data()?.title);
 
       if (displayMessages) {
-        toast.success('Data has been refreshed');
+        toast.success(t('refreshSuccess'));
       }
 
       setIsLoading(false);
     },
-    [surveyId, router, getAnswersData]
+    [surveyId, router, getAnswersData, t]
   );
 
   useEffect(() => {
@@ -121,10 +123,12 @@ export const useSurveyResultsManager = () => {
       });
 
       toast.success(
-        `Survey status changed to ${isActive ? 'Active' : 'Inactive'}`
+        `${t('toggleChangeActiveStatus')} ${
+          isActive ? t('toggleActive') : t('toggleInactive')
+        }`
       );
     } catch (error) {
-      toast.error('Can not update survey status');
+      toast.error(t('toggleChangeActiveStatusError'));
     }
   };
 
