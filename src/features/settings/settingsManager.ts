@@ -12,6 +12,7 @@ import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useApplicationContext } from 'features/application/context';
 import { auth, db } from 'firebaseConfiguration';
+import { FirebaseError } from 'firebase/app';
 
 export const useSettingsManager = () => {
   const { loading, error, user } = useApplicationContext();
@@ -28,8 +29,6 @@ export const useSettingsManager = () => {
   }
 
   const handleOnAccountDelete = async () => {
-    // TO DO: this is not working properly to run user.delete(); we need to force to reauthenticate again.
-    // when the user is logged in for more than 5 minutes, an error will be returned
     try {
       if (!user) {
         return;
@@ -58,7 +57,11 @@ export const useSettingsManager = () => {
       toast.success('Account deleted');
       signOut(auth);
     } catch (error) {
-      toast.error('Error deleting account');
+      if (error instanceof FirebaseError && error.code === 'auth/requires-recent-login') {
+        toast.error('For security reasons, please sign in again to delete your account');
+        signOut(auth);
+        await router.replace('/login');
+      }
     }
     setIsRemoving(false);
   };
