@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { ComponentType } from 'react';
-import { useCallback, useEffect } from 'react';
 import { useApplicationContext } from 'features/application/context';
 
 const withProtectedRoute = (WrappedComponent: ComponentType) => {
@@ -9,17 +8,10 @@ const withProtectedRoute = (WrappedComponent: ComponentType) => {
     const isLoggedIn = user && !error;
     const location = useRouter();
 
-    const redirectToHome = useCallback(() => {
-      location.replace('/login');
-    }, [location]);
+    if (!loading && !isLoggedIn && location.pathname !== '/login') {
+      location.push('/login');
+    }
 
-    useEffect(() => {
-      if (!isLoggedIn && !loading) {
-        redirectToHome();
-      }
-    }, [isLoggedIn, loading, redirectToHome]);
-
-    if (loading) return null;
     if (isLoggedIn) {
       return <WrappedComponent {...props} />;
     }
