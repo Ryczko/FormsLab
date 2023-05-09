@@ -2,14 +2,14 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 interface StyledDialogProps {
-  title: string;
+  title?: string;
   content: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function StyledDialog({
-  title,
+  title = '',
   content,
   isOpen,
   onClose,
