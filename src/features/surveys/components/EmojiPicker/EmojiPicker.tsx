@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { EmojiClickData } from 'emoji-picker-react';
 import { Categories } from 'emoji-picker-react';
