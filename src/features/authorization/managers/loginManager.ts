@@ -1,8 +1,10 @@
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { logInWithEmailAndPassword } from 'firebaseConfiguration';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useLoginManager = () => {
+  const { t } = useTranslation();
   const initialValues = {
     email: '',
     password: '',
@@ -13,9 +15,9 @@ export const useLoginManager = () => {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Incorrect email address')
-      .required('Required field'),
-    password: Yup.string().required('Required field'),
+      .email(t('login:incorrectEmail'))
+      .required(t('login:required')),
+    password: Yup.string().required(t('login:required')),
   });
 
   const onSubmit = async (
@@ -26,10 +28,11 @@ export const useLoginManager = () => {
       await logInWithEmailAndPassword({
         email: values.email,
         password: values.password,
+        authError: t('login:authError'),
       });
       resetForm();
     } catch (e) {
-      setFieldError('message', 'Error while signing in!');
+      setFieldError('message', t('login:errorSingingIn'));
     }
   };
 

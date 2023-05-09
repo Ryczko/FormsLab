@@ -44,7 +44,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_USE_EMULATORS === 'true') {
+if (
+  typeof window !== 'undefined' &&
+  process.env.NODE_ENV !== 'production' &&
+  process.env.NEXT_PUBLIC_USE_EMULATORS === 'true'
+) {
   connectAuthEmulator(
     auth,
     `http://localhost:${firebaseEmulatorConfig.emulators.auth.port}`
@@ -59,7 +63,10 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production' && pr
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (
+  authError: string,
+  accountAlreadyExist: string
+) => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
@@ -77,14 +84,17 @@ const signInWithGoogle = async () => {
       err instanceof FirebaseError &&
       err.code === 'auth/account-exists-with-different-credential'
     ) {
-      toast.error('The account already exists for that email.');
+      toast.error(accountAlreadyExist);
     } else {
-      toast.error('Authentication failed!');
+      toast.error(authError);
     }
   }
 };
 
-const signInWithGithub = async () => {
+const signInWithGithub = async (
+  authError: string,
+  accountAlreadyExist: string
+) => {
   try {
     const res = await signInWithPopup(auth, githubProvider);
     const user = res.user;
@@ -103,9 +113,9 @@ const signInWithGithub = async () => {
       err instanceof FirebaseError &&
       err.code === 'auth/account-exists-with-different-credential'
     ) {
-      toast.error('The account already exists for that email.');
+      toast.error(accountAlreadyExist);
     } else {
-      toast.error('Authentication failed!');
+      toast.error(authError);
     }
   }
 };
@@ -113,14 +123,16 @@ const signInWithGithub = async () => {
 const logInWithEmailAndPassword = async ({
   email,
   password,
+  authError,
 }: {
   email: string;
   password: string;
+  authError: string;
 }) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    if (err instanceof Error) toast.error('Authentication failed!');
+    if (err instanceof Error) toast.error(authError);
   }
 };
 
@@ -129,11 +141,15 @@ const registerWithEmailAndPassword = async ({
   email,
   password,
   changeDisplayName,
+  registerError,
+  accountAlreadyExist,
 }: {
   name: string;
   email: string;
   password: string;
   changeDisplayName: (userName: string) => void;
+  registerError: string;
+  accountAlreadyExist: string;
 }) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -153,19 +169,23 @@ const registerWithEmailAndPassword = async ({
       err instanceof FirebaseError &&
       err.code === 'auth/email-already-in-use'
     ) {
-      toast.error('The account already exists for that email.');
+      toast.error(accountAlreadyExist);
     } else {
-      toast.error('Registration failed!');
+      toast.error(registerError);
     }
   }
 };
 
-const sendPasswordReset = async (email: string) => {
+const sendPasswordReset = async (
+  email: string,
+  resetSuccess: string,
+  resetFailature: string
+) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    toast.success('Password reset link sent!');
+    toast.success(resetSuccess);
   } catch (err) {
-    if (err instanceof Error) toast.error('Password reset failed!');
+    if (err instanceof Error) toast.error(resetFailature);
   }
 };
 

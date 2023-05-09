@@ -13,12 +13,14 @@ import { useRouter } from 'next/router';
 import { useApplicationContext } from 'features/application/context';
 import { auth, db } from 'firebaseConfiguration';
 import { FirebaseError } from 'firebase/app';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useSettingsManager = () => {
   const { loading, error, user } = useApplicationContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation('settings');
 
   function closeDeleteModal() {
     setIsOpen(false);
@@ -53,21 +55,21 @@ export const useSettingsManager = () => {
       await deleteDoc(doc(db, 'users', user.uid));
 
       closeDeleteModal();
-      toast.success('Account deleted');
+      toast.success(t('deleteAccountSuccess'));
       signOut(auth);
     } catch (error) {
       if (
         error instanceof FirebaseError &&
         error.code === 'auth/requires-recent-login'
       ) {
-        toast.error(
-          'For security reasons, please sign in and delete your account again'
-        );
+        toast.error(t('reauthorize'));
         signOut(auth);
         await router.replace({
           pathname: '/login',
           query: { redirect: '/settings' },
         });
+      } else {
+        toast.error(t('deleteAccountError'));
       }
     }
     setIsRemoving(false);

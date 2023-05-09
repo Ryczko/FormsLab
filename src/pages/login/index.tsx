@@ -12,12 +12,14 @@ import Input from 'shared/components/Input/Input';
 import { useLoginManager } from 'features/authorization/managers/loginManager';
 import Github from '../../../public/images/github.svg';
 import Google from '../../../public/images/google.svg';
+import useTranslation from 'next-translate/useTranslation';
 
 function LoginPage() {
   const { loading, user } = useApplicationContext();
   const { initialValues, LoginSchema, onSubmit } = useLoginManager();
   const router = useRouter();
   const { redirect } = router.query;
+  const { t } = useTranslation('login');
 
   useEffect(() => {
     if (user) {
@@ -33,11 +35,11 @@ function LoginPage() {
   return (
     <>
       <Head>
-        <title>Login</title>
-        <meta name="description" content="Login - Employee Pulse" />
+        <title>{t('login:title')}</title>
+        <meta name="description" content={t('login:content')} />
       </Head>
 
-      <Header>Sign in</Header>
+      <Header>{t('login:heading')}</Header>
       <div className="flex flex-col items-center justify-center space-y-2">
         <Formik
           initialValues={initialValues}
@@ -46,24 +48,37 @@ function LoginPage() {
         >
           {({ values, errors, handleChange, handleSubmit, touched }) => (
             <Form className="flex w-full flex-col sm:w-80">
-              <LoginButton image={Google} onClick={signInWithGoogle}>
-                Sign in with Google
+              <LoginButton
+                image={Google}
+                onClick={() =>
+                  signInWithGoogle(
+                    t('login:authError'),
+                    t('login:accountWithEmailAlreadyExist')
+                  )
+                }
+              >
+                {t('login:googleButton')}
               </LoginButton>
               <LoginButton
                 image={Github}
-                onClick={signInWithGithub}
+                onClick={() =>
+                  signInWithGithub(
+                    t('login:authError'),
+                    t('login:accountWithEmailAlreadyExist')
+                  )
+                }
                 className="mb-3"
               >
-                Sign in with Github
+                {t('login:githubButton')}
               </LoginButton>
-              <p>OR</p>
+              <p>{t('login:or')}</p>
 
               <Input
                 type="email"
                 value={values.email}
                 required
                 error={touched.email ? errors.email : undefined}
-                placeholder="E-mail"
+                placeholder={t('login:email')}
                 className="mt-3 !mb-1"
                 onChange={handleChange('email')}
               />
@@ -72,7 +87,7 @@ function LoginPage() {
                 value={values.password}
                 error={touched.password ? errors.password : undefined}
                 required
-                placeholder="Password"
+                placeholder={t('login:password')}
                 className="!my-1"
                 onChange={handleChange('password')}
               />
@@ -88,7 +103,7 @@ function LoginPage() {
                   type="submit"
                   onClick={handleSubmit}
                 >
-                  Sign in
+                  {t('login:signInButton')}
                 </LoginButton>
               </div>
               <Link href={'/signup'} passHref>
@@ -96,7 +111,7 @@ function LoginPage() {
                   data-test-id="signup-link"
                   className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer"
                 >
-                  Don&apos;t have an account?
+                  {t('login:dontHaveAccount')}
                 </p>
               </Link>
             </Form>
@@ -104,7 +119,9 @@ function LoginPage() {
         </Formik>
       </div>
       {loading && (
-        <div className="text-center text-sm text-zinc-600">Loading...</div>
+        <div className="text-center text-sm text-zinc-600">
+          {t('login:loading')}
+        </div>
       )}
     </>
   );

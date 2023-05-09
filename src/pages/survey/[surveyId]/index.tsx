@@ -12,6 +12,7 @@ import {
   AnswerType,
   AnswersComponentFactory,
 } from 'features/surveys/components/AnswersComponent/AnswersComponentFactory';
+import useTranslation from 'next-translate/useTranslation';
 
 function AnswerPage() {
   const {
@@ -27,12 +28,13 @@ function AnswerPage() {
     isAnswering,
     showEmojiError,
   } = useSurveyAnswerManager();
+  const { t } = useTranslation('survey');
 
   return (
     <>
       <Head>
-        <title>Survey</title>
-        <meta name="description" content="Survey - Employee Pulse" />
+        <title>{t('title')}</title>
+        <meta name="description" content={t('content')} />
       </Head>
       <Loader isLoading={isLoading} />
       {!isLoading && (
@@ -60,20 +62,20 @@ function AnswerPage() {
                   sizeType={ButtonSize.MEDIUM}
                   isLoading={isAnswering}
                 >
-                  Send
+                  {t('sendButton')}
                 </Button>
               </div>
             </>
           ) : (
             <>
               <h1 className="text-5xl">🙁</h1>
-              <h1 className="my-5 text-xl">Oops Survey is no longer active</h1>
+              <h1 className="my-5 text-xl">{t('surveyNoLongerActive')}</h1>
               <Link href={'/'}>
                 <ButtonLink
                   variant={ButtonVariant.PRIMARY}
                   className="w-full sm:w-auto"
                 >
-                  Go back to home
+                  {t('backHomeButton')}
                 </ButtonLink>
               </Link>
             </>

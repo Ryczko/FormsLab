@@ -1,0 +1,22 @@
+{
+  "title": "Survey Answers",
+  "content": "Survey Answers - Employee Pulse",
+  "buttonCopyLinkTitle": "Copy link to clipboard",
+  "buttonCopyLink": "Copy link to clipboard",
+  "buttonRefreshTitle": "Refresh data",
+  "buttonRefresh": "Refresh",
+  "buttonDeleteSurveyTitle": "Delete survey",
+  "toggleSureveyActive": "Is survey active",
+  "toogleFeedback": "With extra feedback only",
+  "noAnswers": "No answers yet",
+  "refreshSuccess": "Data has been refreshed",
+  "toggleChangeActiveStatus": "Survey status changed to",
+  "toggleActive": "Active",
+  "toggleInactive": "Inactive",
+  "toggleChangeActiveStatusError": "Can not update survey status",
+  "createDateInformation": "Create Date",
+  "totalVotesInformation": "Total Votes",
+  "copyLinkButtonTitle": "Copy link to clipboard",
+  "deleteSurveyButtonTitle": "Delete survey",
+  "tooltipValue": "value:"
+}

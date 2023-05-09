@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { db } from 'firebaseConfiguration';
 import { LocalStorageKeys } from 'features/surveys/constants/types';
 import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
+import useTranslation from 'next-translate/useTranslation';
 
 const DEFAULT_VALUE: string[] = [];
 
@@ -25,6 +26,7 @@ export const useSurveyAnswerManager = () => {
     DEFAULT_VALUE,
     LocalStorageKeys.LocalStorageKey
   );
+  const { t } = useTranslation('survey');
 
   const getSurveyData = useCallback(async () => {
     const surveyData = await getDoc(doc(db, 'surveys', surveyId));
@@ -53,7 +55,7 @@ export const useSurveyAnswerManager = () => {
       !isAnswering
     ) {
       router.replace('/');
-      toast.success('You have answered this survey');
+      toast.success(t('alreadyAnswered'));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorageValue]);
@@ -75,7 +77,7 @@ export const useSurveyAnswerManager = () => {
 
     try {
       if (!surveyId) {
-        toast.error('Survey ID not found');
+        toast.error(t('surveyIdNotFound'));
         throw new Error('Survey ID not found');
       }
 
@@ -89,13 +91,13 @@ export const useSurveyAnswerManager = () => {
         });
         setLocalStorageValue([...localStorageValue, surveyId]);
         await router.replace('/');
-        toast.success('The reply has been sent');
+        toast.success(t('successfullSubmit'));
       } else {
         await router.replace('/');
-        toast.error('The survey is no longer active.');
+        toast.error(t('surveyInactive'));
       }
     } catch (error) {
-      toast.error('Error occured');
+      toast.error(t('unSuccessfullSubmit'));
     } finally {
       setButtonDisable(false);
       setIsAnswering(false);

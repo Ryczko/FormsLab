@@ -13,11 +13,13 @@ import AvatarIcon from '../../../public/images/avatar.svg';
 import GithubCorner from 'layout/GithubCorner/GithubCorner';
 import { useApplicationContext } from 'features/application/context';
 import IconButtonLink from 'shared/components/IconButtonLink/IconButtonLink';
+import useTranslation from 'next-translate/useTranslation';
 
 function Navigation() {
   const { user, loading, displayName } = useApplicationContext();
 
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation('common');
 
   const logout = async () => {
     signOut(auth);
@@ -39,11 +41,13 @@ function Navigation() {
             <div className="none hidden space-x-4 lg:flex">
               <Link href={'/survey/create'} passHref>
                 <ButtonLink variant={ButtonVariant.FLAT}>
-                  Create Survey
+                  {t('navigation.createSurveyButton')}
                 </ButtonLink>
               </Link>
               <Link href={'/surveys'} passHref>
-                <ButtonLink variant={ButtonVariant.FLAT}>My Surveys</ButtonLink>
+                <ButtonLink variant={ButtonVariant.FLAT}>
+                  {t('navigation.mySurveysButton')}
+                </ButtonLink>
               </Link>
             </div>
             <div className="hidden items-center justify-center lg:flex">
@@ -94,7 +98,7 @@ function Navigation() {
                               variant={ButtonVariant.FLAT}
                               icon={<CogIcon className="h-5 w-5" />}
                             >
-                              Settings
+                              {t('navigation.settingsButton')}
                             </IconButtonLink>
                           </Link>
                         </Menu.Item>
@@ -106,7 +110,7 @@ function Navigation() {
                           className="w-40 text-red-600 hover:bg-red-100"
                           icon={<LogoutIcon className="h-5 w-5" />}
                         >
-                          Sign Out
+                          {t('navigation.signOutButton')}
                         </Button>
                       </Menu.Item>
                     </div>
@@ -125,7 +129,7 @@ function Navigation() {
               className="hidden px-4 xsm:block sm:px-6"
               variant={ButtonVariant.OUTLINE_PRIMARY}
             >
-              Sign In
+              {t('navigation.signInButton')}
             </ButtonLink>
           </Link>
         )}
@@ -137,7 +141,7 @@ function Navigation() {
             variant={ButtonVariant.FLAT}
             className="mb-3 w-[95%] lg:w-auto"
           >
-            Create Survey
+            {t('navigation.createSurveyButton')}
           </ButtonLink>
         </Link>
         <Link href={'/surveys'} passHref>
@@ -146,7 +150,7 @@ function Navigation() {
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
           >
-            My Surveys
+            {t('navigation.mySurveysButton')}
           </ButtonLink>
         </Link>
         {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
@@ -157,7 +161,7 @@ function Navigation() {
               variant={ButtonVariant.FLAT}
               icon={<CogIcon className="h-5 w-5" />}
             >
-              Settings
+              {t('navigation.settingsButton')}
             </IconButtonLink>
           </Link>
         )}
@@ -167,7 +171,7 @@ function Navigation() {
           className="w-[95%] justify-center text-red-600 hover:bg-red-100 lg:w-auto"
           icon={<LogoutIcon className="h-5 w-5" />}
         >
-          Sign Out
+          {t('navigation.signOutButton')}
         </Button>
       </BurgerMenu>
     </nav>
