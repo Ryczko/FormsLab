@@ -4,5 +4,6 @@
   "heading": "Surveys",
   "headingError": "There is a problem - your surveys cannot be viewed.",
   "noSurveys": "No surveys yet",
-  "buttonCreateSurvey": "Create Survey"
+  "buttonCreateSurvey": "Create Survey",
+  "moreButton": "More"
 }

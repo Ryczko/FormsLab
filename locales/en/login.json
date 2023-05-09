@@ -12,5 +12,7 @@
   "password": "Password",
   "incorrectEmail": "Incorrect email address",
   "required": "Required field",
-  "errorSingingIn": "Error while signing in!"
+  "errorSingingIn": "Error while signing in!",
+  "authError": "Authentication failed",
+  "accountWithEmailAlreadyExist": "The account already exists for that email."
 }

@@ -26,7 +26,7 @@ export default function SurveyRow({
     closeModal: closeDeleteSurveyModal,
     openModal: openDeleteSurveyModal,
   } = useModal();
-  const { t } = useTranslation('surveyComponents');
+  const { t } = useTranslation('surveys');
 
   const handleCopyLink = () => {
     const domain =

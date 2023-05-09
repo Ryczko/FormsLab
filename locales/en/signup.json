@@ -13,5 +13,8 @@
   "errorSingingUp": "Error while signing up!",
   "passwordLengthMin": "Password must be at least 8 characters long",
   "passwordLengthMax": "Password can be up to 64 characters long",
-  "alreadyHaveAccount": "Already have an account?"
+  "alreadyHaveAccount": "Already have an account?",
+  "authError": "Authentication failed",
+  "accountWithEmailAlreadyExist": "The account already exists for that email.",
+  "registerError": "Registration failed!"
 }

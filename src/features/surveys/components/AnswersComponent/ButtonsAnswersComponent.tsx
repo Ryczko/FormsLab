@@ -19,7 +19,7 @@ export default function ButtonsAnswersComponent({
   selectedIcon,
   showEmojiError,
 }: ButtonAnswersComponentProps) {
-  const { t } = useTranslation('surveyComponents');
+  const { t } = useTranslation('survey');
   return (
     <>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">

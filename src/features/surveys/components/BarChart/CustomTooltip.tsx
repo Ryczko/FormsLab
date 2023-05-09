@@ -11,7 +11,7 @@ export const CustomTooltip = ({
   payload,
   label,
 }: TooltipProps<ValueType, NameType>) => {
-  const { t } = useTranslation('surveyComponents');
+  const { t } = useTranslation('surveyAnswer');
   if (active) {
     return (
       <div className="flex flex-col items-center rounded-md border border-zinc-200 bg-white p-4 shadow-md">

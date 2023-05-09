@@ -41,8 +41,8 @@ export const useRegisterManager = () => {
         email: values.email,
         password: values.password,
         changeDisplayName,
-        registerError: t('firebaseConfig:registerError'),
-        accountAlreadyExist: t('firebaseConfig:accountAlreadyExist'),
+        registerError: t('signup:registerError'),
+        accountAlreadyExist: t('signup:accountAlreadyExist'),
       });
       resetForm();
     } catch (e) {

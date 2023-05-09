@@ -52,8 +52,8 @@ function LoginPage() {
                 image={Google}
                 onClick={() =>
                   signInWithGoogle(
-                    t('firebaseConfig:authError'),
-                    t('firebaseConfig:accountWithEmailAlreadyExist')
+                    t('login:authError'),
+                    t('login:accountWithEmailAlreadyExist')
                   )
                 }
               >
@@ -63,8 +63,8 @@ function LoginPage() {
                 image={Github}
                 onClick={() =>
                   signInWithGithub(
-                    t('firebaseConfig:authError'),
-                    t('firebaseConfig:accountWithEmailAlreadyExist')
+                    t('login:authError'),
+                    t('login:accountWithEmailAlreadyExist')
                   )
                 }
                 className="mb-3"

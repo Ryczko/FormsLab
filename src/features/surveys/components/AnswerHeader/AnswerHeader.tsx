@@ -15,7 +15,7 @@ function AnswerHeader({
   createDate,
   chartData,
 }: AnswerHeaderProps) {
-  const { t } = useTranslation('surveyComponents');
+  const { t } = useTranslation('surveyAnswer');
   return (
     <div className="flex flex-col-reverse items-center justify-center md:flex-row">
       {chartData.length ? <BarChart data={chartData} /> : null}

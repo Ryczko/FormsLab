@@ -19,20 +19,22 @@ export default function DeleteSurveyModal({
   onSuccess,
 }: DeleteSurveyModalProps) {
   const { deleteSurvey, isRemoving } = useRemoveSurvey();
-  const { t } = useTranslation('surveyComponents');
+  const { t } = useTranslation('common');
 
   return (
     <StyledDialog
       isOpen={isOpened}
       onClose={closeModal}
-      title={t('modalTitle')}
+      title={t('surveyRemoving.modalTitle')}
       content={
         <>
           <div className="mt-2">
             <p className="text-sm text-red-500">
-              {t('modalContentFirst')}&nbsp;
-              <span className="font-bold">{t('modalContentSecond')}</span>{' '}
-              {t('modalContentThird')}
+              {t('surveyRemoving.modalContentFirst')}&nbsp;
+              <span className="font-bold">
+                {t('surveyRemoving.modalContentSecond')}
+              </span>{' '}
+              {t('surveyRemoving.modalContentThird')}
             </p>
           </div>
 
@@ -43,7 +45,7 @@ export default function DeleteSurveyModal({
               className="uppercase"
               disabled={isRemoving}
             >
-              {t('modelCancelButton')}
+              {t('surveyRemoving.modelCancelButton')}
             </Button>
             <Button
               variant={ButtonVariant.DANGER}
@@ -52,7 +54,7 @@ export default function DeleteSurveyModal({
               className="uppercase"
               isLoading={isRemoving}
             >
-              {t('modalDeleteButton')}
+              {t('surveyRemoving.modalDeleteButton')}
             </Button>
           </div>
         </>

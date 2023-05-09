@@ -28,7 +28,7 @@ export const useLoginManager = () => {
       await logInWithEmailAndPassword({
         email: values.email,
         password: values.password,
-        authError: t('firebaseConfig:authError'),
+        authError: t('login:authError'),
       });
       resetForm();
     } catch (e) {

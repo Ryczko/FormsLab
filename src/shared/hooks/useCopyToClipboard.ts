@@ -4,12 +4,12 @@ import useTranslation from 'next-translate/useTranslation';
 
 function useCopyToClipboard() {
   const [copiedText, setCopiedText] = useState<string | null>(null);
-  const { t } = useTranslation('sharedHooks');
+  const { t } = useTranslation('common');
 
   const copy = async (text: string, silient = false) => {
     if (!navigator?.clipboard) {
       if (!silient) {
-        toast.error(t('copyingNotSupported'));
+        toast.error(t('coping.copyingNotSupported'));
       }
       return false;
     }
@@ -18,12 +18,12 @@ function useCopyToClipboard() {
       await navigator.clipboard.writeText(text);
       setCopiedText(text);
       if (!silient) {
-        toast.success(t('copyingSucces'));
+        toast.success(t('coping.copyingSucces'));
       }
       return true;
     } catch (error) {
       if (!silient) {
-        toast.error(t('copyingError'));
+        toast.error(t('coping.copyingError'));
       }
       setCopiedText(null);
       return false;

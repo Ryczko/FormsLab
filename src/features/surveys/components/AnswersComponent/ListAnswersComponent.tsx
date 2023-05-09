@@ -19,7 +19,7 @@ export default function ListAnswersComponent({
   selectedIcon,
   showEmojiError,
 }: ListAnswersComponentProps) {
-  const { t } = useTranslation('surveyComponents');
+  const { t } = useTranslation('survey');
   return (
     <div className="rounded-xl border bg-white/50 py-4 px-6 shadow">
       <div className="mt-2 flex flex-wrap justify-center gap-y-2">

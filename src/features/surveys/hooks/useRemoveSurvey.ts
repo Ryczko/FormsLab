@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 export const useRemoveSurvey = () => {
   const [isRemoving, setIsRemoving] = useState(false);
-  const { t } = useTranslation('surveysHooks');
+  const { t } = useTranslation('common');
 
   const deleteSurvey =
     (id: string, closeDeleteModal: () => void, onSuccess?: () => void) =>
@@ -24,9 +24,9 @@ export const useRemoveSurvey = () => {
           });
 
           if (onSuccess) onSuccess();
-          toast.success(t('surveyDeleteSuccess'));
+          toast.success(t('surveyRemoving.surveyDeleteSuccess'));
         } catch (error) {
-          toast.error(t('surveyDeleteError'));
+          toast.error(t('surveyRemoving.surveyDeleteError'));
         } finally {
           closeDeleteModal();
           setIsRemoving(false);

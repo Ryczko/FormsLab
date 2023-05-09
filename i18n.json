@@ -2,13 +2,7 @@
   "locales": ["en"],
   "defaultLocale": "en",
   "pages": {
-    "*": [
-      "navigation",
-      "surveysHooks",
-      "surveyComponents",
-      "sharedHooks",
-      "firebaseConfig"
-    ],
+    "*": ["common"],
     "/": ["home"],
     "/404": ["404"],
     "/login": ["login"],
