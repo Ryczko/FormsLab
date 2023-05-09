@@ -5,4 +5,5 @@ module.exports = nextTranslate({
   images: {
     domains: ['lh3.googleusercontent.com', 'avatars.githubusercontent.com'],
   },
+  optimizeFonts: false,
 });
