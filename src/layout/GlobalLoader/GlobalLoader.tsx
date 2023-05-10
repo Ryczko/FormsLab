@@ -12,8 +12,15 @@ export default function GlobalLoader() {
       className="fixed left-0 top-0 z-50 h-screen w-screen bg-zinc-100"
     >
       <div className="fixed left-[50%] top-[45%] w-full translate-x-[-50%] translate-y-[-50%] text-center">
-        <Image priority src={logo} alt="logo" width={260} height={60} />
-        <Loader className="mt-1" isLoading />
+        <Image
+          className="mx-auto"
+          priority
+          src={logo}
+          alt="logo"
+          width={260}
+          height={60}
+        />
+        <Loader className="mt-3" isLoading />
       </div>
     </motion.div>
   );
