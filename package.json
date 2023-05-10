@@ -22,7 +22,7 @@
     "start:emulator": "firebase emulators:exec 'npm start'"
   },
   "dependencies": {
-    "@headlessui/react": "^1.6.2",
+    "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
