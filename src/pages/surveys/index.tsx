@@ -9,7 +9,6 @@ import Loader from 'shared/components/Loader/Loader';
 import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
-import Link from 'next/link';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import usePagination from 'features/surveys/hooks/usePagination';

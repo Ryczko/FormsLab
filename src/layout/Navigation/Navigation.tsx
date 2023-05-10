@@ -1,5 +1,4 @@
 import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
-import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { Menu, Transition } from '@headlessui/react';
@@ -54,9 +53,9 @@ function Navigation() {
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex w-full items-center justify-center rounded-md py-1 px-4 font-medium hover:bg-zinc-200"
+                  className="flex w-full items-center justify-center rounded-md px-4 py-1 font-medium hover:bg-zinc-200"
                 >
-                  <p className="mr-4 ml-2 hidden items-center truncate sm:block">
+                  <p className="ml-2 mr-4 hidden items-center truncate sm:block">
                     {displayName}
                   </p>
                   {user.photoURL ? (

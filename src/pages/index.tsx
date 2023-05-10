@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
@@ -24,7 +23,7 @@ function IndexPage() {
           </span>
         </h1>
         <p className="mb-8 text-xl text-zinc-600">{t('Description')}</p>
-        <div className="flex flex-col space-y-2 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+        <div className="flex flex-col space-y-2 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
           {!loading && !user && (
             <ButtonLink
               href={'/login'}
