@@ -33,8 +33,8 @@ function LoginButton({
     >
       {image && (
         <Image
-          className="ml-2 mr-6 block"
-          width={45}
+          className="ml-2 mr-[10px] block"
+          width={24}
           height={24}
           src={image}
           alt={image}

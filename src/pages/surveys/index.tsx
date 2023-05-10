@@ -53,11 +53,9 @@ function SurveyListPage() {
           ) : (
             <>
               <Image
-                className="mt-2 w-[200px] -translate-x-3"
+                className="mt-2 w-[160px] -translate-x-3"
                 src={NoSurveys}
                 alt="no surveys"
-                width="200"
-                height="125"
               />
               <p className="my-8">{t('noSurveys')}</p>
               <ButtonLink
