@@ -26,25 +26,23 @@ function IndexPage() {
         <p className="mb-8 text-xl text-zinc-600">{t('Description')}</p>
         <div className="flex flex-col space-y-2 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
           {!loading && !user && (
-            <Link href={'/login'} passHref>
-              <ButtonLink
-                variant={ButtonVariant.PRIMARY}
-                className="w-full sm:w-auto"
-              >
-                {t('buttonSignIn')}
-              </ButtonLink>
-            </Link>
-          )}
-
-          <Link href={'/survey/create'} passHref>
             <ButtonLink
-              data-test-id="create-survey"
-              variant={ButtonVariant.OUTLINE_PRIMARY}
+              href={'/login'}
+              variant={ButtonVariant.PRIMARY}
               className="w-full sm:w-auto"
             >
-              {t('buttonCreateSurvey')}
+              {t('buttonSignIn')}
             </ButtonLink>
-          </Link>
+          )}
+
+          <ButtonLink
+            href={'/survey/create'}
+            data-test-id="create-survey"
+            variant={ButtonVariant.OUTLINE_PRIMARY}
+            className="w-full sm:w-auto"
+          >
+            {t('buttonCreateSurvey')}
+          </ButtonLink>
         </div>
       </div>
     </>

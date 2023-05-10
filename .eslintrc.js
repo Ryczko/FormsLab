@@ -9,7 +9,6 @@ module.exports = {
     'react-app',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'plugin:@next/next/recommended',
     'next/core-web-vitals',
     'plugin:jest/recommended',
     'plugin:testing-library/react',

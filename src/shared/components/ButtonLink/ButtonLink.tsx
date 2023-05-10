@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { LegacyRef, PropsWithChildren } from 'react';
-import { forwardRef } from 'react';
+import Link from 'next/link';
+import { PropsWithChildren } from 'react';
 import {
   ButtonProps,
   ButtonSize,
@@ -12,25 +12,24 @@ export const ButtonLinkSize = ButtonSize;
 
 interface ButtonLinkProps extends ButtonProps {
   onClick?: () => void;
+  href: string;
 }
 
-const ButtonLink = (
-  {
-    children,
-    className,
-    variant = ButtonLinkVariant.SECONDARY,
-    sizeType = ButtonLinkSize.DEFAULT,
-    ...props
-  }: PropsWithChildren<ButtonLinkProps>,
-  ref: LegacyRef<HTMLAnchorElement>
-) => (
-  <a
+const ButtonLink = ({
+  children,
+  className,
+  href,
+  variant = ButtonLinkVariant.SECONDARY,
+  sizeType = ButtonLinkSize.DEFAULT,
+  ...props
+}: PropsWithChildren<ButtonLinkProps>) => (
+  <Link
+    href={href}
     {...props}
-    ref={ref}
     className={clsx('btn', variant, sizeType, 'hover:no-underline', className)}
   >
     {children}
-  </a>
+  </Link>
 );
 
-export default forwardRef(ButtonLink);
+export default ButtonLink;

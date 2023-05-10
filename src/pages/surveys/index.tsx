@@ -61,14 +61,13 @@ function SurveyListPage() {
                 height="125"
               />
               <p className="my-8">{t('noSurveys')}</p>
-              <Link href={'/survey/create'} passHref>
-                <ButtonLink
-                  variant={ButtonVariant.OUTLINE_PRIMARY}
-                  className="w-full sm:w-auto"
-                >
-                  {t('buttonCreateSurvey')}
-                </ButtonLink>
-              </Link>
+              <ButtonLink
+                href={'/survey/create'}
+                variant={ButtonVariant.OUTLINE_PRIMARY}
+                className="w-full sm:w-auto"
+              >
+                {t('buttonCreateSurvey')}
+              </ButtonLink>
             </>
           ))}
       </div>
