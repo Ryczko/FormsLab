@@ -9,7 +9,6 @@ import Loader from 'shared/components/Loader/Loader';
 import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
-import Link from 'next/link';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import usePagination from 'features/surveys/hooks/usePagination';
@@ -54,21 +53,18 @@ function SurveyListPage() {
           ) : (
             <>
               <Image
-                className="mt-2 w-[200px] -translate-x-3"
+                className="mt-2 w-[160px] -translate-x-3"
                 src={NoSurveys}
                 alt="no surveys"
-                width="200"
-                height="125"
               />
               <p className="my-8">{t('noSurveys')}</p>
-              <Link href={'/survey/create'} passHref>
-                <ButtonLink
-                  variant={ButtonVariant.OUTLINE_PRIMARY}
-                  className="w-full sm:w-auto"
-                >
-                  {t('buttonCreateSurvey')}
-                </ButtonLink>
-              </Link>
+              <ButtonLink
+                href={'/survey/create'}
+                variant={ButtonVariant.OUTLINE_PRIMARY}
+                className="w-full sm:w-auto"
+              >
+                {t('buttonCreateSurvey')}
+              </ButtonLink>
             </>
           ))}
       </div>

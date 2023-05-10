@@ -91,7 +91,7 @@ function SurveyResultsPage() {
                 title={t('buttonRefreshTitle')}
                 onClick={handleRefresh}
                 variant={ButtonVariant.OUTLINE}
-                className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
+                className="mt-2 w-full justify-center sm:ml-2 sm:mt-0 sm:w-[170px]"
                 icon={<RefreshIcon className="h-5 w-5" />}
               >
                 {t('buttonRefresh')}
@@ -123,7 +123,7 @@ function SurveyResultsPage() {
           />
 
           {answersData.length > 0 && (
-            <div className="mt-10 mb-4 flex justify-center">
+            <div className="mb-4 mt-10 flex justify-center">
               <Toggle
                 isEnabled={showOnlyWithExtraFeedback}
                 onToggle={toggleShowOnlyWithExtraFeedback}

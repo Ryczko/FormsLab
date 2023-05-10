@@ -21,7 +21,7 @@ export default function ListAnswersComponent({
 }: ListAnswersComponentProps) {
   const { t } = useTranslation('survey');
   return (
-    <div className="rounded-xl border bg-white/50 py-4 px-6 shadow">
+    <div className="rounded-xl border bg-white/50 px-6 py-4 shadow">
       <div className="mt-2 flex flex-wrap justify-center gap-y-2">
         {icons.map((icon, idx) => (
           <EmojiListItem

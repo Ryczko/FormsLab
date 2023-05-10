@@ -79,7 +79,7 @@ function LoginPage() {
                 required
                 error={touched.email ? errors.email : undefined}
                 placeholder={t('login:email')}
-                className="mt-3 !mb-1"
+                className="!mb-1 mt-3"
                 onChange={handleChange('email')}
               />
               <Input
@@ -99,7 +99,7 @@ function LoginPage() {
               )}
               <div className="flex flex-col items-center justify-center">
                 <LoginButton
-                  className="mt-1 mb-2 !bg-indigo-200 !text-indigo-900 hover:!bg-indigo-300"
+                  className="mb-2 mt-1 !bg-indigo-200 !text-indigo-900 hover:!bg-indigo-300"
                   type="submit"
                   onClick={handleSubmit}
                 >

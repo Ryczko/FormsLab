@@ -41,7 +41,7 @@ export default function SurveyRow({
 
   return (
     <div className="mb-4 flex w-full flex-col md:flex-row">
-      <div className="flex w-full items-center justify-between rounded-md rounded-b-none bg-white py-3 px-4 shadow-sm md:rounded-b-md">
+      <div className="flex w-full items-center justify-between rounded-md rounded-b-none bg-white px-4 py-3 shadow-sm md:rounded-b-md">
         <div title={question} className="w-36 truncate text-left">
           {question}
         </div>
@@ -52,7 +52,7 @@ export default function SurveyRow({
       <div className="flex w-full md:ml-2 md:w-auto">
         <Button
           variant={ButtonVariant.OUTLINE}
-          className="mt-2 mr-2 w-full px-4 sm:mt-0 md:w-auto"
+          className="mr-2 mt-2 w-full px-4 sm:mt-0 md:w-auto"
           onClick={handleOnMoreButton}
         >
           {t('moreButton')}
@@ -70,7 +70,7 @@ export default function SurveyRow({
         <Button
           variant={ButtonVariant.DANGER}
           title={t('deleteSurveyButtonTitle')}
-          className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
+          className="ml-2 mt-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
           onClick={openDeleteSurveyModal}
           icon={<TrashIcon className="h-5 w-5" />}
         />

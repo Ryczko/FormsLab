@@ -6,7 +6,6 @@ import Button, {
 import Header from 'shared/components/Header/Header';
 import Loader from 'shared/components/Loader/Loader';
 import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
-import Link from 'next/link';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import {
   AnswerType,
@@ -70,14 +69,13 @@ function AnswerPage() {
             <>
               <h1 className="text-5xl">🙁</h1>
               <h1 className="my-5 text-xl">{t('surveyNoLongerActive')}</h1>
-              <Link href={'/'}>
-                <ButtonLink
-                  variant={ButtonVariant.PRIMARY}
-                  className="w-full sm:w-auto"
-                >
-                  {t('backHomeButton')}
-                </ButtonLink>
-              </Link>
+              <ButtonLink
+                href={'/'}
+                variant={ButtonVariant.PRIMARY}
+                className="w-full sm:w-auto"
+              >
+                {t('backHomeButton')}
+              </ButtonLink>
             </>
           )}
         </>

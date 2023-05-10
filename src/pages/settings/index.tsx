@@ -37,7 +37,7 @@ function SettingsPage() {
           <Button
             variant={ButtonVariant.DANGER}
             title={t('deleteAccountButtonTitle')}
-            className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
+            className="ml-2 mt-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
             onClick={openDeleteModal}
             icon={<TrashIcon className="h-5 w-5" />}
           >

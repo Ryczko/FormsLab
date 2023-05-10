@@ -1,5 +1,4 @@
 import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
-import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { Menu, Transition } from '@headlessui/react';
@@ -39,16 +38,13 @@ function Navigation() {
         {!loading && user ? (
           <div className="flex md:space-x-4">
             <div className="none hidden space-x-4 lg:flex">
-              <Link href={'/survey/create'} passHref>
-                <ButtonLink variant={ButtonVariant.FLAT}>
-                  {t('navigation.createSurveyButton')}
-                </ButtonLink>
-              </Link>
-              <Link href={'/surveys'} passHref>
-                <ButtonLink variant={ButtonVariant.FLAT}>
-                  {t('navigation.mySurveysButton')}
-                </ButtonLink>
-              </Link>
+              <ButtonLink variant={ButtonVariant.FLAT} href={'/survey/create'}>
+                {t('navigation.createSurveyButton')}
+              </ButtonLink>
+
+              <ButtonLink variant={ButtonVariant.FLAT} href={'/surveys'}>
+                {t('navigation.mySurveysButton')}
+              </ButtonLink>
             </div>
             <div className="hidden items-center justify-center lg:flex">
               <Menu
@@ -57,9 +53,9 @@ function Navigation() {
               >
                 <Menu.Button
                   title="Expand menu"
-                  className="flex w-full items-center justify-center rounded-md py-1 px-4 font-medium hover:bg-zinc-200"
+                  className="flex w-full items-center justify-center rounded-md px-4 py-1 font-medium hover:bg-zinc-200"
                 >
-                  <p className="mr-4 ml-2 hidden items-center truncate sm:block">
+                  <p className="ml-2 mr-4 hidden items-center truncate sm:block">
                     {displayName}
                   </p>
                   {user.photoURL ? (
@@ -93,14 +89,13 @@ function Navigation() {
                     <div className="flex flex-col justify-end p-1">
                       {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
                         <Menu.Item>
-                          <Link href={'/settings'} passHref>
-                            <IconButtonLink
-                              variant={ButtonVariant.FLAT}
-                              icon={<CogIcon className="h-5 w-5" />}
-                            >
-                              {t('navigation.settingsButton')}
-                            </IconButtonLink>
-                          </Link>
+                          <IconButtonLink
+                            variant={ButtonVariant.FLAT}
+                            href={'/settings'}
+                            icon={<CogIcon className="h-5 w-5" />}
+                          >
+                            {t('navigation.settingsButton')}
+                          </IconButtonLink>
                         </Menu.Item>
                       )}
                       <Menu.Item>
@@ -124,46 +119,42 @@ function Navigation() {
             />
           </div>
         ) : (
-          <Link href={'/login'} passHref>
-            <ButtonLink
-              className="hidden px-4 xsm:block sm:px-6"
-              variant={ButtonVariant.OUTLINE_PRIMARY}
-            >
-              {t('navigation.signInButton')}
-            </ButtonLink>
-          </Link>
+          <ButtonLink
+            className="hidden px-4 xsm:block sm:px-6"
+            href={'/login'}
+            variant={ButtonVariant.OUTLINE_PRIMARY}
+          >
+            {t('navigation.signInButton')}
+          </ButtonLink>
         )}
       </div>
       <BurgerMenu isOpen={isOpen}>
-        <Link href={'/survey/create'} passHref>
-          <ButtonLink
-            onClick={() => setIsOpen(!isOpen)}
-            variant={ButtonVariant.FLAT}
-            className="mb-3 w-[95%] lg:w-auto"
-          >
-            {t('navigation.createSurveyButton')}
-          </ButtonLink>
-        </Link>
-        <Link href={'/surveys'} passHref>
-          <ButtonLink
-            className="mb-3 w-[95%] lg:w-auto"
-            onClick={() => setIsOpen(!isOpen)}
-            variant={ButtonVariant.FLAT}
-          >
-            {t('navigation.mySurveysButton')}
-          </ButtonLink>
-        </Link>
+        <ButtonLink
+          href={'/survey/create'}
+          onClick={() => setIsOpen(!isOpen)}
+          variant={ButtonVariant.FLAT}
+          className="mb-3 w-[95%] lg:w-auto"
+        >
+          {t('navigation.createSurveyButton')}
+        </ButtonLink>
+        <ButtonLink
+          href={'/surveys'}
+          className="mb-3 w-[95%] lg:w-auto"
+          onClick={() => setIsOpen(!isOpen)}
+          variant={ButtonVariant.FLAT}
+        >
+          {t('navigation.mySurveysButton')}
+        </ButtonLink>
         {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
-          <Link href={'/settings'} passHref>
-            <IconButtonLink
-              className="mb-3 w-[95%] justify-center lg:w-auto"
-              onClick={() => setIsOpen(!isOpen)}
-              variant={ButtonVariant.FLAT}
-              icon={<CogIcon className="h-5 w-5" />}
-            >
-              {t('navigation.settingsButton')}
-            </IconButtonLink>
-          </Link>
+          <IconButtonLink
+            className="mb-3 w-[95%] justify-center lg:w-auto"
+            href="/settings"
+            onClick={() => setIsOpen(!isOpen)}
+            variant={ButtonVariant.FLAT}
+            icon={<CogIcon className="h-5 w-5" />}
+          >
+            {t('navigation.settingsButton')}
+          </IconButtonLink>
         )}
         <Button
           onClick={logout}
