@@ -69,6 +69,7 @@ function EmojiPicker({
       <StyledDialog
         onClose={() => setDisplayPicker(false)}
         isOpen={displayPicker}
+        contentClassName="w-[400px] p-0"
         content={
           <Picker
             onEmojiClick={!addEmoji ? onEmojiClick : onEmojiClickAdd}
@@ -113,7 +114,7 @@ function EmojiPicker({
                 name: 'Flags',
               },
             ]}
-            width={400}
+            width={'100%'}
             height={400}
           />
         }
