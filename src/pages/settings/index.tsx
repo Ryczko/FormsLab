@@ -13,7 +13,6 @@ import useTranslation from 'next-translate/useTranslation';
 function SettingsPage() {
   const {
     user,
-    loading,
     isOpen,
     openDeleteModal,
     closeDeleteModal,
@@ -82,9 +81,6 @@ function SettingsPage() {
           </>
         }
       />
-      {loading && (
-        <div className="text-center text-sm text-zinc-600">{t('loading')}</div>
-      )}
     </>
   );
 }

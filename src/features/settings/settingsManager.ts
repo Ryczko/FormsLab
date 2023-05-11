@@ -16,7 +16,7 @@ import { FirebaseError } from 'firebase/app';
 import useTranslation from 'next-translate/useTranslation';
 
 export const useSettingsManager = () => {
-  const { loading, error, user } = useApplicationContext();
+  const { error, user } = useApplicationContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   const router = useRouter();
@@ -76,7 +76,6 @@ export const useSettingsManager = () => {
   };
 
   return {
-    loading,
     error,
     user,
     isOpen,
