@@ -12,7 +12,7 @@ import { useApplicationContext } from 'features/application/context';
 import useTranslation from 'next-translate/useTranslation';
 
 function SignupPage() {
-  const { loading, user } = useApplicationContext();
+  const { user } = useApplicationContext();
   const { initialValues, onSubmit, SignupSchema, isRegistering } =
     useRegisterManager();
   const { t } = useTranslation('signup');
@@ -21,7 +21,7 @@ function SignupPage() {
     if (user) {
       router.push('/');
     }
-  }, [user, loading]);
+  }, [user]);
 
   return (
     <>
@@ -92,9 +92,6 @@ function SignupPage() {
           )}
         </Formik>
       </div>
-      {loading && (
-        <div className="text-center text-sm text-zinc-600">{t('loading')}</div>
-      )}
     </>
   );
 }
