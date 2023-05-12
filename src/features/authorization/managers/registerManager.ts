@@ -44,6 +44,14 @@ export const useRegisterManager = () => {
         registerError: t('signup:registerError'),
         accountAlreadyExist: t('signup:accountAlreadyExist'),
       });
+
+      // MIGRATION TO NEXT-AUTH
+      // await axios.post('/api/register', {
+      //   name: values.name,
+      //   email: values.email,
+      //   password: values.password,
+      // });
+
       resetForm();
     } catch (e) {
       setFieldError('message', t('signup:errorSingingUp'));
