@@ -30,6 +30,17 @@ export const useLoginManager = () => {
         password: values.password,
         authError: t('login:authError'),
       });
+
+      // MIGRATION TO NEXT-AUTH
+      // signIn('credentials', {
+      //   email: values.email,
+      //   password: values.password,
+      //   callbackUrl: '/',
+      //   redirect: false,
+      // });
+
+      // router.push('/')
+
       resetForm();
     } catch (e) {
       setFieldError('message', t('login:errorSingingIn'));
