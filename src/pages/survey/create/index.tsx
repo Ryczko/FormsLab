@@ -38,7 +38,7 @@ function SurveyCreatePage() {
         name="survey-title"
         placeholder={t('surveyTitlePlaceholder')}
         value={title}
-        error={!title ? error : undefined}
+        error={error}
         className="!mb-1 py-3"
         onChange={handleChangeTitle}
         absoluteError

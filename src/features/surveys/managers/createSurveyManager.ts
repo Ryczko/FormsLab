@@ -26,6 +26,7 @@ export const useCreateSurveyManager = () => {
   }, []);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setError('');
     setTitle(e.target.value);
   };
 
@@ -60,7 +61,7 @@ export const useCreateSurveyManager = () => {
   };
 
   const createSurvey = async () => {
-    if (!title) return setError(t('required'));
+    if (!title.trim()) return setError(t('required'));
 
     setIsCreating(true);
 
