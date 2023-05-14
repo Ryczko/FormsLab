@@ -4,12 +4,9 @@ import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import Header from 'shared/components/Header/Header';
 import Input from 'shared/components/Input/Input';
-import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
 import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
 import useTranslation from 'next-translate/useTranslation';
-
-const MIN_EMOJIS = 2;
-const MAX_EMOJIS = 8;
+import QuestionBlockFactory from 'features/surveys/components/QuestionBlocks/QuestionBlockFactory';
 
 function SurveyCreatePage() {
   const {
@@ -44,44 +41,24 @@ function SurveyCreatePage() {
         absoluteError
       />
 
-      <div className="mt-8">
-        <div className="mb-3 block text-left font-semibold">
-          {t('emojiPickingInformation')}
-        </div>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, 64px)',
-            justifyContent: 'space-between',
-            gridGap: '8px',
-          }}
+      <QuestionBlockFactory
+        type="emoji"
+        handleAddingNewEmote={handleAddingNewEmote}
+        pack={pack}
+        handleEmotePick={handleEmotePick}
+        handleEmoteRemove={handleEmoteRemove}
+      />
+
+      <div className="flex justify-center">
+        <Button
+          name="create-survey"
+          onClick={createSurvey}
+          className="z-0 mt-2 w-full py-3"
+          variant={ButtonVariant.PRIMARY}
+          isLoading={isCreating}
         >
-          {pack.map((emote, idx) => (
-            <EmojiPicker
-              key={idx}
-              index={idx}
-              pickedEmoji={emote}
-              onEmotePick={handleEmotePick}
-              onEmoteRemove={
-                pack.length > MIN_EMOJIS ? handleEmoteRemove : undefined
-              }
-            />
-          ))}
-          {pack.length < MAX_EMOJIS && (
-            <EmojiPicker addEmoji={true} onEmoteAdd={handleAddingNewEmote} />
-          )}
-        </div>
-        <div className="flex justify-center">
-          <Button
-            name="create-survey"
-            onClick={createSurvey}
-            className="z-0 mt-9 w-full sm:w-auto"
-            variant={ButtonVariant.PRIMARY}
-            isLoading={isCreating}
-          >
-            {t('buttonCreate')}
-          </Button>
-        </div>
+          {t('buttonCreate')}
+        </Button>
       </div>
     </>
   );
