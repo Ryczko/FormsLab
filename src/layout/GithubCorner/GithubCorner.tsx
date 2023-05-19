@@ -1,7 +1,7 @@
 export default function GithubCorner() {
   return (
     <a
-      href="https://github.com/Ryczko/Employee-pulse"
+      href="https://github.com/Ryczko/FormsLab"
       target="_blank"
       className="github-corner hidden xsm:block"
       aria-label="View source on GitHub"
