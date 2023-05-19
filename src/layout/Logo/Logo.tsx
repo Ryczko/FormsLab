@@ -7,9 +7,9 @@ interface LogoProps {
   height?: number;
 }
 
-function Logo({ width = 160, height = 50 }: LogoProps) {
+function Logo({ width = 115, height = 50 }: LogoProps) {
   return (
-    <div className="flex translate-y-[2px] cursor-pointer items-center">
+    <div className="flex cursor-pointer items-center">
       <Link href={'/'}>
         <Image src={logo} alt="logo" width={width} height={height} />
       </Link>
