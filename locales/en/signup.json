@@ -12,6 +12,7 @@
   "errorSingingUp": "Error while signing up!",
   "passwordLengthMin": "Password must be at least 8 characters long",
   "passwordLengthMax": "Password can be up to 64 characters long",
+  "noSpaceInPassword": "Password cannot contain spaces",
   "alreadyHaveAccount": "Already have an account?",
   "authError": "Authentication failed",
   "accountWithEmailAlreadyExist": "The account already exists for that email.",
