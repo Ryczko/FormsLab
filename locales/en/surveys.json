@@ -1,0 +1,11 @@
+{
+  "title": "Surveys",
+  "content": "Surveys - FormsLab",
+  "heading": "Surveys",
+  "headingError": "There is a problem - your surveys cannot be viewed.",
+  "noSurveys": "No surveys yet",
+  "buttonCreateSurvey": "Create Survey",
+  "moreButton": "More",
+  "deleteSurveyButtonTitle": "Delete survey",
+  "copyLinkButtonTitle": "Copy link to clipboard"
+}

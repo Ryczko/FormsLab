@@ -1,17 +1,19 @@
 import { motion } from 'framer-motion';
 import Loader from 'shared/components/Loader/Loader';
-import Logo from 'layout/Logo/Logo';
+import Image from 'next/image';
+
+import logo from '../../../public/images/logo.svg';
 
 export default function GlobalLoader() {
   return (
     <motion.div
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6, type: 'tween' }}
-      className="fixed top-0 left-0 z-50 h-screen w-screen bg-zinc-100"
+      className="fixed left-0 top-0 z-50 h-screen w-screen bg-zinc-100"
     >
-      <div className="fixed top-[45%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center">
-        <Logo classNames="!text-6xl !mb-10 !ml-0 !leading-[80px]" />
-        <Loader isLoading />
+      <div className="fixed left-[50%] top-[45%] w-full translate-x-[-50%] translate-y-[-50%] text-center">
+        <Image className="mx-auto" priority src={logo} alt="logo" width={190} />
+        <Loader className="mt-5" isLoading />
       </div>
     </motion.div>
   );

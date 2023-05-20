@@ -1,18 +1,21 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import clsx from 'clsx';
 
 interface StyledDialogProps {
-  title: string;
+  title?: string;
   content: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  contentClassName?: string;
 }
 
 export default function StyledDialog({
-  title,
+  title = '',
   content,
   isOpen,
   onClose,
+  contentClassName = '',
 }: StyledDialogProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -40,7 +43,12 @@ export default function StyledDialog({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="flex w-auto max-w-md flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all">
+              <Dialog.Panel
+                className={clsx(
+                  'flex w-auto max-w-md flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all',
+                  contentClassName
+                )}
+              >
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-zinc-900"

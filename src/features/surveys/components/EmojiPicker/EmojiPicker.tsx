@@ -1,13 +1,13 @@
-import { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { EmojiClickData } from 'emoji-picker-react';
 import { Categories } from 'emoji-picker-react';
-import { useCloseComponent } from 'shared/hooks/useCloseComponent';
 import Loader from 'shared/components/Loader/Loader';
 import Emoji from 'features/surveys/components/Emoji/Emoji';
 import { EMOJI_STYLE } from 'shared/constants/emojisConfig';
 import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
+import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
   ssr: false,
@@ -33,22 +33,18 @@ function EmojiPicker({
 }: EmojiPickerProps) {
   const [displayPicker, setDisplayPicker] = useState(false);
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useCloseComponent(wrapperRef, () => setDisplayPicker(false));
-
   const onEmojiClick = (emojiObject: EmojiClickData) => {
     onEmotePick?.(index, emojiObject.unified);
-    setDisplayPicker(!displayPicker);
+    setDisplayPicker(false);
   };
 
   const onEmojiClickAdd = (emojiObject: EmojiClickData) => {
     onEmoteAdd?.(emojiObject.unified);
-    setDisplayPicker(!displayPicker);
+    setDisplayPicker(false);
   };
 
   return (
-    <div ref={wrapperRef}>
+    <div>
       <button
         type="button"
         className="label-text flex w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
@@ -70,15 +66,11 @@ function EmojiPicker({
           icon={<TrashIcon className="h-4 w-4" />}
         />
       )}
-      {displayPicker && (
-        <button
-          type="button"
-          onClick={() => setDisplayPicker(false)}
-          className="fixed top-0 left-0 z-10 h-full w-full bg-black opacity-60"
-        />
-      )}
-      {displayPicker && (
-        <div className="fixed top-1/2 left-1/2 z-20 flex h-[400px] max-h-[90%] w-[400px] max-w-[90%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-white">
+      <StyledDialog
+        onClose={() => setDisplayPicker(false)}
+        isOpen={displayPicker}
+        contentClassName="!w-[400px] !p-0"
+        content={
           <Picker
             onEmojiClick={!addEmoji ? onEmojiClick : onEmojiClickAdd}
             autoFocusSearch={false}
@@ -122,11 +114,11 @@ function EmojiPicker({
                 name: 'Flags',
               },
             ]}
-            width={400}
+            width={'100%'}
             height={400}
           />
-        </div>
-      )}
+        }
+      ></StyledDialog>
     </div>
   );
 }

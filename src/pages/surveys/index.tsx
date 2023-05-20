@@ -9,30 +9,30 @@ import Loader from 'shared/components/Loader/Loader';
 import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
 import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
-import Link from 'next/link';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import usePagination from 'features/surveys/hooks/usePagination';
-import { ArrowLeftIcon, ArrowRightIcon} from '@heroicons/react/outline';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
+import useTranslation from 'next-translate/useTranslation';
 
 function SurveyListPage() {
   const { error, loading, surveysCollection } = useSurveyListManager();
-  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } = usePagination<DocumentData>(surveysCollection?.docs ?? [], { size: 10 });
+  const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
+    usePagination<DocumentData>(surveysCollection?.docs ?? [], { size: 10 });
+  const { t } = useTranslation('surveys');
 
   return (
     <>
       <Head>
-        <title>Surveys</title>
-        <meta name="description" content="Surveys - Employee Pulse" />
+        <title>{t('title')}</title>
+        <meta name="description" content={t('content')} />
       </Head>
 
-      <Header>Surveys</Header>
+      <Header>{t('heading')}</Header>
 
       <div className="flex flex-col items-center justify-center">
         <div>
-          {error && (
-            <strong>There is a problem - your surveys cannot be viewed.</strong>
-          )}
+          {error && <strong>{t('headingError')}</strong>}
           {loading && <Loader isLoading={true} />}
         </div>
         {surveysCollection &&
@@ -53,41 +53,38 @@ function SurveyListPage() {
           ) : (
             <>
               <Image
-                className="mt-2 w-[200px] -translate-x-3"
+                className="mt-2 w-[160px] -translate-x-3"
                 src={NoSurveys}
                 alt="no surveys"
-                width="200"
-                height="125"
               />
-              <p className="my-8">No surveys yet </p>
-              <Link href={'/survey/create'} passHref>
-                <ButtonLink
-                  variant={ButtonVariant.OUTLINE_PRIMARY}
-                  className="w-full sm:w-auto"
-                >
-                  Create Survey
-                </ButtonLink>
-              </Link>
+              <p className="my-8">{t('noSurveys')}</p>
+              <ButtonLink
+                href={'/survey/create'}
+                variant={ButtonVariant.OUTLINE_PRIMARY}
+                className="w-full sm:w-auto"
+              >
+                {t('buttonCreateSurvey')}
+              </ButtonLink>
             </>
           ))}
       </div>
       {(canGoNext || canGoPrev) && (
-        <div className='flex justify-center'>
-          <div className='flex flex-row items-center'>
+        <div className="flex justify-center">
+          <div className="flex flex-row items-center">
             <Button
               variant={ButtonVariant.OUTLINE_PRIMARY}
-              className='px-4'
-              icon={<ArrowLeftIcon className='h-5 w-5' />}
+              className="px-4"
+              icon={<ArrowLeftIcon className="h-5 w-5" />}
               disabled={!canGoPrev}
               onClick={goPrev}
             />
-            <div className='min-w-[100px]'>
-              <p className='text-center'>{pageIndex + 1}</p>
+            <div className="min-w-[100px]">
+              <p className="text-center">{pageIndex + 1}</p>
             </div>
             <Button
               variant={ButtonVariant.OUTLINE_PRIMARY}
-              className='px-4'
-              icon={<ArrowRightIcon className='h-5 w-5' />}
+              className="px-4"
+              icon={<ArrowRightIcon className="h-5 w-5" />}
               disabled={!canGoNext}
               onClick={goNext}
             />

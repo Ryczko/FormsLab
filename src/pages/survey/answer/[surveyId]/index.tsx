@@ -19,6 +19,7 @@ import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import Toggle from 'shared/components/Toggle/Toggle';
 import usePagination from 'features/surveys/hooks/usePagination';
+import useTranslation from 'next-translate/useTranslation';
 
 function SurveyResultsPage() {
   const {
@@ -41,6 +42,8 @@ function SurveyResultsPage() {
 
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex, reset } =
     usePagination(filteredAnswersData, { size: 10 });
+
+  const { t } = useTranslation('surveyAnswer');
 
   const {
     isModalOpen: isDeleteSurveyModalOpen,
@@ -65,39 +68,39 @@ function SurveyResultsPage() {
   return (
     <>
       <Head>
-        <title>Survey Answers</title>
-        <meta name="description" content="Survey Answers - Employee Pulse" />
+        <title>{t('title')}</title>
+        <meta name="description" content={t('content')} />
       </Head>
 
       <Loader isLoading={isLoading} />
       {!isLoading && (
         <>
-          <Header>Answers for &quot;{title}&quot;</Header>
+          <Header>{title}</Header>
           <div className="mb-6 flex flex-col justify-center sm:flex-row md:mb-6">
             <Button
-              title="Copy link to clipboard"
+              title={t('buttonCopyLinkTitle')}
               onClick={handleCopyLink(surveyId)}
               variant={ButtonVariant.PRIMARY}
               className="mb-2 w-full justify-center sm:mb-0 sm:w-[260px]"
               icon={<LinkIcon className="h-5 w-5" />}
             >
-              Copy link to survey
+              {t('buttonCopyLink')}
             </Button>
             {!process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE && (
               <Button
-                title="Refresh data"
+                title={t('buttonRefreshTitle')}
                 onClick={handleRefresh}
                 variant={ButtonVariant.OUTLINE}
-                className="mt-2 w-full justify-center sm:mt-0 sm:ml-2 sm:w-[170px]"
+                className="mt-2 w-full justify-center sm:ml-2 sm:mt-0 sm:w-[170px]"
                 icon={<RefreshIcon className="h-5 w-5" />}
               >
-                Refresh
+                {t('buttonRefresh')}
               </Button>
             )}
 
             <Button
               variant={ButtonVariant.DANGER}
-              title="Delete survey"
+              title={t('buttonDeleteSurveyTitle')}
               className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
               onClick={openDeleteSurveyModal}
               icon={<TrashIcon className="h-5 w-5" />}
@@ -108,7 +111,7 @@ function SurveyResultsPage() {
             <Toggle
               isEnabled={isSurveyActive}
               onToggle={updateSurveyStatus}
-              label="Is survey active"
+              label={t('toggleSureveyActive')}
             />
           </div>
 
@@ -120,11 +123,11 @@ function SurveyResultsPage() {
           />
 
           {answersData.length > 0 && (
-            <div className="mt-10 mb-4 flex justify-center">
+            <div className="mb-4 mt-10 flex justify-center">
               <Toggle
                 isEnabled={showOnlyWithExtraFeedback}
                 onToggle={toggleShowOnlyWithExtraFeedback}
-                label="With extra feedback only"
+                label={t('toogleFeedback')}
               />
             </div>
           )}
@@ -141,7 +144,7 @@ function SurveyResultsPage() {
               ))}
             </div>
           ) : (
-            <div className="my-4">No answers yet</div>
+            <div className="my-4">{t('noAnswers')}</div>
           )}
           {(canGoNext || canGoPrev) && (
             <div className="flex justify-center">

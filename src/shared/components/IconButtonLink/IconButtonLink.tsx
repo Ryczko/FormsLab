@@ -1,32 +1,31 @@
-import React, { LegacyRef, PropsWithChildren } from 'react';
-import { forwardRef } from 'react';
+import React, { PropsWithChildren } from 'react';
 import clsx from 'clsx';
 import {
   ButtonProps,
   ButtonSize,
   ButtonVariant,
 } from 'shared/components/Button/Button';
+import Link from 'next/link';
 
 export const IconButtonLinkVariant = ButtonVariant;
 export const IconButtonLinkSize = ButtonSize;
 interface IconButtonLinkProps extends ButtonProps {
   onClick?: () => void;
+  href: string;
 }
 
-const IconButtonLink = (
-  {
-    children,
-    className,
-    variant = IconButtonLinkVariant.SECONDARY,
-    sizeType = IconButtonLinkSize.DEFAULT,
-    icon,
-    ...props
-  }: PropsWithChildren<IconButtonLinkProps>,
-  ref: LegacyRef<HTMLAnchorElement>
-) => {
+const IconButtonLink = ({
+  children,
+  className,
+  variant = IconButtonLinkVariant.SECONDARY,
+  sizeType = IconButtonLinkSize.DEFAULT,
+  icon,
+  href,
+  ...props
+}: PropsWithChildren<IconButtonLinkProps>) => {
   return (
-    <a
-      ref={ref}
+    <Link
+      href={href}
       {...props}
       className={clsx(
         'btn',
@@ -39,8 +38,8 @@ const IconButtonLink = (
     >
       <div className="px-1">{icon}</div>
       {children}
-    </a>
+    </Link>
   );
 };
 
-export default forwardRef(IconButtonLink);
+export default IconButtonLink;

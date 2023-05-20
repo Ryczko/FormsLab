@@ -1,0 +1,19 @@
+{
+  "title": "Sign up",
+  "content": "Sign up - FormsLab",
+  "heading": "Sign up",
+  "signUpButton": "Sign up",
+  "or": "or",
+  "email": "E-mail",
+  "name": "Name",
+  "password": "Password",
+  "incorrectEmail": "Incorrect email address",
+  "required": "Required field",
+  "errorSingingUp": "Error while signing up!",
+  "passwordLengthMin": "Password must be at least 8 characters long",
+  "passwordLengthMax": "Password can be up to 64 characters long",
+  "alreadyHaveAccount": "Already have an account?",
+  "authError": "Authentication failed",
+  "accountWithEmailAlreadyExist": "The account already exists for that email.",
+  "registerError": "Registration failed!"
+}

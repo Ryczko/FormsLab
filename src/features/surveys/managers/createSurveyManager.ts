@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useApplicationContext } from 'features/application/context';
 import { db } from 'firebaseConfiguration';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
@@ -16,6 +17,7 @@ export const useCreateSurveyManager = () => {
 
   const router = useRouter();
   const { copy } = useCopyToClipboard();
+  const { t } = useTranslation('surveyCreate');
 
   // Move to useState initial value when bug in emoji library will be solved:
   // https://github.com/ealush/emoji-picker-react/issues/329
@@ -24,12 +26,13 @@ export const useCreateSurveyManager = () => {
   }, []);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setError('');
     setTitle(e.target.value);
   };
 
   const isEmojiPicked = (emoji: string) => {
     if (pack.includes(emoji)) {
-      toast.error('Emoji already selected');
+      toast.error(t('duplicatingEmoji'));
       return true;
     }
 
@@ -58,7 +61,7 @@ export const useCreateSurveyManager = () => {
   };
 
   const createSurvey = async () => {
-    if (!title) return setError('Required field');
+    if (!title.trim()) return setError(t('required'));
 
     setIsCreating(true);
 
@@ -76,12 +79,12 @@ export const useCreateSurveyManager = () => {
       const copiedCorrectly = await copy(link, true);
       await router.push(`/survey/answer/${newSurvey.id}`);
       toast.success(
-        `Survey created succesfully ${
-          copiedCorrectly ? 'and link copied to clipboard' : ''
+        `${t('surveyCreationSuccess')} ${
+          copiedCorrectly ? t('surveyCreationSucessCopiedCorrectly') : ''
         }`
       );
     } catch (error) {
-      toast.error('Survey creation failed');
+      toast.error(t('surveyCreationFailed'));
     }
     setIsCreating(false);
   };

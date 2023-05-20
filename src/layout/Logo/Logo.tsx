@@ -1,23 +1,19 @@
-import clsx from 'clsx';
 import Link from 'next/link';
+import logo from '../../../public/images/logo.svg';
+import Image from 'next/image';
 
 interface LogoProps {
-  classNames?: string;
+  width?: number;
+  height?: number;
 }
 
-function Logo({ classNames = '' }: LogoProps) {
+function Logo({ width = 115, height = 50 }: LogoProps) {
   return (
-    <Link href={'/'} passHref>
-      <a
-        href={'/'}
-        className={clsx(
-          'block translate-y-[-2px] font-serif text-2xl text-zinc-600 xsm:ml-14 md:ml-11',
-          classNames
-        )}
-      >
-        Employee Pulse
-      </a>
-    </Link>
+    <div className="flex cursor-pointer items-center">
+      <Link href={'/'}>
+        <Image src={logo} alt="logo" width={width} height={height} />
+      </Link>
+    </div>
   );
 }
 

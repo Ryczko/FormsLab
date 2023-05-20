@@ -1,0 +1,17 @@
+{
+  "title": "Login",
+  "content": "Login - FormsLab",
+  "heading": "Sign in",
+  "googleButton": "Sign in with Google",
+  "githubButton": "Sign in with Github",
+  "signInButton": "Sign in",
+  "or": "or",
+  "dontHaveAccount": "Don't have an account?",
+  "email": "E-mail",
+  "password": "Password",
+  "incorrectEmail": "Incorrect email address",
+  "required": "Required field",
+  "errorSingingIn": "Error while signing in!",
+  "authError": "Authentication failed",
+  "accountWithEmailAlreadyExist": "The account already exists for that email."
+}

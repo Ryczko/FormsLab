@@ -8,49 +8,55 @@ import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import { useSettingsManager } from 'features/settings/settingsManager';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import withFeatureToggles from 'shared/HOC/withFeatureToggles';
+import useTranslation from 'next-translate/useTranslation';
 
 function SettingsPage() {
   const {
     user,
-    loading,
     isOpen,
     openDeleteModal,
     closeDeleteModal,
     handleOnAccountDelete,
     isRemoving,
   } = useSettingsManager();
+  const { t } = useTranslation('settings');
 
   return (
     <>
       <Head>
-        <title>Settings</title>
-        <meta name="description" content="Settings - Employee Pulse" />
+        <title>{t('title')}</title>
+        <meta name="description" content={t('content')} />
       </Head>
 
-      <Header>Hi {user?.displayName}!</Header>
+      <Header>
+        {t('heading')}&nbsp;{user?.displayName}!
+      </Header>
       <div className="flex flex-col items-center justify-center space-y-2">
         <div className="flex w-full md:ml-2 md:w-auto">
           <Button
             variant={ButtonVariant.DANGER}
-            title="Delete my account"
-            className="mt-2 ml-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
+            title={t('deleteAccountButtonTitle')}
+            className="ml-2 mt-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
             onClick={openDeleteModal}
             icon={<TrashIcon className="h-5 w-5" />}
           >
-            Delete my account
+            {t('deleteAccountButton')}
           </Button>
         </div>
       </div>
       <StyledDialog
         isOpen={isOpen}
         onClose={closeDeleteModal}
-        title="Delete my account"
+        title={t('dialogTitle')}
         content={
           <>
             <div className="mt-2">
               <p className="text-sm text-red-500">
-                Are you sure you want to&nbsp;
-                <span className="font-bold">delete</span> your account?
+                {t('dialogContentFirst')}&nbsp;
+                <span className="font-bold">
+                  {t('dialogContentSecond')}
+                </span>{' '}
+                {t('dialogContentThird')}
               </p>
             </div>
             <div className="mt-6 flex justify-between space-x-3">
@@ -60,7 +66,7 @@ function SettingsPage() {
                 className="uppercase"
                 disabled={isRemoving}
               >
-                Cancel
+                {t('buttonCancle')}
               </Button>
               <Button
                 variant={ButtonVariant.DANGER}
@@ -69,15 +75,12 @@ function SettingsPage() {
                 className="uppercase"
                 isLoading={isRemoving}
               >
-                Confirm
+                {t('buttonConfirm')}
               </Button>
             </div>
           </>
         }
       />
-      {loading && (
-        <div className="text-center text-sm text-zinc-600">Loading...</div>
-      )}
     </>
   );
 }

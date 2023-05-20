@@ -23,6 +23,7 @@ function Input({
   error,
   className,
   absoluteError,
+  ...props
 }: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
     <div className="relative">
@@ -36,16 +37,17 @@ function Input({
         placeholder={placeholder}
         onChange={onChange}
         className={clsx(
-          'mt-2 mb-4 block w-full rounded-lg border py-2 px-4 shadow focus:outline-none',
+          'mb-4 mt-2 block w-full rounded-lg border px-4 py-2 shadow focus:outline-none',
           error ? ' border-red-400' : ' border-transparent',
           className
         )}
+        {...props}
       />
       {!!error && (
         <p
           className={clsx(
             'mb-1 text-right text-sm text-red-400',
-            absoluteError ? 'absolute top-full right-0 my-1' : ''
+            absoluteError ? 'absolute right-0 top-full my-1' : ''
           )}
         >
           {error}
