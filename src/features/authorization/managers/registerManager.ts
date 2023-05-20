@@ -25,7 +25,10 @@ export const useRegisterManager = () => {
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters long')
       .max(64, 'Password can be up to 64 characters long')
-      .required('Required field'),
+      .required('Required field')
+      .test('no-spaces', 'Password cannot contain only spaces', (value) => {
+        return value.trim() !== '';
+      }),
   });
 
   const onSubmit = async (
