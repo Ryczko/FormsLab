@@ -27,6 +27,7 @@ export const useRegisterManager = () => {
     password: Yup.string()
       .min(8, t('signup:passwordLengthMin'))
       .max(64, t('signup:passwordLengthMax'))
+      .matches(/^\S*$/, t('signup:noSpaceInPassword'))
       .required(t('signup:required')),
   });
 
