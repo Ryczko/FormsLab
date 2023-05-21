@@ -16,5 +16,5 @@
   "authError": "Authentication failed",
   "accountWithEmailAlreadyExist": "The account already exists for that email.",
   "registerError": "Registration failed!",
-  "noSpaceInPassword": "Password cannot contain spaces"
+  "restrictedCharacterError": "Password contains illegal characters. Please use only letters (both uppercase and lowercase), digits, and the following special characters: ! @ # $ % ^ & * ( ) _ + -"
 }
