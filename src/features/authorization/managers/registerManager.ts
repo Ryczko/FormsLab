@@ -30,7 +30,7 @@ export const useRegisterManager = () => {
         t('signup:restrictedCharacterError')
       )
       .min(8, t('signup:passwordLengthMin'))
-      .max(64, t('signup:restrictedCharacterError'))
+      .max(64, t('signup:passwordLengthMax'))
       .required(t('signup:required')),
   });
 
