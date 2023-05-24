@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { signInWithGoogle, signInWithGithub } from 'firebaseConfiguration';
 import withAnimation from 'shared/HOC/withAnimation';
 import Header from 'shared/components/Header/Header';
 import LoginButton from 'shared/components/LoginButton/LoginButton';
@@ -13,10 +12,12 @@ import { useLoginManager } from 'features/authorization/managers/loginManager';
 import Github from '../../../public/images/github.svg';
 import Google from '../../../public/images/google.svg';
 import useTranslation from 'next-translate/useTranslation';
+import { signIn } from 'next-auth/react';
 
 function LoginPage() {
   const { loading, user } = useApplicationContext();
-  const { initialValues, LoginSchema, onSubmit } = useLoginManager();
+  const { initialValues, LoginSchema, onSubmit, onGoogleLogin, onGithubLogin } =
+    useLoginManager();
   const router = useRouter();
   const { redirect } = router.query;
   const { t } = useTranslation('login');
@@ -48,25 +49,12 @@ function LoginPage() {
         >
           {({ values, errors, handleChange, handleSubmit, touched }) => (
             <Form className="flex w-full flex-col sm:w-80">
-              <LoginButton
-                image={Google}
-                onClick={() =>
-                  signInWithGoogle(
-                    t('login:authError'),
-                    t('login:accountWithEmailAlreadyExist')
-                  )
-                }
-              >
+              <LoginButton image={Google} onClick={onGoogleLogin}>
                 {t('login:googleButton')}
               </LoginButton>
               <LoginButton
                 image={Github}
-                onClick={() =>
-                  signInWithGithub(
-                    t('login:authError'),
-                    t('login:accountWithEmailAlreadyExist')
-                  )
-                }
+                onClick={onGithubLogin}
                 className="mb-3"
               >
                 {t('login:githubButton')}

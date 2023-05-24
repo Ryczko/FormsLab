@@ -1,11 +1,11 @@
-import { addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useApplicationContext } from 'features/application/context';
-import { db } from 'firebaseConfiguration';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
+import axios from 'axios';
+import { QuestionType } from '@prisma/client';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
@@ -66,13 +66,26 @@ export const useCreateSurveyManager = () => {
     setIsCreating(true);
 
     try {
-      const newSurvey = await addDoc(collection(db, 'surveys'), {
-        title,
-        pack,
-        isActive: true,
-        creatorId: user?.uid,
-        createDate: new Date(),
-      });
+      // const newSurvey = await addDoc(collection(db, 'surveys'), {
+      //   title,
+      //   pack,
+      //   isActive: true,
+      //   creatorId: user?.uid,
+      //   createDate: new Date(),
+      // });
+      const newSurvey = await axios
+        .post('/api/survey', {
+          title,
+          questions: [
+            {
+              title: 'ljlkjkl',
+              options: pack,
+              type: QuestionType.EMOIJI,
+            },
+          ],
+        })
+        .then((res) => res.data);
+
       const domain =
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
       const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;

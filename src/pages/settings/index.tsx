@@ -29,7 +29,7 @@ function SettingsPage() {
       </Head>
 
       <Header>
-        {t('heading')}&nbsp;{user?.displayName}!
+        {t('heading')}&nbsp;{user?.name}!
       </Header>
       <div className="flex flex-col items-center justify-center space-y-2">
         <div className="flex w-full md:ml-2 md:w-auto">

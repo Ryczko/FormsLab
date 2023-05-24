@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
-import { ComponentType } from 'react';
+import { FunctionComponent } from 'react';
 
-const withAnimation = (WrappedComponent: ComponentType) => {
-  const hocComponent = ({ ...props }) => (
+const withAnimation = <T extends object>(
+  WrappedComponent: FunctionComponent<T>
+) => {
+  const hocComponent: FunctionComponent<T> = ({ ...props }) => (
     <motion.div
       data-test-id="loading"
       initial={{ opacity: 0, y: 16 }}

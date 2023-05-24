@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router';
-import { ComponentType } from 'react';
+import { FunctionComponent } from 'react';
 import { useApplicationContext } from 'features/application/context';
 
-const withProtectedRoute = (WrappedComponent: ComponentType) => {
-  const HocComponent = ({ ...props }) => {
+const withProtectedRoute = <T extends object>(
+  WrappedComponent: FunctionComponent<T>
+) => {
+  const HocComponent: FunctionComponent<T> = ({ ...props }) => {
     const { user, loading, error } = useApplicationContext();
     const isLoggedIn = user && !error;
     const location = useRouter();

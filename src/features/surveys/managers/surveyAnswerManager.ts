@@ -1,11 +1,10 @@
-import { getDoc, doc, addDoc, collection } from 'firebase/firestore';
-import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
-import { db } from 'firebaseConfiguration';
 import { LocalStorageKeys } from 'features/surveys/constants/types';
 import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const DEFAULT_VALUE: string[] = [];
 
@@ -29,18 +28,19 @@ export const useSurveyAnswerManager = () => {
   const { t } = useTranslation('survey');
 
   const getSurveyData = useCallback(async () => {
-    const surveyData = await getDoc(doc(db, 'surveys', surveyId));
-    if (!surveyData.exists()) {
+    const surveyData = await fetch(`/api/survey/${surveyId}`)
+      .then((res) => res.json())
+      .then((res) => res.survey);
+
+    console.log(surveyData);
+
+    if (!surveyData.isActive) {
       router.replace('/');
       return;
-    }
-
-    if (!surveyData.data()?.isActive) {
-      setIsSurveyActive(false);
     } else {
       setIsSurveyActive(true);
-      setQuestion(surveyData.data()?.title);
-      setIcons(surveyData.data()?.pack);
+      setQuestion(surveyData.title);
+      setIcons(surveyData.questions[0].options);
     }
     setIsLoading(false);
   }, [router, surveyId]);
@@ -81,13 +81,20 @@ export const useSurveyAnswerManager = () => {
         throw new Error('Survey ID not found');
       }
 
-      const survey = await getDoc(doc(db, 'surveys', surveyId));
+      const survey = await axios
+        .get(`/api/survey/${surveyId}`)
+        .then((res) => res.data.survey);
 
-      if (survey.data()?.isActive) {
-        await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
-          selectedIcon,
-          answer,
-          answerDate: new Date(),
+      console.log(survey);
+
+      if (survey.isActive) {
+        await axios.post(`/api/answer/${surveyId}`, {
+          answersData: [
+            {
+              questionId: survey.questions[0].id,
+              answer: selectedIcon,
+            },
+          ],
         });
         setLocalStorageValue([...localStorageValue, surveyId]);
         await router.replace('/');

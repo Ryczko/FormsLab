@@ -14,13 +14,16 @@ model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String
   image          String?
-  email          String    @unique
-  authProvider   String
+  email          String?   @unique
+  emailVerified  DateTime?
   hashedPassword String?
   createdAt      DateTime  @default(now())
-  surveysIds     String[]  @db.ObjectId
+  updatedAt      DateTime  @updatedAt
   sessions       Session[]
-  Account        Account[]
+  accounts       Account[]
+
+  surveys Survey[]
+  answers Answer[]
 }
 
 model Account {
@@ -47,7 +50,65 @@ model Session {
   sessionToken String   @unique
   userId       String   @db.ObjectId
   expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Survey {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String     @db.ObjectId
+  createdAt   DateTime   @default(now())
+  title       String
+  isActive    Boolean
+  description String?
+  questions   Question[]
+  answers     Answer[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Question {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  surveyId    String       @db.ObjectId
+  createdAt   DateTime     @default(now())
+  title       String
+  description String?
+  type        QuestionType
+  options     String[]
+
+  survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+}
+
+model Answer {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String?  @db.ObjectId
+  createdAt  DateTime @default(now())
+  surveyId   String   @db.ObjectId
+
+  answerData AnswerData[]
+
+  user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+}
+
+model AnswerData {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  answerId       String @db.ObjectId
+  questionId     String @db.ObjectId
+  providedAnswer String
+
+  answer   Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+ }
+
+enum QuestionType {
+  EMOIJI
+  INPUT
+}

@@ -1,28 +1,37 @@
 import { useCallback, useState, useEffect } from 'react';
-import {
-  getDoc,
-  doc,
-  collection,
-  query,
-  orderBy,
-  Timestamp,
-  updateDoc,
-  onSnapshot,
-  QuerySnapshot,
-  DocumentData,
-  getDocs,
-} from 'firebase/firestore';
+
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { BarChartData } from 'features/surveys/components/BarChart/BarChart';
 import { AnswerData } from 'features/surveys/interfaces/AnswerData';
-import {
-  formatDateDistance,
-  formatFirebaseDateWithHours,
-} from 'shared/utilities/convertTime';
+
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
-import { db } from 'firebaseConfiguration';
+
 import useTranslation from 'next-translate/useTranslation';
+import axios from 'axios';
+
+interface SurveyData {
+  survey: {
+    id: string;
+    title: string;
+    createdAt: string;
+    isActive: boolean;
+    questions: {
+      id: string;
+      title: string;
+      options: string[];
+    }[];
+    answers: {
+      id: string;
+      answerData: {
+        id: string;
+        answerId: string;
+        questionId: string;
+        providedAnswer: string;
+      }[];
+    }[];
+  };
+}
 
 export const useSurveyResultsManager = () => {
   const router = useRouter();
@@ -45,45 +54,27 @@ export const useSurveyResultsManager = () => {
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyAnswer');
 
-  const getAnswersData = useCallback(
-    async (answersCollection: QuerySnapshot<DocumentData>) => {
-      setVotes(answersCollection.docs.length);
-
-      const data = answersCollection.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        answerDate: formatDateDistance(doc.data().answerDate as Timestamp),
-      })) as AnswerData[];
-      setAnswersData(data);
-    },
-    []
-  );
-
   const getSurveyData = useCallback(
     async (displayMessages = false) => {
-      const surveyData = await getDoc(doc(db, 'surveys', surveyId));
-      if (!surveyData.exists()) {
+      const surveyData = (await axios
+        .get(`/api/survey/${surveyId}`)
+        .then((res) => res.data)) as SurveyData;
+
+      if (!surveyData) {
         router.replace('/');
         return;
       }
 
-      if (!process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE) {
-        const answersQuery = await query(
-          collection(db, 'surveys', surveyId, 'answers'),
-          orderBy('answerDate', 'desc')
-        );
+      const mappedDataByQuestion = surveyData.survey.answers.map((answer) => {
+        return answer.answerData[0];
+      });
 
-        const answersData = await getDocs(answersQuery);
+      setVotes(surveyData.survey.answers.length);
+      setAnswersData(mappedDataByQuestion || []);
+      setIsSurveyActive(surveyData.survey.isActive);
 
-        getAnswersData(answersData);
-      }
-
-      setIsSurveyActive(surveyData.data()?.isActive);
-      setCreateDate(
-        formatFirebaseDateWithHours(surveyData.data()?.createDate as Timestamp)
-      );
-
-      setTitle(surveyData.data()?.title);
+      setCreateDate(surveyData.survey.createdAt);
+      setTitle(surveyData.survey.title);
 
       if (displayMessages) {
         toast.success(t('refreshSuccess'));
@@ -91,7 +82,7 @@ export const useSurveyResultsManager = () => {
 
       setIsLoading(false);
     },
-    [surveyId, router, getAnswersData, t]
+    [surveyId, router, t]
   );
 
   useEffect(() => {
@@ -102,25 +93,15 @@ export const useSurveyResultsManager = () => {
 
     getSurveyData();
 
-    if (process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE) {
-      onSnapshot(
-        query(
-          collection(db, 'surveys', surveyId, 'answers'),
-          orderBy('answerDate', 'desc')
-        ),
-        getAnswersData
-      );
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateSurveyStatus = async (isActive: boolean) => {
     try {
       setIsSurveyActive(isActive);
-      await updateDoc(doc(db, 'surveys', surveyId), {
-        isActive,
-      });
+      // await updateDoc(doc(db, 'surveys', surveyId), {
+      //   isActive,
+      // });
 
       toast.success(
         `${t('toggleChangeActiveStatus')} ${
@@ -138,7 +119,7 @@ export const useSurveyResultsManager = () => {
     }
 
     const uniqueAnswers = Array.from(
-      new Set(answersData.map((a) => a.selectedIcon))
+      new Set(answersData.map((a) => a.providedAnswer))
     );
 
     const result: {
@@ -150,7 +131,7 @@ export const useSurveyResultsManager = () => {
     });
 
     answersData.forEach((answer) => {
-      result[answer.selectedIcon] += 1;
+      result[answer.providedAnswer] += 1;
     });
 
     return Object.keys(result)
@@ -167,7 +148,7 @@ export const useSurveyResultsManager = () => {
 
   useEffect(() => {
     const filtered = showOnlyWithExtraFeedback
-      ? answersData.filter((answer) => answer.answer.trim() !== '')
+      ? answersData.filter((answer) => answer.providedAnswer.trim() !== '')
       : answersData;
     setFilteredAnswersData(filtered);
   }, [answersData, showOnlyWithExtraFeedback]);

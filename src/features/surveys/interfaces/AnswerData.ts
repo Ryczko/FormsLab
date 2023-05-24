@@ -1,6 +1,6 @@
 export interface AnswerData {
   id: string;
-  answerDate: string;
-  selectedIcon: string;
-  answer: string;
+  answerId: string;
+  questionId: string;
+  providedAnswer: string;
 }

@@ -1,24 +1,47 @@
-import { DocumentData, Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import Head from 'next/head';
 import { formatDateDistance } from 'shared/utilities/convertTime';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import Header from 'shared/components/Header/Header';
-import Loader from 'shared/components/Loader/Loader';
 import SurveyRow from 'features/surveys/components/SurveyRow/SurveyRow';
-import { useSurveyListManager } from 'features/surveys/managers/surveyListManager';
 import NoSurveys from '../../../public/images/no-surveys.svg';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import usePagination from 'features/surveys/hooks/usePagination';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import useTranslation from 'next-translate/useTranslation';
+import { InferGetServerSidePropsType, NextPageContext } from 'next';
+import { getSession } from 'next-auth/react';
+import axios from 'axios';
 
-function SurveyListPage() {
-  const { error, loading, surveysCollection } = useSurveyListManager();
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  const surveys = await axios
+    .get('http://localhost:3000/api/survey')
+    .then((res) => res.data);
+
+  return {
+    props: {
+      surveys: surveys.surveys,
+    },
+  };
+}
+
+function SurveyListPage({
+  surveys,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
-    usePagination<DocumentData>(surveysCollection?.docs ?? [], { size: 10 });
+    usePagination<any>(surveys ?? [], { size: 10 });
   const { t } = useTranslation('surveys');
 
   return (
@@ -31,22 +54,19 @@ function SurveyListPage() {
       <Header>{t('heading')}</Header>
 
       <div className="flex flex-col items-center justify-center">
-        <div>
+        {/* <div>
           {error && <strong>{t('headingError')}</strong>}
           {loading && <Loader isLoading={true} />}
-        </div>
-        {surveysCollection &&
+        </div> */}
+        {surveys &&
           (items?.length > 0 ? (
-            items.map((doc) => {
-              const survey = doc.data();
+            items.map((item) => {
               return (
                 <SurveyRow
-                  key={doc.id}
-                  id={doc.id}
-                  question={survey.title}
-                  createDate={formatDateDistance(
-                    survey.createDate as Timestamp
-                  )}
+                  key={item.id}
+                  id={item.id}
+                  question={item.title}
+                  createDate={formatDateDistance(item.createdAt)}
                 ></SurveyRow>
               );
             })

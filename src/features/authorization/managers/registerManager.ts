@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { useApplicationContext } from 'features/application/context';
-import { registerWithEmailAndPassword } from 'firebaseConfiguration';
 import useTranslation from 'next-translate/useTranslation';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/react';
 
 export const useRegisterManager = () => {
-  const { changeDisplayName } = useApplicationContext();
   const [isRegistering, setIsRegistering] = useState(false);
   const { t } = useTranslation();
+
+  const router = useRouter();
 
   const initialValues = {
     name: '',
@@ -40,21 +42,20 @@ export const useRegisterManager = () => {
   ) => {
     setIsRegistering(true);
     try {
-      await registerWithEmailAndPassword({
+      await axios.post('/api/register', {
         name: values.name,
         email: values.email,
         password: values.password,
-        changeDisplayName,
-        registerError: t('signup:registerError'),
-        accountAlreadyExist: t('signup:accountAlreadyExist'),
       });
 
-      // MIGRATION TO NEXT-AUTH
-      // await axios.post('/api/register', {
-      //   name: values.name,
-      //   email: values.email,
-      //   password: values.password,
-      // });
+      await signIn('credentials', {
+        email: values.email,
+        password: values.password,
+        callbackUrl: '/',
+        redirect: false,
+      });
+
+      router.push('/');
 
       resetForm();
     } catch (e) {
