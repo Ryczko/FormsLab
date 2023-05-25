@@ -15,5 +15,6 @@
   "alreadyHaveAccount": "Already have an account?",
   "authError": "Authentication failed",
   "accountWithEmailAlreadyExist": "The account already exists for that email.",
-  "registerError": "Registration failed!"
+  "registerError": "Registration failed!",
+  "restrictedCharacterError": "Password contains illegal characters."
 }

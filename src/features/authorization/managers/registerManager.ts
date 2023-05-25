@@ -25,6 +25,10 @@ export const useRegisterManager = () => {
       .email(t('signup:incorrectEmail'))
       .required(t('signup:required')),
     password: Yup.string()
+      .matches(
+        /^[a-zA-Z0-9!@#$%^&*()_+-]+$/,
+        t('signup:restrictedCharacterError')
+      )
       .min(8, t('signup:passwordLengthMin'))
       .max(64, t('signup:passwordLengthMax'))
       .required(t('signup:required')),
