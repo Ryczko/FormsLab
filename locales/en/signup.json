@@ -16,5 +16,5 @@
   "authError": "Authentication failed",
   "accountWithEmailAlreadyExist": "The account already exists for that email.",
   "registerError": "Registration failed!",
-  "restrictedCharacterError": "Password contains illegal characters. Please use only letters (both uppercase and lowercase), digits, and the following special characters: ! @ # $ % ^ & * ( ) _ + -"
+  "restrictedCharacterError": "Password contains illegal characters."
 }
