@@ -1,8 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import prismadb from '../../../../lib/prismadb';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { getServerSession } from 'next-auth';
+
+import serverAuth from '../../../../lib/serverAuth';
+import { Question } from '@prisma/client';
+
+export async function getAllUserSurveys(userId: string) {
+  const surveys = await prismadb.survey.findMany({
+    where: {
+      user: {
+        id: userId,
+      },
+    },
+    include: {
+      questions: false,
+      answers: false,
+    },
+  });
+
+  return surveys;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,40 +27,33 @@ export default async function handler(
 ) {
   try {
     const requestMethod = req.method;
-
-    const session = await getServerSession(req, res, authOptions);
+    const session = await serverAuth(req, res);
 
     switch (requestMethod) {
       case 'GET': {
-        const surveys = await prismadb.survey.findMany({
-          where: {
-            user: {
-              id: session?.user?.id,
-            },
-          },
-          include: {
-            questions: false,
-            answers: false,
-          },
-        });
-
+        const surveys = await getAllUserSurveys(session.currentUser.id);
         return res.status(200).json({ surveys });
       }
       case 'POST': {
-        const { title, description, questions } = req.body;
+        const { title, description, questions } = req.body as {
+          title: string;
+          description: string;
+          questions: Question[];
+        };
 
         const survey = await prismadb.survey.create({
           data: {
-            user: { connect: { id: session?.user?.id } },
+            user: { connect: { id: session.currentUser.id } },
             title,
             description,
             isActive: true,
             questions: {
-              create: questions.map((question: any) => ({
+              create: questions.map((question) => ({
                 type: question.type,
                 title: question.title,
                 description: question.description,
-                options: { set: question.options },
+                options: question.options,
+                isRequired: true,
               })),
             },
           },

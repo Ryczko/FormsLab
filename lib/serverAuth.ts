@@ -17,7 +17,7 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   if (!currentUser) {
-    throw new Error('You must be logged in to access this page');
+    throw new Error('No user found');
   }
 
   return { currentUser };

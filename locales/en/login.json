@@ -13,5 +13,6 @@
   "required": "Required field",
   "errorSingingIn": "Error while signing in!",
   "authError": "Authentication failed",
-  "accountWithEmailAlreadyExist": "The account already exists for that email."
+  "accountWithEmailAlreadyExist": "The account already exists for that email.",
+  "differentProvider": "Failed to login. Email is used by other provider."
 }

@@ -12,7 +12,6 @@ import { useLoginManager } from 'features/authorization/managers/loginManager';
 import Github from '../../../public/images/github.svg';
 import Google from '../../../public/images/google.svg';
 import useTranslation from 'next-translate/useTranslation';
-import { signIn } from 'next-auth/react';
 
 function LoginPage() {
   const { loading, user } = useApplicationContext();

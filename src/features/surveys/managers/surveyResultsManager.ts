@@ -8,37 +8,14 @@ import { AnswerData } from 'features/surveys/interfaces/AnswerData';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 
 import useTranslation from 'next-translate/useTranslation';
-import axios from 'axios';
+import { getFetch } from '../../../../lib/axiosConfig';
+import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 
-interface SurveyData {
-  survey: {
-    id: string;
-    title: string;
-    createdAt: string;
-    isActive: boolean;
-    questions: {
-      id: string;
-      title: string;
-      options: string[];
-    }[];
-    answers: {
-      id: string;
-      answerData: {
-        id: string;
-        answerId: string;
-        questionId: string;
-        providedAnswer: string;
-      }[];
-    }[];
-  };
-}
-
-export const useSurveyResultsManager = () => {
+export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   const router = useRouter();
   const { surveyId } = router.query as { surveyId: string };
 
   const [votes, setVotes] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [createDate, setCreateDate] = useState<string>('');
   const [answersData, setAnswersData] = useState<AnswerData[]>([]);
@@ -54,35 +31,37 @@ export const useSurveyResultsManager = () => {
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyAnswer');
 
+  const fillSurveyData = useCallback((surveyData: SurveyWithAnswers) => {
+    const mappedDataByQuestion = surveyData.answers.map((answer) => {
+      return answer.answerData[0];
+    });
+
+    setVotes(surveyData.answers.length);
+    setAnswersData(mappedDataByQuestion || []);
+    setIsSurveyActive(surveyData.isActive);
+
+    setCreateDate(surveyData.createdAt.toString());
+    setTitle(surveyData.title);
+  }, []);
+
   const getSurveyData = useCallback(
     async (displayMessages = false) => {
-      const surveyData = (await axios
-        .get(`/api/survey/${surveyId}`)
-        .then((res) => res.data)) as SurveyData;
+      const surveyData = await getFetch<SurveyWithAnswers>(
+        `/api/survey/${surveyId}`
+      );
 
       if (!surveyData) {
         router.replace('/');
         return;
       }
 
-      const mappedDataByQuestion = surveyData.survey.answers.map((answer) => {
-        return answer.answerData[0];
-      });
-
-      setVotes(surveyData.survey.answers.length);
-      setAnswersData(mappedDataByQuestion || []);
-      setIsSurveyActive(surveyData.survey.isActive);
-
-      setCreateDate(surveyData.survey.createdAt);
-      setTitle(surveyData.survey.title);
+      fillSurveyData(surveyData);
 
       if (displayMessages) {
         toast.success(t('refreshSuccess'));
       }
-
-      setIsLoading(false);
     },
-    [surveyId, router, t]
+    [surveyId, router, t, fillSurveyData]
   );
 
   useEffect(() => {
@@ -91,7 +70,7 @@ export const useSurveyResultsManager = () => {
       return;
     }
 
-    getSurveyData();
+    fillSurveyData(initialData);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -166,7 +145,6 @@ export const useSurveyResultsManager = () => {
   };
 
   return {
-    isLoading,
     title,
     handleCopyLink,
     surveyId,

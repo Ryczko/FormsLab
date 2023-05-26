@@ -7,6 +7,24 @@ import Input from 'shared/components/Input/Input';
 import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
 import useTranslation from 'next-translate/useTranslation';
 import QuestionBlockFactory from 'features/surveys/components/QuestionBlocks/QuestionBlockFactory';
+import { getSession } from 'next-auth/react';
+import { NextPageContext } from 'next';
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 function SurveyCreatePage() {
   const {
@@ -53,7 +71,7 @@ function SurveyCreatePage() {
         <Button
           name="create-survey"
           onClick={createSurvey}
-          className="z-0 mt-2 w-full py-3"
+          className="z-0 mt-2 w-full"
           variant={ButtonVariant.PRIMARY}
           isLoading={isCreating}
         >

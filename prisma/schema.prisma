@@ -82,10 +82,12 @@ model Question {
   title       String
   description String?
   type        QuestionType
+  isRequired  Boolean
   options     String[]
 
   survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
 }
+
 
 model Answer {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -109,6 +111,6 @@ model AnswerData {
  }
 
 enum QuestionType {
-  EMOIJI
+  EMOJI
   INPUT
 }

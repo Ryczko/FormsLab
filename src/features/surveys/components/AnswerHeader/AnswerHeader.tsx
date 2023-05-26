@@ -3,6 +3,7 @@ import { BarChartData } from 'features/surveys/components/BarChart/BarChart';
 import BarChart from 'features/surveys/components/BarChart/BarChart';
 import DataCard from 'features/surveys/components/DataCard/DataCard';
 import useTranslation from 'next-translate/useTranslation';
+import { formatDate } from 'shared/utilities/convertTime';
 
 interface AnswerHeaderProps {
   totalVotes: number;
@@ -26,7 +27,10 @@ function AnswerHeader({
           !chartData.length ? 'md:flex-row' : ''
         )}
       >
-        <DataCard title={t('createDateInformation')} value={createDate} />
+        <DataCard
+          title={t('createDateInformation')}
+          value={formatDate(createDate)}
+        />
         <DataCard
           title={t('totalVotesInformation')}
           value={totalVotes.toString()}

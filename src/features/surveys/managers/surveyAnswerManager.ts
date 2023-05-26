@@ -4,11 +4,12 @@ import { LocalStorageKeys } from 'features/surveys/constants/types';
 import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import { getFetch, postFetch } from '../../../../lib/axiosConfig';
+import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
 
 const DEFAULT_VALUE: string[] = [];
 
-export const useSurveyAnswerManager = () => {
+export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   const router = useRouter();
   const [showEmojiError, setShowEmojiError] = useState(false);
   const { surveyId } = router.query as { surveyId: string };
@@ -19,7 +20,6 @@ export const useSurveyAnswerManager = () => {
   const [icons, setIcons] = useState<string[]>([]);
   const [selectedIcon, setSelectedIcon] = useState('');
   const [buttonDisable, setButtonDisable] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isAnswering, setIsAnswering] = useState(false);
   const [localStorageValue, setLocalStorageValue] = useLocalStorage<string[]>(
     DEFAULT_VALUE,
@@ -28,22 +28,15 @@ export const useSurveyAnswerManager = () => {
   const { t } = useTranslation('survey');
 
   const getSurveyData = useCallback(async () => {
-    const surveyData = await fetch(`/api/survey/${surveyId}`)
-      .then((res) => res.json())
-      .then((res) => res.survey);
-
-    console.log(surveyData);
-
-    if (!surveyData.isActive) {
+    if (!initialData.isActive) {
       router.replace('/');
       return;
     } else {
       setIsSurveyActive(true);
-      setQuestion(surveyData.title);
-      setIcons(surveyData.questions[0].options);
+      setQuestion(initialData.title);
+      setIcons(initialData.questions[0].options);
     }
-    setIsLoading(false);
-  }, [router, surveyId]);
+  }, [router, initialData]);
 
   useEffect(() => {
     if (surveyId) {
@@ -81,14 +74,12 @@ export const useSurveyAnswerManager = () => {
         throw new Error('Survey ID not found');
       }
 
-      const survey = await axios
-        .get(`/api/survey/${surveyId}`)
-        .then((res) => res.data.survey);
-
-      console.log(survey);
+      const survey = await getFetch<SurveyWithQuestions>(
+        `/api/answer/${surveyId}`
+      );
 
       if (survey.isActive) {
-        await axios.post(`/api/answer/${surveyId}`, {
+        await postFetch(`/api/answer/${surveyId}`, {
           answersData: [
             {
               questionId: survey.questions[0].id,
@@ -96,6 +87,7 @@ export const useSurveyAnswerManager = () => {
             },
           ],
         });
+
         setLocalStorageValue([...localStorageValue, surveyId]);
         await router.replace('/');
         toast.success(t('successfullSubmit'));
@@ -116,7 +108,6 @@ export const useSurveyAnswerManager = () => {
   };
 
   return {
-    isLoading,
     isSurveyActive,
     question,
     icons,

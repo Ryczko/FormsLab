@@ -16,7 +16,7 @@ export const useLoginManager = () => {
 
     switch (error) {
       case 'OAuthAccountNotLinked':
-        toast.error(t('login:accountWithEmailAlreadyExist'));
+        toast.error(t('login:differentProvider'));
         break;
       default:
         toast.error(t('login:authError'));

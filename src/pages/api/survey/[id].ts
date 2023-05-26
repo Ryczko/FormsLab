@@ -1,6 +1,26 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import prismadb from '../../../../lib/prismadb';
+import serverAuth from '../../../../lib/serverAuth';
+
+export async function getSurveyWithAnswers(surveyId: string, userId: string) {
+  const survey = await prismadb.survey.findFirst({
+    where: {
+      id: surveyId,
+      userId: userId,
+    },
+    include: {
+      questions: true,
+      answers: {
+        include: {
+          answerData: true,
+        },
+      },
+    },
+  });
+
+  return survey;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,26 +28,17 @@ export default async function handler(
 ) {
   try {
     const requestMethod = req.method;
+    const session = await serverAuth(req, res);
 
     switch (requestMethod) {
       case 'GET': {
         const { id } = req.query;
+        const survey = await getSurveyWithAnswers(
+          id as string,
+          session.currentUser.id
+        );
 
-        const survey = await prismadb.survey.findUnique({
-          where: {
-            id: id as string,
-          },
-          include: {
-            questions: true,
-            answers: {
-              include: {
-                answerData: true,
-              },
-            },
-          },
-        });
-
-        return res.status(200).json({ survey });
+        return res.status(200).json(survey);
       }
 
       default:

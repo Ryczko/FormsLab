@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react';
-import fetcher from '../../../lib/fetcher';
+import { getFetch } from '../../../lib/axiosConfig';
+import { User } from '@prisma/client';
 
-export const useApplicationManager = () => {
+export interface ApplicationManager {
+  user: User | undefined;
+  loading: boolean;
+  error: boolean;
+}
+
+export const useApplicationManager = (): ApplicationManager => {
   const [loading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState<any>(undefined);
+  const [error, setError] = useState(false);
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     init();
@@ -12,11 +19,10 @@ export const useApplicationManager = () => {
 
   const init = async () => {
     try {
-      const user = await fetcher('/api/current');
-
-      setUser(user.currentUser);
+      const user = await getFetch<User>('/api/current');
+      setUser(user);
     } catch (error) {
-      setError(error);
+      setError(true);
     } finally {
       setIsLoading(false);
     }
@@ -24,7 +30,6 @@ export const useApplicationManager = () => {
 
   return {
     user,
-    setUser,
     loading,
     error,
   };

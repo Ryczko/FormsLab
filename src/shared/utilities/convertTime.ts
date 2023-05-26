@@ -1,6 +1,6 @@
 import { formatDistance } from 'date-fns';
 
-const formatDateDistance = (date: string) => {
+const formatDateDistance = (date: string | Date) => {
   const dateObject = new Date(date);
 
   if (!dateObject) return '';
@@ -14,4 +14,18 @@ const formatDateDistance = (date: string) => {
   return formattedDistance;
 };
 
-export { formatDateDistance };
+const formatDate = (date: string | Date) => {
+  const dateObject = new Date(date);
+
+  if (!dateObject) return '';
+
+  const formattedDate = dateObject.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  return formattedDate;
+};
+
+export { formatDateDistance, formatDate };

@@ -1,18 +1,16 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useApplicationContext } from 'features/application/context';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
-import axios from 'axios';
 import { QuestionType } from '@prisma/client';
+import { postFetch } from '../../../../lib/axiosConfig';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
   const [pack, setPack] = useState<string[]>([]);
   const [error, setError] = useState('');
 
-  const { user } = useApplicationContext();
   const [isCreating, setIsCreating] = useState(false);
 
   const router = useRouter();
@@ -66,25 +64,16 @@ export const useCreateSurveyManager = () => {
     setIsCreating(true);
 
     try {
-      // const newSurvey = await addDoc(collection(db, 'surveys'), {
-      //   title,
-      //   pack,
-      //   isActive: true,
-      //   creatorId: user?.uid,
-      //   createDate: new Date(),
-      // });
-      const newSurvey = await axios
-        .post('/api/survey', {
-          title,
-          questions: [
-            {
-              title: 'ljlkjkl',
-              options: pack,
-              type: QuestionType.EMOIJI,
-            },
-          ],
-        })
-        .then((res) => res.data);
+      const newSurvey = await postFetch('/api/survey', {
+        title,
+        questions: [
+          {
+            title,
+            options: pack,
+            type: QuestionType.EMOJI,
+          },
+        ],
+      });
 
       const domain =
         window.location.hostname === 'localhost' ? 'http://' : 'https://';

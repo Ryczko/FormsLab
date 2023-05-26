@@ -1,8 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import prismadb from '../../../../lib/prismadb';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { getServerSession } from 'next-auth';
+
+export async function getSurveyData(surveyId: string) {
+  const survey = await prismadb.survey.findUnique({
+    where: {
+      id: surveyId,
+    },
+    include: {
+      questions: true,
+      answers: false,
+    },
+  });
+
+  return survey;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,29 +23,19 @@ export default async function handler(
   try {
     const requestMethod = req.method;
 
-    const session = await getServerSession(req, res, authOptions);
     const { id } = req.query;
 
     switch (requestMethod) {
       case 'GET': {
-        const survey = await prismadb.survey.findUnique({
-          where: {
-            id: id as string,
-          },
-          include: {
-            questions: true,
-            answers: false,
-          },
-        });
-
-        return res.status(200).json({ survey });
+        const survey = await getSurveyData(id as string);
+        return res.status(200).json(survey);
       }
       case 'POST': {
         const { answersData } = req.body as {
           answersData: { questionId: string; answer: string }[];
         };
 
-        const answer = await prismadb.answer.create({
+        await prismadb.answer.create({
           data: {
             survey: {
               connect: {

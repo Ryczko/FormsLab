@@ -2,15 +2,14 @@ import { useState } from 'react';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import useTranslation from 'next-translate/useTranslation';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
+import { postFetch } from '../../../../lib/axiosConfig';
+import { isAxiosError } from 'axios';
 
 export const useRegisterManager = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const { t } = useTranslation();
-
-  const router = useRouter();
 
   const initialValues = {
     name: '',
@@ -38,11 +37,11 @@ export const useRegisterManager = () => {
 
   const onSubmit = async (
     values: FormValues,
-    { resetForm, setFieldError }: FormikHelpers<FormValues>
+    { setFieldError }: FormikHelpers<FormValues>
   ) => {
     setIsRegistering(true);
     try {
-      await axios.post('/api/register', {
+      await postFetch('/api/register', {
         name: values.name,
         email: values.email,
         password: values.password,
@@ -55,13 +54,17 @@ export const useRegisterManager = () => {
         redirect: false,
       });
 
-      router.push('/');
-
-      resetForm();
-    } catch (e) {
-      setFieldError('message', t('signup:errorSingingUp'));
+      window.location.replace('/');
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response?.data.message === 'User already exists') {
+          setFieldError('email', t('signup:accountWithEmailAlreadyExist'));
+        }
+      } else {
+        setFieldError('message', t('signup:errorSingingUp'));
+      }
+      setIsRegistering(false);
     }
-    setIsRegistering(false);
   };
 
   return {

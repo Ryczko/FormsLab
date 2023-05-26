@@ -13,26 +13,26 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
-import axios from 'axios';
+import { getAllUserSurveys } from 'pages/api/survey';
+import { Survey } from '@prisma/client';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
+
   if (!session) {
     return {
       redirect: {
-        destination: '/auth/signin',
+        destination: '/login',
         permanent: false,
       },
     };
   }
 
-  const surveys = await axios
-    .get('http://localhost:3000/api/survey')
-    .then((res) => res.data);
+  const surveys = await getAllUserSurveys(session.user.id);
 
   return {
     props: {
-      surveys: surveys.surveys,
+      surveys: JSON.parse(JSON.stringify(surveys)),
     },
   };
 }
@@ -41,7 +41,7 @@ function SurveyListPage({
   surveys,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
-    usePagination<any>(surveys ?? [], { size: 10 });
+    usePagination<Survey>(surveys ?? [], { size: 10 });
   const { t } = useTranslation('surveys');
 
   return (
@@ -54,10 +54,6 @@ function SurveyListPage({
       <Header>{t('heading')}</Header>
 
       <div className="flex flex-col items-center justify-center">
-        {/* <div>
-          {error && <strong>{t('headingError')}</strong>}
-          {loading && <Loader isLoading={true} />}
-        </div> */}
         {surveys &&
           (items?.length > 0 ? (
             items.map((item) => {
