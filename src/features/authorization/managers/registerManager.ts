@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
 import { postFetch } from '../../../../lib/axiosConfig';
 import { isAxiosError } from 'axios';
