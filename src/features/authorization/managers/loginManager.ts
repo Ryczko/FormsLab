@@ -45,16 +45,18 @@ export const useLoginManager = () => {
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     try {
-      await signIn('credentials', {
+      const user = await signIn('credentials', {
         email: values.email,
         password: values.password,
         callbackUrl: '/',
         redirect: false,
       });
 
-      router.push('/');
-
-      resetForm();
+      if (user?.ok) {
+        window.location.replace('/');
+      } else {
+        toast.error(t('login:wrongCredentails'));
+      }
     } catch (e) {
       toast.error(t('login:authError'));
     }

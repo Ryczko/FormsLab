@@ -13,6 +13,7 @@
   "required": "Required field",
   "errorSingingIn": "Error while signing in!",
   "authError": "Authentication failed",
+  "wrongCredentails": "Wrong email or password",
   "accountWithEmailAlreadyExist": "The account already exists for that email.",
   "differentProvider": "Failed to login. Email is used by other provider."
 }
