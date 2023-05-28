@@ -27,7 +27,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       NEXTAUTH_JWT_SECRET: ${{ secrets.NEXTAUTH_JWT_SECRET }}
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-      BASE_URL: ${{ secrets.BASE_URL }}
+      NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
       GITHUB_ID: ${{ secrets.GITHUB_ID }}
       GITHUB_SECRET: ${{ secrets.GITHUB_SECRET }}
       GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
