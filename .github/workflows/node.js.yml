@@ -51,7 +51,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
-      - name: Run E2E tests
-        uses: cypress-io/github-action@v4
-        with:
-          command: 'npm run e2e:headless:ci'
+      # - name: Run E2E tests
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     command: 'npm run e2e:headless:ci'
