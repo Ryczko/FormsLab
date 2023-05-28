@@ -6,17 +6,20 @@ import { Toaster } from 'react-hot-toast';
 import PageLayout from 'layout/PageLayout';
 import { ApplicationContext } from 'features/application/context';
 import { useApplicationManager } from 'features/application/manager';
+import { SessionProvider } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const manager = useApplicationManager();
 
   return (
-    <ApplicationContext.Provider value={manager}>
-      <Toaster position="bottom-center" />
-      <PageLayout>
-        <Component {...pageProps} />
-      </PageLayout>
-    </ApplicationContext.Provider>
+    <SessionProvider session={session}>
+      <ApplicationContext.Provider value={manager}>
+        <Toaster position="bottom-center" />
+        <PageLayout>
+          <Component {...pageProps} />
+        </PageLayout>
+      </ApplicationContext.Provider>
+    </SessionProvider>
   );
 }
 

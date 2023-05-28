@@ -1,5 +1,3 @@
-import { deleteDoc, doc, getDocs, query, collection } from 'firebase/firestore';
-import { db } from 'firebaseConfiguration';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import useTranslation from 'next-translate/useTranslation';
@@ -13,18 +11,18 @@ export const useRemoveSurvey = () => {
       async () => {
         setIsRemoving(true);
         try {
-          await deleteDoc(doc(db, 'surveys', id));
+        // await deleteDoc(doc(db, 'surveys', id));
 
-          const answersCollection = await getDocs(
-            query(collection(db, 'surveys', id, 'answers'))
-          );
+          // const answersCollection = await getDocs(
+          //   query(collection(db, 'surveys', id, 'answers'))
+          // );
 
-          answersCollection.forEach(async (answer) => {
-            await deleteDoc(answer.ref);
-          });
+          // answersCollection.forEach(async (answer) => {
+          //   await deleteDoc(answer.ref);
+          // });
 
-          if (onSuccess) onSuccess();
-          toast.success(t('surveyRemoving.surveyDeleteSuccess'));
+        // if (onSuccess) onSuccess();
+        // toast.success(t('surveyRemoving.surveyDeleteSuccess'));
         } catch (error) {
           toast.error(t('surveyRemoving.surveyDeleteError'));
         } finally {

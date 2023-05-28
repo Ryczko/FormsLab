@@ -1,30 +1,7 @@
 import { formatDistance } from 'date-fns';
-import { Timestamp } from 'firebase/firestore';
 
-const formatFirebaseDateWithHours = (date: Timestamp | undefined) => {
-  return (
-    date?.toDate().toLocaleString(undefined, {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }) ?? ''
-  );
-};
-
-const formatFirebaseDateWithoutHours = (date: Timestamp | undefined) => {
-  return (
-    date?.toDate().toLocaleString(undefined, {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }) ?? ''
-  );
-};
-
-const formatDateDistance = (date: Timestamp | undefined) => {
-  const dateObject = date?.toDate();
+const formatDateDistance = (date: string | Date) => {
+  const dateObject = new Date(date);
 
   if (!dateObject) return '';
 
@@ -37,8 +14,18 @@ const formatDateDistance = (date: Timestamp | undefined) => {
   return formattedDistance;
 };
 
-export {
-  formatFirebaseDateWithHours,
-  formatFirebaseDateWithoutHours,
-  formatDateDistance,
+const formatDate = (date: string | Date) => {
+  const dateObject = new Date(date);
+
+  if (!dateObject) return '';
+
+  const formattedDate = dateObject.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  return formattedDate;
 };
+
+export { formatDateDistance, formatDate };

@@ -1,18 +1,16 @@
-import { addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useApplicationContext } from 'features/application/context';
-import { db } from 'firebaseConfiguration';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
+import { QuestionType } from '@prisma/client';
+import { postFetch } from '../../../../lib/axiosConfig';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
   const [pack, setPack] = useState<string[]>([]);
   const [error, setError] = useState('');
 
-  const { user } = useApplicationContext();
   const [isCreating, setIsCreating] = useState(false);
 
   const router = useRouter();
@@ -66,13 +64,17 @@ export const useCreateSurveyManager = () => {
     setIsCreating(true);
 
     try {
-      const newSurvey = await addDoc(collection(db, 'surveys'), {
+      const newSurvey = await postFetch('/api/survey', {
         title,
-        pack,
-        isActive: true,
-        creatorId: user?.uid,
-        createDate: new Date(),
+        questions: [
+          {
+            title,
+            options: pack,
+            type: QuestionType.EMOJI,
+          },
+        ],
       });
+
       const domain =
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
       const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;

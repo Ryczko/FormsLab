@@ -1,15 +1,15 @@
-import { getDoc, doc, addDoc, collection } from 'firebase/firestore';
-import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
-import { db } from 'firebaseConfiguration';
 import { LocalStorageKeys } from 'features/surveys/constants/types';
 import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
+import { getFetch, postFetch } from '../../../../lib/axiosConfig';
+import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
 
 const DEFAULT_VALUE: string[] = [];
 
-export const useSurveyAnswerManager = () => {
+export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   const router = useRouter();
   const [showEmojiError, setShowEmojiError] = useState(false);
   const { surveyId } = router.query as { surveyId: string };
@@ -20,7 +20,6 @@ export const useSurveyAnswerManager = () => {
   const [icons, setIcons] = useState<string[]>([]);
   const [selectedIcon, setSelectedIcon] = useState('');
   const [buttonDisable, setButtonDisable] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isAnswering, setIsAnswering] = useState(false);
   const [localStorageValue, setLocalStorageValue] = useLocalStorage<string[]>(
     DEFAULT_VALUE,
@@ -29,21 +28,15 @@ export const useSurveyAnswerManager = () => {
   const { t } = useTranslation('survey');
 
   const getSurveyData = useCallback(async () => {
-    const surveyData = await getDoc(doc(db, 'surveys', surveyId));
-    if (!surveyData.exists()) {
+    if (!initialData.isActive) {
       router.replace('/');
       return;
-    }
-
-    if (!surveyData.data()?.isActive) {
-      setIsSurveyActive(false);
     } else {
       setIsSurveyActive(true);
-      setQuestion(surveyData.data()?.title);
-      setIcons(surveyData.data()?.pack);
+      setQuestion(initialData.title);
+      setIcons(initialData.questions[0].options);
     }
-    setIsLoading(false);
-  }, [router, surveyId]);
+  }, [router, initialData]);
 
   useEffect(() => {
     if (surveyId) {
@@ -81,14 +74,20 @@ export const useSurveyAnswerManager = () => {
         throw new Error('Survey ID not found');
       }
 
-      const survey = await getDoc(doc(db, 'surveys', surveyId));
+      const survey = await getFetch<SurveyWithQuestions>(
+        `/api/answer/${surveyId}`
+      );
 
-      if (survey.data()?.isActive) {
-        await addDoc(collection(db, 'surveys', surveyId, 'answers'), {
-          selectedIcon,
-          answer,
-          answerDate: new Date(),
+      if (survey.isActive) {
+        await postFetch(`/api/answer/${surveyId}`, {
+          answersData: [
+            {
+              questionId: survey.questions[0].id,
+              answer: selectedIcon,
+            },
+          ],
         });
+
         setLocalStorageValue([...localStorageValue, surveyId]);
         await router.replace('/');
         toast.success(t('successfullSubmit'));
@@ -109,7 +108,6 @@ export const useSurveyAnswerManager = () => {
   };
 
   return {
-    isLoading,
     isSurveyActive,
     question,
     icons,

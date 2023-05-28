@@ -1,9 +1,7 @@
 import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
 import { Fragment, useState } from 'react';
-import { signOut } from 'firebase/auth';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { auth } from 'firebaseConfiguration';
 import Logo from 'layout/Logo/Logo';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import BurgerMenu from 'layout/BurgerMenu/BurgerMenu';
@@ -13,15 +11,16 @@ import GithubCorner from 'layout/GithubCorner/GithubCorner';
 import { useApplicationContext } from 'features/application/context';
 import IconButtonLink from 'shared/components/IconButtonLink/IconButtonLink';
 import useTranslation from 'next-translate/useTranslation';
+import { signOut } from 'next-auth/react';
 
 function Navigation() {
-  const { user, loading, displayName } = useApplicationContext();
+  const { user, loading } = useApplicationContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation('common');
 
   const logout = async () => {
-    signOut(auth);
+    signOut();
     setIsOpen(false);
   };
 
@@ -56,11 +55,11 @@ function Navigation() {
                   className="flex w-full items-center justify-center rounded-md px-4 py-1 font-medium hover:bg-zinc-200"
                 >
                   <p className="ml-2 mr-4 hidden items-center truncate sm:block">
-                    {displayName}
+                    {user.name}
                   </p>
-                  {user.photoURL ? (
+                  {user.image ? (
                     <Image
-                      src={user.photoURL}
+                      src={user.image}
                       alt="user photo"
                       width={32}
                       height={32}

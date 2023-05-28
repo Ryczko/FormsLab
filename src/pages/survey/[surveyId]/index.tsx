@@ -4,7 +4,6 @@ import Button, {
   ButtonSize,
 } from 'shared/components/Button/Button';
 import Header from 'shared/components/Header/Header';
-import Loader from 'shared/components/Loader/Loader';
 import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import {
@@ -12,11 +11,24 @@ import {
   AnswersComponentFactory,
 } from 'features/surveys/components/AnswersComponent/AnswersComponentFactory';
 import useTranslation from 'next-translate/useTranslation';
+import { InferGetServerSidePropsType, NextPageContext } from 'next';
+import { getSurveyData } from 'pages/api/answer/[id]';
 
-function AnswerPage() {
+export async function getServerSideProps(context: NextPageContext) {
+  const surveyData = await getSurveyData(context.query.surveyId as string);
+
+  return {
+    props: {
+      initialData: JSON.parse(JSON.stringify(surveyData)),
+    },
+  };
+}
+
+function AnswerPage({
+  initialData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     isSurveyActive,
-    isLoading,
     question,
     icons,
     selectedIcon,
@@ -26,7 +38,7 @@ function AnswerPage() {
     handleSave,
     isAnswering,
     showEmojiError,
-  } = useSurveyAnswerManager();
+  } = useSurveyAnswerManager(initialData);
   const { t } = useTranslation('survey');
 
   return (
@@ -35,51 +47,48 @@ function AnswerPage() {
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
-      <Loader isLoading={isLoading} />
-      {!isLoading && (
-        <>
-          {isSurveyActive ? (
-            <>
-              <Header>{question}</Header>
+      <>
+        {isSurveyActive ? (
+          <>
+            <Header>{question}</Header>
 
-              <AnswersComponentFactory
-                type={AnswerType.BUTTONS}
-                {...{
-                  icons,
-                  selectedIcon,
-                  handleIconClick,
-                  showEmojiError,
-                  answer,
-                  handleInputAnswer,
-                }}
-              />
-              <div className="flex justify-center">
-                <Button
-                  onClick={handleSave}
-                  className="mt-6 w-full sm:w-auto"
-                  variant={ButtonVariant.PRIMARY}
-                  sizeType={ButtonSize.MEDIUM}
-                  isLoading={isAnswering}
-                >
-                  {t('sendButton')}
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <h1 className="text-5xl">🙁</h1>
-              <h1 className="my-5 text-xl">{t('surveyNoLongerActive')}</h1>
-              <ButtonLink
-                href={'/'}
+            <AnswersComponentFactory
+              type={AnswerType.LIST}
+              {...{
+                icons,
+                selectedIcon,
+                handleIconClick,
+                showEmojiError,
+                answer,
+                handleInputAnswer,
+              }}
+            />
+            <div className="flex justify-center">
+              <Button
+                onClick={handleSave}
+                className="mt-6 w-full"
                 variant={ButtonVariant.PRIMARY}
-                className="w-full sm:w-auto"
+                sizeType={ButtonSize.MEDIUM}
+                isLoading={isAnswering}
               >
-                {t('backHomeButton')}
-              </ButtonLink>
-            </>
-          )}
-        </>
-      )}
+                {t('sendButton')}
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1 className="text-5xl">🙁</h1>
+            <h1 className="my-5 text-xl">{t('surveyNoLongerActive')}</h1>
+            <ButtonLink
+              href={'/'}
+              variant={ButtonVariant.PRIMARY}
+              className="w-full sm:w-auto"
+            >
+              {t('backHomeButton')}
+            </ButtonLink>
+          </>
+        )}
+      </>
     </>
   );
 }

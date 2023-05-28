@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { useApplicationContext } from 'features/application/context';
-import { registerWithEmailAndPassword } from 'firebaseConfiguration';
 import useTranslation from 'next-translate/useTranslation';
+import { signIn } from 'next-auth/react';
+import { postFetch } from '../../../../lib/axiosConfig';
+import { isAxiosError } from 'axios';
 
 export const useRegisterManager = () => {
-  const { changeDisplayName } = useApplicationContext();
   const [isRegistering, setIsRegistering] = useState(false);
   const { t } = useTranslation();
 
@@ -36,31 +36,34 @@ export const useRegisterManager = () => {
 
   const onSubmit = async (
     values: FormValues,
-    { resetForm, setFieldError }: FormikHelpers<FormValues>
+    { setFieldError }: FormikHelpers<FormValues>
   ) => {
     setIsRegistering(true);
     try {
-      await registerWithEmailAndPassword({
+      await postFetch('/api/register', {
         name: values.name,
         email: values.email,
         password: values.password,
-        changeDisplayName,
-        registerError: t('signup:registerError'),
-        accountAlreadyExist: t('signup:accountAlreadyExist'),
       });
 
-      // MIGRATION TO NEXT-AUTH
-      // await axios.post('/api/register', {
-      //   name: values.name,
-      //   email: values.email,
-      //   password: values.password,
-      // });
+      await signIn('credentials', {
+        email: values.email,
+        password: values.password,
+        callbackUrl: '/',
+        redirect: false,
+      });
 
-      resetForm();
-    } catch (e) {
-      setFieldError('message', t('signup:errorSingingUp'));
+      window.location.replace('/');
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response?.data.message === 'User already exists') {
+          setFieldError('email', t('signup:accountWithEmailAlreadyExist'));
+        }
+      } else {
+        setFieldError('message', t('signup:errorSingingUp'));
+      }
+      setIsRegistering(false);
     }
-    setIsRegistering(false);
   };
 
   return {

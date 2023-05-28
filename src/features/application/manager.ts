@@ -1,35 +1,36 @@
-import { User } from 'firebase/auth';
-import { useState, useEffect, useCallback } from 'react';
-import { auth } from 'firebaseConfiguration';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useState, useEffect } from 'react';
+import { getFetch } from '../../../lib/axiosConfig';
+import { User } from '@prisma/client';
 
 export interface ApplicationManager {
-  user: User | null | undefined;
-  displayName: string;
+  user: User | undefined;
   loading: boolean;
-  error: Error | undefined;
-  changeDisplayName: (userName: string) => void;
+  error: boolean;
 }
 
 export const useApplicationManager = (): ApplicationManager => {
-  const [displayName, setDisplayName] = useState('');
-  const [user, loading, error] = useAuthState(auth);
+  const [loading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    if (user?.displayName) {
-      setDisplayName(user.displayName);
-    }
-  }, [user]);
-
-  const changeDisplayName = useCallback((userName: string) => {
-    setDisplayName(userName);
+    init();
   }, []);
+
+  const init = async () => {
+    try {
+      const user = await getFetch<User>('/api/current');
+      setUser(user);
+    } catch (error) {
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return {
     user,
     loading,
-    displayName,
     error,
-    changeDisplayName,
   };
 };

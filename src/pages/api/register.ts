@@ -35,7 +35,6 @@ export default async function handler(
         email,
         hashedPassword,
         image: null,
-        authProvider: 'email',
       },
     });
 

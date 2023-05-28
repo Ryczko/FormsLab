@@ -1,4 +1,4 @@
-import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
+import { LinkIcon } from '@heroicons/react/outline';
 
 import { useRouter } from 'next/router';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
@@ -24,7 +24,7 @@ export default function SurveyRow({
   const {
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
-    openModal: openDeleteSurveyModal,
+    // openModal: openDeleteSurveyModal,
   } = useModal();
   const { t } = useTranslation('surveys');
 
@@ -67,13 +67,13 @@ export default function SurveyRow({
           icon={<LinkIcon className="h-5 w-5" />}
           onClick={handleCopyLink}
         />
-        <Button
+        {/* <Button
           variant={ButtonVariant.DANGER}
           title={t('deleteSurveyButtonTitle')}
           className="ml-2 mt-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
           onClick={openDeleteSurveyModal}
           icon={<TrashIcon className="h-5 w-5" />}
-        />
+        /> */}
       </div>
       <DeleteSurveyModal
         surveyId={id}
