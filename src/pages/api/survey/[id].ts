@@ -15,6 +15,9 @@ export async function getSurveyWithAnswers(surveyId: string, userId: string) {
         include: {
           answerData: true,
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
       },
     },
   });
