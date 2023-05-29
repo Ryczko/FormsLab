@@ -1,9 +1,7 @@
 import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
 import useTranslation from 'next-translate/useTranslation';
 import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
-
-const MIN_EMOJIS = 2;
-const MAX_EMOJIS = 8;
+import { MAX_EMOJIS, MIN_EMOJIS } from 'shared/constants/emojisConfig';
 
 interface EmojiQuestionBlockProps {
   pack: string[];
