@@ -23,8 +23,8 @@ export const useApplicationManager = (): ApplicationManager => {
 
   const init = async () => {
     try {
-      const user = await getFetch<User>('/api/current');
       await emojisInit({ data, custom: customEmojisData, set: EMOJI_STYLE });
+      const user = await getFetch<User>('/api/current');
       setUser(user);
     } catch (error) {
       setError(true);
