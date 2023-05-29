@@ -15,8 +15,14 @@ import useTranslation from 'next-translate/useTranslation';
 
 function LoginPage() {
   const { loading, user } = useApplicationContext();
-  const { initialValues, LoginSchema, onSubmit, onGoogleLogin, onGithubLogin } =
-    useLoginManager();
+  const {
+    initialValues,
+    LoginSchema,
+    onSubmit,
+    onGoogleLogin,
+    onGithubLogin,
+    isSubmitting,
+  } = useLoginManager();
   const router = useRouter();
   const { redirect } = router.query;
   const { t } = useTranslation('login');
@@ -89,6 +95,7 @@ function LoginPage() {
                   className="mb-2 mt-1 !bg-indigo-200 !text-indigo-900 hover:!bg-indigo-300"
                   type="submit"
                   onClick={handleSubmit}
+                  isLoading={isSubmitting}
                 >
                   {t('login:signInButton')}
                 </LoginButton>

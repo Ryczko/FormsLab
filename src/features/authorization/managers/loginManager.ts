@@ -3,10 +3,11 @@ import * as Yup from 'yup';
 import useTranslation from 'next-translate/useTranslation';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export const useLoginManager = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -44,6 +45,7 @@ export const useLoginManager = () => {
     values: FormValues,
     { resetForm }: FormikHelpers<FormValues>
   ) => {
+    setIsSubmitting(true);
     try {
       const user = await signIn('credentials', {
         email: values.email,
@@ -59,6 +61,8 @@ export const useLoginManager = () => {
       }
     } catch (e) {
       toast.error(t('login:authError'));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,5 +86,6 @@ export const useLoginManager = () => {
     onSubmit,
     onGoogleLogin,
     onGithubLogin,
+    isSubmitting,
   };
 };
