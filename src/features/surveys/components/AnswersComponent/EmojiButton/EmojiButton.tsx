@@ -15,7 +15,7 @@ function EmojiButton({ icon, onClick, selected = false }: EmojiButtonProps) {
       }`}
       onClick={() => onClick(icon)}
     >
-      <Emoji unified={icon} />
+      <Emoji shortcodes={icon} />
     </button>
   );
 }

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
@@ -8,7 +8,12 @@ import { postFetch } from '../../../../lib/axiosConfig';
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
-  const [pack, setPack] = useState<string[]>([]);
+  const [pack, setPack] = useState<string[]>([
+    ':smiley:',
+    ':slightly_smiling_face:',
+    ':slightly_frowning_face:',
+    ':rage:',
+  ]);
   const [error, setError] = useState('');
 
   const [isCreating, setIsCreating] = useState(false);
@@ -16,12 +21,6 @@ export const useCreateSurveyManager = () => {
   const router = useRouter();
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
-
-  // Move to useState initial value when bug in emoji library will be solved:
-  // https://github.com/ealush/emoji-picker-react/issues/329
-  useEffect(() => {
-    setPack(['1f603', '1f642', '1f641', '1f621']);
-  }, []);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setError('');

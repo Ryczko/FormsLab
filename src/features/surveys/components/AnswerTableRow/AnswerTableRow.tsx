@@ -11,7 +11,7 @@ function AnswerTableRow({ time, selectedIcon, text }: AnswerTableRowProps) {
     <div className="my-2 grid grid-cols-8 rounded-md bg-white p-3 shadow-sm">
       <div className="col-span-3 hidden text-sm xsm:block">{time}</div>
       <div className="col-span-2 ml-[4px] mr-2 mt-[1px] flex justify-center xsm:col-span-1 xsm:justify-start">
-        <Emoji unified={selectedIcon} size={22} />
+        <Emoji shortcodes={selectedIcon} size={22} />
       </div>
       <div className="col-span-6 break-words text-left xsm:col-span-4">
         {text || '-'}
