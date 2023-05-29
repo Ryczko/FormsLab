@@ -76,6 +76,7 @@ function EmojiPicker({
             emojiButtonRadius={'8px'}
             categories={[
               'frequent',
+              'giffs',
               'people',
               'nature',
               'foods',
