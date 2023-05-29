@@ -16,6 +16,9 @@ export async function getAllUserSurveys(userId: string) {
       questions: false,
       answers: false,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return surveys;
