@@ -20,6 +20,8 @@
     "e2e:headless:ci": "start-server-and-test http://localhost:3000 cypress:headless"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
     "@next-auth/prisma-adapter": "^1.0.6",
@@ -27,6 +29,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/emoji-mart": "^3.0.9",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.3",
     "@types/react": "^18.0.28",
@@ -35,7 +38,7 @@
     "bcrypt": "^5.1.0",
     "clsx": "^1.1.1",
     "date-fns": "^2.28.0",
-    "emoji-picker-react": "4.4.7",
+    "emoji-mart": "^5.5.2",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.3",
     "next": "^13.4.1",

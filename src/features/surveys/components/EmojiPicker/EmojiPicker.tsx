@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-import { EmojiClickData } from 'emoji-picker-react';
-import { Categories } from 'emoji-picker-react';
-import Loader from 'shared/components/Loader/Loader';
-import Emoji from 'features/surveys/components/Emoji/Emoji';
 import { EMOJI_STYLE } from 'shared/constants/emojisConfig';
 import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
-
-const Picker = dynamic(() => import('emoji-picker-react'), {
-  ssr: false,
-  loading: () => <Loader isLoading={true} />,
-});
+import Picker from '@emoji-mart/react';
+import Emoji from 'features/surveys/components/Emoji/Emoji';
+import { EmojiObject } from 'features/surveys/components/EmojiPicker/EmojiObject';
 
 interface EmojiPickerProps {
   index?: number;
@@ -33,13 +26,13 @@ function EmojiPicker({
 }: EmojiPickerProps) {
   const [displayPicker, setDisplayPicker] = useState(false);
 
-  const onEmojiClick = (emojiObject: EmojiClickData) => {
-    onEmotePick?.(index, emojiObject.unified);
+  const onEmojiClick = (emojiObject: EmojiObject) => {
+    onEmotePick?.(index, emojiObject.shortcodes);
     setDisplayPicker(false);
   };
 
-  const onEmojiClickAdd = (emojiObject: EmojiClickData) => {
-    onEmoteAdd?.(emojiObject.unified);
+  const onEmojiClickAdd = (emojiObject: EmojiObject) => {
+    onEmoteAdd?.(emojiObject.shortcodes);
     setDisplayPicker(false);
   };
 
@@ -47,13 +40,13 @@ function EmojiPicker({
     <div>
       <button
         type="button"
-        className="label-text flex w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
+        className="label-text flex min-h-[56px] w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (
-          <Emoji unified={pickedEmoji || ''} />
+          <Emoji shortcodes={pickedEmoji || ''} />
         ) : (
-          <div className="w-[32px]">
+          <div className="flex h-[34px] w-[32px] items-center">
             <PlusSmIcon />
           </div>
         )}
@@ -72,50 +65,24 @@ function EmojiPicker({
         contentClassName="!w-[400px] !p-0"
         content={
           <Picker
-            onEmojiClick={!addEmoji ? onEmojiClick : onEmojiClickAdd}
-            autoFocusSearch={false}
-            emojiStyle={EMOJI_STYLE}
-            searchDisabled
-            skinTonesDisabled
-            previewConfig={{
-              showPreview: false,
-            }}
+            onEmojiSelect={!addEmoji ? onEmojiClick : onEmojiClickAdd}
+            set={EMOJI_STYLE}
+            previewPosition="none"
+            searchPosition="none"
+            dynamicWidth={true}
+            skinTonePosition="none"
+            emojiSize={30}
+            emojiButtonSize={40}
+            emojiButtonRadius={'8px'}
             categories={[
-              {
-                category: Categories.SUGGESTED,
-                name: 'Frequently Used',
-              },
-              {
-                category: Categories.SMILEYS_PEOPLE,
-                name: 'Smileys & People',
-              },
-              {
-                category: Categories.ANIMALS_NATURE,
-                name: 'Animals & Nature',
-              },
-              {
-                category: Categories.FOOD_DRINK,
-                name: 'Food & Drink',
-              },
-              {
-                category: Categories.TRAVEL_PLACES,
-                name: 'Travel & Places',
-              },
-              {
-                category: Categories.ACTIVITIES,
-                name: 'Activities',
-              },
-              {
-                category: Categories.OBJECTS,
-                name: 'Objects',
-              },
-              {
-                category: Categories.FLAGS,
-                name: 'Flags',
-              },
+              'frequent',
+              'people',
+              'nature',
+              'foods',
+              'activity',
+              'places',
+              'flags',
             ]}
-            width={'100%'}
-            height={400}
           />
         }
       ></StyledDialog>
