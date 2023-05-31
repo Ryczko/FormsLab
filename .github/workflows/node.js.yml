@@ -43,6 +43,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
+      - run: npm run build
       - name: Run E2E tests
         uses: cypress-io/github-action@v4
         with:
