@@ -46,5 +46,3 @@ jobs:
       - run: npm run build
       - name: Run E2E tests
         uses: cypress-io/github-action@v5
-        with:
-          command: npm run e2e:headless:ci
