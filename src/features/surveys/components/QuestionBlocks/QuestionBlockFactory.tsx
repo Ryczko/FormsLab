@@ -1,31 +1,57 @@
+import { QuestionType } from '@prisma/client';
 import EmojiQuestionBlock from 'features/surveys/components/QuestionBlocks/EmojiQuestionBlock/EmojiQuestionBlock';
+import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
 
 interface QuestionBlockFactoryProps {
-  type: 'emoji';
+  type: QuestionType;
   pack: string[];
-  handleEmotePick: (index: number, newEmote: string) => void;
-  handleEmoteRemove: (index: number) => void;
-  handleAddingNewEmote: (newEmote: string) => void;
+  handleEmotePick: (
+    index: number,
+    newEmote: string,
+    questionIndex: number
+  ) => void;
+  handleEmoteRemove: (index: number, questionIndex: number) => void;
+  handleAddingNewEmote: (newEmote: string, questionIndex: number) => void;
+  onQuestionRemove: (index: number) => void;
+  questionIndex: number;
+  updateQuestion: (newQuestion: string, questionIndex: number) => void;
+  questionTitle: string;
+  isSubmitted: boolean;
+  isRemovingPossible: boolean;
 }
 
 export default function QuestionBlockFactory({
-  type,
-  handleAddingNewEmote,
   handleEmotePick,
   handleEmoteRemove,
+  handleAddingNewEmote,
+  questionIndex,
+  questionTitle,
+  onQuestionRemove,
+  type,
+  updateQuestion,
   pack,
+  isSubmitted,
+  isRemovingPossible,
 }: QuestionBlockFactoryProps) {
-  switch (type) {
-    case 'emoji':
-      return (
+  return (
+    <QuestionBlockWrapper
+      index={questionIndex}
+      onQuestionRemove={onQuestionRemove}
+      updateQuestion={updateQuestion}
+      questionTitle={questionTitle}
+      isSubmitted={isSubmitted}
+      isRemovingPossible={isRemovingPossible}
+    >
+      {type === QuestionType.INPUT && null}
+      {type === QuestionType.EMOJI && (
         <EmojiQuestionBlock
           handleAddingNewEmote={handleAddingNewEmote}
-          pack={pack}
           handleEmotePick={handleEmotePick}
+          pack={pack}
           handleEmoteRemove={handleEmoteRemove}
+          questionIndex={questionIndex}
         />
-      );
-    default:
-      return null;
-  }
+      )}
+    </QuestionBlockWrapper>
+  );
 }

@@ -11,9 +11,10 @@ interface EmojiPickerProps {
   index?: number;
   pickedEmoji?: string;
   addEmoji?: boolean;
-  onEmotePick?: (idx: number, newValue: string) => void;
-  onEmoteAdd?: (newValue: string) => void;
-  onEmoteRemove?: (idx: number) => void;
+  onEmotePick?: (idx: number, newValue: string, questionIndex: number) => void;
+  onEmoteAdd?: (newValue: string, questionIndex: number) => void;
+  onEmoteRemove?: (idx: number, questionIndex: number) => void;
+  questionIndex: number;
 }
 
 function EmojiPicker({
@@ -23,16 +24,17 @@ function EmojiPicker({
   onEmotePick,
   onEmoteAdd,
   onEmoteRemove,
+  questionIndex,
 }: EmojiPickerProps) {
   const [displayPicker, setDisplayPicker] = useState(false);
 
   const onEmojiClick = (emojiObject: EmojiObject) => {
-    onEmotePick?.(index, emojiObject.shortcodes);
+    onEmotePick?.(index, emojiObject.shortcodes, questionIndex);
     setDisplayPicker(false);
   };
 
   const onEmojiClickAdd = (emojiObject: EmojiObject) => {
-    onEmoteAdd?.(emojiObject.shortcodes);
+    onEmoteAdd?.(emojiObject.shortcodes, questionIndex);
     setDisplayPicker(false);
   };
 
@@ -40,20 +42,18 @@ function EmojiPicker({
     <div>
       <button
         type="button"
-        className="label-text flex min-h-[56px] w-16 items-center justify-center rounded-lg bg-white p-3 text-3xl shadow transition hover:scale-95"
+        className="label-text flex min-h-[57px] w-16 items-center justify-center rounded-lg bg-white p-3 shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (
           <Emoji shortcodes={pickedEmoji || ''} />
         ) : (
-          <div className="flex h-[34px] w-[32px] items-center">
-            <PlusSmIcon />
-          </div>
+          <PlusSmIcon className="w-[32px]" />
         )}
       </button>
       {onEmoteRemove && (
         <Button
-          onClick={() => onEmoteRemove(index)}
+          onClick={() => onEmoteRemove(index, questionIndex)}
           className="mt-1 w-[64px]"
           variant={ButtonVariant.DANGER}
           icon={<TrashIcon className="h-4 w-4" />}
@@ -83,6 +83,8 @@ function EmojiPicker({
               'activity',
               'places',
               'flags',
+              'objects',
+              'symbols',
             ]}
           />
         }

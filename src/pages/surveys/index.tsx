@@ -41,7 +41,7 @@ function SurveyListPage({
   surveys,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
-    usePagination<Survey>(surveys ?? [], { size: 10 });
+    usePagination<Survey>(surveys ?? [], { size: 8 });
   const { t } = useTranslation('surveys');
 
   return (
@@ -85,26 +85,24 @@ function SurveyListPage({
           ))}
       </div>
       {(canGoNext || canGoPrev) && (
-        <div className="flex justify-center">
-          <div className="flex flex-row items-center">
-            <Button
-              variant={ButtonVariant.OUTLINE_PRIMARY}
-              className="px-4"
-              icon={<ArrowLeftIcon className="h-5 w-5" />}
-              disabled={!canGoPrev}
-              onClick={goPrev}
-            />
-            <div className="min-w-[100px]">
-              <p className="text-center">{pageIndex + 1}</p>
-            </div>
-            <Button
-              variant={ButtonVariant.OUTLINE_PRIMARY}
-              className="px-4"
-              icon={<ArrowRightIcon className="h-5 w-5" />}
-              disabled={!canGoNext}
-              onClick={goNext}
-            />
+        <div className="mt-2 flex flex-row items-center justify-center">
+          <Button
+            variant={ButtonVariant.OUTLINE_PRIMARY}
+            className="px-4"
+            icon={<ArrowLeftIcon className="h-5 w-5" />}
+            disabled={!canGoPrev}
+            onClick={goPrev}
+          />
+          <div className="min-w-[100px]">
+            <p className="text-center">{pageIndex + 1}</p>
           </div>
+          <Button
+            variant={ButtonVariant.OUTLINE_PRIMARY}
+            className="px-4"
+            icon={<ArrowRightIcon className="h-5 w-5" />}
+            disabled={!canGoNext}
+            onClick={goNext}
+          />
         </div>
       )}
     </>

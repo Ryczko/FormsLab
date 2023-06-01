@@ -15,6 +15,7 @@ export enum ButtonSize {
   DEFAULT = '',
   MEDIUM = 'w-32',
   LARGE = 'w-40',
+  FULL = 'w-full',
 }
 export interface ButtonProps {
   variant?: ButtonVariant;

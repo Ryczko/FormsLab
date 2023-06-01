@@ -15,7 +15,7 @@ function IndexPage() {
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
-      <div className="mb-16 pt-28 md:pt-40">
+      <div className="mb-16 pt-28 md:pt-48">
         <h1 className="leading-tighter mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl">
           {t('firstPartHeading')}&nbsp;
           <span className="bg-gradient-to-r from-indigo-600 to-indigo-100 bg-clip-text text-transparent">

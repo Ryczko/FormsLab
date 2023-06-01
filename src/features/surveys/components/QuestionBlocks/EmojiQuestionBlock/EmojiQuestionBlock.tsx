@@ -1,13 +1,16 @@
-import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
-import useTranslation from 'next-translate/useTranslation';
 import EmojiPicker from 'features/surveys/components/EmojiPicker/EmojiPicker';
 import { MAX_EMOJIS, MIN_EMOJIS } from 'shared/constants/emojisConfig';
 
 interface EmojiQuestionBlockProps {
   pack: string[];
-  handleEmotePick: (index: number, newEmote: string) => void;
-  handleEmoteRemove: (index: number) => void;
-  handleAddingNewEmote: (newEmote: string) => void;
+  handleEmotePick: (
+    index: number,
+    newEmote: string,
+    questionIndex: number
+  ) => void;
+  handleEmoteRemove: (index: number, questionIndex: number) => void;
+  handleAddingNewEmote: (newEmote: string, questionIndex: number) => void;
+  questionIndex: number;
 }
 
 export default function EmojiQuestionBlock({
@@ -15,37 +18,37 @@ export default function EmojiQuestionBlock({
   handleAddingNewEmote,
   handleEmotePick,
   handleEmoteRemove,
+  questionIndex,
 }: EmojiQuestionBlockProps) {
-  const { t } = useTranslation('surveyCreate');
-
   return (
-    <QuestionBlockWrapper>
-      <div className="mb-3 block text-left font-semibold">
-        {t('emojiPickingInformation')}
-      </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, 64px)',
-          justifyContent: 'space-between',
-          gridGap: '8px',
-        }}
-      >
-        {pack.map((emote, idx) => (
-          <EmojiPicker
-            key={idx}
-            index={idx}
-            pickedEmoji={emote}
-            onEmotePick={handleEmotePick}
-            onEmoteRemove={
-              pack.length > MIN_EMOJIS ? handleEmoteRemove : undefined
-            }
-          />
-        ))}
-        {pack.length < MAX_EMOJIS && (
-          <EmojiPicker addEmoji={true} onEmoteAdd={handleAddingNewEmote} />
-        )}
-      </div>
-    </QuestionBlockWrapper>
+    <div
+      className="mt-8"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, 64px)',
+        justifyContent: 'space-between',
+        gridGap: '8px',
+      }}
+    >
+      {pack.map((emote, idx) => (
+        <EmojiPicker
+          key={idx}
+          index={idx}
+          pickedEmoji={emote}
+          questionIndex={questionIndex}
+          onEmotePick={handleEmotePick}
+          onEmoteRemove={
+            pack.length > MIN_EMOJIS ? handleEmoteRemove : undefined
+          }
+        />
+      ))}
+      {pack.length < MAX_EMOJIS && (
+        <EmojiPicker
+          questionIndex={questionIndex}
+          addEmoji={true}
+          onEmoteAdd={handleAddingNewEmote}
+        />
+      )}
+    </div>
   );
 }

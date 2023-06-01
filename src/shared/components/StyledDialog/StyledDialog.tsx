@@ -8,6 +8,7 @@ interface StyledDialogProps {
   isOpen: boolean;
   onClose: () => void;
   contentClassName?: string;
+  centerTitle?: boolean;
 }
 
 export default function StyledDialog({
@@ -16,6 +17,7 @@ export default function StyledDialog({
   isOpen,
   onClose,
   contentClassName = '',
+  centerTitle = false,
 }: StyledDialogProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -51,7 +53,10 @@ export default function StyledDialog({
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-zinc-900"
+                  className={clsx(
+                    'text-lg font-medium leading-6 text-zinc-900',
+                    centerTitle && 'text-center'
+                  )}
                 >
                   {title}
                 </Dialog.Title>

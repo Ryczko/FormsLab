@@ -8,8 +8,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { CustomTooltip } from 'features/surveys/components/BarChart/CustomTooltip';
-import { CustomXAxisTick } from 'features/surveys/components/BarChart/CustomXAxisTick';
+import { CustomTooltip } from 'features/surveys/components/ResultsComponents/BarChart/CustomTooltip';
+import { CustomXAxisTick } from 'features/surveys/components/ResultsComponents/BarChart/CustomXAxisTick';
 
 interface BarChartProps {
   data: BarChartData[];
@@ -43,7 +43,7 @@ export default function BarChart({ data }: BarChartProps) {
   };
 
   return data ? (
-    <div className="h-[250px] w-[300px] max-w-[300px]">
+    <div className="h-[250px]">
       <ResponsiveContainer width="100%">
         <Chart
           width={600}
