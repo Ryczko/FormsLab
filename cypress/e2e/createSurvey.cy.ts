@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-describe.skip('Create Survey Page', () => {
+describe('Create Survey Page', () => {
   beforeEach(() => cy.clearIndexedDB());
 
   it('should redirect to login page when user is not logged in', () => {
