@@ -35,23 +35,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        # Setup Java for firebase CLI
-      - name: Install Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - name: Install Firebase Emulator Suite
-        run: npm install -g firebase-tools
       - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
-      # - name: Run E2E tests
-      #   uses: cypress-io/github-action@v4
-      #   with:
-      #     command: 'npm run e2e:headless:ci'
+      - run: npm run build
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          build: npm run build
+          start: npm start
