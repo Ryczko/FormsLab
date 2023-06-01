@@ -58,12 +58,14 @@ html::-webkit-scrollbar {
 }
 
 em-emoji-picker {
-  --category-icon-size: 20px;
+  --category-icon-size: 18px;
   --font-family: Montserrat, 'sans-serif';
-  --padding-small: 30px;
+
+  --rgb-accent: 165, 180, 252;
 
   width: 100%;
   height: 400px;
+  overflow: auto;
 }
 
 em-emoji {

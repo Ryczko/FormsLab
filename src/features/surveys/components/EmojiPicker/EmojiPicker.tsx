@@ -71,9 +71,10 @@ function EmojiPicker({
             searchPosition="none"
             dynamicWidth={true}
             skinTonePosition="none"
-            emojiSize={30}
-            emojiButtonSize={40}
-            emojiButtonRadius={'8px'}
+            emojiSize={28}
+            emojiButtonSize={38}
+            emojiButtonRadius={'6px'}
+            theme="light"
             categories={[
               'frequent',
               'giffs',
