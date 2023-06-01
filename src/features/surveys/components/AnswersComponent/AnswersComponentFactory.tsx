@@ -1,31 +1,26 @@
-import ButtonsAnswersComponent from 'features/surveys/components/AnswersComponent/ButtonsAnswersComponent';
+import { QuestionType } from '@prisma/client';
 import ListAnswersComponent from 'features/surveys/components/AnswersComponent/ListAnswersComponent';
-
-export enum AnswerType {
-  BUTTONS = 'buttons',
-  LIST = 'list',
-}
+import TextAnswersComponent from 'features/surveys/components/AnswersComponent/TextAnswersComponent';
 
 interface AnswersComponentFactoryProps {
-  type: AnswerType;
-  icons: string[];
-  selectedIcon: string;
-  handleIconClick: (icon: string) => void;
-  showEmojiError: boolean;
-  answer: string;
-  handleInputAnswer: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  type: QuestionType;
+  options: string[];
+  handleAnswerChange: (answer: string, questionId: string) => void;
+  answer?: string;
+  questionId: string;
+  question: string;
+  isSubmitted: boolean;
 }
 export const AnswersComponentFactory = (
   props: AnswersComponentFactoryProps
 ) => {
   const { type } = props;
 
-  switch (type) {
-    case AnswerType.BUTTONS:
-      return <ButtonsAnswersComponent {...props} />;
-    case AnswerType.LIST:
-      return <ListAnswersComponent {...props} />;
-    default:
-      return null;
-  }
+  return (
+    <div className="mb-3 rounded-md border bg-white/50 px-6 py-4 shadow">
+      <h2 className="mb-5 text-lg font-semibold">{props.question}</h2>
+      {type === QuestionType.EMOJI && <ListAnswersComponent {...props} />}
+      {type === QuestionType.INPUT && <TextAnswersComponent {...props} />}
+    </div>
+  );
 };

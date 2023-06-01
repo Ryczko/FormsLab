@@ -9,6 +9,12 @@ import useTranslation from 'next-translate/useTranslation';
 import QuestionBlockFactory from 'features/surveys/components/QuestionBlocks/QuestionBlockFactory';
 import { getSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
+import { AddQuestionButton } from 'features/surveys/components/AddQuestionButton/AddQuestionButton';
+import {
+  MAX_QUESTIONS,
+  MAX_TITLE_LENGTH,
+  MIN_QUESTIONS,
+} from 'shared/constants/surveysConfig';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -29,7 +35,6 @@ export async function getServerSideProps(context: NextPageContext) {
 function SurveyCreatePage() {
   const {
     title,
-    pack,
     error,
     handleChangeTitle,
     handleEmotePick,
@@ -37,6 +42,11 @@ function SurveyCreatePage() {
     handleAddingNewEmote,
     createSurvey,
     isCreating,
+    questions,
+    addQuestion,
+    removeQuestion,
+    updateQuestion,
+    isSubmitted,
   } = useCreateSurveyManager();
   const { t } = useTranslation('surveyCreate');
 
@@ -54,18 +64,32 @@ function SurveyCreatePage() {
         placeholder={t('surveyTitlePlaceholder')}
         value={title}
         error={error}
-        className="!mb-1 py-3"
+        maxLength={MAX_TITLE_LENGTH}
+        className="mb-8"
         onChange={handleChangeTitle}
         absoluteError
       />
 
-      <QuestionBlockFactory
-        type="emoji"
-        handleAddingNewEmote={handleAddingNewEmote}
-        pack={pack}
-        handleEmotePick={handleEmotePick}
-        handleEmoteRemove={handleEmoteRemove}
-      />
+      {questions.map((question, index) => (
+        <QuestionBlockFactory
+          key={index}
+          type={question.type}
+          handleAddingNewEmote={handleAddingNewEmote}
+          pack={question.options ?? []}
+          handleEmotePick={handleEmotePick}
+          handleEmoteRemove={handleEmoteRemove}
+          questionIndex={index}
+          onQuestionRemove={removeQuestion}
+          updateQuestion={updateQuestion}
+          questionTitle={question.title}
+          isSubmitted={isSubmitted}
+          isRemovingPossible={questions.length > MIN_QUESTIONS}
+        />
+      ))}
+
+      {questions.length < MAX_QUESTIONS && (
+        <AddQuestionButton onClick={addQuestion} />
+      )}
 
       <div className="flex justify-center">
         <Button

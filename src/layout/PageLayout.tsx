@@ -16,7 +16,7 @@ function PageLayout({ children }: PropsWithChildren) {
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
       <Navigation />
-      <div className="m-auto mb-8 min-h-full max-w-2xl overflow-hidden px-6 pt-24 text-center sm:px-8 md:pt-32">
+      <div className="m-auto mb-8 min-h-full max-w-3xl overflow-hidden px-6 pt-24 text-center sm:px-8">
         <Background />
         <AnimatePresence exitBeforeEnter initial={false}>
           <Fragment key={router.asPath}>{children}</Fragment>

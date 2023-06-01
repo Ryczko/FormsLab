@@ -46,8 +46,10 @@ function Input({
       {!!error && (
         <p
           className={clsx(
-            'mb-1 text-right text-sm text-red-400',
-            absoluteError ? 'absolute right-0 top-full my-1' : ''
+            'mb-1 text-sm text-red-400',
+            absoluteError
+              ? 'absolute left-1/2 top-full my-1 -translate-x-1/2'
+              : ''
           )}
         >
           {error}

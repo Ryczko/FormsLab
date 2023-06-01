@@ -4,6 +4,18 @@ import prismadb from '../../../../lib/prismadb';
 
 import serverAuth from '../../../../lib/serverAuth';
 import { Question } from '@prisma/client';
+import {
+  MAX_QUESTIONS,
+  MAX_QUESTION_LENGTH,
+  MAX_TITLE_LENGTH,
+  MIN_QUESTIONS,
+} from 'shared/constants/surveysConfig';
+
+interface SurveyData {
+  title: string;
+  description: string;
+  questions: Question[];
+}
 
 export async function getAllUserSurveys(userId: string) {
   const surveys = await prismadb.survey.findMany({
@@ -24,6 +36,24 @@ export async function getAllUserSurveys(userId: string) {
   return surveys;
 }
 
+const isSurveyValid = (survey: SurveyData) => {
+  if (
+    survey.title.trim() === '' ||
+    survey.title.length > MAX_TITLE_LENGTH ||
+    survey.questions.some(
+      (question) =>
+        question.title.trim() === '' ||
+        question.title.length > MAX_QUESTION_LENGTH
+    ) ||
+    survey.questions.length < MIN_QUESTIONS ||
+    survey.questions.length > MAX_QUESTIONS
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -38,11 +68,11 @@ export default async function handler(
         return res.status(200).json({ surveys });
       }
       case 'POST': {
-        const { title, description, questions } = req.body as {
-          title: string;
-          description: string;
-          questions: Question[];
-        };
+        const { title, description, questions } = req.body as SurveyData;
+
+        if (!isSurveyValid(req.body)) {
+          return res.status(400).end();
+        }
 
         const survey = await prismadb.survey.create({
           data: {

@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import prismadb from '../../../../lib/prismadb';
+import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
+
+interface AnswerData {
+  answersData: { questionId: string; answer: string }[];
+}
 
 export async function getSurveyData(surveyId: string) {
   const survey = await prismadb.survey.findUnique({
@@ -15,6 +20,19 @@ export async function getSurveyData(surveyId: string) {
 
   return survey;
 }
+
+const isAnswerDataValid = (answerData: AnswerData) => {
+  if (
+    answerData.answersData.some(
+      (answer) =>
+        answer.answer.trim() === '' || answer.answer.length > MAX_ANSWER_LENGTH
+    )
+  ) {
+    return false;
+  }
+
+  return true;
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,9 +49,11 @@ export default async function handler(
         return res.status(200).json(survey);
       }
       case 'POST': {
-        const { answersData } = req.body as {
-          answersData: { questionId: string; answer: string }[];
-        };
+        const { answersData } = req.body as AnswerData;
+
+        if (!isAnswerDataValid(req.body)) {
+          return res.status(400).end();
+        }
 
         await prismadb.answer.create({
           data: {

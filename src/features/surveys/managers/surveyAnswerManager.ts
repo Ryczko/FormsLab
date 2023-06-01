@@ -6,35 +6,39 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getFetch, postFetch } from '../../../../lib/axiosConfig';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
+import { Question, Survey } from '@prisma/client';
+
+export type Answers = { [key: string]: string };
 
 const DEFAULT_VALUE: string[] = [];
 
+type SurveyWithQuestionsAndUsersAnswers = Survey & {
+  questions: (Question & { answer?: string })[];
+};
+
 export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   const router = useRouter();
-  const [showEmojiError, setShowEmojiError] = useState(false);
+  const { t } = useTranslation('survey');
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const { surveyId } = router.query as { surveyId: string };
 
-  const [isSurveyActive, setIsSurveyActive] = useState<boolean>(false);
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [icons, setIcons] = useState<string[]>([]);
-  const [selectedIcon, setSelectedIcon] = useState('');
-  const [buttonDisable, setButtonDisable] = useState(false);
+  const [formData, setFormData] =
+    useState<SurveyWithQuestionsAndUsersAnswers>();
+
   const [isAnswering, setIsAnswering] = useState(false);
   const [localStorageValue, setLocalStorageValue] = useLocalStorage<string[]>(
     DEFAULT_VALUE,
     LocalStorageKeys.LocalStorageKey
   );
-  const { t } = useTranslation('survey');
 
   const getSurveyData = useCallback(async () => {
     if (!initialData.isActive) {
       router.replace('/');
       return;
     } else {
-      setIsSurveyActive(true);
-      setQuestion(initialData.title);
-      setIcons(initialData.questions[0].options);
+      setFormData(initialData);
     }
   }, [router, initialData]);
 
@@ -53,20 +57,36 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorageValue]);
 
-  const handleIconClick = (icon: string) => {
-    setSelectedIcon(icon);
-    setShowEmojiError(false);
+  const handleAnswerChange = (answer: string, questionId: string) => {
+    setFormData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        questions: prev.questions.map((question) => {
+          if (question.id === questionId) {
+            return { ...question, answer };
+          }
+          return question;
+        }),
+      };
+    });
   };
 
   const handleSave = async () => {
-    if (!selectedIcon) {
-      setShowEmojiError(true);
+    setIsSubmitted(true);
+
+    if (
+      !formData?.questions
+        .filter((question) => question.isRequired)
+        .every((question) => question.answer)
+    ) {
+      toast.error(t('Fill missing fields'));
       return;
     } else {
-      setShowEmojiError(false);
-      setButtonDisable(true);
-      setIsAnswering(true);
+      setIsSubmitted(false);
     }
+
+    setIsAnswering(true);
 
     try {
       if (!surveyId) {
@@ -80,12 +100,10 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
 
       if (survey.isActive) {
         await postFetch(`/api/answer/${surveyId}`, {
-          answersData: [
-            {
-              questionId: survey.questions[0].id,
-              answer: selectedIcon,
-            },
-          ],
+          answersData: formData?.questions.map((question) => ({
+            questionId: question.id,
+            answer: question.answer,
+          })),
         });
 
         setLocalStorageValue([...localStorageValue, surveyId]);
@@ -98,26 +116,15 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     } catch (error) {
       toast.error(t('unSuccessfullSubmit'));
     } finally {
-      setButtonDisable(false);
       setIsAnswering(false);
     }
   };
 
-  const handleInputAnswer = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setAnswer(e.target.value);
-  };
-
   return {
-    isSurveyActive,
-    question,
-    icons,
-    selectedIcon,
-    handleIconClick,
-    answer,
-    handleInputAnswer,
-    buttonDisable,
+    handleAnswerChange,
     handleSave,
     isAnswering,
-    showEmojiError,
+    formData,
+    isSubmitted,
   };
 };

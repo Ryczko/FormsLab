@@ -42,7 +42,7 @@ export default function SurveyRow({
   return (
     <div className="mb-4 flex w-full flex-col md:flex-row">
       <div className="flex w-full items-center justify-between rounded-md rounded-b-none bg-white px-4 py-3 shadow-sm md:rounded-b-md">
-        <div title={question} className="w-36 truncate text-left">
+        <div title={question} className="w-40 truncate text-left">
           {question}
         </div>
         <div className="hidden items-center space-x-2 text-sm xsm:flex">

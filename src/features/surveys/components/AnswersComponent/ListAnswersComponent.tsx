@@ -1,49 +1,44 @@
 import React from 'react';
 import EmojiListItem from 'features/surveys/components/AnswersComponent/EmojiListItem/EmojiListItem';
-import useTranslation from 'next-translate/useTranslation';
+import { QuestionType } from '@prisma/client';
 
 interface ListAnswersComponentProps {
-  icons: string[];
-  selectedIcon: string;
-  handleIconClick: (icon: string) => void;
-  showEmojiError: boolean;
-  answer: string;
-  handleInputAnswer: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  type: QuestionType;
+  options: string[];
+  handleAnswerChange: (answer: string, questionId: string) => void;
+  answer?: string;
+  questionId: string;
+  isSubmitted: boolean;
 }
 
 export default function ListAnswersComponent({
-  icons,
+  type,
+  options,
+  handleAnswerChange,
   answer,
-  handleIconClick,
-  handleInputAnswer,
-  selectedIcon,
-  showEmojiError,
+  questionId,
+  isSubmitted,
 }: ListAnswersComponentProps) {
-  const { t } = useTranslation('survey');
+  const onAnswerChange = (answer: string) => {
+    handleAnswerChange(answer, questionId);
+  };
+
   return (
-    <div className="rounded-xl border bg-white/50 px-6 py-4 shadow">
-      <div className="mt-1 flex flex-wrap justify-center gap-y-2">
-        {icons.map((icon, idx) => (
+    <>
+      <div className="mb-2 flex flex-wrap justify-center gap-y-2">
+        {options.map((icon, idx) => (
           <EmojiListItem
             icon={icon}
-            selected={selectedIcon === icon}
-            isAnySelected={selectedIcon !== ''}
+            selected={answer === icon}
+            isAnySelected={!!answer}
             key={idx}
-            onClick={handleIconClick}
+            onClick={onAnswerChange}
           />
         ))}
       </div>
-      {showEmojiError && (
-        <div className="mt-5 text-red-500">{t('choseEmojiBeforeSend')}</div>
+      {isSubmitted && !answer && (
+        <p className="mt-4 text-sm text-red-500">Please select an answer</p>
       )}
-      {/* <div className="mt-6">
-        <textarea
-          className="h-40 w-full resize-none rounded-lg bg-zinc-100 p-4 shadow focus:outline-none"
-          placeholder={t('sendFeedbackTellUsMore')}
-          value={answer}
-          onChange={handleInputAnswer}
-        ></textarea>
-      </div> */}
-    </div>
+    </>
   );
 }

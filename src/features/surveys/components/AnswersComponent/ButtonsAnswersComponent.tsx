@@ -35,14 +35,6 @@ export default function ButtonsAnswersComponent({
       {showEmojiError && (
         <div className="mt-2 text-red-500">{t('choseEmojiBeforeSend')}</div>
       )}
-      {/* <div className="mt-8">
-        <textarea
-          className="h-52 w-full resize-none rounded-lg p-4 shadow focus:outline-none"
-          placeholder={t('sendFeedbackTellUsMore')}
-          value={answer}
-          onChange={handleInputAnswer}
-        ></textarea>
-      </div> */}
     </>
   );
 }

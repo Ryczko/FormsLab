@@ -5,7 +5,7 @@ interface DataCardProps {
 
 export default function DataCard({ title, value }: DataCardProps) {
   return (
-    <div className="m-1 w-full rounded-lg border border-zinc-200 bg-white px-4 py-2 shadow-md sm:w-1/2 md:w-[220px]">
+    <div className="w-full rounded-lg border bg-white/50 px-4 py-2 shadow-sm">
       <h3 className="mb-1 font-semibold">{title}</h3>
       {value}
     </div>
