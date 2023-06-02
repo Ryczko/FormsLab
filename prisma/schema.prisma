@@ -105,7 +105,7 @@ model AnswerData {
   id             String @id @default(auto()) @map("_id") @db.ObjectId
   answerId       String @db.ObjectId
   questionId     String @db.ObjectId
-  providedAnswer String
+  providedAnswer String?
 
   answer   Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
  }

@@ -8,6 +8,7 @@ interface TextAnswersComponentProps {
   answer?: string;
   questionId: string;
   isSubmitted: boolean;
+  isRequired: boolean;
 }
 
 export default function TextAnswersComponent({
@@ -15,6 +16,7 @@ export default function TextAnswersComponent({
   answer,
   questionId,
   isSubmitted,
+  isRequired,
 }: TextAnswersComponentProps) {
   const onAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ export default function TextAnswersComponent({
   };
 
   const getAnswerError = () => {
-    if ((!answer || answer?.trim() === '') && isSubmitted) {
+    if ((!answer || answer?.trim() === '') && isSubmitted && isRequired) {
       return 'Answer is required';
     }
     return undefined;

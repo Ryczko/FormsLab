@@ -3,6 +3,7 @@ import Button from 'shared/components/Button/Button';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import { Question } from 'features/surveys/managers/createSurveyManager';
 import { QuestionType } from '@prisma/client';
+import { v4 } from 'uuid';
 
 type NewQuestionModalProps = {
   isOpened: boolean;
@@ -18,8 +19,10 @@ export default function NewQuestionModal({
   const addEmojiQuestion = () => {
     closeModal();
     onSuccess?.({
+      id: v4(),
       type: QuestionType.EMOJI,
       title: '',
+      isRequired: true,
       options: [
         ':smiley:',
         ':slightly_smiling_face:',
@@ -32,8 +35,10 @@ export default function NewQuestionModal({
   const addInputQuestion = () => {
     closeModal();
     onSuccess?.({
+      id: v4(),
       type: QuestionType.INPUT,
       title: '',
+      isRequired: false,
     });
   };
 

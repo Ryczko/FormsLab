@@ -22,7 +22,7 @@ export default function EmojiQuestionBlock({
 }: EmojiQuestionBlockProps) {
   return (
     <div
-      className="mt-8"
+      className="mt-4"
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, 64px)',
@@ -32,7 +32,7 @@ export default function EmojiQuestionBlock({
     >
       {pack.map((emote, idx) => (
         <EmojiPicker
-          key={idx}
+          key={emote}
           index={idx}
           pickedEmoji={emote}
           questionIndex={questionIndex}

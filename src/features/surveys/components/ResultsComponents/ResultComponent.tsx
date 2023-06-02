@@ -18,9 +18,22 @@ export default function ResultComponent({
   answers,
 }: ResultComponentProps) {
   const [chartData, setChartData] = useState<BarChartData[]>([]);
+  const [notEmptyAnswers, setNotEmptyAnswers] = useState<MappedAnswerData[]>(
+    []
+  );
+
+  useEffect(() => {
+    const notEmptyAnswers = answers.filter(
+      (answer) =>
+        answer.answer !== null &&
+        answer.answer !== undefined &&
+        answer.answer !== ''
+    );
+    setNotEmptyAnswers(notEmptyAnswers);
+  }, [answers]);
 
   const getDataToChart = useCallback((): BarChartData[] => {
-    const answersValues = answers.map((answer) => answer.answer);
+    const answersValues = notEmptyAnswers.map((answer) => answer.answer);
 
     const uniqueAnswers = Array.from(new Set(answersValues));
 
@@ -29,10 +42,12 @@ export default function ResultComponent({
     } = {};
 
     uniqueAnswers.forEach((answer) => {
+      if (!answer) return;
       result[answer] = 0;
     });
 
     answersValues.forEach((answer) => {
+      if (!answer) return;
       result[answer] += 1;
     });
 
@@ -42,7 +57,7 @@ export default function ResultComponent({
         value: result[key],
       }))
       .sort((a, b) => b.value - a.value);
-  }, [answers]);
+  }, [notEmptyAnswers]);
 
   useEffect(() => {
     if (type === QuestionType.EMOJI) {
@@ -51,13 +66,13 @@ export default function ResultComponent({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [answers]);
+  }, [notEmptyAnswers]);
 
   return (
     <div className="mb-2 rounded-md border bg-white/50 p-4 shadow-sm">
-      <h2 className="mb-6 text-lg font-semibold">{question}</h2>
+      <h2 className="mb-4 text-lg font-semibold">{question}</h2>
       {type === QuestionType.EMOJI && <BarChart data={chartData} />}
-      {type === QuestionType.INPUT && <TextResults answers={answers} />}
+      {type === QuestionType.INPUT && <TextResults answers={notEmptyAnswers} />}
     </div>
   );
 }

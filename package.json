@@ -51,6 +51,7 @@
     "recharts": "^2.4.3",
     "sass": "^1.52.1",
     "typescript": "^5.0.2",
+    "uuid": "^9.0.0",
     "yup": "^1.0.2"
   },
   "devDependencies": {
@@ -61,6 +62,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/bcrypt": "^5.0.0",
     "@types/nprogress": "^0.2.0",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "autoprefixer": "^10.4.7",

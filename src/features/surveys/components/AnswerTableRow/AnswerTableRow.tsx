@@ -7,10 +7,12 @@ interface AnswerTableRowProps {
 
 function AnswerTableRow({ answer }: AnswerTableRowProps) {
   return (
-    <div className="my-2 grid grid-cols-8 rounded-md bg-white p-3 shadow-sm">
-      <div className="col-span-2 text-sm">{formatDate(answer.date)}</div>
+    <div className="mb-2 grid grid-cols-8 rounded-md bg-white p-3 shadow-sm">
+      <div className="col-span-3 border-r px-4 text-sm">
+        {formatDate(answer.date)}
+      </div>
 
-      <div className="col-span-6 break-words text-left text-sm">
+      <div className="col-span-5 ml-4 break-words text-left text-sm">
         {answer.answer || '-'}
       </div>
     </div>

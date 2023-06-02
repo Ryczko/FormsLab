@@ -1,4 +1,5 @@
 export interface MappedAnswerData {
-  answer: string;
+  id: string;
+  answer?: string;
   date: Date | string;
 }

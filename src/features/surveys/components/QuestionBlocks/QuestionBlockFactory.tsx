@@ -1,6 +1,7 @@
 import { QuestionType } from '@prisma/client';
 import EmojiQuestionBlock from 'features/surveys/components/QuestionBlocks/EmojiQuestionBlock/EmojiQuestionBlock';
 import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
+import InputQuestionBlock from 'features/surveys/components/QuestionBlocks/InputQuestionBlock/InputQuestionBlock';
 
 interface QuestionBlockFactoryProps {
   type: QuestionType;
@@ -18,6 +19,8 @@ interface QuestionBlockFactoryProps {
   questionTitle: string;
   isSubmitted: boolean;
   isRemovingPossible: boolean;
+  updateQuestionRequired: (questionIndex: number) => void;
+  isRequired: boolean;
 }
 
 export default function QuestionBlockFactory({
@@ -32,6 +35,8 @@ export default function QuestionBlockFactory({
   pack,
   isSubmitted,
   isRemovingPossible,
+  isRequired,
+  updateQuestionRequired,
 }: QuestionBlockFactoryProps) {
   return (
     <QuestionBlockWrapper
@@ -41,8 +46,10 @@ export default function QuestionBlockFactory({
       questionTitle={questionTitle}
       isSubmitted={isSubmitted}
       isRemovingPossible={isRemovingPossible}
+      isRequired={isRequired}
+      updateQuestionRequired={updateQuestionRequired}
     >
-      {type === QuestionType.INPUT && null}
+      {type === QuestionType.INPUT && <InputQuestionBlock />}
       {type === QuestionType.EMOJI && (
         <EmojiQuestionBlock
           handleAddingNewEmote={handleAddingNewEmote}

@@ -10,6 +10,7 @@ interface AnswersComponentFactoryProps {
   questionId: string;
   question: string;
   isSubmitted: boolean;
+  isRequired: boolean;
 }
 export const AnswersComponentFactory = (
   props: AnswersComponentFactoryProps
@@ -18,7 +19,7 @@ export const AnswersComponentFactory = (
 
   return (
     <div className="mb-3 rounded-md border bg-white/50 px-6 py-4 shadow">
-      <h2 className="mb-5 text-lg font-semibold">{props.question}</h2>
+      <h2 className="mb-4 text-lg font-semibold">{props.question}</h2>
       {type === QuestionType.EMOJI && <ListAnswersComponent {...props} />}
       {type === QuestionType.INPUT && <TextAnswersComponent {...props} />}
     </div>

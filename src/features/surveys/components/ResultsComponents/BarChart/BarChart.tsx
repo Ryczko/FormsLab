@@ -42,7 +42,7 @@ export default function BarChart({ data }: BarChartProps) {
     return maxValue;
   };
 
-  return data ? (
+  return data && data.length > 0 ? (
     <div className="h-[250px]">
       <ResponsiveContainer width="100%">
         <Chart
@@ -80,5 +80,7 @@ export default function BarChart({ data }: BarChartProps) {
         </Chart>
       </ResponsiveContainer>
     </div>
-  ) : null;
+  ) : (
+    <div className="mb-4 mt-5">no answers yet</div>
+  );
 }

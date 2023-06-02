@@ -15,6 +15,9 @@ function Toggle({ classNames, isEnabled, onToggle, label }: ToggleProps) {
         className={clsx('flex items-center', classNames)}
         data-test-id="toggle-wrapper"
       >
+        <Switch.Label className="mr-2 text-sm sm:text-base">
+          {label}
+        </Switch.Label>
         <Switch
           checked={isEnabled}
           onChange={onToggle}
@@ -28,9 +31,6 @@ function Toggle({ classNames, isEnabled, onToggle, label }: ToggleProps) {
             } inline-block h-3 w-3 transform rounded-full bg-white transition-transform sm:h-4 sm:w-4`}
           />
         </Switch>
-        <Switch.Label className="ml-2 text-sm sm:text-base">
-          {label}
-        </Switch.Label>
       </div>
     </Switch.Group>
   );
