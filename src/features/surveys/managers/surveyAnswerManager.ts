@@ -80,7 +80,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
         .filter((question) => question.isRequired)
         .every((question) => question.answer)
     ) {
-      toast.error(t('Fill missing fields'));
+      toast.error(t('missingFields'));
       return;
     } else {
       setIsSubmitted(false);

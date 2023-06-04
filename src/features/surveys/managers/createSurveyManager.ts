@@ -131,12 +131,12 @@ export const useCreateSurveyManager = () => {
     setIsSubmitted(true);
 
     if (!isTitleValid(title)) {
-      toast.error(t('Fill missing fields'));
+      toast.error(t('missingFields'));
       return setError(t('required'));
     }
 
     if (!areQuestionsValid(questions)) {
-      toast.error(t('Fill missing fields'));
+      toast.error(t('missingFields'));
       return;
     }
 

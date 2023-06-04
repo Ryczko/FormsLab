@@ -10,5 +10,11 @@
   "required": "Required field",
   "surveyCreationFailed": "Survey creation failed",
   "surveyCreationSuccess": "Survey created succesfully",
-  "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard"
+  "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard",
+  "addQuestion": "Add Question",
+  "Emoji": "Emoji",
+  "Text": "Text",
+  "QuestionType:": "Choose question type",
+  "missingFields": "Fill missing fields",
+  "question": "Question..."
 }

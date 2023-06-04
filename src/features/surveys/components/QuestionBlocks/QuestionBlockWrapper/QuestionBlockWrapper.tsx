@@ -52,7 +52,7 @@ export default function QuestionBlockWrapper({
       )}
 
       <Input
-        placeholder="Question..."
+        placeholder={t('question')}
         onInput={handleQuestionChange}
         className="mt-2"
         value={questionTitle}

@@ -6,6 +6,7 @@ import Button, {
 import NewQuestionModal from 'features/surveys/components/NewQuestionModal/NewQuestionModal';
 import useModal from 'features/surveys/hooks/useModal';
 import { Question } from 'features/surveys/managers/createSurveyManager';
+import useTranslation from 'next-translate/useTranslation';
 
 interface AddQuestionButtonProps {
   onClick: (newQuestion: Question) => void;
@@ -13,6 +14,7 @@ interface AddQuestionButtonProps {
 
 export const AddQuestionButton = ({ onClick }: AddQuestionButtonProps) => {
   const { closeModal, isModalOpen, openModal } = useModal();
+  const { t } = useTranslation('surveyCreate');
   return (
     <>
       <Button
@@ -21,7 +23,7 @@ export const AddQuestionButton = ({ onClick }: AddQuestionButtonProps) => {
         sizeType={ButtonSize.FULL}
         icon={<PlusCircleIcon className="h-5 w-5" />}
       >
-        Add Question
+        {t('addQuestion')}
       </Button>
 
       <NewQuestionModal

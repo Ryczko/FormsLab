@@ -10,5 +10,7 @@
   "unSuccessfullSubmit": "Error occured",
   "surveyInactive": "The survey is no longer active.",
   "sendFeedbackTellUsMore": "Tell us more",
-  "choseEmojiBeforeSend": "Please select an emoji before sending."
+  "choseEmojiBeforeSend": "Please select an emoji before sending.",
+  "selectAnswer": "Please select an answer",
+  "missingFields": "Fill missing fields"
 }
