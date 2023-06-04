@@ -15,7 +15,7 @@
   "toggleInactive": "Inactive",
   "toggleChangeActiveStatusError": "Can not update survey status",
   "createDateInformation": "Create Date",
-  "totalVotesInformation": "Total Votes",
+  "totalVotesInformation": "Total Answers",
   "copyLinkButtonTitle": "Copy link to clipboard",
   "deleteSurveyButtonTitle": "Delete survey",
   "tooltipValue": "value:"

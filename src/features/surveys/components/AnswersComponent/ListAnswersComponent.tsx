@@ -1,5 +1,6 @@
 import React from 'react';
 import EmojiListItem from 'features/surveys/components/AnswersComponent/EmojiListItem/EmojiListItem';
+import useTranslation from 'next-translate/useTranslation';
 
 interface ListAnswersComponentProps {
   options: string[];
@@ -18,6 +19,8 @@ export default function ListAnswersComponent({
   isSubmitted,
   isRequired,
 }: ListAnswersComponentProps) {
+  const { t } = useTranslation('survey');
+
   const onAnswerChange = (answer: string) => {
     handleAnswerChange(answer, questionId);
   };
@@ -36,7 +39,7 @@ export default function ListAnswersComponent({
         ))}
       </div>
       {isSubmitted && !answer && isRequired && (
-        <p className="mt-4 text-sm text-red-500">Please select an answer</p>
+        <p className="mt-4 text-sm text-red-500">{t('choseEmojiBeforeSend')}</p>
       )}
     </>
   );

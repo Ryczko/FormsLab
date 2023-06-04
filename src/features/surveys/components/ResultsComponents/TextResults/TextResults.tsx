@@ -4,12 +4,15 @@ import usePagination from 'features/surveys/hooks/usePagination';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import { MappedAnswerData } from 'types/MappedAnswerData';
+import useTranslation from 'next-translate/useTranslation';
 
 type TextResultsProps = {
   answers: MappedAnswerData[];
 };
 
 export default function TextResults({ answers }: TextResultsProps) {
+  const { t } = useTranslation('surveyAnswer');
+
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
     usePagination(answers, { size: 5 });
 
@@ -20,7 +23,7 @@ export default function TextResults({ answers }: TextResultsProps) {
           <AnswerTableRow key={answer.id} answer={answer} />
         ))
       ) : (
-        <div className="mb-4 mt-5">no answers yet</div>
+        <div className="mb-4 mt-5">{t('noAnswers')}</div>
       )}
 
       {(canGoNext || canGoPrev) && (

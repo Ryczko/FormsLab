@@ -9,6 +9,8 @@
   "successfullSubmit": "The reply has been sent",
   "unSuccessfullSubmit": "Error occured",
   "surveyInactive": "The survey is no longer active.",
-  "sendFeedbackTellUsMore": "Tell us more",
-  "choseEmojiBeforeSend": "Please select an emoji before sending."
+  "choseEmojiBeforeSend": "Please select an emoji before sending.",
+  "requiredField": "This answer is required.",
+  "fillRequiredFields": "Please fill all required fields",
+  "atLeastOneAnswer": "Please select at least one answer."
 }

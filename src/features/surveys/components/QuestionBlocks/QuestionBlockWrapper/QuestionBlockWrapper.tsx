@@ -63,7 +63,7 @@ export default function QuestionBlockWrapper({
       <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-4">
         <div className="w-full grow">
           <Input
-            placeholder="Question..."
+            placeholder={t('questionPlaceholder')}
             onInput={handleQuestionChange}
             className="mt-2"
             value={questionTitle}
@@ -74,7 +74,7 @@ export default function QuestionBlockWrapper({
         <div className="flex w-full justify-center sm:w-auto">
           <Toggle
             classNames="sm:mt-4"
-            label="Required"
+            label={t('requiredToggle')}
             onToggle={handleRequiredToggle}
             isEnabled={isRequired}
           />

@@ -10,6 +10,7 @@ import {
 
 import { CustomTooltip } from 'features/surveys/components/ResultsComponents/BarChart/CustomTooltip';
 import { CustomXAxisTick } from 'features/surveys/components/ResultsComponents/BarChart/CustomXAxisTick';
+import useTranslation from 'next-translate/useTranslation';
 
 interface BarChartProps {
   data: BarChartData[];
@@ -32,6 +33,8 @@ const COLORS = [
 ];
 
 export default function BarChart({ data }: BarChartProps) {
+  const { t } = useTranslation('surveyAnswer');
+
   const getMaxValue = () => {
     let maxValue = 0;
     data.forEach((item) => {
@@ -81,6 +84,6 @@ export default function BarChart({ data }: BarChartProps) {
       </ResponsiveContainer>
     </div>
   ) : (
-    <div className="mb-4 mt-5">no answers yet</div>
+    <div className="mb-4 mt-5">{t('noAnswers')}</div>
   );
 }

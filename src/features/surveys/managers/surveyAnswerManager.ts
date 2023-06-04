@@ -78,7 +78,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
         .filter((question) => question.isRequired)
         .every((question) => question.answer)
     ) {
-      toast.error(t('Fill required fields'));
+      toast.error(t('fillRequiredFields'));
       return false;
     }
 
@@ -87,7 +87,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
         (question) => !question.answer || question.answer?.trim() === ''
       )
     ) {
-      toast.error(t('Fill at least one field'));
+      toast.error(t('atLeastOneAnswer'));
       return false;
     }
 

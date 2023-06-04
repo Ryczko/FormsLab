@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React, { ChangeEvent } from 'react';
 import Input from 'shared/components/Input/Input';
 import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
+import useTranslation from 'next-translate/useTranslation';
 
 interface TextAnswersComponentProps {
   handleAnswerChange: (answer: string, questionId: string) => void;
@@ -18,6 +19,8 @@ export default function TextAnswersComponent({
   isSubmitted,
   isRequired,
 }: TextAnswersComponentProps) {
+  const { t } = useTranslation('survey');
+
   const onAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     handleAnswerChange(e.target.value, questionId);
@@ -25,7 +28,7 @@ export default function TextAnswersComponent({
 
   const getAnswerError = () => {
     if ((!answer || answer?.trim() === '') && isSubmitted && isRequired) {
-      return 'Answer is required';
+      return t('requiredField');
     }
     return undefined;
   };
