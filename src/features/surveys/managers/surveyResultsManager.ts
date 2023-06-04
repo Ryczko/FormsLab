@@ -30,8 +30,9 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
         const existingQuestion = mappedDataByQuestion[answerData.questionId];
         if (existingQuestion) {
           existingQuestion.answers.push({
+            id: answerData.id,
             date: answer.createdAt,
-            answer: answerData.providedAnswer,
+            answer: answerData.providedAnswer ?? undefined,
           });
         } else {
           const questionData = surveyData.questions.find(
@@ -41,7 +42,11 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
             questionType: questionData?.type as QuestionType,
             question: questionData?.title as string,
             answers: [
-              { answer: answerData.providedAnswer, date: answer.createdAt },
+              {
+                id: answerData.id,
+                answer: answerData.providedAnswer ?? undefined,
+                date: answer.createdAt,
+              },
             ],
           };
         }

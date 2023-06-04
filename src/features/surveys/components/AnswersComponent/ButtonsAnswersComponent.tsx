@@ -23,11 +23,11 @@ export default function ButtonsAnswersComponent({
   return (
     <>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {icons.map((icon, idx) => (
+        {icons.map((icon) => (
           <EmojiButton
             icon={icon}
             selected={selectedIcon === icon}
-            key={idx}
+            key={icon}
             onClick={handleIconClick}
           />
         ))}

@@ -86,7 +86,7 @@ export default async function handler(
                 title: question.title,
                 description: question.description,
                 options: question.options,
-                isRequired: true,
+                isRequired: question.isRequired,
               })),
             },
           },

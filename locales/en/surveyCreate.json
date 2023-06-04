@@ -3,12 +3,14 @@
   "content": "Create Survey - FormsLab",
   "heading": "Create new survey",
   "buttonCreate": "Create Survey",
-  "emojiPickingInformation": "Click on icon to change",
   "surveyTitleLable": "Survey Title",
   "surveyTitlePlaceholder": "Title...",
+  "questionPlaceholder": "Question...",
   "duplicatingEmoji": "Emoji already selected",
   "required": "Required field",
+  "requiredToggle": "Required",
   "surveyCreationFailed": "Survey creation failed",
   "surveyCreationSuccess": "Survey created succesfully",
+  "fillRequiredFields": "Please fill all required fields",
   "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard"
 }

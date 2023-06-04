@@ -50,6 +50,7 @@ function AnswerPage({
                   questionId={question.id}
                   handleAnswerChange={handleAnswerChange}
                   isSubmitted={isSubmitted}
+                  isRequired={question.isRequired}
                 />
               );
             })}

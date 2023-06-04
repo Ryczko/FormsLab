@@ -1,5 +1,6 @@
 import { QuestionType } from '@prisma/client';
 import { Question } from 'features/surveys/managers/createSurveyManager';
+import { v4 } from 'uuid';
 
 export const MAX_TITLE_LENGTH = 255;
 
@@ -11,6 +12,7 @@ export const MAX_ANSWER_LENGTH = 255;
 
 export const defaultQuestions: Question[] = [
   {
+    id: v4(),
     title: '',
     options: [
       ':smiley:',
@@ -19,9 +21,12 @@ export const defaultQuestions: Question[] = [
       ':rage:',
     ],
     type: QuestionType.EMOJI,
+    isRequired: true,
   },
   {
+    id: v4(),
     title: '',
     type: QuestionType.INPUT,
+    isRequired: false,
   },
 ];

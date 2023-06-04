@@ -8,9 +8,11 @@ import { postFetch } from '../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 
 export interface Question {
+  id: string;
   title: string;
   options?: string[];
   type: QuestionType;
+  isRequired: boolean;
 }
 
 export const useCreateSurveyManager = () => {
@@ -47,6 +49,16 @@ export const useCreateSurveyManager = () => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
       newQuestion.title = newQuestionTitle;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
+  const updateQuestionRequired = (questionIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      newQuestion.isRequired = !newQuestion.isRequired;
       newQuestions.splice(questionIndex, 1, newQuestion);
       return newQuestions;
     });
@@ -127,18 +139,25 @@ export const useCreateSurveyManager = () => {
     return true;
   };
 
-  const createSurvey = async () => {
+  const isSurveyValid = () => {
     setIsSubmitted(true);
 
     if (!isTitleValid(title)) {
-      toast.error(t('Fill missing fields'));
-      return setError(t('required'));
+      toast.error(t('fillRequiredFields'));
+      setError(t('required'));
+      return false;
     }
 
     if (!areQuestionsValid(questions)) {
-      toast.error(t('Fill missing fields'));
-      return;
+      toast.error(t('fillRequiredFields'));
+      return false;
     }
+
+    return true;
+  };
+
+  const createSurvey = async () => {
+    if (!isSurveyValid()) return;
 
     setIsCreating(true);
 
@@ -149,6 +168,7 @@ export const useCreateSurveyManager = () => {
           title: question.title,
           options: question.options,
           type: question.type,
+          isRequired: question.isRequired,
         })),
       });
 
@@ -182,5 +202,6 @@ export const useCreateSurveyManager = () => {
     removeQuestion,
     updateQuestion,
     isSubmitted,
+    updateQuestionRequired,
   };
 };

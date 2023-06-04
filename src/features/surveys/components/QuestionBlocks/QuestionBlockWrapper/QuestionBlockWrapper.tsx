@@ -3,6 +3,7 @@ import { ChangeEvent, PropsWithChildren } from 'react';
 import Input from 'shared/components/Input/Input';
 import useTranslation from 'next-translate/useTranslation';
 import { MAX_QUESTION_LENGTH } from 'shared/constants/surveysConfig';
+import Toggle from 'shared/components/Toggle/Toggle';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -11,6 +12,8 @@ interface QuestionBlockWrapperProps {
   questionTitle: string;
   isSubmitted: boolean;
   isRemovingPossible: boolean;
+  updateQuestionRequired: (questionIndex: number) => void;
+  isRequired: boolean;
 }
 
 export default function QuestionBlockWrapper({
@@ -21,6 +24,8 @@ export default function QuestionBlockWrapper({
   questionTitle,
   isSubmitted,
   isRemovingPossible,
+  isRequired,
+  updateQuestionRequired,
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
 
@@ -30,6 +35,10 @@ export default function QuestionBlockWrapper({
 
   const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
     updateQuestion(e.target.value, index);
+  };
+
+  const handleRequiredToggle = () => {
+    updateQuestionRequired(index);
   };
 
   const questionError = () => {
@@ -51,15 +60,26 @@ export default function QuestionBlockWrapper({
         </button>
       )}
 
-      <Input
-        placeholder="Question..."
-        onInput={handleQuestionChange}
-        className="mt-2"
-        value={questionTitle}
-        error={questionError()}
-        absoluteError
-        maxLength={MAX_QUESTION_LENGTH}
-      />
+      <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-4">
+        <div className="w-full grow">
+          <Input
+            placeholder={t('questionPlaceholder')}
+            onInput={handleQuestionChange}
+            className="mt-2"
+            value={questionTitle}
+            error={questionError()}
+            maxLength={MAX_QUESTION_LENGTH}
+          />
+        </div>
+        <div className="flex w-full justify-center sm:w-auto">
+          <Toggle
+            classNames="sm:mt-4"
+            label={t('requiredToggle')}
+            onToggle={handleRequiredToggle}
+            isEnabled={isRequired}
+          />
+        </div>
+      </div>
       {children}
     </div>
   );

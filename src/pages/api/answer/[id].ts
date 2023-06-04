@@ -4,7 +4,7 @@ import prismadb from '../../../../lib/prismadb';
 import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
 
 interface AnswerData {
-  answersData: { questionId: string; answer: string }[];
+  answersData: { questionId: string; answer?: string }[];
 }
 
 export async function getSurveyData(surveyId: string) {
@@ -24,8 +24,7 @@ export async function getSurveyData(surveyId: string) {
 const isAnswerDataValid = (answerData: AnswerData) => {
   if (
     answerData.answersData.some(
-      (answer) =>
-        answer.answer.trim() === '' || answer.answer.length > MAX_ANSWER_LENGTH
+      (answer) => answer.answer && answer.answer.length > MAX_ANSWER_LENGTH
     )
   ) {
     return false;

@@ -72,19 +72,33 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     });
   };
 
-  const handleSave = async () => {
-    setIsSubmitted(true);
-
+  const isAnswersValid = () => {
     if (
       !formData?.questions
         .filter((question) => question.isRequired)
         .every((question) => question.answer)
     ) {
-      toast.error(t('Fill missing fields'));
-      return;
-    } else {
-      setIsSubmitted(false);
+      toast.error(t('fillRequiredFields'));
+      return false;
     }
+
+    if (
+      formData.questions.every(
+        (question) => !question.answer || question.answer?.trim() === ''
+      )
+    ) {
+      toast.error(t('atLeastOneAnswer'));
+      return false;
+    }
+
+    setIsSubmitted(false);
+    return true;
+  };
+
+  const handleSave = async () => {
+    setIsSubmitted(true);
+
+    if (!isAnswersValid()) return;
 
     setIsAnswering(true);
 

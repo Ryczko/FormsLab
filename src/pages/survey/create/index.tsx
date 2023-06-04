@@ -47,6 +47,7 @@ function SurveyCreatePage() {
     removeQuestion,
     updateQuestion,
     isSubmitted,
+    updateQuestionRequired,
   } = useCreateSurveyManager();
   const { t } = useTranslation('surveyCreate');
 
@@ -65,14 +66,12 @@ function SurveyCreatePage() {
         value={title}
         error={error}
         maxLength={MAX_TITLE_LENGTH}
-        className="mb-8"
         onChange={handleChangeTitle}
-        absoluteError
       />
 
       {questions.map((question, index) => (
         <QuestionBlockFactory
-          key={index}
+          key={question.id}
           type={question.type}
           handleAddingNewEmote={handleAddingNewEmote}
           pack={question.options ?? []}
@@ -84,6 +83,8 @@ function SurveyCreatePage() {
           questionTitle={question.title}
           isSubmitted={isSubmitted}
           isRemovingPossible={questions.length > MIN_QUESTIONS}
+          isRequired={question.isRequired}
+          updateQuestionRequired={updateQuestionRequired}
         />
       ))}
 
