@@ -15,6 +15,8 @@ import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import { getAllUserSurveys } from 'pages/api/survey';
 import { Survey } from '@prisma/client';
+import { useEffect, useState } from 'react';
+import { getFetch } from '../../../lib/axiosConfig';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -40,9 +42,23 @@ export async function getServerSideProps(context: NextPageContext) {
 function SurveyListPage({
   surveys,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [surveysData, setSurveysData] = useState<Survey[]>(surveys);
+
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
-    usePagination<Survey>(surveys ?? [], { size: 7 });
+    usePagination<Survey>(surveysData ?? [], { size: 7 });
   const { t } = useTranslation('surveys');
+
+  useEffect(() => {
+    if (items.length === 0) {
+      goPrev();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
+
+  const refreshSurveys = async () => {
+    const surveys = await getFetch<{ surveys: Survey[] }>('/api/survey');
+    setSurveysData(surveys.surveys);
+  };
 
   return (
     <>
@@ -62,6 +78,7 @@ function SurveyListPage({
                   key={item.id}
                   id={item.id}
                   question={item.title}
+                  refreshSurveys={refreshSurveys}
                   createDate={formatDateDistance(item.createdAt)}
                 ></SurveyRow>
               );

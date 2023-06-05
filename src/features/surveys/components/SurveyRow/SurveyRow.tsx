@@ -1,4 +1,4 @@
-import { LinkIcon } from '@heroicons/react/outline';
+import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { useRouter } from 'next/router';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
@@ -12,19 +12,21 @@ interface SurveyRowProps {
   question: string;
   createDate: string;
   id: string;
+  refreshSurveys: () => Promise<void>;
 }
 
 export default function SurveyRow({
   question,
   createDate,
   id,
+  refreshSurveys,
 }: SurveyRowProps) {
   const { copy } = useCopyToClipboard();
   const navigate = useRouter();
   const {
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
-    // openModal: openDeleteSurveyModal,
+    openModal: openDeleteSurveyModal,
   } = useModal();
   const { t } = useTranslation('surveys');
 
@@ -41,7 +43,7 @@ export default function SurveyRow({
 
   return (
     <div className="mb-4 flex w-full flex-col md:flex-row">
-      <div className="flex w-full items-center justify-between rounded-md rounded-b-none bg-white px-4 py-3 shadow-sm md:rounded-b-md">
+      <div className="flex w-full items-center justify-between rounded-md bg-white px-4 py-3 shadow-sm">
         <div title={question} className="w-40 truncate text-left">
           {question}
         </div>
@@ -52,7 +54,7 @@ export default function SurveyRow({
       <div className="flex w-full md:ml-2 md:w-auto">
         <Button
           variant={ButtonVariant.OUTLINE}
-          className="mr-2 mt-2 w-full px-4 sm:mt-0 md:w-auto"
+          className="mr-2 mt-2 w-full px-4 md:mt-0 md:w-auto"
           onClick={handleOnMoreButton}
         >
           {t('moreButton')}
@@ -61,23 +63,24 @@ export default function SurveyRow({
         <Button
           variant={ButtonVariant.PRIMARY}
           className={
-            'mt-2 w-full justify-center px-3 text-center sm:mt-0 md:w-auto'
+            'mt-2 w-full justify-center px-3 text-center md:mt-0 md:w-auto'
           }
           title={t('copyLinkButtonTitle')}
           icon={<LinkIcon className="h-5 w-5" />}
           onClick={handleCopyLink}
         />
-        {/* <Button
+        <Button
           variant={ButtonVariant.DANGER}
           title={t('deleteSurveyButtonTitle')}
-          className="ml-2 mt-2 w-full justify-center px-3 sm:mt-0 md:w-auto"
+          className="ml-2 mt-2 w-full justify-center px-3 md:mt-0 md:w-auto"
           onClick={openDeleteSurveyModal}
           icon={<TrashIcon className="h-5 w-5" />}
-        /> */}
+        />
       </div>
       <DeleteSurveyModal
         surveyId={id}
         closeModal={closeDeleteSurveyModal}
+        onSuccess={refreshSurveys}
         isOpened={isDeleteSurveyModalOpen}
       />
     </div>

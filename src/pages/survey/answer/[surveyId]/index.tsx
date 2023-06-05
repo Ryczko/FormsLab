@@ -1,4 +1,4 @@
-import { LinkIcon, RefreshIcon } from '@heroicons/react/outline';
+import { LinkIcon, RefreshIcon, TrashIcon } from '@heroicons/react/outline';
 
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
@@ -15,6 +15,8 @@ import { getSession } from 'next-auth/react';
 import { getSurveyWithAnswers } from 'pages/api/survey/[id]';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import ResultComponent from 'features/surveys/components/ResultsComponents/ResultComponent';
+import useModal from 'features/surveys/hooks/useModal';
+import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -58,7 +60,14 @@ function SurveyResultsPage({
     surveyData,
     mappedAnswersData,
     isDataLoading,
+    onRemoveSuccess,
   } = useSurveyResultsManager(initialData);
+
+  const {
+    isModalOpen: isDeleteSurveyModalOpen,
+    closeModal: closeDeleteSurveyModal,
+    openModal: openDeleteSurveyModal,
+  } = useModal();
 
   const { t } = useTranslation('surveyAnswer');
 
@@ -91,6 +100,13 @@ function SurveyResultsPage({
               icon={<RefreshIcon className="h-5 w-5" />}
             />
           )}
+          <Button
+            variant={ButtonVariant.DANGER}
+            title={t('deleteSurveyButtonTitle')}
+            className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
+            onClick={openDeleteSurveyModal}
+            icon={<TrashIcon className="h-5 w-5" />}
+          />
         </div>
 
         <hr />
@@ -111,6 +127,13 @@ function SurveyResultsPage({
             answers={mappedAnswersData[key].answers}
           />
         ))}
+
+        <DeleteSurveyModal
+          surveyId={surveyId}
+          closeModal={closeDeleteSurveyModal}
+          isOpened={isDeleteSurveyModalOpen}
+          onSuccess={onRemoveSuccess}
+        />
       </>
     </>
   );

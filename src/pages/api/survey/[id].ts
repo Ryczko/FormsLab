@@ -32,16 +32,37 @@ export default async function handler(
   try {
     const requestMethod = req.method;
     const session = await serverAuth(req, res);
+    const { id } = req.query;
 
     switch (requestMethod) {
       case 'GET': {
-        const { id } = req.query;
         const survey = await getSurveyWithAnswers(
           id as string,
           session.currentUser.id
         );
 
         return res.status(200).json(survey);
+      }
+
+      case 'DELETE': {
+        const survey = await prismadb.survey.findFirst({
+          where: {
+            id: id as string,
+            userId: session.currentUser.id,
+          },
+        });
+
+        if (!survey) {
+          return res.status(404).end();
+        }
+
+        await prismadb.survey.delete({
+          where: {
+            id: id as string,
+          },
+        });
+
+        return res.status(200).end();
       }
 
       default:
