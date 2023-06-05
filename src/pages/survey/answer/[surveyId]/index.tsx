@@ -90,16 +90,16 @@ function SurveyResultsPage({
           >
             {t('buttonCopyLink')}
           </Button>
-          {!process.env.NEXT_PUBLIC_LIVE_ANSWERS_UPDATE && (
-            <Button
-              title={t('buttonRefreshTitle')}
-              onClick={getSurveyData}
-              isLoading={isDataLoading}
-              variant={ButtonVariant.OUTLINE}
-              className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
-              icon={<RefreshIcon className="h-5 w-5" />}
-            />
-          )}
+
+          <Button
+            title={t('buttonRefreshTitle')}
+            onClick={getSurveyData}
+            isLoading={isDataLoading}
+            variant={ButtonVariant.OUTLINE}
+            className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
+            icon={<RefreshIcon className="h-5 w-5" />}
+          />
+
           <Button
             variant={ButtonVariant.DANGER}
             title={t('deleteSurveyButtonTitle')}

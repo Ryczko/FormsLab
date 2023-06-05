@@ -1,6 +1,22 @@
 # Contributing to FormsLab
 
-We have included keys in the application to connect to the develop Firebase, so you don't have to worry about configuration. On the other hand, you would like to make a contribution in which you need access to the Firebase Console write to us and we will give you the appropriate permissions.
+Contributing to FormsLab is fairly easy. This document will guide you through the process.
+
+## Local Development
+
+To run project locally:
+
+1. Clone or fork the repo.
+2. Run `npm install` to install dependencies.
+3. Create a `.env` file in the root of the project and add at least the following environment variables:
+
+```
+DATABASE_URL= # Your MongoDB database URL (you can use a local database or a create on https://www.mongodb.com/cloud/atlas)
+NEXTAUTH_JWT_SECRET= # random string
+NEXTAUTH_SECRET= # random string
+```
+
+4. Run `npm run dev` to start the development server.
 
 ## Pull Requests
 
