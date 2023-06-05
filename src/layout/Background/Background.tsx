@@ -28,17 +28,17 @@ export default function Background() {
           <circle cx="155" cy="443" r="64" />
         </g>
         <image
-          className="rotate-6 opacity-80"
+          className="rotate-6 opacity-70"
           y={180}
-          x={1100}
+          x={1200}
           width="200"
           height="200"
           xlinkHref={'/images/emote2.svg'}
         />
         <image
-          className="-rotate-6 opacity-80"
+          className="-rotate-6 opacity-70"
           y={100}
-          x={50}
+          x={0}
           width="200"
           height="200"
           xlinkHref={'/images/emote.svg'}

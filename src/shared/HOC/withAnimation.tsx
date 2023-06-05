@@ -11,6 +11,9 @@ const withAnimation = <T extends object>(
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
       transition={{ duration: 0.15 }}
+      onAnimationComplete={() => {
+        window.scroll(0, 0);
+      }}
     >
       <WrappedComponent {...props} />
     </motion.div>

@@ -50,13 +50,13 @@ export default function QuestionBlockWrapper({
   };
 
   return (
-    <div className="relative my-6 rounded-md border bg-white/30 p-4 shadow-sm">
+    <div className="relative mt-3 rounded-md border bg-white/30 p-4 shadow-sm">
       {isRemovingPossible && (
         <button
           onClick={removeQuestion}
-          className="absolute right-0 top-0 translate-x-[50%] translate-y-[-50%] cursor-pointer rounded-full bg-white p-2 shadow-md hover:scale-95"
+          className="absolute right-0 top-0 translate-x-[50%] translate-y-[-30%] cursor-pointer rounded-full bg-white p-[6px] shadow-md hover:scale-95"
         >
-          <TrashIcon className="w-[18px] text-red-700" />
+          <TrashIcon className="w-[16px] text-red-700" />
         </button>
       )}
 

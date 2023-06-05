@@ -19,7 +19,7 @@ function SignupPage() {
 
   useEffect(() => {
     if (user) {
-      router.push('/');
+      router.push('/', undefined, { scroll: false });
     }
   }, [user]);
 
@@ -83,7 +83,7 @@ function SignupPage() {
                   {t('signUpButton')}
                 </LoginButton>
               </div>
-              <Link href={'/login'} passHref>
+              <Link scroll={false} href={'/login'} passHref>
                 <p className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer">
                   {t('alreadyHaveAccount')}
                 </p>

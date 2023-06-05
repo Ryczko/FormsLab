@@ -27,6 +27,7 @@ const IconButtonLink = ({
     <Link
       href={href}
       {...props}
+      scroll={false}
       className={clsx(
         'btn',
         'hover:no-underline',

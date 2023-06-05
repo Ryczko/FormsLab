@@ -11,7 +11,7 @@ const withProtectedRoute = <T extends object>(
     const location = useRouter();
 
     if (!loading && !isLoggedIn && location.pathname !== '/login') {
-      location.push('/login');
+      location.push('/login', undefined, { scroll: false });
     }
 
     if (isLoggedIn) {

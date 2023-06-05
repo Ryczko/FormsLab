@@ -36,7 +36,7 @@ export default function SurveyRow({
   };
 
   const handleOnMoreButton = () => {
-    navigate.push(`/survey/answer/${id}`);
+    navigate.push(`/survey/answer/${id}`, undefined, { scroll: false });
   };
 
   return (

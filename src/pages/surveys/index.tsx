@@ -41,7 +41,7 @@ function SurveyListPage({
   surveys,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
-    usePagination<Survey>(surveys ?? [], { size: 8 });
+    usePagination<Survey>(surveys ?? [], { size: 7 });
   const { t } = useTranslation('surveys');
 
   return (
