@@ -9,7 +9,7 @@ type DeleteSurveyModalProps = {
   surveyId: string;
   isOpened: boolean;
   closeModal: () => void;
-  onSuccess?: () => void;
+  onSuccess?: () => Promise<void>;
 };
 
 export default function DeleteSurveyModal({
@@ -49,7 +49,7 @@ export default function DeleteSurveyModal({
             </Button>
             <Button
               variant={ButtonVariant.DANGER}
-              onClick={deleteSurvey(surveyId, closeModal, onSuccess)}
+              onClick={() => deleteSurvey(surveyId, closeModal, onSuccess)}
               icon={<TrashIcon className="h-5 w-5" />}
               className="uppercase"
               isLoading={isRemoving}

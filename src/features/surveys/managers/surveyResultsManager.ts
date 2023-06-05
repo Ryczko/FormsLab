@@ -92,6 +92,10 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     copy(link);
   };
 
+  const onRemoveSuccess = async () => {
+    await router.replace('/surveys');
+  };
+
   return {
     handleCopyLink,
     surveyId,
@@ -99,5 +103,6 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     surveyData,
     mappedAnswersData,
     isDataLoading,
+    onRemoveSuccess,
   };
 };

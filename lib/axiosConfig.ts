@@ -19,3 +19,10 @@ export const postFetch = (url: string, data = {}) => {
     data,
   }).then((response) => response.data);
 };
+
+export const deleteFetch = (url: string) => {
+  return instance({
+    method: 'DELETE',
+    url,
+  }).then((response) => response.data);
+};
