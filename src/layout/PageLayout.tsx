@@ -6,6 +6,7 @@ import GlobalLoader from 'layout/GlobalLoader/GlobalLoader';
 import Navigation from 'layout/Navigation/Navigation';
 import { useApplicationContext } from 'features/application/context';
 import { useGlobalProgressBar } from 'layout/hooks/useGlobalProgressBar';
+import Footer from 'layout/Footer/Footer';
 
 function PageLayout({ children }: PropsWithChildren) {
   useGlobalProgressBar();
@@ -16,11 +17,14 @@ function PageLayout({ children }: PropsWithChildren) {
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
       <Navigation />
-      <div className="m-auto mb-8 min-h-full max-w-3xl overflow-hidden px-6 pt-24 text-center sm:px-8">
-        <Background />
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Fragment key={router.asPath}>{children}</Fragment>
-        </AnimatePresence>
+      <div className="relative min-h-screen">
+        <div className="m-auto max-w-[54rem] overflow-hidden px-6 pb-[90px] pt-24 text-center">
+          <Background />
+          <AnimatePresence exitBeforeEnter initial={false}>
+            <Fragment key={router.asPath}>{children}</Fragment>
+          </AnimatePresence>
+        </div>
+        <Footer />
       </div>
     </>
   );

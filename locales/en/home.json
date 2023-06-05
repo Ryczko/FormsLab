@@ -1,9 +1,16 @@
 {
   "title": "FormsLab",
   "content": "Homepage - FormsLab",
-  "firstPartHeading": "How are you",
-  "secondPartHeading": "feeling?",
-  "Description": "There is no better way to find out than FormsLab!",
+  "firstPartHeading": "What do you",
+  "secondPartHeading": "think?",
+  "Description": "There is no better way to find out than FormsLab - simply and fancy form builder",
   "buttonSignIn": "Sign In",
-  "buttonCreateSurvey": "Create Survey"
+  "star": "Star on GitHub",
+  "buttonCreateSurvey": "Create Survey",
+  "createTitle": "Create Survey",
+  "createDescription": "Using simple form builder with different type of questions.",
+  "answerTitle": "Share your survey",
+  "answerDescription": "To collect data from users. To answer users don't need to have an account.",
+  "resultTitle": "Check the results",
+  "resultDescription": "To see what users need and get to know their opinions."
 }

@@ -10,7 +10,7 @@ interface LogoProps {
 function Logo({ width = 115, height = 50 }: LogoProps) {
   return (
     <div className="flex cursor-pointer items-center">
-      <Link href={'/'}>
+      <Link href={'/'} scroll={false}>
         <Image src={logo} alt="logo" width={width} height={height} />
       </Link>
     </div>

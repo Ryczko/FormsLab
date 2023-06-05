@@ -176,7 +176,9 @@ export const useCreateSurveyManager = () => {
         window.location.hostname === 'localhost' ? 'http://' : 'https://';
       const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
       const copiedCorrectly = await copy(link, true);
-      await router.push(`/survey/answer/${newSurvey.id}`);
+      await router.push(`/survey/answer/${newSurvey.id}`, undefined, {
+        scroll: false,
+      });
       toast.success(
         `${t('surveyCreationSuccess')} ${
           copiedCorrectly ? t('surveyCreationSucessCopiedCorrectly') : ''

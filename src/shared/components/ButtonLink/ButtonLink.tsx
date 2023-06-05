@@ -13,6 +13,7 @@ export const ButtonLinkSize = ButtonSize;
 interface ButtonLinkProps extends ButtonProps {
   onClick?: () => void;
   href: string;
+  target?: string;
 }
 
 const ButtonLink = ({
@@ -21,11 +22,14 @@ const ButtonLink = ({
   href,
   variant = ButtonLinkVariant.SECONDARY,
   sizeType = ButtonLinkSize.DEFAULT,
+  target,
   ...props
 }: PropsWithChildren<ButtonLinkProps>) => (
   <Link
     href={href}
+    target={target}
     {...props}
+    scroll={false}
     className={clsx('btn', variant, sizeType, 'hover:no-underline', className)}
   >
     {children}

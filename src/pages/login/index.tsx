@@ -30,9 +30,9 @@ function LoginPage() {
   useEffect(() => {
     if (user) {
       if (redirect === 'settings') {
-        router.push('/settings');
+        router.push('/settings', undefined, { scroll: false });
       } else {
-        router.push('/');
+        router.push('/', undefined, { scroll: false });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +100,7 @@ function LoginPage() {
                   {t('login:signInButton')}
                 </LoginButton>
               </div>
-              <Link href={'/signup'} passHref>
+              <Link scroll={false} href={'/signup'} passHref>
                 <p
                   data-test-id="signup-link"
                   className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer"
