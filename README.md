@@ -1,13 +1,13 @@
 <h1 align="center">
-<img src="https://user-images.githubusercontent.com/73366069/227785106-441ef2e3-1fab-467e-96dd-edd543be0be7.png" alt="FormsLab logo" width="300"/>
+<img src="https://github.com/Ryczko/FormsLab/assets/51440879/6c899f04-b6c0-4bb8-8b86-42e576acc9ed" alt="FormsLab logo" width="300"/>
 </h1>
 
-<p align="center">Simple surveys creator and feedback app. Create surveys using emojis 😍. </br>
+<p align="center">Simple survey creator and feedback app. Create forms using emojis 😍. </br>
 It can be used to collect information about the well-being of employees or to collect feedback from customers. </br>
-<strong><a href="https://employee-pulse.vercel.app">Check application live here</a></strong>
+<strong><a href="https://formslab.vercel.app">Check application live here</a></strong>
 </p>
 
-https://user-images.githubusercontent.com/51440879/227773762-fea8a39f-0ea2-4543-9372-e79d6e926e10.mp4
+https://github.com/Ryczko/FormsLab/assets/51440879/e678e6f8-d208-476d-8412-07987ed75574
 
 </br>
 
@@ -33,5 +33,4 @@ https://user-images.githubusercontent.com/51440879/227773762-fea8a39f-0ea2-4543-
 <img src="https://camo.githubusercontent.com/f21f1fa29dfe5e1d0772b0efe2f43eca2f6dc14f2fede8d9cbef4a3a8210c91d/68747470733a2f2f6173736574732e76657263656c2e636f6d2f696d6167652f75706c6f61642f76313636323133303535392f6e6578746a732f49636f6e5f6c696768745f6261636b67726f756e642e706e67" title="Next.js" alt="Next.js" width="40" height="40"/>
 <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="TypeScript" alt="TypeScript" width="40" height="40"/>
 <img src="https://github.com/devicons/devicon/blob/master/icons/tailwindcss/tailwindcss-plain.svg" title="TailwindCSS" alt="TailwindCSS" width="40" height="40"/>
-<img src="https://github.com/devicons/devicon/blob/master/icons/firebase/firebase-plain-wordmark.svg" title="Firebase" alt="Firebase" width="40" />
 </div>
