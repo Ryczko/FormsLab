@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="https://github.com/Ryczko/FormsLab/assets/51440879/f2cc5d3c-60be-4801-88d7-650868f84fd5" alt="FormsLab logo" width="300"/>
+<img src="https://github.com/Ryczko/FormsLab/assets/51440879/6c899f04-b6c0-4bb8-8b86-42e576acc9ed" alt="FormsLab logo" width="300"/>
 </h1>
 
 <p align="center">Simple survey creator and feedback app. Create forms using emojis 😍. </br>
