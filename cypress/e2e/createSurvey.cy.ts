@@ -16,6 +16,17 @@ describe('Create Survey Page', () => {
     cy.url().should('include', '/survey/create');
     cy.get('input[name="survey-title"]').type(surveyTitle);
     cy.get('button[name="create-survey"]').click();
+
+    cy.wrap(
+      Cypress.automation('remote:debugger:protocol', {
+        command: 'Browser.grantPermissions',
+        params: {
+          permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+          origin: window.location.origin,
+        },
+      })
+    );
+
     cy.url().should('match', /\/survey\/answer\/.*/);
     cy.visit('/surveys');
     cy.contains(surveyTitle);
