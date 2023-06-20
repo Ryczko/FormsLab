@@ -1,8 +1,6 @@
 import { faker } from '@faker-js/faker';
 
 describe('Login Page', () => {
-  beforeEach(() => cy.clearIndexedDB());
-
   it('should sign up via email and password and redirect to home page', () => {
     cy.visit('/login');
     cy.get('[data-test-id="signup-link"]').click();
