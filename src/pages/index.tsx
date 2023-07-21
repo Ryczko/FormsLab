@@ -47,7 +47,7 @@ function IndexPage({
           <ButtonLink
             href="https://github.com/Ryczko/FormsLab"
             target="_blank"
-            className="flex w-full items-center justify-center sm:w-[230px]"
+            className="flex w-full items-center justify-center sm:w-[250px]"
             variant={ButtonVariant.PRIMARY}
           >
             {t('star')}{' '}
@@ -63,7 +63,7 @@ function IndexPage({
             <ButtonLink
               href={'/login'}
               variant={ButtonVariant.OUTLINE_PRIMARY}
-              className="w-full sm:w-[230px]"
+              className="w-full sm:w-[250px]"
             >
               {t('buttonSignIn')}
             </ButtonLink>
