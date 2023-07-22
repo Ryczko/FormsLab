@@ -10,6 +10,7 @@ import Input from 'shared/components/Input/Input';
 import { useRegisterManager } from 'features/authorization/managers/registerManager';
 import { useApplicationContext } from 'features/application/context';
 import useTranslation from 'next-translate/useTranslation';
+import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
 
 function SignupPage() {
   const { user } = useApplicationContext();
@@ -30,15 +31,15 @@ function SignupPage() {
         <meta name="description" content={t('content')} />
       </Head>
 
-      <Header>{t('heading')}</Header>
-      <div className="flex flex-col items-center justify-center space-y-2">
+      <AuthFormWrapper>
+        <Header>{t('heading')}</Header>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
           validationSchema={SignupSchema}
         >
           {({ values, errors, handleChange, handleSubmit, touched }) => (
-            <Form className="flex w-full flex-col sm:w-80">
+            <Form className="flex w-full flex-col">
               <Input
                 type="text"
                 name="name"
@@ -84,14 +85,14 @@ function SignupPage() {
                 </LoginButton>
               </div>
               <Link scroll={false} href={'/login'} passHref>
-                <p className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer">
+                <p className="mt-2 text-center text-sm text-zinc-600 underline hover:cursor-pointer">
                   {t('alreadyHaveAccount')}
                 </p>
               </Link>
             </Form>
           )}
         </Formik>
-      </div>
+      </AuthFormWrapper>
     </>
   );
 }
