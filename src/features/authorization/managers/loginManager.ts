@@ -8,6 +8,9 @@ import toast from 'react-hot-toast';
 
 export const useLoginManager = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isGithubLoading, setIsGithubLoading] = useState(false);
+
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -67,6 +70,7 @@ export const useLoginManager = () => {
   };
 
   const onGoogleLogin = async () => {
+    setIsGoogleLoading(true);
     await signIn('google', {
       callbackUrl: '/',
       redirect: false,
@@ -74,6 +78,7 @@ export const useLoginManager = () => {
   };
 
   const onGithubLogin = async () => {
+    setIsGithubLoading(true);
     await signIn('github', {
       callbackUrl: '/',
       redirect: false,
@@ -87,5 +92,7 @@ export const useLoginManager = () => {
     onGoogleLogin,
     onGithubLogin,
     isSubmitting,
+    isGoogleLoading,
+    isGithubLoading,
   };
 };

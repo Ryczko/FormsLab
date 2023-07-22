@@ -12,6 +12,7 @@ import { useLoginManager } from 'features/authorization/managers/loginManager';
 import Github from '../../../public/images/github.svg';
 import Google from '../../../public/images/google.svg';
 import useTranslation from 'next-translate/useTranslation';
+import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
 
 function LoginPage() {
   const { loading, user } = useApplicationContext();
@@ -22,6 +23,8 @@ function LoginPage() {
     onGoogleLogin,
     onGithubLogin,
     isSubmitting,
+    isGoogleLoading,
+    isGithubLoading,
   } = useLoginManager();
   const router = useRouter();
   const { redirect } = router.query;
@@ -45,20 +48,25 @@ function LoginPage() {
         <meta name="description" content={t('login:content')} />
       </Head>
 
-      <Header>{t('login:heading')}</Header>
-      <div className="flex flex-col items-center justify-center space-y-2">
+      <AuthFormWrapper>
+        <Header>{t('login:heading')}</Header>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
           validationSchema={LoginSchema}
         >
           {({ values, errors, handleChange, handleSubmit, touched }) => (
-            <Form className="flex w-full flex-col sm:w-80">
-              <LoginButton image={Google} onClick={onGoogleLogin}>
+            <Form className="flex w-full flex-col">
+              <LoginButton
+                isLoading={isGoogleLoading}
+                image={Google}
+                onClick={onGoogleLogin}
+              >
                 {t('login:googleButton')}
               </LoginButton>
               <LoginButton
                 image={Github}
+                isLoading={isGithubLoading}
                 onClick={onGithubLogin}
                 className="mb-3"
               >
@@ -103,7 +111,7 @@ function LoginPage() {
               <Link scroll={false} href={'/signup'} passHref>
                 <p
                   data-test-id="signup-link"
-                  className="mt-2 max-w-sm text-center text-sm text-zinc-600 underline hover:cursor-pointer"
+                  className="mt-2 text-center text-sm text-zinc-600 underline hover:cursor-pointer"
                 >
                   {t('login:dontHaveAccount')}
                 </p>
@@ -111,12 +119,7 @@ function LoginPage() {
             </Form>
           )}
         </Formik>
-      </div>
-      {loading && (
-        <div className="text-center text-sm text-zinc-600">
-          {t('login:loading')}
-        </div>
-      )}
+      </AuthFormWrapper>
     </>
   );
 }
