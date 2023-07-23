@@ -1,8 +1,7 @@
 {
   "title": "Page Not Found",
   "content": "FormsLab (404) - This page cannot be found.",
-  "Heading": "This page cannot be found.",
-  "Description": "Redirecting to Homepage in",
-  "RedirectSecond": "second",
-  "RedirectSeconds": "seconds"
+  "header": "This page cannot be found.",
+  "description": "Redirecting to Homepage in",
+  "backToHome": "Back to home page"
 }
