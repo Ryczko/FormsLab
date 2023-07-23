@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import useRedirectWithTimeout from 'shared/hooks/useRedirectWithTimeout';
 import useTranslation from 'next-translate/useTranslation';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import { ButtonVariant } from 'shared/components/Button/Button';
 
 export default function FourOhFour() {
-  const { secondsRemaining } = useRedirectWithTimeout('/', 5);
   const { t } = useTranslation('404');
   return (
     <>
@@ -11,12 +11,20 @@ export default function FourOhFour() {
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
-      <h1 className="text-center text-2xl font-bold">{t('Heading')}</h1>
-      <h2 className="mt-4 text-center text-xl">
-        {t('Description')}
-        &nbsp;{secondsRemaining}&nbsp;
-        {secondsRemaining > 1 ? t('RedirectSeconds') : t('RedirectSecond')}.
-      </h2>
+      <section className="absolute left-1/2 top-1/3 w-full -translate-x-1/2 -translate-y-1/2">
+        <div className="px-4 py-8 lg:px-6 lg:py-16">
+          <h1 className="text-primary-300 mb-2 text-7xl font-extrabold tracking-tight text-indigo-300 lg:text-8xl">
+            404
+          </h1>
+
+          <p className="mb-7 text-lg font-light text-gray-500 dark:text-gray-400">
+            {t('header')}
+          </p>
+          <ButtonLink href="/" variant={ButtonVariant.PRIMARY}>
+            {t('backToHome')}
+          </ButtonLink>
+        </div>
+      </section>
     </>
   );
 }
