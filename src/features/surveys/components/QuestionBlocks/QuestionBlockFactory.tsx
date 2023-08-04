@@ -2,17 +2,22 @@ import { QuestionType } from '@prisma/client';
 import EmojiQuestionBlock from 'features/surveys/components/QuestionBlocks/EmojiQuestionBlock/EmojiQuestionBlock';
 import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
 import InputQuestionBlock from 'features/surveys/components/QuestionBlocks/InputQuestionBlock/InputQuestionBlock';
+import ChoiceQuestionBlock from 'features/surveys/components/QuestionBlocks/ChoiceQuestionBlock/ChoiceQuestionBlock';
 
 interface QuestionBlockFactoryProps {
   type: QuestionType;
-  pack: string[];
-  handleEmotePick: (
+  options: string[];
+  handleOptionChange: (
     index: number,
     newEmote: string,
     questionIndex: number
   ) => void;
-  handleEmoteRemove: (index: number, questionIndex: number) => void;
-  handleAddingNewEmote: (newEmote: string, questionIndex: number) => void;
+  handleOptionRemove: (index: number, questionIndex: number) => void;
+  handleAddingNewOption: (
+    newEmote: string,
+    questionIndex: number,
+    blockDuplicates?: boolean
+  ) => void;
   onQuestionRemove: (index: number) => void;
   questionIndex: number;
   updateQuestion: (newQuestion: string, questionIndex: number) => void;
@@ -24,15 +29,15 @@ interface QuestionBlockFactoryProps {
 }
 
 export default function QuestionBlockFactory({
-  handleEmotePick,
-  handleEmoteRemove,
-  handleAddingNewEmote,
+  handleOptionChange,
+  handleOptionRemove,
+  handleAddingNewOption,
   questionIndex,
   questionTitle,
   onQuestionRemove,
   type,
   updateQuestion,
-  pack,
+  options,
   isSubmitted,
   isRemovingPossible,
   isRequired,
@@ -50,12 +55,22 @@ export default function QuestionBlockFactory({
       updateQuestionRequired={updateQuestionRequired}
     >
       {type === QuestionType.INPUT && <InputQuestionBlock />}
+      {type === QuestionType.CHOICE && (
+        <ChoiceQuestionBlock
+          handleAddingNewOption={handleAddingNewOption}
+          handleOptionChange={handleOptionChange}
+          handleOptionRemove={handleOptionRemove}
+          options={options}
+          questionIndex={questionIndex}
+          isSubmitted={isSubmitted}
+        />
+      )}
       {type === QuestionType.EMOJI && (
         <EmojiQuestionBlock
-          handleAddingNewEmote={handleAddingNewEmote}
-          handleEmotePick={handleEmotePick}
-          pack={pack}
-          handleEmoteRemove={handleEmoteRemove}
+          handleAddingNewEmote={handleAddingNewOption}
+          handleEmotePick={handleOptionChange}
+          pack={options}
+          handleEmoteRemove={handleOptionRemove}
           questionIndex={questionIndex}
         />
       )}

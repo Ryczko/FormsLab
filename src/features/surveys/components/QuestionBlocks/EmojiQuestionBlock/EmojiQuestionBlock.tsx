@@ -9,7 +9,11 @@ interface EmojiQuestionBlockProps {
     questionIndex: number
   ) => void;
   handleEmoteRemove: (index: number, questionIndex: number) => void;
-  handleAddingNewEmote: (newEmote: string, questionIndex: number) => void;
+  handleAddingNewEmote: (
+    newEmote: string,
+    questionIndex: number,
+    blockDuplicates?: boolean
+  ) => void;
   questionIndex: number;
 }
 

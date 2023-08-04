@@ -1,6 +1,7 @@
 import { QuestionType } from '@prisma/client';
 import ListAnswersComponent from 'features/surveys/components/AnswersComponent/ListAnswersComponent';
 import TextAnswersComponent from 'features/surveys/components/AnswersComponent/TextAnswersComponent';
+import ChoiceComponent from 'features/surveys/components/AnswersComponent/ChoiceComponent/ChoiceComponent';
 
 interface AnswersComponentFactoryProps {
   type: QuestionType;
@@ -22,6 +23,7 @@ export const AnswersComponentFactory = (
       <h2 className="mb-4 text-lg font-semibold">{props.question}</h2>
       {type === QuestionType.EMOJI && <ListAnswersComponent {...props} />}
       {type === QuestionType.INPUT && <TextAnswersComponent {...props} />}
+      {type === QuestionType.CHOICE && <ChoiceComponent {...props} />}
     </div>
   );
 };
