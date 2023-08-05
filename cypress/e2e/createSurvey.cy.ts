@@ -19,6 +19,8 @@ describe('Create Survey Page', () => {
     cy.get('input[data-test-id="question-input-1"]').type(questionContent);
 
     cy.get('button[name="create-survey"]').click();
+
+    console.log('url', cy.url());
     cy.url().should('include', '/survey/answer/');
     cy.visit('/surveys');
     cy.contains(surveyTitle);
