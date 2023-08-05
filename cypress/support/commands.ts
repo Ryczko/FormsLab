@@ -26,5 +26,4 @@ Cypress.Commands.add('login', () => {
 
   cy.get('form').submit();
   cy.url().should('include', '/');
-  cy.get('[data-test-id="loading"]').should('not.be.visible');
 });

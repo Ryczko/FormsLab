@@ -69,6 +69,7 @@ export default function QuestionBlockWrapper({
             value={questionTitle}
             error={questionError()}
             maxLength={MAX_QUESTION_LENGTH}
+            data-test-id={`question-input-${index}`}
           />
         </div>
         <div className="flex w-full justify-center sm:w-auto">
