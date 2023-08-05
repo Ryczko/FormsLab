@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { QuestionType } from '@prisma/client';
 import { postFetch } from '../../../../lib/axiosConfig';
@@ -35,6 +36,7 @@ export const useCreateSurveyManager = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const router = useRouter();
+  const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -179,10 +181,18 @@ export const useCreateSurveyManager = () => {
         })),
       });
 
+      const domain =
+        window.location.hostname === 'localhost' ? 'http://' : 'https://';
+      const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
+      const copiedCorrectly = await copy(link, true);
       await router.push(`/survey/answer/${newSurvey.id}`, undefined, {
         scroll: false,
       });
-      toast.success(`${t('surveyCreationSuccess')}`);
+      toast.success(
+        `${t('surveyCreationSuccess')} ${
+          copiedCorrectly ? t('surveyCreationSucessCopiedCorrectly') : ''
+        }`
+      );
     } catch (error) {
       toast.error(t('surveyCreationFailed'));
     }
