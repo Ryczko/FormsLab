@@ -37,9 +37,9 @@ function SurveyCreatePage() {
     title,
     error,
     handleChangeTitle,
-    handleEmotePick,
-    handleEmoteRemove,
-    handleAddingNewEmote,
+    handleOptionChange,
+    handleOptionRemove,
+    handleAddingNewOption,
     createSurvey,
     isCreating,
     questions,
@@ -73,10 +73,10 @@ function SurveyCreatePage() {
         <QuestionBlockFactory
           key={question.id}
           type={question.type}
-          handleAddingNewEmote={handleAddingNewEmote}
-          pack={question.options ?? []}
-          handleEmotePick={handleEmotePick}
-          handleEmoteRemove={handleEmoteRemove}
+          handleAddingNewOption={handleAddingNewOption}
+          options={question.options ?? []}
+          handleOptionChange={handleOptionChange}
+          handleOptionRemove={handleOptionRemove}
           questionIndex={index}
           onQuestionRemove={removeQuestion}
           updateQuestion={updateQuestion}

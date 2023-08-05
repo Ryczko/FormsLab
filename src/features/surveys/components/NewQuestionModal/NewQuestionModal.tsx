@@ -42,6 +42,17 @@ export default function NewQuestionModal({
     });
   };
 
+  const addChoiceQuestion = () => {
+    closeModal();
+    onSuccess?.({
+      id: v4(),
+      type: QuestionType.CHOICE,
+      title: '',
+      isRequired: false,
+      options: ['', '', ''],
+    });
+  };
+
   return (
     <StyledDialog
       centerTitle
@@ -49,13 +60,17 @@ export default function NewQuestionModal({
       onClose={closeModal}
       title={'Choose question type'}
       content={
-        <div className="mt-6 flex gap-2">
-          <Button onClick={addEmojiQuestion} className="w-[120px] p-6">
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+          <Button onClick={addEmojiQuestion} className="p-6 sm:w-[120px]">
             Emoji
           </Button>
 
-          <Button onClick={addInputQuestion} className="w-[120px] p-6">
+          <Button onClick={addInputQuestion} className="p-6 sm:w-[120px]">
             Text
+          </Button>
+
+          <Button onClick={addChoiceQuestion} className="p-6 sm:w-[120px]">
+            Choice
           </Button>
         </div>
       }

@@ -74,18 +74,19 @@ export const useCreateSurveyManager = () => {
     return false;
   };
 
-  const handleEmotePick = (
-    emojiIndex: number,
-    newEmote: string,
-    questionIndex: number
+  const handleOptionChange = (
+    optionIndex: number,
+    newValue: string,
+    questionIndex: number,
+    blockDuplicate = false
   ) => {
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
       const newOptions = [...(newQuestion.options ?? [])];
 
-      if (!isEmojiPicked(newEmote, questionIndex)) {
-        newOptions.splice(emojiIndex, 1, newEmote);
+      if (!blockDuplicate || !isEmojiPicked(newValue, questionIndex)) {
+        newOptions.splice(optionIndex, 1, newValue);
       }
 
       newQuestion.options = newOptions;
@@ -95,14 +96,18 @@ export const useCreateSurveyManager = () => {
     });
   };
 
-  const handleAddingNewEmote = (newEmote: string, questionIndex: number) => {
+  const handleAddingNewOption = (
+    newOption: string,
+    questionIndex: number,
+    blockDuplicate = false
+  ) => {
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
       const newOptions = [...(newQuestion.options ?? [])];
 
-      if (!isEmojiPicked(newEmote, questionIndex)) {
-        newOptions.push(newEmote);
+      if (!blockDuplicate || !isEmojiPicked(newOption, questionIndex)) {
+        newOptions.push(newOption);
       }
 
       newQuestion.options = newOptions;
@@ -112,10 +117,10 @@ export const useCreateSurveyManager = () => {
     });
   };
 
-  const handleEmoteRemove = (emojiIndex: number, questionIndex: number) => {
+  const handleOptionRemove = (optionIndex: number, questionIndex: number) => {
     const newQuestion = { ...questions[questionIndex] };
     const newOptions = [...(newQuestion.options ?? [])];
-    newOptions.splice(emojiIndex, 1);
+    newOptions.splice(optionIndex, 1);
     newQuestion.options = newOptions;
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
@@ -133,7 +138,11 @@ export const useCreateSurveyManager = () => {
   };
 
   const areQuestionsValid = (questions: Question[]) => {
-    if (questions.map((question) => question.title).includes('')) {
+    if (
+      questions.some(
+        (question) => question.options?.includes('') || question.title === ''
+      )
+    ) {
       return false;
     }
     return true;
@@ -194,9 +203,9 @@ export const useCreateSurveyManager = () => {
     title,
     error,
     handleChangeTitle,
-    handleEmotePick,
-    handleEmoteRemove,
-    handleAddingNewEmote,
+    handleOptionChange,
+    handleOptionRemove,
+    handleAddingNewOption,
     createSurvey,
     isCreating,
     questions,

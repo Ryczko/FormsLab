@@ -113,4 +113,5 @@ model AnswerData {
 enum QuestionType {
   EMOJI
   INPUT
+  CHOICE
 }
