@@ -23,6 +23,7 @@ jobs:
         node-version: [18.x]
     env:
       CI: 1
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       NEXTAUTH_JWT_SECRET: ${{ secrets.NEXTAUTH_JWT_SECRET }}
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
