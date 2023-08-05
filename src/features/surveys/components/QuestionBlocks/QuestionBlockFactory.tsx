@@ -10,7 +10,8 @@ interface QuestionBlockFactoryProps {
   handleOptionChange: (
     index: number,
     newEmote: string,
-    questionIndex: number
+    questionIndex: number,
+    blockDuplicates?: boolean
   ) => void;
   handleOptionRemove: (index: number, questionIndex: number) => void;
   handleAddingNewOption: (

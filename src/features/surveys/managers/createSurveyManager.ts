@@ -77,14 +77,15 @@ export const useCreateSurveyManager = () => {
   const handleOptionChange = (
     optionIndex: number,
     newValue: string,
-    questionIndex: number
+    questionIndex: number,
+    blockDuplicate = false
   ) => {
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
       const newOptions = [...(newQuestion.options ?? [])];
 
-      if (!isEmojiPicked(newValue, questionIndex)) {
+      if (!blockDuplicate || !isEmojiPicked(newValue, questionIndex)) {
         newOptions.splice(optionIndex, 1, newValue);
       }
 

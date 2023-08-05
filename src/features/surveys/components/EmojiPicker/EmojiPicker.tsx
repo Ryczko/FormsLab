@@ -11,7 +11,12 @@ interface EmojiPickerProps {
   index?: number;
   pickedEmoji?: string;
   addEmoji?: boolean;
-  onEmotePick?: (idx: number, newValue: string, questionIndex: number) => void;
+  onEmotePick?: (
+    idx: number,
+    newValue: string,
+    questionIndex: number,
+    blockDuplicates?: boolean
+  ) => void;
   onEmoteAdd?: (
     newValue: string,
     questionIndex: number,
@@ -33,7 +38,7 @@ function EmojiPicker({
   const [displayPicker, setDisplayPicker] = useState(false);
 
   const onEmojiClick = (emojiObject: EmojiObject) => {
-    onEmotePick?.(index, emojiObject.shortcodes, questionIndex);
+    onEmotePick?.(index, emojiObject.shortcodes, questionIndex, true);
     setDisplayPicker(false);
   };
 

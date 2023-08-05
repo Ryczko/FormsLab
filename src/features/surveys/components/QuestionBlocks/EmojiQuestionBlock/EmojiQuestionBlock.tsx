@@ -6,7 +6,8 @@ interface EmojiQuestionBlockProps {
   handleEmotePick: (
     index: number,
     newEmote: string,
-    questionIndex: number
+    questionIndex: number,
+    blockDuplicates?: boolean
   ) => void;
   handleEmoteRemove: (index: number, questionIndex: number) => void;
   handleAddingNewEmote: (

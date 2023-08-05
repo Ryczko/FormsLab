@@ -6,6 +6,7 @@ import {
   Cell,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from 'recharts';
 
 import { CustomTooltip } from 'features/surveys/components/ResultsComponents/BarChart/CustomTooltip';
@@ -14,6 +15,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 interface BarChartProps {
   data: BarChartData[];
+  emojiLabels?: boolean;
 }
 
 export interface BarChartData {
@@ -32,7 +34,7 @@ const COLORS = [
   '#52525B',
 ];
 
-export default function BarChart({ data }: BarChartProps) {
+export default function BarChart({ data, emojiLabels }: BarChartProps) {
   const { t } = useTranslation('surveyAnswer');
 
   const getMaxValue = () => {
@@ -62,7 +64,9 @@ export default function BarChart({ data }: BarChartProps) {
           <XAxis
             dataKey="name"
             interval={0}
-            tick={(props) => <CustomXAxisTick {...props} />}
+            tick={
+              emojiLabels ? (props) => <CustomXAxisTick {...props} /> : false
+            }
           />
 
           <YAxis
@@ -73,13 +77,31 @@ export default function BarChart({ data }: BarChartProps) {
           <Tooltip
             wrapperStyle={{ outline: 'none' }}
             cursor={false}
-            content={(props) => <CustomTooltip {...props} />}
+            content={(props) => (
+              <CustomTooltip emojiLabels={emojiLabels} {...props} />
+            )}
           />
           <Bar dataKey="value" fill="#8884d8" radius={[8, 8, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
             ))}
           </Bar>
+
+          {!emojiLabels && (
+            <Legend
+              wrapperStyle={{
+                paddingLeft: '38px',
+                lineHeight: '28px',
+              }}
+              layout="vertical"
+              payload={data.map((item, index) => ({
+                id: item.name,
+                type: 'circle',
+                value: `${item.name} (${item.value})`,
+                color: COLORS[index],
+              }))}
+            />
+          )}
         </Chart>
       </ResponsiveContainer>
     </div>
