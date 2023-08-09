@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
+    "test:cov": "jest --coverage",
     "test-ci": "cross-env CI=1 jest --ci",
     "test-watch": "jest test --watch",
     "lint": "tsc && eslint --max-warnings=0 --ext  .js,.ts,.tsx src/",
@@ -14,10 +15,7 @@
     "prepare": "husky install",
     "cypress": "cypress open",
     "postinstall": "prisma generate",
-    "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test dev http://localhost:3000 cypress",
-    "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
-    "e2e:headless:ci": "start-server-and-test http://localhost:3000 cypress:headless"
+    "cypress:headless": "cypress run"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
@@ -86,6 +84,7 @@
     "husky": "^8.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
+    "next-router-mock": "^0.9.7",
     "postcss": "^8.4.21",
     "prisma": "^4.14.0",
     "start-server-and-test": "^2.0.0",
