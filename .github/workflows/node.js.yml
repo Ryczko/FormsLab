@@ -39,15 +39,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run test-ci
-      - run: npm run build
+          cache: 'yarn'
+      - run: yarn ci
+      - run: yarn run lint
+      - run: yarn run test-ci
+      - run: yarn run build
       - name: Run E2E tests
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          build: npm run build
-          start: npm start
+          build: yarn run build
+          start: yarn start
           wait-on: 'http://localhost:3000'

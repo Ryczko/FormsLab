@@ -13,11 +13,11 @@ https://github.com/Ryczko/FormsLab/assets/51440879/e678e6f8-d208-476d-8412-07987
 
 ## Useful commands
 
-- `npm install` - install project
-- `npm run dev` - run project locally
-- `npm run test` - run all tests
-- `npm run lint` - check code lints
-- `npm run lint-fix` - try to solve lints errors automatically
+- `yarn install` - install project
+- `yarn run dev` - run project locally
+- `yarn run test` - run all tests
+- `yarn run lint` - check code lints
+- `yarn run lint-fix` - try to solve lints errors automatically
 
 ## Collaborators
 

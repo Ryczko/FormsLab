@@ -7,7 +7,7 @@ Contributing to FormsLab is fairly easy. This document will guide you through th
 To run project locally:
 
 1. Clone or fork the repo.
-2. Run `npm install` to install dependencies.
+2. Run `yarn` to install dependencies.
 3. Create a `.env` file in the root of the project and add at least the following environment variables:
 
 ```
@@ -16,7 +16,7 @@ NEXTAUTH_JWT_SECRET= # random string
 NEXTAUTH_SECRET= # random string
 ```
 
-4. Run `npm run dev` to start the development server.
+4. Run `yarn run dev` to start the development server.
 
 ## Pull Requests
 

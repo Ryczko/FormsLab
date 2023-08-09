@@ -7,9 +7,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'react-app',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'next/core-web-vitals',
+    // 'plugin:react/recommended',
     'plugin:jest/recommended',
     'plugin:testing-library/react',
     'plugin:jsx-a11y/recommended',
