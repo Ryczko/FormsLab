@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn ci
+      - run: yarn run ci
       - run: yarn run lint
       - run: yarn run test-ci
       - run: yarn run build
