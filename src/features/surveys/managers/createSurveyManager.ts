@@ -17,10 +17,13 @@ export interface Question {
 
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
-
   const [questions, setQuestions] = useState<Question[]>(defaultQuestions);
-
   const [error, setError] = useState('');
+  const [isCreating, setIsCreating] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const router = useRouter();
+  const { copy } = useCopyToClipboard();
+  const { t } = useTranslation('surveyCreate');
 
   const addQuestion = (newQuestion: Question) => {
     setQuestions((oldQuestions) => [...oldQuestions, newQuestion]);
@@ -31,13 +34,6 @@ export const useCreateSurveyManager = () => {
       oldQuestions.filter((question, idx) => idx !== index)
     );
   };
-
-  const [isCreating, setIsCreating] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const router = useRouter();
-  const { copy } = useCopyToClipboard();
-  const { t } = useTranslation('surveyCreate');
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setError('');
