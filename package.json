@@ -14,6 +14,10 @@
     "lint-fix": "eslint --ext .js,.ts,.tsx src/ --fix",
     "prepare": "husky install",
     "cypress": "cypress open",
+    "cypress:headless": "cypress run",
+    "e2e": "start-server-and-test dev http://localhost:3000 cypress",
+    "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
+    "e2e:headless:ci": "start-server-and-test http://localhost:3000 cypress:headless",
     "postinstall": "prisma generate",
     "ci": "yarn install --frozen-lockfile"
   },
