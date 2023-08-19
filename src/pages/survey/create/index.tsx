@@ -15,6 +15,13 @@ import {
   MAX_TITLE_LENGTH,
   MIN_QUESTIONS,
 } from 'shared/constants/surveysConfig';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd';
+import clsx from 'clsx';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -48,8 +55,17 @@ function SurveyCreatePage() {
     updateQuestion,
     isSubmitted,
     updateQuestionRequired,
+    reorderQuestion,
   } = useCreateSurveyManager();
   const { t } = useTranslation('surveyCreate');
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+
+    reorderQuestion(result.source.index, result.destination.index);
+  };
 
   return (
     <>
@@ -65,28 +81,59 @@ function SurveyCreatePage() {
         placeholder={t('surveyTitlePlaceholder')}
         value={title}
         error={error}
+        className="mb-3"
         maxLength={MAX_TITLE_LENGTH}
         onChange={handleChangeTitle}
       />
 
-      {questions.map((question, index) => (
-        <QuestionBlockFactory
-          key={question.id}
-          type={question.type}
-          handleAddingNewOption={handleAddingNewOption}
-          options={question.options ?? []}
-          handleOptionChange={handleOptionChange}
-          handleOptionRemove={handleOptionRemove}
-          questionIndex={index}
-          onQuestionRemove={removeQuestion}
-          updateQuestion={updateQuestion}
-          questionTitle={question.title}
-          isSubmitted={isSubmitted}
-          isRemovingPossible={questions.length > MIN_QUESTIONS}
-          isRequired={question.isRequired}
-          updateQuestionRequired={updateQuestionRequired}
-        />
-      ))}
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className={clsx(snapshot.isDraggingOver && '')}
+            >
+              {questions.map((question, index) => (
+                <Draggable
+                  key={question.id}
+                  draggableId={question.id}
+                  index={index}
+                >
+                  {(provided, snapshot) => (
+                    <div
+                      className={clsx('mb-3', snapshot.isDragging && '')}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      style={provided.draggableProps.style}
+                    >
+                      <QuestionBlockFactory
+                        key={question.id}
+                        type={question.type}
+                        dragHandleProps={provided.dragHandleProps}
+                        handleAddingNewOption={handleAddingNewOption}
+                        options={question.options ?? []}
+                        handleOptionChange={handleOptionChange}
+                        handleOptionRemove={handleOptionRemove}
+                        questionIndex={index}
+                        onQuestionRemove={removeQuestion}
+                        updateQuestion={updateQuestion}
+                        questionTitle={question.title}
+                        isSubmitted={isSubmitted}
+                        isRemovingPossible={questions.length > MIN_QUESTIONS}
+                        isDraggingPossible={questions.length > 1}
+                        isRequired={question.isRequired}
+                        updateQuestionRequired={updateQuestionRequired}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       {questions.length < MAX_QUESTIONS && (
         <AddQuestionButton onClick={addQuestion} />

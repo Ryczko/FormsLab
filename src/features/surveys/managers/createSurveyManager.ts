@@ -195,6 +195,15 @@ export const useCreateSurveyManager = () => {
     setIsCreating(false);
   };
 
+  const reorderQuestion = (startIndex: number, endIndex: number) => {
+    const newOrderedQuestions = Array.from(questions);
+
+    const [removed] = newOrderedQuestions.splice(startIndex, 1);
+    newOrderedQuestions.splice(endIndex, 0, removed);
+
+    setQuestions(newOrderedQuestions);
+  };
+
   return {
     title,
     error,
@@ -210,5 +219,6 @@ export const useCreateSurveyManager = () => {
     updateQuestion,
     isSubmitted,
     updateQuestionRequired,
+    reorderQuestion,
   };
 };
