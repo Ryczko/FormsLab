@@ -56,6 +56,7 @@ function SurveyCreatePage() {
     isSubmitted,
     updateQuestionRequired,
     reorderQuestion,
+    expandQuestion,
   } = useCreateSurveyManager();
   const { t } = useTranslation('surveyCreate');
 
@@ -81,59 +82,62 @@ function SurveyCreatePage() {
         placeholder={t('surveyTitlePlaceholder')}
         value={title}
         error={error}
-        className="mb-3"
         maxLength={MAX_TITLE_LENGTH}
         onChange={handleChangeTitle}
       />
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className={clsx(snapshot.isDraggingOver && '')}
-            >
-              {questions.map((question, index) => (
-                <Draggable
-                  key={question.id}
-                  draggableId={question.id}
-                  index={index}
-                >
-                  {(provided, snapshot) => (
-                    <div
-                      className={clsx('mb-3', snapshot.isDragging && '')}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      style={provided.draggableProps.style}
-                    >
-                      <QuestionBlockFactory
-                        key={question.id}
-                        type={question.type}
-                        dragHandleProps={provided.dragHandleProps}
-                        handleAddingNewOption={handleAddingNewOption}
-                        options={question.options ?? []}
-                        handleOptionChange={handleOptionChange}
-                        handleOptionRemove={handleOptionRemove}
-                        questionIndex={index}
-                        onQuestionRemove={removeQuestion}
-                        updateQuestion={updateQuestion}
-                        questionTitle={question.title}
-                        isSubmitted={isSubmitted}
-                        isRemovingPossible={questions.length > MIN_QUESTIONS}
-                        isDraggingPossible={questions.length > 1}
-                        isRequired={question.isRequired}
-                        updateQuestionRequired={updateQuestionRequired}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div className="mt-4">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={clsx(snapshot.isDraggingOver && '')}
+              >
+                {questions.map((question, index) => (
+                  <Draggable
+                    key={question.id}
+                    draggableId={question.id}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <div
+                        className={clsx('mb-3', snapshot.isDragging && '')}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        style={provided.draggableProps.style}
+                      >
+                        <QuestionBlockFactory
+                          key={question.id}
+                          type={question.type}
+                          dragHandleProps={provided.dragHandleProps}
+                          handleAddingNewOption={handleAddingNewOption}
+                          options={question.options ?? []}
+                          handleOptionChange={handleOptionChange}
+                          handleOptionRemove={handleOptionRemove}
+                          questionIndex={index}
+                          onQuestionRemove={removeQuestion}
+                          updateQuestion={updateQuestion}
+                          questionTitle={question.title}
+                          isSubmitted={isSubmitted}
+                          isRemovingPossible={questions.length > MIN_QUESTIONS}
+                          isDraggingPossible={questions.length > 1}
+                          isRequired={question.isRequired}
+                          updateQuestionRequired={updateQuestionRequired}
+                          expanded={question.expanded}
+                          expandQuestion={expandQuestion}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
 
       {questions.length < MAX_QUESTIONS && (
         <AddQuestionButton onClick={addQuestion} />

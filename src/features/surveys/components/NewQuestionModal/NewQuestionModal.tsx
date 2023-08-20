@@ -29,6 +29,7 @@ export default function NewQuestionModal({
         ':slightly_frowning_face:',
         ':rage:',
       ],
+      expanded: true,
     });
   };
 
@@ -38,7 +39,8 @@ export default function NewQuestionModal({
       id: v4(),
       type: QuestionType.INPUT,
       title: '',
-      isRequired: false,
+      isRequired: true,
+      expanded: true,
     });
   };
 
@@ -48,8 +50,9 @@ export default function NewQuestionModal({
       id: v4(),
       type: QuestionType.CHOICE,
       title: '',
-      isRequired: false,
+      isRequired: true,
       options: ['', '', ''],
+      expanded: true,
     });
   };
 

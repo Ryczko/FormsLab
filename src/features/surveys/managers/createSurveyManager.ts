@@ -13,6 +13,7 @@ export interface Question {
   options?: string[];
   type: QuestionType;
   isRequired: boolean;
+  expanded: boolean;
 }
 
 export const useCreateSurveyManager = () => {
@@ -134,6 +135,17 @@ export const useCreateSurveyManager = () => {
   };
 
   const areQuestionsValid = (questions: Question[]) => {
+    console.log('jkljkljl');
+    setQuestions((oldQuestions) =>
+      oldQuestions.map((question) => {
+        console.log(question);
+        if (question.options?.includes('')) {
+          return { ...question, expanded: true };
+        }
+        return question;
+      })
+    );
+
     if (
       questions.some(
         (question) => question.options?.includes('') || question.title === ''
@@ -146,19 +158,22 @@ export const useCreateSurveyManager = () => {
 
   const isSurveyValid = () => {
     setIsSubmitted(true);
+    let isValid = true;
 
     if (!isTitleValid(title)) {
-      toast.error(t('fillRequiredFields'));
       setError(t('required'));
-      return false;
+      isValid = false;
     }
 
     if (!areQuestionsValid(questions)) {
-      toast.error(t('fillRequiredFields'));
-      return false;
+      isValid = false;
     }
 
-    return true;
+    if (!isValid) {
+      toast.error(t('fillRequiredFields'));
+    }
+
+    return isValid;
   };
 
   const createSurvey = async () => {
@@ -204,6 +219,16 @@ export const useCreateSurveyManager = () => {
     setQuestions(newOrderedQuestions);
   };
 
+  const expandQuestion = (questionIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      newQuestion.expanded = !newQuestion.expanded;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
   return {
     title,
     error,
@@ -220,5 +245,6 @@ export const useCreateSurveyManager = () => {
     isSubmitted,
     updateQuestionRequired,
     reorderQuestion,
+    expandQuestion,
   };
 };
