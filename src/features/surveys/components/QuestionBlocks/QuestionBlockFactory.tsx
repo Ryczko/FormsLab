@@ -3,6 +3,7 @@ import EmojiQuestionBlock from 'features/surveys/components/QuestionBlocks/Emoji
 import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
 import InputQuestionBlock from 'features/surveys/components/QuestionBlocks/InputQuestionBlock/InputQuestionBlock';
 import ChoiceQuestionBlock from 'features/surveys/components/QuestionBlocks/ChoiceQuestionBlock/ChoiceQuestionBlock';
+import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 
 interface QuestionBlockFactoryProps {
   type: QuestionType;
@@ -25,8 +26,10 @@ interface QuestionBlockFactoryProps {
   questionTitle: string;
   isSubmitted: boolean;
   isRemovingPossible: boolean;
+  isDraggingPossible: boolean;
   updateQuestionRequired: (questionIndex: number) => void;
   isRequired: boolean;
+  dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
 }
 
 export default function QuestionBlockFactory({
@@ -43,15 +46,19 @@ export default function QuestionBlockFactory({
   isRemovingPossible,
   isRequired,
   updateQuestionRequired,
+  isDraggingPossible,
+  dragHandleProps,
 }: QuestionBlockFactoryProps) {
   return (
     <QuestionBlockWrapper
+      dragHandleProps={dragHandleProps}
       index={questionIndex}
       onQuestionRemove={onQuestionRemove}
       updateQuestion={updateQuestion}
       questionTitle={questionTitle}
       isSubmitted={isSubmitted}
       isRemovingPossible={isRemovingPossible}
+      isDraggingPossible={isDraggingPossible}
       isRequired={isRequired}
       updateQuestionRequired={updateQuestionRequired}
     >
