@@ -13,6 +13,7 @@ module.exports = {
       'surveys',
       'surveyAnswer',
       'survey',
+      'thankyou'
     ],
   },
   loadLocaleFrom: (lang, ns) =>

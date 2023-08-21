@@ -121,7 +121,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
         });
 
         setLocalStorageValue([...localStorageValue, surveyId]);
-        await router.replace('/');
+        await router.replace(`/survey/${surveyId}/thank-you`);
         toast.success(t('successfullSubmit'));
       } else {
         await router.replace('/');
