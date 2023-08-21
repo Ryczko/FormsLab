@@ -77,7 +77,6 @@ function SurveyCreatePage() {
 
       <Header>{t('heading')}</Header>
       <Input
-        label={t('surveyTitleLable')}
         name="survey-title"
         placeholder={t('surveyTitlePlaceholder')}
         value={title}
