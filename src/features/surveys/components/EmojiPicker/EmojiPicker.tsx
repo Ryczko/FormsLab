@@ -51,7 +51,7 @@ function EmojiPicker({
     <div>
       <button
         type="button"
-        className="label-text flex min-h-[57px] w-16 items-center justify-center rounded-lg bg-white p-3 shadow transition hover:scale-95"
+        className="label-text flex min-h-[57px] w-16 items-center justify-center rounded-md bg-white p-3 shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (

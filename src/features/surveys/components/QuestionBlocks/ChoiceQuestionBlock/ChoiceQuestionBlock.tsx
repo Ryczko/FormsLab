@@ -41,15 +41,16 @@ export default function ChoiceQuestionBlock({
   };
 
   return (
-    <div className="mt-2">
+    <div>
       {options.map((option, index) => (
-        <div className="flex w-full" key={index}>
-          <div className="mr-4 block flex-grow">
+        <div className="flex w-full gap-2" key={index}>
+          <div className="block flex-grow">
             <Input
               type="text"
               value={option}
               placeholder="Answer..."
               error={getAnswerError(option)}
+              className="mt-[2px]"
               onChange={(e) =>
                 handleOptionChange(
                   index,
@@ -61,7 +62,7 @@ export default function ChoiceQuestionBlock({
           </div>
           {options.length > MIN_OPTIONS && (
             <Button
-              className="mt-[8px] h-[44px] w-[60px]"
+              className="mt-[2px] h-[42px] w-[42px]"
               variant={ButtonVariant.DANGER}
               icon={<TrashIcon className="h-4 w-4" />}
               onClick={() => handleOptionRemove(index, questionIndex)}
@@ -70,7 +71,7 @@ export default function ChoiceQuestionBlock({
         </div>
       ))}
       {options.length < MAX_OPTIONS && (
-        <div className="mt-2">
+        <div className="mb-3 mt-2">
           <Button
             className="ml-auto"
             onClick={() => handleAddingNewOption('', questionIndex)}

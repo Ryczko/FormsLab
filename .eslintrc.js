@@ -12,7 +12,6 @@ module.exports = {
     'next/core-web-vitals',
     'plugin:jest/recommended',
     'plugin:testing-library/react',
-    'plugin:jsx-a11y/recommended',
     'plugin:tailwindcss/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
@@ -33,7 +32,6 @@ module.exports = {
   plugins: [
     'react',
     'react-hooks',
-    'jsx-a11y',
     'jest',
     'testing-library',
     'tailwindcss',

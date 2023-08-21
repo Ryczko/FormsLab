@@ -30,6 +30,8 @@ interface QuestionBlockFactoryProps {
   updateQuestionRequired: (questionIndex: number) => void;
   isRequired: boolean;
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
+  expanded: boolean;
+  expandQuestion: (questionIndex: number) => void;
 }
 
 export default function QuestionBlockFactory({
@@ -48,6 +50,8 @@ export default function QuestionBlockFactory({
   updateQuestionRequired,
   isDraggingPossible,
   dragHandleProps,
+  expanded,
+  expandQuestion,
 }: QuestionBlockFactoryProps) {
   return (
     <QuestionBlockWrapper
@@ -61,6 +65,8 @@ export default function QuestionBlockFactory({
       isDraggingPossible={isDraggingPossible}
       isRequired={isRequired}
       updateQuestionRequired={updateQuestionRequired}
+      expanded={expanded}
+      expandQuestion={expandQuestion}
     >
       {type === QuestionType.INPUT && <InputQuestionBlock />}
       {type === QuestionType.CHOICE && (
