@@ -1,9 +1,12 @@
 import React from 'react';
-import Button from 'shared/components/Button/Button';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import { Question } from 'features/surveys/managers/createSurveyManager';
 import { QuestionType } from '@prisma/client';
 import { v4 } from 'uuid';
+import NewQuestionModalButton from 'features/surveys/components/NewQuestionModal/components/NewQuestionModalButton';
+import EmojiIcon from 'shared/components/QuestionTypeIcons/EmojiIcon';
+import InputIcon from 'shared/components/QuestionTypeIcons/InputIcon';
+import ChoiceIcon from 'shared/components/QuestionTypeIcons/ChoiceIcon';
 
 type NewQuestionModalProps = {
   isOpened: boolean;
@@ -64,17 +67,21 @@ export default function NewQuestionModal({
       title={'Choose question type'}
       content={
         <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-          <Button onClick={addEmojiQuestion} className="p-6 sm:w-[120px]">
-            Emoji
-          </Button>
-
-          <Button onClick={addInputQuestion} className="p-6 sm:w-[120px]">
-            Text
-          </Button>
-
-          <Button onClick={addChoiceQuestion} className="p-6 sm:w-[120px]">
-            Choice
-          </Button>
+          <NewQuestionModalButton
+            onClick={addEmojiQuestion}
+            icon={<EmojiIcon />}
+            text="Emoji"
+          />
+          <NewQuestionModalButton
+            onClick={addInputQuestion}
+            icon={<InputIcon />}
+            text="Text"
+          />
+          <NewQuestionModalButton
+            onClick={addChoiceQuestion}
+            icon={<ChoiceIcon />}
+            text="Choice"
+          />
         </div>
       }
     />

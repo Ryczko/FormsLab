@@ -67,6 +67,7 @@ export default function QuestionBlockFactory({
       updateQuestionRequired={updateQuestionRequired}
       expanded={expanded}
       expandQuestion={expandQuestion}
+      type={type}
     >
       {type === QuestionType.INPUT && <InputQuestionBlock />}
       {type === QuestionType.CHOICE && (

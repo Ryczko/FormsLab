@@ -10,6 +10,10 @@ import { MAX_QUESTION_LENGTH } from 'shared/constants/surveysConfig';
 import Toggle from 'shared/components/Toggle/Toggle';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import clsx from 'clsx';
+import { QuestionType } from '@prisma/client';
+import EmojiIcon from 'shared/components/QuestionTypeIcons/EmojiIcon';
+import InputIcon from 'shared/components/QuestionTypeIcons/InputIcon';
+import ChoiceIcon from 'shared/components/QuestionTypeIcons/ChoiceIcon';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -24,6 +28,7 @@ interface QuestionBlockWrapperProps {
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
   expanded: boolean;
   expandQuestion: (questionIndex: number) => void;
+  type: QuestionType;
 }
 
 export default function QuestionBlockWrapper({
@@ -40,6 +45,7 @@ export default function QuestionBlockWrapper({
   isDraggingPossible,
   expanded,
   expandQuestion,
+  type,
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
 
@@ -83,7 +89,13 @@ export default function QuestionBlockWrapper({
             />
           </button>
 
-          <div className="w-full grow">
+          <div className="mx-1 hidden h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
+            {type === QuestionType.EMOJI && <EmojiIcon />}
+            {type === QuestionType.INPUT && <InputIcon />}
+            {type === QuestionType.CHOICE && <ChoiceIcon />}
+          </div>
+
+          <div className=" w-full grow">
             <Input
               placeholder={t('questionPlaceholder')}
               onInput={handleQuestionChange}
@@ -96,24 +108,26 @@ export default function QuestionBlockWrapper({
           </div>
         </div>
 
-        <div className="mb-2 flex w-full items-start justify-end gap-2 sm:w-auto">
-          {isDraggingPossible && (
-            <div
-              className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
-              {...dragHandleProps}
-            >
-              <SelectorIcon className="w-[15px]" />
-            </div>
-          )}
-          {isRemovingPossible && (
-            <button
-              onClick={removeQuestion}
-              className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
-            >
-              <TrashIcon className="w-[15px] text-red-700" />
-            </button>
-          )}
-        </div>
+        {(isDraggingPossible || isRemovingPossible) && (
+          <div className="mb-2 flex w-full items-start justify-end gap-2 sm:w-auto">
+            {isDraggingPossible && (
+              <div
+                className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+                {...dragHandleProps}
+              >
+                <SelectorIcon className="w-[15px]" />
+              </div>
+            )}
+            {isRemovingPossible && (
+              <button
+                onClick={removeQuestion}
+                className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+              >
+                <TrashIcon className="w-[15px] text-red-700" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {expanded && (
@@ -122,7 +136,7 @@ export default function QuestionBlockWrapper({
 
           <div className="mt-2 flex justify-end border-t">
             <Toggle
-              classNames="mt-4"
+              classNames="mt-3.5"
               label={t('requiredToggle')}
               onToggle={handleRequiredToggle}
               isEnabled={isRequired}

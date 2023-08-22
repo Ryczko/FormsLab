@@ -51,21 +51,21 @@ function EmojiPicker({
     <div>
       <button
         type="button"
-        className="label-text flex min-h-[57px] w-16 items-center justify-center rounded-md bg-white p-3 shadow transition hover:scale-95"
+        className="label-text flex h-12 w-14 items-center justify-center rounded-md bg-white p-3 shadow transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (
-          <Emoji shortcodes={pickedEmoji || ''} />
+          <Emoji size={28} shortcodes={pickedEmoji || ''} />
         ) : (
-          <PlusSmIcon className="w-[32px]" />
+          <PlusSmIcon className="w-[22px]" />
         )}
       </button>
       {onEmoteRemove && (
         <Button
           onClick={() => onEmoteRemove(index, questionIndex)}
-          className="mt-1 w-[64px]"
+          className="mt-1 w-14"
           variant={ButtonVariant.DANGER}
-          icon={<TrashIcon className="h-4 w-4" />}
+          icon={<TrashIcon className="h-[15px] w-[15px]" />}
         />
       )}
       <StyledDialog
