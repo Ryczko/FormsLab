@@ -17,7 +17,7 @@ const ThankyouPage = () => {
         </div>
         <h1 className="leading-tighter mb-4 pt-3 text-4xl font-extrabold tracking-tighter md:text-6xl">
           {t('firstPartHeading')}&nbsp;
-          <span className="text-[#A5B4FC]">
+          <span className="text-indigo-200">
             {t('secondPartHeading')}
           </span>
         </h1>
