@@ -4,7 +4,7 @@
   "heading": "Create new survey",
   "buttonCreate": "Create Survey",
   "surveyTitleLable": "Survey Title",
-  "surveyTitlePlaceholder": "Title...",
+  "surveyTitlePlaceholder": "Survey Title...",
   "questionPlaceholder": "Question...",
   "duplicatingEmoji": "Emoji already selected",
   "required": "Required field",

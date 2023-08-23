@@ -37,7 +37,7 @@ function Input({
         placeholder={placeholder}
         onChange={onChange}
         className={clsx(
-          'my-2 block w-full rounded-lg border px-4 py-2 shadow focus:outline-none',
+          'my-2 block w-full rounded-md border px-4 py-2 shadow focus:outline-none',
           error ? ' border-red-400' : ' border-transparent',
           className
         )}
@@ -49,7 +49,7 @@ function Input({
             'text-sm text-red-400',
             absoluteError
               ? 'absolute left-1/2 top-full my-2 w-full -translate-x-1/2 text-center'
-              : 'text-right'
+              : 'mb-2 text-right'
           )}
         >
           {error}

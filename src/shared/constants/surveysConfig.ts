@@ -25,11 +25,13 @@ export const defaultQuestions: Question[] = [
     ],
     type: QuestionType.EMOJI,
     isRequired: true,
+    expanded: true,
   },
   {
     id: v4(),
     title: '',
     type: QuestionType.INPUT,
-    isRequired: false,
+    isRequired: true,
+    expanded: false,
   },
 ];

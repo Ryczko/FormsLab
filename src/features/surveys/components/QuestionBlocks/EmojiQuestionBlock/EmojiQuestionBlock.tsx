@@ -27,10 +27,10 @@ export default function EmojiQuestionBlock({
 }: EmojiQuestionBlockProps) {
   return (
     <div
-      className="mt-4"
+      className="mb-3 mt-1"
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, 64px)',
+        gridTemplateColumns: 'repeat(auto-fit, 58px)',
         justifyContent: 'space-between',
         gridGap: '8px',
       }}

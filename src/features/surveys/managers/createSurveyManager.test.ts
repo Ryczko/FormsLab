@@ -19,6 +19,7 @@ const setUp = () => {
       title: NEW_QUESTION_TITLE,
       options: [],
       isRequired: false,
+      expanded: true,
     });
   });
 
@@ -35,6 +36,7 @@ describe('useCreateSurveyManager tests', () => {
         title: 'test',
         options: [],
         isRequired: false,
+        expanded: true,
       });
     });
 

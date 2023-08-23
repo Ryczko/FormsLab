@@ -1,10 +1,19 @@
-import { SelectorIcon, TrashIcon } from '@heroicons/react/outline';
+import {
+  ChevronDownIcon,
+  SelectorIcon,
+  TrashIcon,
+} from '@heroicons/react/outline';
 import { ChangeEvent, PropsWithChildren } from 'react';
 import Input from 'shared/components/Input/Input';
 import useTranslation from 'next-translate/useTranslation';
 import { MAX_QUESTION_LENGTH } from 'shared/constants/surveysConfig';
 import Toggle from 'shared/components/Toggle/Toggle';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
+import clsx from 'clsx';
+import { QuestionType } from '@prisma/client';
+import EmojiIcon from 'shared/components/QuestionTypeIcons/EmojiIcon';
+import InputIcon from 'shared/components/QuestionTypeIcons/InputIcon';
+import ChoiceIcon from 'shared/components/QuestionTypeIcons/ChoiceIcon';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -17,6 +26,9 @@ interface QuestionBlockWrapperProps {
   updateQuestionRequired: (questionIndex: number) => void;
   isRequired: boolean;
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
+  expanded: boolean;
+  expandQuestion: (questionIndex: number) => void;
+  type: QuestionType;
 }
 
 export default function QuestionBlockWrapper({
@@ -31,6 +43,9 @@ export default function QuestionBlockWrapper({
   updateQuestionRequired,
   dragHandleProps,
   isDraggingPossible,
+  expanded,
+  expandQuestion,
+  type,
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
 
@@ -54,50 +69,81 @@ export default function QuestionBlockWrapper({
     return undefined;
   };
 
-  return (
-    <div className="relative rounded-md border bg-white/30 p-4 pr-8 shadow-sm">
-      <div className="absolute right-0 top-0 translate-x-[50%] translate-y-[-15%] space-y-1 px-1">
-        {isRemovingPossible && (
-          <button
-            onClick={removeQuestion}
-            className="cursor-pointer rounded-md bg-white p-[6px] shadow-md hover:scale-95"
-          >
-            <TrashIcon className="w-[16px] text-red-700" />
-          </button>
-        )}
+  const onExpand = () => {
+    expandQuestion(index);
+  };
 
-        {isDraggingPossible && (
-          <div
-            className="cursor-pointer rounded-md bg-white p-[6px] shadow-md hover:scale-95"
-            {...dragHandleProps}
+  return (
+    <div className="relative overflow-hidden rounded-md border bg-white/30 shadow-sm">
+      <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
+        <div className="flex w-full items-start gap-2">
+          <button
+            onClick={onExpand}
+            className="cursor-pointer rounded-md border border-opacity-100 p-[13px]"
           >
-            <SelectorIcon className="w-[16px]" />
+            <ChevronDownIcon
+              className={clsx(
+                'w-[15px] transition-transform',
+                !expanded && '-rotate-90'
+              )}
+            />
+          </button>
+
+          <div className="mx-1 hidden h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
+            {type === QuestionType.EMOJI && <EmojiIcon />}
+            {type === QuestionType.INPUT && <InputIcon />}
+            {type === QuestionType.CHOICE && <ChoiceIcon />}
+          </div>
+
+          <div className=" w-full grow">
+            <Input
+              placeholder={t('questionPlaceholder')}
+              onInput={handleQuestionChange}
+              value={questionTitle}
+              error={questionError()}
+              className="mt-0"
+              maxLength={MAX_QUESTION_LENGTH}
+              data-test-id={`question-input-${index}`}
+            />
+          </div>
+        </div>
+
+        {(isDraggingPossible || isRemovingPossible) && (
+          <div className="mb-2 flex w-full items-start justify-end gap-2 sm:w-auto">
+            {isDraggingPossible && (
+              <div
+                className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+                {...dragHandleProps}
+              >
+                <SelectorIcon className="w-[15px]" />
+              </div>
+            )}
+            {isRemovingPossible && (
+              <button
+                onClick={removeQuestion}
+                className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+              >
+                <TrashIcon className="w-[15px] text-red-700" />
+              </button>
+            )}
           </div>
         )}
       </div>
 
-      <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-4">
-        <div className="w-full grow">
-          <Input
-            placeholder={t('questionPlaceholder')}
-            onInput={handleQuestionChange}
-            className="mt-2"
-            value={questionTitle}
-            error={questionError()}
-            maxLength={MAX_QUESTION_LENGTH}
-            data-test-id={`question-input-${index}`}
-          />
+      {expanded && (
+        <div className="mb-4 px-3">
+          {children}
+
+          <div className="mt-2 flex justify-end border-t">
+            <Toggle
+              classNames="mt-3.5"
+              label={t('requiredToggle')}
+              onToggle={handleRequiredToggle}
+              isEnabled={isRequired}
+            />
+          </div>
         </div>
-        <div className="flex w-full justify-center sm:w-auto">
-          <Toggle
-            classNames="sm:mt-4"
-            label={t('requiredToggle')}
-            onToggle={handleRequiredToggle}
-            isEnabled={isRequired}
-          />
-        </div>
-      </div>
-      {children}
+      )}
     </div>
   );
 }
