@@ -20,5 +20,9 @@
     "modalTitle": "Delete survey",
     "modalDeleteButton": "Delete",
     "modelCancelButton": "Cancel"
+  },
+  "shareSurveyModal": {
+    "title": "Share your survey",
+    "copyUrl": "Copy URL"
   }
 }

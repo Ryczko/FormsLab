@@ -18,5 +18,6 @@
   "totalVotesInformation": "Total Answers",
   "copyLinkButtonTitle": "Copy link to clipboard",
   "deleteSurveyButtonTitle": "Delete survey",
-  "tooltipValue": "value:"
+  "tooltipValue": "value:",
+  "buttonShare": "Share"
 }
