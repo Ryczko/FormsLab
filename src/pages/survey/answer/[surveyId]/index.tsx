@@ -91,7 +91,7 @@ function SurveyResultsPage({
             title={t('buttonCopyLinkTitle')}
             onClick={openShareSurveyModal}
             variant={ButtonVariant.PRIMARY}
-            className="w-full justify-center gap-1 sm:mb-0 sm:w-[260px]"
+            className="justify-center gap-1 sm:mb-0"
             icon={<LinkIcon className="h-5 w-5" />}
           >
             {t('buttonShare')}

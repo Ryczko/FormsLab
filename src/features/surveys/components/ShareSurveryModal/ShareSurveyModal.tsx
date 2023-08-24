@@ -29,7 +29,7 @@ export default function ShareSurveyModal({
       onClose={closeModal}
       title={t('shareSurveyModal.title')}
       centerTitle
-      contentClassName='w-96'
+      contentClassName='!w-96'
       content={
         <>
           <div className="mt-8">
@@ -38,8 +38,6 @@ export default function ShareSurveyModal({
               value={`${link}/${surveyId}`}
               disabled
             />
-            <p className="text-sm text-red-500">
-            </p>
           </div>
 
           <div className="mt-6 flex justify-end">
@@ -49,7 +47,6 @@ export default function ShareSurveyModal({
                 copy(link);
               }}
               icon={<LinkIcon className="h-5 w-5" />}
-              className=""
             >
               {t('shareSurveyModal.copyUrl')}
             </Button>
