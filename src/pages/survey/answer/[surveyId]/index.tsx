@@ -17,6 +17,7 @@ import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import ResultComponent from 'features/surveys/components/ResultsComponents/ResultComponent';
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
+import ShareSurveyModal from 'features/surveys/components/ShareSurveryModal/ShareSurveyModal';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -54,7 +55,6 @@ function SurveyResultsPage({
   initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
-    handleCopyLink,
     surveyId,
     getSurveyData,
     surveyData,
@@ -67,6 +67,12 @@ function SurveyResultsPage({
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
     openModal: openDeleteSurveyModal,
+  } = useModal();
+
+  const {
+    isModalOpen: isShareSurveyModalOpen,
+    closeModal: closeShareSurveyModal,
+    openModal: openShareSurveyModal,
   } = useModal();
 
   const { t } = useTranslation('surveyAnswer');
@@ -83,12 +89,12 @@ function SurveyResultsPage({
         <div className="mb-6 flex flex-col justify-center sm:flex-row">
           <Button
             title={t('buttonCopyLinkTitle')}
-            onClick={handleCopyLink(surveyId)}
+            onClick={openShareSurveyModal}
             variant={ButtonVariant.PRIMARY}
-            className="w-full justify-center sm:mb-0 sm:w-[260px]"
+            className="justify-center gap-1 sm:mb-0"
             icon={<LinkIcon className="h-5 w-5" />}
           >
-            {t('buttonCopyLink')}
+            {t('buttonShare')}
           </Button>
 
           <Button
@@ -133,6 +139,12 @@ function SurveyResultsPage({
           closeModal={closeDeleteSurveyModal}
           isOpened={isDeleteSurveyModalOpen}
           onSuccess={onRemoveSuccess}
+        />
+
+        <ShareSurveyModal
+          surveyId={surveyId}
+          closeModal={closeShareSurveyModal}
+          isOpened={isShareSurveyModalOpen}
         />
       </>
     </>
