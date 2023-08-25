@@ -1,10 +1,9 @@
-import { LinkIcon, RefreshIcon, TrashIcon } from '@heroicons/react/outline';
+import { RefreshIcon, ShareIcon, TrashIcon } from '@heroicons/react/outline';
 
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import AnswerHeader from 'features/surveys/components/AnswerHeader/AnswerHeader';
-import Header from 'shared/components/Header/Header';
 import { useSurveyResultsManager } from 'features/surveys/managers/surveyResultsManager';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
@@ -85,34 +84,36 @@ function SurveyResultsPage({
       </Head>
 
       <>
-        <Header>{surveyData?.title}</Header>
-        <div className="mb-6 flex flex-col justify-center sm:flex-row">
-          <Button
-            title={t('buttonCopyLinkTitle')}
-            onClick={openShareSurveyModal}
-            variant={ButtonVariant.PRIMARY}
-            className="justify-center gap-1 sm:mb-0"
-            icon={<LinkIcon className="h-5 w-5" />}
-          >
-            {t('buttonShare')}
-          </Button>
+        <div className="mb-6 flex flex-col items-center justify-between gap-x-8 sm:mb-4 sm:flex-row">
+          <h1 className="flex min-h-[38px] items-center border-indigo-200 pb-4 text-xl font-semibold sm:border-l-4 sm:pb-0 sm:pl-4 sm:text-left">
+            {surveyData?.title}
+          </h1>
+          <div className="flex w-full justify-center gap-2 sm:w-auto">
+            <Button
+              title={t('buttonCopyLinkTitle')}
+              onClick={openShareSurveyModal}
+              className="grow sm:grow-0"
+              variant={ButtonVariant.PRIMARY}
+              icon={<ShareIcon className="h-5 w-5" />}
+            />
 
-          <Button
-            title={t('buttonRefreshTitle')}
-            onClick={getSurveyData}
-            isLoading={isDataLoading}
-            variant={ButtonVariant.OUTLINE}
-            className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
-            icon={<RefreshIcon className="h-5 w-5" />}
-          />
+            <Button
+              title={t('buttonRefreshTitle')}
+              onClick={getSurveyData}
+              isLoading={isDataLoading}
+              className="grow sm:grow-0"
+              variant={ButtonVariant.OUTLINE}
+              icon={<RefreshIcon className="h-5 w-5" />}
+            />
 
-          <Button
-            variant={ButtonVariant.DANGER}
-            title={t('deleteSurveyButtonTitle')}
-            className="mt-2 justify-center px-3 sm:ml-2 sm:mt-0"
-            onClick={openDeleteSurveyModal}
-            icon={<TrashIcon className="h-5 w-5" />}
-          />
+            <Button
+              variant={ButtonVariant.DANGER}
+              title={t('deleteSurveyButtonTitle')}
+              onClick={openDeleteSurveyModal}
+              className="grow sm:grow-0"
+              icon={<TrashIcon className="h-5 w-5" />}
+            />
+          </div>
         </div>
 
         <hr />

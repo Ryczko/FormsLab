@@ -1,12 +1,12 @@
-import { LinkIcon, TrashIcon } from '@heroicons/react/outline';
+import { ShareIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { useRouter } from 'next/router';
-import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import useModal from 'features/surveys/hooks/useModal';
 import useTranslation from 'next-translate/useTranslation';
+import ShareSurveyModal from 'features/surveys/components/ShareSurveryModal/ShareSurveyModal';
 
 interface SurveyRowProps {
   question: string;
@@ -21,7 +21,6 @@ export default function SurveyRow({
   id,
   refreshSurveys,
 }: SurveyRowProps) {
-  const { copy } = useCopyToClipboard();
   const navigate = useRouter();
   const {
     isModalOpen: isDeleteSurveyModalOpen,
@@ -30,11 +29,14 @@ export default function SurveyRow({
   } = useModal();
   const { t } = useTranslation('surveys');
 
-  const handleCopyLink = () => {
-    const domain =
-      window.location.hostname === 'localhost' ? 'http://' : 'https://';
-    const link = `${domain}${window.location.host}/survey/${id}`;
-    copy(link);
+  const {
+    isModalOpen: isShareSurveyModalOpen,
+    closeModal: closeShareSurveyModal,
+    openModal: openShareSurveyModal,
+  } = useModal();
+
+  const handleShare = () => {
+    openShareSurveyModal();
   };
 
   const handleOnMoreButton = () => {
@@ -66,8 +68,8 @@ export default function SurveyRow({
             'mt-2 w-full justify-center px-3 text-center md:mt-0 md:w-auto'
           }
           title={t('copyLinkButtonTitle')}
-          icon={<LinkIcon className="h-5 w-5" />}
-          onClick={handleCopyLink}
+          icon={<ShareIcon className="h-5 w-5" />}
+          onClick={handleShare}
         />
         <Button
           variant={ButtonVariant.DANGER}
@@ -82,6 +84,11 @@ export default function SurveyRow({
         closeModal={closeDeleteSurveyModal}
         onSuccess={refreshSurveys}
         isOpened={isDeleteSurveyModalOpen}
+      />
+      <ShareSurveyModal
+        surveyId={id}
+        closeModal={closeShareSurveyModal}
+        isOpened={isShareSurveyModalOpen}
       />
     </div>
   );

@@ -38,7 +38,7 @@ export default function DeleteSurveyModal({
             </p>
           </div>
 
-          <div className="mt-6 flex justify-between">
+          <div className="mt-6 flex flex-col-reverse justify-between gap-2 sm:flex-row">
             <Button
               variant={ButtonVariant.SECONDARY}
               onClick={closeModal}

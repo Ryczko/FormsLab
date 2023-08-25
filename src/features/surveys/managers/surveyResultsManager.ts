@@ -86,9 +86,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   }, []);
 
   const handleCopyLink = (id: string) => () => {
-    const domain =
-      window.location.hostname === 'localhost' ? 'http://' : 'https://';
-    const link = `${domain}${window.location.host}/survey/${id}`;
+    const link = `${window.location.protocol}//${window.location.host}/survey/${id}`;
     copy(link);
   };
 
