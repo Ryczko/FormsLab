@@ -23,6 +23,7 @@
   },
   "shareSurveyModal": {
     "title": "Share your survey",
-    "copyUrl": "Copy URL"
+    "copyUrl": "Copy URL",
+    "cancelButton": "Cancel"
   }
 }

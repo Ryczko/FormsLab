@@ -192,9 +192,8 @@ export const useCreateSurveyManager = () => {
         })),
       });
 
-      const domain =
-        window.location.hostname === 'localhost' ? 'http://' : 'https://';
-      const link = `${domain}${window.location.host}/survey/${newSurvey.id}`;
+      const link = `${window.location.protocol}//${window.location.host}/survey/${newSurvey.id}`;
+
       const copiedCorrectly = await copy(link, true);
       await router.push(`/survey/answer/${newSurvey.id}`, undefined, {
         scroll: false,
