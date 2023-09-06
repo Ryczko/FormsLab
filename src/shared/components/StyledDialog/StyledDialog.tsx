@@ -47,7 +47,7 @@ export default function StyledDialog({
             >
               <Dialog.Panel
                 className={clsx(
-                  'flex w-auto max-w-lg flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all',
+                  'flex w-auto max-w-xl flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all',
                   contentClassName
                 )}
               >

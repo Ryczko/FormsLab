@@ -33,7 +33,7 @@ export default function ShareSurveyModal({
       content={
         <>
           <div className="mt-4">
-            <span className="block w-full select-all break-words rounded-md border border-gray-300 px-3 py-2 text-center text-sm focus:outline-none">
+            <span className="scrollbar-hide block w-full select-all overflow-x-auto rounded-md border border-gray-300 px-3 py-2 text-center text-sm focus:outline-none">
               {link}
             </span>
           </div>
