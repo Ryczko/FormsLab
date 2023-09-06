@@ -1,5 +1,5 @@
 import { LinkIcon } from '@heroicons/react/outline';
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,40 +18,24 @@ export default function ShareSurveyModal({
 }: ShareSurveyModalProps) {
   const { t } = useTranslation('common');
   const { copy } = useCopyToClipboard();
-  const inputEl = useRef<HTMLInputElement>(null);
 
   const link = `${window.location.protocol}//${window.location.host}/survey/${surveyId}`;
 
   const handleCopy = () => {
     copy(link);
-
-    if (inputEl.current) {
-      inputEl.current.select();
-    }
   };
-
-  const handleInputFocus = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      e.target.select();
-    },
-    []
-  );
 
   return (
     <StyledDialog
       isOpen={isOpened}
       onClose={closeModal}
       title={t('shareSurveyModal.title')}
-      contentClassName="!w-[800px]"
       content={
         <>
           <div className="mt-4">
-            <input
-              onFocus={handleInputFocus}
-              ref={inputEl}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none"
-              value={`${link}`}
-            />
+            <span className="block w-full select-all break-words rounded-md border border-gray-300 px-3 py-2 text-center text-sm focus:outline-none">
+              {link}
+            </span>
           </div>
 
           <div className="mt-4 flex flex-col-reverse justify-between gap-2 sm:flex-row">
