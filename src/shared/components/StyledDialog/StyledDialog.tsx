@@ -17,7 +17,7 @@ export default function StyledDialog({
   isOpen,
   onClose,
   contentClassName = '',
-  centerTitle = false,
+  centerTitle = true,
 }: StyledDialogProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -47,7 +47,7 @@ export default function StyledDialog({
             >
               <Dialog.Panel
                 className={clsx(
-                  'flex w-auto max-w-md flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all',
+                  'flex w-auto max-w-lg flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all',
                   contentClassName
                 )}
               >
