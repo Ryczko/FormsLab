@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  overflow-y: scroll;
-}
-
-html::-webkit-scrollbar {
-  display: none;
-}
-
 @layer base {
   *,
   *::before,
@@ -20,6 +10,19 @@ html::-webkit-scrollbar {
   }
   * {
     font-family: 'Montserrat', 'sans-serif';
+
+    ::-webkit-scrollbar-track {
+      @apply bg-white rounded-md;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      @apply bg-indigo-200 rounded-md;
+    }
   }
   body {
     @apply text-zinc-900 bg-zinc-100;

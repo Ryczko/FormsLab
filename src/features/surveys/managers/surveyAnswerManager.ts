@@ -12,7 +12,7 @@ export type Answers = { [key: string]: string };
 
 const DEFAULT_VALUE: string[] = [];
 
-type SurveyWithQuestionsAndUsersAnswers = Survey & {
+export type SurveyWithQuestionsAndUsersAnswers = Survey & {
   questions: (Question & { answer?: string })[];
 };
 
@@ -32,6 +32,34 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     DEFAULT_VALUE,
     LocalStorageKeys.LocalStorageKey
   );
+
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+
+  const handleNextQuestion = () => {
+    setIsSubmitted(true);
+
+    if (isAnswerValid(activeQuestionIndex) && formData?.questions) {
+      if (activeQuestionIndex < formData?.questions.length - 1) {
+        setActiveQuestionIndex((prev) => prev + 1);
+        setIsSubmitted(false);
+      } else {
+        handleSave();
+      }
+    }
+  };
+
+  const handlePreviousQuestion = () => {
+    if (activeQuestionIndex > 0) {
+      setActiveQuestionIndex((prev) => prev - 1);
+    }
+  };
+
+  const isAnswerValid = (index: number) => {
+    if (formData?.questions[index].isRequired) {
+      return !!formData?.questions[index].answer?.trim();
+    }
+    return true;
+  };
 
   const getSurveyData = useCallback(async () => {
     if (!initialData.isActive) {
@@ -140,5 +168,8 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     isAnswering,
     formData,
     isSubmitted,
+    activeQuestionIndex,
+    handleNextQuestion,
+    handlePreviousQuestion,
   };
 };

@@ -10,7 +10,7 @@ interface InputProps {
   error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
-  absoluteError?: boolean;
+  centeredError?: boolean;
 }
 
 function Input({
@@ -22,7 +22,7 @@ function Input({
   onChange,
   error,
   className,
-  absoluteError,
+  centeredError,
   ...props
 }: InputProps & React.HTMLProps<HTMLInputElement>) {
   return (
@@ -46,10 +46,8 @@ function Input({
       {!!error && (
         <p
           className={clsx(
-            'text-sm text-red-400',
-            absoluteError
-              ? 'absolute left-1/2 top-full my-2 w-full -translate-x-1/2 text-center'
-              : 'mb-2 text-right'
+            'mb-2 text-sm text-red-400',
+            centeredError ? 'text-center' : 'text-right'
           )}
         >
           {error}

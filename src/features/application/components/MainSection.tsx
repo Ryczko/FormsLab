@@ -20,7 +20,7 @@ export default function MainSection({
   return (
     <article
       className={clsx(
-        'mt-12 flex w-full flex-col items-center gap-12 md:flex-row',
+        'mt-12 flex w-full flex-col items-center justify-between gap-12 md:flex-row',
         reversed && 'md:flex-row-reverse'
       )}
     >

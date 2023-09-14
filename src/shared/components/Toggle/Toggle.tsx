@@ -6,9 +6,16 @@ interface ToggleProps {
   onToggle: (isEnabled: boolean) => void;
   label?: string;
   classNames?: string;
+  testId?: string;
 }
 
-function Toggle({ classNames, isEnabled, onToggle, label }: ToggleProps) {
+function Toggle({
+  classNames,
+  isEnabled,
+  onToggle,
+  label,
+  testId,
+}: ToggleProps) {
   return (
     <Switch.Group>
       <div
@@ -18,6 +25,7 @@ function Toggle({ classNames, isEnabled, onToggle, label }: ToggleProps) {
         <Switch.Label className="mr-2 text-sm">{label}</Switch.Label>
         <Switch
           checked={isEnabled}
+          data-test-id={testId}
           onChange={onToggle}
           className={`${
             isEnabled ? 'bg-indigo-300' : 'bg-zinc-300'

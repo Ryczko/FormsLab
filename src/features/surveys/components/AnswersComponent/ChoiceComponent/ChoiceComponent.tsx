@@ -36,9 +36,7 @@ export default function ChoiceComponent({
         </button>
       ))}
       {isSubmitted && !answer && isRequired && (
-        <p className="mt-2 text-sm text-red-500">
-          {t('choseAnswerBeforeSend')}
-        </p>
+        <p className="mt-2 text-sm text-red-500">{t('requiredField')}</p>
       )}
     </div>
   );

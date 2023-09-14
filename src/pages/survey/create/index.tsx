@@ -22,6 +22,9 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import clsx from 'clsx';
+import { CogIcon } from '@heroicons/react/outline';
+import useModal from 'features/surveys/hooks/useModal';
+import SurveyOptionsModalModal from 'features/surveys/components/SurveyOptionsModal/SurveyOptionsModal';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -57,6 +60,8 @@ function SurveyCreatePage() {
     updateQuestionRequired,
     reorderQuestion,
     expandQuestion,
+    surveyOptions,
+    updateSurveyOptions,
   } = useCreateSurveyManager();
   const { t } = useTranslation('surveyCreate');
 
@@ -68,6 +73,12 @@ function SurveyCreatePage() {
     reorderQuestion(result.source.index, result.destination.index);
   };
 
+  const {
+    isModalOpen: isOptionsModalOpen,
+    closeModal: closeOptionsSurveyModal,
+    openModal: openOptionsSurveyModal,
+  } = useModal();
+
   return (
     <>
       <Head>
@@ -76,14 +87,29 @@ function SurveyCreatePage() {
       </Head>
 
       <Header>{t('heading')}</Header>
-      <Input
-        name="survey-title"
-        placeholder={t('surveyTitlePlaceholder')}
-        value={title}
-        error={error}
-        maxLength={MAX_TITLE_LENGTH}
-        onChange={handleChangeTitle}
-      />
+
+      <div className="flex flex-col gap-x-2 sm:flex-row">
+        <div className="w-full">
+          <Input
+            name="survey-title"
+            placeholder={t('surveyTitlePlaceholder')}
+            value={title}
+            error={error}
+            maxLength={MAX_TITLE_LENGTH}
+            onChange={handleChangeTitle}
+          />
+        </div>
+
+        <Button
+          className="h-[42px] border border-transparent sm:mt-2"
+          variant={ButtonVariant.PRIMARY}
+          onClick={openOptionsSurveyModal}
+          icon={<CogIcon className="h-5 w-5" />}
+          data-test-id="options-button"
+        >
+          Options
+        </Button>
+      </div>
 
       <div className="mt-4">
         <DragDropContext onDragEnd={onDragEnd}>
@@ -142,7 +168,7 @@ function SurveyCreatePage() {
         <AddQuestionButton onClick={addQuestion} />
       )}
 
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-2">
         <Button
           name="create-survey"
           onClick={createSurvey}
@@ -153,6 +179,13 @@ function SurveyCreatePage() {
           {t('buttonCreate')}
         </Button>
       </div>
+
+      <SurveyOptionsModalModal
+        isOpened={isOptionsModalOpen}
+        closeModal={closeOptionsSurveyModal}
+        surveyOptions={surveyOptions}
+        updateOptions={updateSurveyOptions}
+      />
     </>
   );
 }

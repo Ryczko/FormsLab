@@ -39,7 +39,7 @@ export default function ListAnswersComponent({
         ))}
       </div>
       {isSubmitted && !answer && isRequired && (
-        <p className="mt-4 text-sm text-red-500">{t('choseEmojiBeforeSend')}</p>
+        <p className="mt-4 text-sm text-red-500">{t('requiredField')}</p>
       )}
     </>
   );

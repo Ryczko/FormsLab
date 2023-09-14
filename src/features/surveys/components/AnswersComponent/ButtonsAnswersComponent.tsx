@@ -33,7 +33,7 @@ export default function ButtonsAnswersComponent({
         ))}
       </div>
       {showEmojiError && (
-        <div className="mt-2 text-red-500">{t('choseEmojiBeforeSend')}</div>
+        <div className="mt-2 text-red-500">{t('requiredField')}</div>
       )}
     </>
   );

@@ -7,6 +7,8 @@ import Navigation from 'layout/Navigation/Navigation';
 import { useApplicationContext } from 'features/application/context';
 import { useGlobalProgressBar } from 'layout/hooks/useGlobalProgressBar';
 import Footer from 'layout/Footer/Footer';
+import { HIDDEN_ELEMENTS_ROUTES } from 'shared/constants/routesConfig';
+import clsx from 'clsx';
 
 function PageLayout({ children }: PropsWithChildren) {
   useGlobalProgressBar();
@@ -16,12 +18,21 @@ function PageLayout({ children }: PropsWithChildren) {
   return (
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
-      <Navigation />
-      <div className="relative min-h-screen">
-        <div className="m-auto max-w-[54rem] overflow-hidden px-6 pb-[90px] pt-24 text-center">
-          <Background />
+      <div className="relative flex h-screen flex-col justify-between">
+        {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Navigation />}
+        <div
+          className={clsx(
+            'mx-auto w-full overflow-auto px-6 py-8 text-center',
+            HIDDEN_ELEMENTS_ROUTES.includes(router.pathname)
+              ? 'my-auto'
+              : 'flex-grow'
+          )}
+        >
+          {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Background />}
           <AnimatePresence exitBeforeEnter initial={false}>
-            <Fragment key={router.asPath}>{children}</Fragment>
+            <Fragment key={router.asPath}>
+              <div className={clsx('mx-auto max-w-[54rem]')}>{children}</div>
+            </Fragment>
           </AnimatePresence>
         </div>
         <Footer />

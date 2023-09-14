@@ -28,8 +28,8 @@ export default function DeleteSurveyModal({
       title={t('surveyRemoving.modalTitle')}
       content={
         <>
-          <div className="mt-2">
-            <p className="text-sm text-red-500">
+          <div className="mt-4">
+            <p className="text-center text-sm text-red-500">
               {t('surveyRemoving.modalContentFirst')}&nbsp;
               <span className="font-bold">
                 {t('surveyRemoving.modalContentSecond')}
@@ -38,7 +38,7 @@ export default function DeleteSurveyModal({
             </p>
           </div>
 
-          <div className="mt-6 flex flex-col-reverse justify-between gap-2 sm:flex-row">
+          <div className="mt-5 flex flex-col-reverse justify-between gap-2 sm:flex-row">
             <Button
               variant={ButtonVariant.SECONDARY}
               onClick={closeModal}

@@ -121,6 +121,7 @@ export default function QuestionBlockWrapper({
             {isRemovingPossible && (
               <button
                 onClick={removeQuestion}
+                data-test-id={`remove-question-${index}`}
                 className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
               >
                 <TrashIcon className="w-[15px] text-red-700" />
