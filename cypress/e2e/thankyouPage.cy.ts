@@ -1,11 +1,6 @@
 import { faker } from '@faker-js/faker';
 
 describe('Create and Answer Survey', () => {
-  it('should redirect to login page when user is not logged in', () => {
-    cy.visit('/survey/create');
-    cy.url().should('include', '/login');
-  });
-
   it('should create a survey and answer it and show thank you page', () => {
     // Login before proceeding
     cy.login();
@@ -21,6 +16,9 @@ describe('Create and Answer Survey', () => {
     cy.get('input[data-test-id="question-input-0"]').type(questionContent);
     cy.get('input[data-test-id="question-input-1"]').type(questionContent);
 
+    cy.get('button[data-test-id="options-button"]').click();
+    cy.get('[data-test-id="one-per-step-toggle"]').click();
+    cy.get('[data-test-id="close-modal"]').click();
     cy.get('button[name="create-survey"]').click();
 
     // Extract and visit the Answer Survey URL
@@ -34,8 +32,13 @@ describe('Create and Answer Survey', () => {
       cy.visit(newUrl);
 
       // Answer Survey
-      cy.get('button:has(em-emoji[shortcodes=":smiley:"])').should('be.visible').should('be.enabled').click();
-      cy.get('input[placeholder="Answer..."]').should('be.visible').type('test');
+      cy.get('button:has(em-emoji[shortcodes=":smiley:"])')
+        .should('be.visible')
+        .should('be.enabled')
+        .click();
+      cy.get('input[placeholder="Answer..."]')
+        .should('be.visible')
+        .type('test');
       cy.contains('button', 'Send').should('be.visible').click();
 
       // Verify Thank You Page

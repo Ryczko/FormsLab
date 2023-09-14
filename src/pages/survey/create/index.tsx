@@ -105,6 +105,7 @@ function SurveyCreatePage() {
           variant={ButtonVariant.PRIMARY}
           onClick={openOptionsSurveyModal}
           icon={<CogIcon className="h-5 w-5" />}
+          data-test-id="options-button"
         >
           Options
         </Button>

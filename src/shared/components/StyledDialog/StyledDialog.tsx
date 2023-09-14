@@ -59,6 +59,7 @@ export default function StyledDialog({
                   <span className="w-full text-left">{title}</span>
                   <XIcon
                     onClick={onClose}
+                    data-test-id={'close-modal'}
                     className=" h-5 w-5 cursor-pointer"
                   />
                 </Dialog.Title>

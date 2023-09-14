@@ -29,6 +29,7 @@ export default function SurveyOptionsModalModal({
           <Toggle
             isEnabled={surveyOptions.oneQuestionPerStep}
             classNames="gap-2"
+            testId="one-per-step-toggle"
             onToggle={() => {
               updateOptions(
                 'oneQuestionPerStep',
