@@ -8,8 +8,8 @@ export default function GithubCorner() {
       rel="noreferrer"
     >
       <svg
-        width="70"
-        height="70"
+        width="60"
+        height="60"
         viewBox="0 0 250 250"
         className="svg-content"
         aria-hidden="true"

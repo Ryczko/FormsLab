@@ -16,6 +16,10 @@ export interface Question {
   expanded: boolean;
 }
 
+export interface SurveyOptions {
+  oneQuestionPerStep: boolean;
+}
+
 export const useCreateSurveyManager = () => {
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState<Question[]>(defaultQuestions);
@@ -25,9 +29,18 @@ export const useCreateSurveyManager = () => {
   const router = useRouter();
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
+  const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
+    oneQuestionPerStep: true,
+  });
+
+  const updateSurveyOptions = (option: keyof SurveyOptions, value: boolean) => {
+    setSurveyOptions((oldOptions) => ({ ...oldOptions, [option]: value }));
+  };
 
   const addQuestion = (newQuestion: Question) => {
     setQuestions((oldQuestions) => [...oldQuestions, newQuestion]);
+    setIsSubmitted(false);
+    setError('');
   };
 
   const removeQuestion = (index: number) => {
@@ -135,10 +148,8 @@ export const useCreateSurveyManager = () => {
   };
 
   const areQuestionsValid = (questions: Question[]) => {
-    console.log('jkljkljl');
     setQuestions((oldQuestions) =>
       oldQuestions.map((question) => {
-        console.log(question);
         if (question.options?.includes('')) {
           return { ...question, expanded: true };
         }
@@ -184,6 +195,7 @@ export const useCreateSurveyManager = () => {
     try {
       const newSurvey = await postFetch('/api/survey', {
         title,
+        oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
         questions: questions.map((question) => ({
           title: question.title,
           options: question.options,
@@ -245,5 +257,7 @@ export const useCreateSurveyManager = () => {
     updateQuestionRequired,
     reorderQuestion,
     expandQuestion,
+    surveyOptions,
+    updateSurveyOptions,
   };
 };

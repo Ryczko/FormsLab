@@ -1,15 +1,12 @@
 import Head from 'next/head';
-import Button, {
-  ButtonVariant,
-  ButtonSize,
-} from 'shared/components/Button/Button';
-import Header from 'shared/components/Header/Header';
+import { ButtonVariant } from 'shared/components/Button/Button';
 import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
-import { AnswersComponentFactory } from 'features/surveys/components/AnswersComponent/AnswersComponentFactory';
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSurveyData } from 'pages/api/answer/[id]';
+import AllQuestionsView from 'features/surveys/components/AllQuestionsView/AllQuestionsView';
+import OneQuestionView from 'features/surveys/components/OneQuestionView/OneQuestionView';
 
 export async function getServerSideProps(context: NextPageContext) {
   const surveyData = await getSurveyData(context.query.surveyId as string);
@@ -24,8 +21,16 @@ export async function getServerSideProps(context: NextPageContext) {
 function AnswerPage({
   initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { handleAnswerChange, handleSave, isAnswering, formData, isSubmitted } =
-    useSurveyAnswerManager(initialData);
+  const {
+    handleAnswerChange,
+    handleSave,
+    isAnswering,
+    formData,
+    isSubmitted,
+    activeQuestionIndex,
+    handleNextQuestion,
+    handlePreviousQuestion,
+  } = useSurveyAnswerManager(initialData);
   const { t } = useTranslation('survey');
 
   return (
@@ -34,38 +39,27 @@ function AnswerPage({
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
-      <>
+      <div className="w-full">
         {formData?.isActive ? (
-          <>
-            <Header>{formData?.title}</Header>
-
-            {formData?.questions.map((question) => {
-              return (
-                <AnswersComponentFactory
-                  key={question.id}
-                  question={question.title}
-                  type={question.type}
-                  options={question.options}
-                  answer={question.answer}
-                  questionId={question.id}
-                  handleAnswerChange={handleAnswerChange}
-                  isSubmitted={isSubmitted}
-                  isRequired={question.isRequired}
-                />
-              );
-            })}
-
-            <div className="flex justify-center">
-              <Button
-                onClick={handleSave}
-                variant={ButtonVariant.PRIMARY}
-                sizeType={ButtonSize.FULL}
-                isLoading={isAnswering}
-              >
-                {t('sendButton')}
-              </Button>
-            </div>
-          </>
+          formData.oneQuestionPerStep ? (
+            <OneQuestionView
+              activeQuestionIndex={activeQuestionIndex}
+              formData={formData}
+              handleNextQuestion={handleNextQuestion}
+              handlePreviousQuestion={handlePreviousQuestion}
+              isSubmitted={isSubmitted}
+              handleAnswerChange={handleAnswerChange}
+              isAnswering={isAnswering}
+            />
+          ) : (
+            <AllQuestionsView
+              formData={formData}
+              handleSave={handleSave}
+              handleAnswerChange={handleAnswerChange}
+              isAnswering={isAnswering}
+              isSubmitted={isSubmitted}
+            />
+          )
         ) : (
           <>
             <h1 className="text-5xl">🙁</h1>
@@ -79,7 +73,7 @@ function AnswerPage({
             </ButtonLink>
           </>
         )}
-      </>
+      </div>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import { XIcon } from '@heroicons/react/outline';
 
 interface StyledDialogProps {
   title?: string;
@@ -8,7 +9,6 @@ interface StyledDialogProps {
   isOpen: boolean;
   onClose: () => void;
   contentClassName?: string;
-  centerTitle?: boolean;
 }
 
 export default function StyledDialog({
@@ -17,7 +17,6 @@ export default function StyledDialog({
   isOpen,
   onClose,
   contentClassName = '',
-  centerTitle = true,
 }: StyledDialogProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -47,18 +46,22 @@ export default function StyledDialog({
             >
               <Dialog.Panel
                 className={clsx(
-                  'flex w-auto max-w-xl flex-col justify-center overflow-hidden rounded-md bg-white p-6 text-left shadow-xl transition-all',
+                  'flex w-auto min-w-[250px] max-w-xl flex-col justify-center overflow-hidden rounded-md bg-white p-4 text-left shadow-xl transition-all',
                   contentClassName
                 )}
               >
                 <Dialog.Title
                   as="h3"
                   className={clsx(
-                    'text-lg font-medium leading-6 text-zinc-900',
-                    centerTitle && 'text-center'
+                    'flex items-center border-b pb-2 text-lg font-medium leading-6 text-zinc-900'
                   )}
                 >
-                  {title}
+                  <span className="w-full text-left">{title}</span>
+                  <XIcon
+                    onClick={onClose}
+                    // className="absolute right-5 top-4 z-10 h-5 w-5 cursor-pointer"
+                    className=" h-5 w-5 cursor-pointer"
+                  />
                 </Dialog.Title>
                 {content}
               </Dialog.Panel>

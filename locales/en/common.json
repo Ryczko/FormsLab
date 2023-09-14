@@ -25,5 +25,9 @@
     "title": "Share your survey",
     "copyUrl": "Copy URL",
     "cancelButton": "Cancel"
+  },
+  "surveyOptionsModal": {
+    "title": "Survey options",
+    "OneQuestionPerStep": "One question per step"
   }
 }

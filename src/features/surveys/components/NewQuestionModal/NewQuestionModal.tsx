@@ -61,12 +61,11 @@ export default function NewQuestionModal({
 
   return (
     <StyledDialog
-      centerTitle
       isOpen={isOpened}
       onClose={closeModal}
       title={'Choose question type'}
       content={
-        <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+        <div className="mt-6 flex flex-col gap-2 sm:mt-4 sm:flex-row">
           <NewQuestionModalButton
             onClick={addEmojiQuestion}
             icon={<EmojiIcon />}

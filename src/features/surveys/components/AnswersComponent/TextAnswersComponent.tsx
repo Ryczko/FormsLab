@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import React, { ChangeEvent } from 'react';
 import Input from 'shared/components/Input/Input';
 import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
@@ -40,8 +39,7 @@ export default function TextAnswersComponent({
         onInput={onAnswerChange}
         placeholder="Answer..."
         error={getAnswerError()}
-        absoluteError
-        className={clsx(getAnswerError() && 'mb-6')}
+        centeredError
         maxLength={MAX_ANSWER_LENGTH}
       ></Input>
     </div>
