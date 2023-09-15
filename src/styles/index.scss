@@ -29,6 +29,10 @@
   }
 }
 
+.max-h-screen-dvh {
+  max-height: 100dvh;
+}
+
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
