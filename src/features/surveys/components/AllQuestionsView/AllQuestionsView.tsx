@@ -27,7 +27,7 @@ export default function AllQuestionView({
 
   return (
     <>
-      <Header>{formData?.title}</Header>
+      {formData?.displayTitle && <Header>{formData?.title}</Header>}
 
       {formData?.questions.map((question) => {
         return (

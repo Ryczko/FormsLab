@@ -38,6 +38,18 @@ export default function SurveyOptionsModalModal({
             }}
             label={t('surveyOptionsModal.OneQuestionPerStep')}
           />
+          <Toggle
+            isEnabled={surveyOptions.displayTitle}
+            classNames="gap-2 mt-4"
+            testId="display-title-toggle"
+            onToggle={() => {
+              updateOptions(
+                'displayTitle',
+                !surveyOptions.displayTitle
+              );
+            }}
+            label={t('surveyOptionsModal.DisplayTitle')}
+          />
         </div>
       }
     />

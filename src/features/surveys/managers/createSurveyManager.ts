@@ -18,6 +18,7 @@ export interface Question {
 
 export interface SurveyOptions {
   oneQuestionPerStep: boolean;
+  displayTitle: boolean;
 }
 
 export const useCreateSurveyManager = () => {
@@ -31,6 +32,7 @@ export const useCreateSurveyManager = () => {
   const { t } = useTranslation('surveyCreate');
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: true,
+    displayTitle: true
   });
 
   const updateSurveyOptions = (option: keyof SurveyOptions, value: boolean) => {
@@ -196,6 +198,7 @@ export const useCreateSurveyManager = () => {
       const newSurvey = await postFetch('/api/survey', {
         title,
         oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
+        displayTitle: surveyOptions.displayTitle,
         questions: questions.map((question) => ({
           title: question.title,
           options: question.options,

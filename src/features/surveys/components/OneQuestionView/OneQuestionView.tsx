@@ -27,7 +27,7 @@ export default function OneQuestionView({
 
   return (
     <>
-      <Header>{formData?.title}</Header>
+      {formData?.displayTitle && <Header>{formData?.title}</Header>}
 
       <AnswersComponentFactory
         key={currentQuestion.id}
