@@ -18,7 +18,7 @@ function PageLayout({ children }: PropsWithChildren) {
   return (
     <>
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
-      <div className="relative flex h-screen flex-col justify-between">
+      <div className="max-h-screen-dvh relative flex h-screen flex-col justify-between">
         {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Navigation />}
         <div
           className={clsx(
