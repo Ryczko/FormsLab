@@ -41,7 +41,7 @@ export default function SurveyOptionsModalModal({
           <Toggle
             isEnabled={surveyOptions.displayTitle}
             classNames="gap-2 mt-4"
-            testId="one-per-step-toggle"
+            testId="display-title-toggle"
             onToggle={() => {
               updateOptions(
                 'displayTitle',
