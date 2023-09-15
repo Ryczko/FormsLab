@@ -17,14 +17,14 @@ const ThankyouPage = () => {
           src="/images/thankyou.svg"
           alt="thankyou"
           height="200"
-          width="160"
+          width="140"
         />
 
-        <h1 className="leading-tighter mt-4 text-4xl font-extrabold tracking-tighter">
+        <h1 className="leading-tighter mt-4 text-3xl font-extrabold tracking-tighter">
           {t('firstPartHeading')}&nbsp;
           <span className="text-indigo-200">{t('secondPartHeading')}</span>
         </h1>
-        <p className="mt-2 max-w-lg text-lg text-zinc-600">{t('content')}</p>
+        <p className="text-md mt-2 max-w-lg text-zinc-600">{t('content')}</p>
       </div>
     </>
   );
