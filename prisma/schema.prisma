@@ -72,6 +72,7 @@ model Survey {
   questions   Question[]
   answers     Answer[]
   oneQuestionPerStep Boolean?
+  displayTitle Boolean?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

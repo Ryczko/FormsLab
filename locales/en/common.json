@@ -28,6 +28,7 @@
   },
   "surveyOptionsModal": {
     "title": "Survey options",
-    "OneQuestionPerStep": "One question per step"
+    "OneQuestionPerStep": "One question per step",
+    "DisplayTitle":"Display title"
   }
 }

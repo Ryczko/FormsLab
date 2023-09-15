@@ -16,6 +16,7 @@ interface SurveyData {
   description: string;
   questions: Question[];
   oneQuestionPerStep: boolean;
+  displayTitle: boolean;
 }
 
 export async function getAllUserSurveys(userId: string) {
@@ -69,7 +70,7 @@ export default async function handler(
         return res.status(200).json({ surveys });
       }
       case 'POST': {
-        const { title, description, questions, oneQuestionPerStep } =
+        const { title, description, questions, oneQuestionPerStep, displayTitle } =
           req.body as SurveyData;
 
         if (!isSurveyValid(req.body)) {
@@ -83,6 +84,7 @@ export default async function handler(
             description,
             isActive: true,
             oneQuestionPerStep,
+            displayTitle,
             questions: {
               create: questions.map((question) => ({
                 type: question.type,
