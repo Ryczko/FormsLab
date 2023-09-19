@@ -4,6 +4,7 @@ import QuestionBlockWrapper from 'features/surveys/components/QuestionBlocks/Que
 import InputQuestionBlock from 'features/surveys/components/QuestionBlocks/InputQuestionBlock/InputQuestionBlock';
 import ChoiceQuestionBlock from 'features/surveys/components/QuestionBlocks/ChoiceQuestionBlock/ChoiceQuestionBlock';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
+import RateQuestionBlock from 'features/surveys/components/QuestionBlocks/RateQuestionBlock/RateQuestionBlock';
 
 interface QuestionBlockFactoryProps {
   type: QuestionType;
@@ -69,6 +70,7 @@ export default function QuestionBlockFactory({
       expandQuestion={expandQuestion}
       type={type}
     >
+      {type === QuestionType.RATE && <RateQuestionBlock />}
       {type === QuestionType.INPUT && <InputQuestionBlock />}
       {type === QuestionType.CHOICE && (
         <ChoiceQuestionBlock
