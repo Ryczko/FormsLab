@@ -14,6 +14,7 @@ import { QuestionType } from '@prisma/client';
 import EmojiIcon from 'shared/components/QuestionTypeIcons/EmojiIcon';
 import InputIcon from 'shared/components/QuestionTypeIcons/InputIcon';
 import ChoiceIcon from 'shared/components/QuestionTypeIcons/ChoiceIcon';
+import RateIcon from 'shared/components/QuestionTypeIcons/RateIcon';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -93,6 +94,7 @@ export default function QuestionBlockWrapper({
             {type === QuestionType.EMOJI && <EmojiIcon />}
             {type === QuestionType.INPUT && <InputIcon />}
             {type === QuestionType.CHOICE && <ChoiceIcon />}
+            {type === QuestionType.RATE && <RateIcon />}
           </div>
 
           <div className=" w-full grow">

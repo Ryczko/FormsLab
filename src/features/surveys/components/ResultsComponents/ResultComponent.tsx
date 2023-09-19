@@ -60,7 +60,11 @@ export default function ResultComponent({
   }, [notEmptyAnswers]);
 
   useEffect(() => {
-    if (type === QuestionType.EMOJI || type === QuestionType.CHOICE) {
+    if (
+      type === QuestionType.EMOJI ||
+      type === QuestionType.CHOICE ||
+      type === QuestionType.RATE
+    ) {
       const chartData = getDataToChart();
       setChartData(chartData);
     }
@@ -74,6 +78,7 @@ export default function ResultComponent({
       {type === QuestionType.EMOJI && <BarChart data={chartData} emojiLabels />}
       {type === QuestionType.INPUT && <TextResults answers={notEmptyAnswers} />}
       {type === QuestionType.CHOICE && <BarChart data={chartData} />}
+      {type === QuestionType.RATE && <BarChart data={chartData} />}
     </div>
   );
 }

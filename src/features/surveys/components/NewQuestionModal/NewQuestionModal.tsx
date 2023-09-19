@@ -7,6 +7,7 @@ import NewQuestionModalButton from 'features/surveys/components/NewQuestionModal
 import EmojiIcon from 'shared/components/QuestionTypeIcons/EmojiIcon';
 import InputIcon from 'shared/components/QuestionTypeIcons/InputIcon';
 import ChoiceIcon from 'shared/components/QuestionTypeIcons/ChoiceIcon';
+import RateIcon from 'shared/components/QuestionTypeIcons/RateIcon';
 
 type NewQuestionModalProps = {
   isOpened: boolean;
@@ -59,6 +60,17 @@ export default function NewQuestionModal({
     });
   };
 
+  const addRateQuestion = () => {
+    closeModal();
+    onSuccess?.({
+      id: v4(),
+      type: QuestionType.RATE,
+      title: '',
+      isRequired: true,
+      expanded: true,
+    });
+  };
+
   return (
     <StyledDialog
       isOpen={isOpened}
@@ -80,6 +92,11 @@ export default function NewQuestionModal({
             onClick={addChoiceQuestion}
             icon={<ChoiceIcon />}
             text="Choice"
+          />
+          <NewQuestionModalButton
+            onClick={addRateQuestion}
+            icon={<RateIcon />}
+            text="Rate"
           />
         </div>
       }

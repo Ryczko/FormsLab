@@ -7,6 +7,7 @@ import Button, {
   ButtonVariant,
 } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
+import RateAnswersComponent from 'features/surveys/components/AnswersComponent/RateComponent/RateComponent';
 
 interface AnswersComponentFactoryProps {
   type: QuestionType;
@@ -43,6 +44,7 @@ export const AnswersComponentFactory = (
       {type === QuestionType.EMOJI && <ListAnswersComponent {...props} />}
       {type === QuestionType.INPUT && <TextAnswersComponent {...props} />}
       {type === QuestionType.CHOICE && <ChoiceComponent {...props} />}
+      {type === QuestionType.RATE && <RateAnswersComponent {...props} />}
 
       {(isNextButtonVisible || isBackButtonVisible) && (
         <div className="mt-6 flex flex-col gap-x-4 gap-y-2 sm:flex-row">
