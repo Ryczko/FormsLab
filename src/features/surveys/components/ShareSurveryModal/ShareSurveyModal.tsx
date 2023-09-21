@@ -9,12 +9,14 @@ type ShareSurveyModalProps = {
   surveyId: string;
   isOpened: boolean;
   closeModal: () => void;
+  copyUrlTestId: string;
 };
 
 export default function ShareSurveyModal({
   surveyId,
   isOpened,
   closeModal,
+  copyUrlTestId
 }: ShareSurveyModalProps) {
   const { t } = useTranslation('common');
   const { copy } = useCopyToClipboard();
@@ -33,7 +35,7 @@ export default function ShareSurveyModal({
       content={
         <>
           <div className="mt-4">
-            <span className="scrollbar-hide block w-full select-all overflow-x-auto rounded-md border border-gray-300 px-3 py-2 text-center text-sm focus:outline-none">
+            <span className="scrollbar-hide block w-full select-all overflow-x-auto rounded-md border border-gray-300 px-3 py-2 text-center text-sm focus:outline-none" data-test-id={copyUrlTestId}>
               {link}
             </span>
           </div>

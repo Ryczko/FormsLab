@@ -24,6 +24,11 @@ describe('Create Survey Page', () => {
     cy.url().should('include', '/survey/answer/');
     cy.visit('/surveys');
     cy.contains(surveyTitle);
+
+    cy.get('[data-test-id="copy-link-0"]').click();
+    cy.get('[data-test-id="copy-url-0"]').invoke('text').then((text)=>{
+      cy.visit(text);
+    });
   });
 
   it('should create a survey with one question per step and not display title', () => {
@@ -48,6 +53,11 @@ describe('Create Survey Page', () => {
     cy.url().should('include', '/survey/answer/');
     cy.visit('/surveys');
     cy.contains(surveyTitle);
+
+    cy.get('[data-test-id="copy-link-0"]').click();
+    cy.get('[data-test-id="copy-url-0"]').invoke('text').then((text)=>{
+      cy.visit(text);
+    });
   });
 
   it('should create a survey with all questions displayed and display title', () => {
@@ -72,6 +82,11 @@ describe('Create Survey Page', () => {
     cy.url().should('include', '/survey/answer/');
     cy.visit('/surveys');
     cy.contains(surveyTitle);
+
+    cy.get('[data-test-id="copy-link-0"]').click();
+    cy.get('[data-test-id="copy-url-0"]').invoke('text').then((text)=>{
+      cy.visit(text);
+    });
   });
 
   it('should create a survey with all questions displayed and not display title', () => {
@@ -97,5 +112,10 @@ describe('Create Survey Page', () => {
     cy.url().should('include', '/survey/answer/');
     cy.visit('/surveys');
     cy.contains(surveyTitle);
+
+    cy.get('[data-test-id="copy-link-0"]').click();
+    cy.get('[data-test-id="copy-url-0"]').invoke('text').then((text)=>{
+      cy.visit(text);
+    });
   });
 });

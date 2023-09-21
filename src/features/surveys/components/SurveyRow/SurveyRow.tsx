@@ -13,6 +13,8 @@ interface SurveyRowProps {
   createDate: string;
   id: string;
   refreshSurveys: () => Promise<void>;
+  testId:string;
+  copyUrlTestId:string;
 }
 
 export default function SurveyRow({
@@ -20,6 +22,8 @@ export default function SurveyRow({
   createDate,
   id,
   refreshSurveys,
+  testId,
+  copyUrlTestId
 }: SurveyRowProps) {
   const navigate = useRouter();
   const {
@@ -70,6 +74,7 @@ export default function SurveyRow({
           title={t('copyLinkButtonTitle')}
           icon={<ShareIcon className="h-5 w-5" />}
           onClick={handleShare}
+          data-test-id={testId}
         />
         <Button
           variant={ButtonVariant.DANGER}
@@ -89,6 +94,7 @@ export default function SurveyRow({
         surveyId={id}
         closeModal={closeShareSurveyModal}
         isOpened={isShareSurveyModalOpen}
+        copyUrlTestId={copyUrlTestId}
       />
     </div>
   );

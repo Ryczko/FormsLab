@@ -72,7 +72,7 @@ function SurveyListPage({
       <div className="flex flex-col items-center justify-center">
         {surveys &&
           (items?.length > 0 ? (
-            items.map((item) => {
+            items.map((item, index) => {
               return (
                 <SurveyRow
                   key={item.id}
@@ -80,6 +80,8 @@ function SurveyListPage({
                   question={item.title}
                   refreshSurveys={refreshSurveys}
                   createDate={formatDateDistance(item.createdAt)}
+                  testId={`copy-link-${index}`}
+                  copyUrlTestId={`copy-url-${index}`}
                 ></SurveyRow>
               );
             })
