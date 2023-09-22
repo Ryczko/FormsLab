@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { QuestionType } from '@prisma/client';
 import { postFetch } from '../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
+import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 
 export interface Question {
   id: string;
@@ -32,8 +33,32 @@ export const useCreateSurveyManager = () => {
   const { t } = useTranslation('surveyCreate');
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: true,
-    displayTitle: true
+    displayTitle: true,
   });
+
+  const signInToCreateSurvey = () => {
+    router.push('/login');
+    sessionStorage.setItem(
+      DRAFT_SURVEY_SESSION_STORAGE,
+      JSON.stringify({
+        title,
+        questions,
+        surveyOptions,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const draftSurvey = sessionStorage.getItem(DRAFT_SURVEY_SESSION_STORAGE);
+    if (!draftSurvey) return;
+
+    const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
+
+    setTitle(title);
+    setQuestions(questions);
+    setSurveyOptions(surveyOptions);
+    sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
+  }, []);
 
   const updateSurveyOptions = (option: keyof SurveyOptions, value: boolean) => {
     setSurveyOptions((oldOptions) => ({ ...oldOptions, [option]: value }));
@@ -262,5 +287,6 @@ export const useCreateSurveyManager = () => {
     expandQuestion,
     surveyOptions,
     updateSurveyOptions,
+    signInToCreateSurvey,
   };
 };

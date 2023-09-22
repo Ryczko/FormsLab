@@ -2,7 +2,6 @@ import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import { ButtonVariant } from 'shared/components/Button/Button';
-import { useApplicationContext } from 'features/application/context';
 import useTranslation from 'next-translate/useTranslation';
 import { StarIcon } from '@heroicons/react/solid';
 import { InferGetServerSidePropsType } from 'next';
@@ -23,7 +22,6 @@ export async function getServerSideProps() {
 function IndexPage({
   repositoryData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { user, loading } = useApplicationContext();
   const { t } = useTranslation('home');
 
   return (
@@ -59,25 +57,14 @@ function IndexPage({
             )}
           </ButtonLink>
 
-          {!loading && !user && (
-            <ButtonLink
-              href={'/login'}
-              variant={ButtonVariant.OUTLINE_PRIMARY}
-              className="w-full sm:w-[250px]"
-            >
-              {t('buttonSignIn')}
-            </ButtonLink>
-          )}
-          {user && (
-            <ButtonLink
-              href={'/survey/create'}
-              data-test-id="create-survey"
-              variant={ButtonVariant.OUTLINE_PRIMARY}
-              className="w-full sm:w-[230px]"
-            >
-              {t('buttonCreateSurvey')}
-            </ButtonLink>
-          )}
+          <ButtonLink
+            href={'/survey/create'}
+            data-test-id="create-survey"
+            variant={ButtonVariant.OUTLINE_PRIMARY}
+            className="w-full sm:w-[230px]"
+          >
+            {t('buttonCreateSurvey')}
+          </ButtonLink>
         </div>
 
         <hr />

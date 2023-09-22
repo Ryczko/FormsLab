@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { getRedirectRoute } from 'shared/utilities/getRedirectRoute';
 
 export const useLoginManager = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +59,7 @@ export const useLoginManager = () => {
       });
 
       if (user?.ok) {
-        window.location.replace('/');
+        window.location.replace(getRedirectRoute());
       } else {
         toast.error(t('login:wrongCredentails'));
       }
@@ -72,7 +73,7 @@ export const useLoginManager = () => {
   const onGoogleLogin = async () => {
     setIsGoogleLoading(true);
     await signIn('google', {
-      callbackUrl: '/',
+      callbackUrl: getRedirectRoute(),
       redirect: false,
     });
   };
@@ -80,7 +81,7 @@ export const useLoginManager = () => {
   const onGithubLogin = async () => {
     setIsGithubLoading(true);
     await signIn('github', {
-      callbackUrl: '/',
+      callbackUrl: getRedirectRoute(),
       redirect: false,
     });
   };

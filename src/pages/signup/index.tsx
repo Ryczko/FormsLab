@@ -1,28 +1,36 @@
 import { Form, Formik } from 'formik';
 import Head from 'next/head';
-import router from 'next/router';
-import { useEffect } from 'react';
 import Link from 'next/link';
 import withAnimation from 'shared/HOC/withAnimation';
 import Header from 'shared/components/Header/Header';
 import LoginButton from 'shared/components/LoginButton/LoginButton';
 import Input from 'shared/components/Input/Input';
 import { useRegisterManager } from 'features/authorization/managers/registerManager';
-import { useApplicationContext } from 'features/application/context';
 import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
+import { getSession } from 'next-auth/react';
+import { NextPageContext } from 'next';
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 function SignupPage() {
-  const { user } = useApplicationContext();
   const { initialValues, onSubmit, SignupSchema, isRegistering } =
     useRegisterManager();
   const { t } = useTranslation('signup');
-
-  useEffect(() => {
-    if (user) {
-      router.push('/', undefined, { scroll: false });
-    }
-  }, [user]);
 
   return (
     <>

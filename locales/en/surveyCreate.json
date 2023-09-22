@@ -12,5 +12,6 @@
   "surveyCreationFailed": "Survey creation failed",
   "surveyCreationSuccess": "Survey created succesfully",
   "fillRequiredFields": "Please fill all required fields",
-  "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard"
+  "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard",
+  "signInToCreateSurvey": "Sign in to create survey"
 }

@@ -1,14 +1,12 @@
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
-import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import Header from 'shared/components/Header/Header';
 import Input from 'shared/components/Input/Input';
 import { useCreateSurveyManager } from 'features/surveys/managers/createSurveyManager';
 import useTranslation from 'next-translate/useTranslation';
 import QuestionBlockFactory from 'features/surveys/components/QuestionBlocks/QuestionBlockFactory';
-import { getSession } from 'next-auth/react';
-import { NextPageContext } from 'next';
+
 import { AddQuestionButton } from 'features/surveys/components/AddQuestionButton/AddQuestionButton';
 import {
   MAX_QUESTIONS,
@@ -25,24 +23,11 @@ import clsx from 'clsx';
 import { CogIcon } from '@heroicons/react/outline';
 import useModal from 'features/surveys/hooks/useModal';
 import SurveyOptionsModalModal from 'features/surveys/components/SurveyOptionsModal/SurveyOptionsModal';
-
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-}
+import { useApplicationContext } from 'features/application/context';
 
 function SurveyCreatePage() {
+  const { user } = useApplicationContext();
+
   const {
     title,
     error,
@@ -62,6 +47,7 @@ function SurveyCreatePage() {
     expandQuestion,
     surveyOptions,
     updateSurveyOptions,
+    signInToCreateSurvey,
   } = useCreateSurveyManager();
   const { t } = useTranslation('surveyCreate');
 
@@ -167,8 +153,7 @@ function SurveyCreatePage() {
       {questions.length < MAX_QUESTIONS && (
         <AddQuestionButton onClick={addQuestion} />
       )}
-
-      <div className="flex justify-center gap-2">
+      {user ? (
         <Button
           name="create-survey"
           onClick={createSurvey}
@@ -178,7 +163,15 @@ function SurveyCreatePage() {
         >
           {t('buttonCreate')}
         </Button>
-      </div>
+      ) : (
+        <Button
+          onClick={signInToCreateSurvey}
+          variant={ButtonVariant.PRIMARY}
+          className="z-0 mt-2 w-full"
+        >
+          {t('signInToCreateSurvey')}
+        </Button>
+      )}
 
       <SurveyOptionsModalModal
         isOpened={isOptionsModalOpen}
@@ -190,4 +183,4 @@ function SurveyCreatePage() {
   );
 }
 
-export default withProtectedRoute(withAnimation(SurveyCreatePage));
+export default withAnimation(SurveyCreatePage);

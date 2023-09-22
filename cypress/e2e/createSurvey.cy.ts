@@ -1,11 +1,6 @@
 import { faker } from '@faker-js/faker';
 
 describe('Create Survey Page', () => {
-  it('should redirect to login page when user is not logged in', () => {
-    cy.visit('/survey/create');
-    cy.url().should('include', '/login');
-  });
-
   it('should create a survey', () => {
     const surveyTitle = faker.lorem.sentence();
     const questionContent = faker.lorem.sentence();
