@@ -1,21 +1,35 @@
 import { Form, Formik } from 'formik';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import withAnimation from 'shared/HOC/withAnimation';
 import Header from 'shared/components/Header/Header';
 import LoginButton from 'shared/components/LoginButton/LoginButton';
-import { useApplicationContext } from 'features/application/context';
 import Input from 'shared/components/Input/Input';
 import { useLoginManager } from 'features/authorization/managers/loginManager';
 import Github from '../../../public/images/github.svg';
 import Google from '../../../public/images/google.svg';
 import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
+import { getSession } from 'next-auth/react';
+import { NextPageContext } from 'next';
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 function LoginPage() {
-  const { loading, user } = useApplicationContext();
   const {
     initialValues,
     LoginSchema,
@@ -26,20 +40,7 @@ function LoginPage() {
     isGoogleLoading,
     isGithubLoading,
   } = useLoginManager();
-  const router = useRouter();
-  const { redirect } = router.query;
   const { t } = useTranslation('login');
-
-  useEffect(() => {
-    if (user) {
-      if (redirect === 'settings') {
-        router.push('/settings', undefined, { scroll: false });
-      } else {
-        router.push('/', undefined, { scroll: false });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, loading]);
 
   return (
     <>

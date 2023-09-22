@@ -5,6 +5,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { signIn } from 'next-auth/react';
 import { postFetch } from '../../../../lib/axiosConfig';
 import { isAxiosError } from 'axios';
+import { getRedirectRoute } from 'shared/utilities/getRedirectRoute';
 
 export const useRegisterManager = () => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -53,7 +54,7 @@ export const useRegisterManager = () => {
         redirect: false,
       });
 
-      window.location.replace('/');
+      window.location.replace(getRedirectRoute());
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.data.message === 'User already exists') {
