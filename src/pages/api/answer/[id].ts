@@ -7,18 +7,20 @@ interface AnswerData {
   answersData: { questionId: string; answer?: string }[];
 }
 
-export async function getSurveyData(surveyId: string) {
-  const survey = await prismadb.survey.findUnique({
-    where: {
-      id: surveyId,
-    },
-    include: {
-      questions: true,
-      answers: false,
-    },
-  });
+export async function getSurveyData(surveyId?: string) {
+  if (surveyId) {
+    const survey = await prismadb.survey.findUnique({
+      where: {
+        id: surveyId,
+      },
+      include: {
+        questions: true,
+        answers: false,
+      },
+    });
 
-  return survey;
+    return survey;
+  }
 }
 
 const isAnswerDataValid = (answerData: AnswerData) => {

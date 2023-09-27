@@ -24,8 +24,24 @@ import { CogIcon } from '@heroicons/react/outline';
 import useModal from 'features/surveys/hooks/useModal';
 import SurveyOptionsModalModal from 'features/surveys/components/SurveyOptionsModal/SurveyOptionsModal';
 import { useApplicationContext } from 'features/application/context';
+import { InferGetServerSidePropsType, NextPageContext } from 'next';
+import { getSurveyData } from 'pages/api/answer/[id]';
 
-function SurveyCreatePage() {
+export async function getServerSideProps(context: NextPageContext) {
+  const surveyId = context.query.surveyId?.[0];
+
+  const surveyData = await getSurveyData(surveyId);
+
+  return {
+    props: {
+      initialData: surveyData ? JSON.parse(JSON.stringify(surveyData)) : null,
+    },
+  };
+}
+
+function SurveyCreatePage({
+  initialData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user } = useApplicationContext();
 
   const {
@@ -48,7 +64,7 @@ function SurveyCreatePage() {
     surveyOptions,
     updateSurveyOptions,
     signInToCreateSurvey,
-  } = useCreateSurveyManager();
+  } = useCreateSurveyManager(initialData);
   const { t } = useTranslation('surveyCreate');
 
   const onDragEnd = (result: DropResult) => {

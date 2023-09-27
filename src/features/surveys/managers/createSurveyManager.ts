@@ -7,6 +7,8 @@ import { QuestionType } from '@prisma/client';
 import { postFetch } from '../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
+import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
+import { Question as QuestionDto } from '@prisma/client';
 
 export interface Question {
   id: string;
@@ -22,19 +24,32 @@ export interface SurveyOptions {
   displayTitle: boolean;
 }
 
-export const useCreateSurveyManager = () => {
-  const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState<Question[]>(defaultQuestions);
+export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
+  const [isEditMode] = useState(!!initialData);
+
+  const [title, setTitle] = useState(initialData?.title ?? '');
+
+  const mapQuestionsWithExpanded = (questions?: QuestionDto[]) => {
+    return questions?.map((question) => ({
+      ...question,
+      expanded: false,
+    }));
+  };
+
+  const [questions, setQuestions] = useState<Question[]>(
+    mapQuestionsWithExpanded(initialData?.questions) ?? defaultQuestions
+  );
+  const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
+    oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
+    displayTitle: initialData?.oneQuestionPerStep ?? true,
+  });
+
   const [error, setError] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
-  const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
-    oneQuestionPerStep: true,
-    displayTitle: true,
-  });
 
   const signInToCreateSurvey = () => {
     router.push('/login');
@@ -288,5 +303,6 @@ export const useCreateSurveyManager = () => {
     surveyOptions,
     updateSurveyOptions,
     signInToCreateSurvey,
+    isEditMode,
   };
 };
