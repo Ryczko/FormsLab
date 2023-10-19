@@ -15,8 +15,8 @@ DATABASE_URL= # Your MongoDB database URL (you can use a local database or a cre
 NEXTAUTH_JWT_SECRET= # random string
 NEXTAUTH_SECRET= # random string
 ```
-
-4. Run `npm run dev` to start the development server.
+4. Run `npx prisma db push` to migrate the database. (Required only for the first time)
+5. Run `npm run dev` to start the development server.
 
 ## Pull Requests
 
