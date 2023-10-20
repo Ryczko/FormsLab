@@ -1,17 +1,16 @@
 import { RefreshIcon, ShareIcon, TrashIcon } from '@heroicons/react/outline';
-
+import Toggle from 'shared/components/Toggle/Toggle';
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import AnswerHeader from 'features/surveys/components/AnswerHeader/AnswerHeader';
 import { useSurveyResultsManager } from 'features/surveys/managers/surveyResultsManager';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
-
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 
-import { getSurveyWithAnswers } from 'pages/api/survey/[id]';
+import { getSurveyWithAnswers, } from 'pages/api/survey/[id]';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import ResultComponent from 'features/surveys/components/ResultsComponents/ResultComponent';
 import useModal from 'features/surveys/hooks/useModal';
@@ -31,7 +30,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const surveyData = (await getSurveyWithAnswers(
     context.query.surveyId as string,
-    session.user.id
+    session.user?.id
   )) as SurveyWithAnswers;
 
   if (!surveyData) {
@@ -46,12 +45,14 @@ export async function getServerSideProps(context: NextPageContext) {
   return {
     props: {
       initialData: JSON.parse(JSON.stringify(surveyData)),
+      userId: session.user.id
     },
   };
 }
 
 function SurveyResultsPage({
   initialData,
+  userId
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     surveyId,
@@ -60,8 +61,9 @@ function SurveyResultsPage({
     mappedAnswersData,
     isDataLoading,
     onRemoveSuccess,
+    updateSurveyStatus
   } = useSurveyResultsManager(initialData);
-
+  
   const {
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
@@ -89,6 +91,7 @@ function SurveyResultsPage({
             {surveyData?.title}
           </h1>
           <div className="flex w-full justify-center gap-2 sm:w-auto">
+            {surveyData?.userId===userId && typeof surveyData?.isActive==='boolean' && <Toggle isEnabled={surveyData?.isActive || false} onToggle={updateSurveyStatus} label={t('toggleShow')} />}
             <Button
               title={t('buttonCopyLinkTitle')}
               onClick={openShareSurveyModal}
@@ -122,7 +125,7 @@ function SurveyResultsPage({
           createDate={surveyData?.createdAt ?? ''}
         />
 
-        {surveyData?.answers.length === 0 && (
+        {surveyData?.answers?.length === 0 && (
           <div className="mt-6">{t('noAnswers')}</div>
         )}
 

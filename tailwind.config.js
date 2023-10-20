@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'bg-toggle-enabled':'#8ca6d6'
+      },
       fontFamily: {
         display: ['Montserrat', 'system-ui', 'sans-serif'],
         body: ['Montserrat', 'system-ui', 'sans-serif'],

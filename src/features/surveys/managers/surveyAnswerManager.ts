@@ -34,7 +34,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   );
 
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
-
+  
   const handleNextQuestion = () => {
     setIsSubmitted(true);
 
@@ -63,12 +63,12 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
 
   const getSurveyData = useCallback(async () => {
     if (!initialData.isActive) {
-      router.replace('/');
+      // router.replace('/');
       return;
     } else {
       setFormData(initialData);
     }
-  }, [router, initialData]);
+  }, [initialData]);
 
   useEffect(() => {
     if (surveyId) {

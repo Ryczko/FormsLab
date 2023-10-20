@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 
 import useTranslation from 'next-translate/useTranslation';
-import { getFetch } from '../../../../lib/axiosConfig';
+import { getFetch, patchFetch } from '../../../../lib/axiosConfig';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import { QuestionType } from '@prisma/client';
 import { MappedAnswers } from 'types/MappedAnswers';
@@ -16,6 +16,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   const { surveyId } = router.query as { surveyId: string };
 
   const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
+  const [isStatusLoading, setIsStatusLoading] = useState<boolean>(false);
   const [surveyData, setSurveyData] = useState<SurveyWithAnswers>();
   const [mappedAnswersData, setMappedAnswersData] = useState<MappedAnswers>({});
 
@@ -36,7 +37,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
           });
         } else {
           const questionData = surveyData.questions.find(
-            (q) => q.id === answerData.questionId
+            (q) => q.id === answerData.questionId,
           );
           mappedDataByQuestion[answerData.questionId] = {
             questionType: questionData?.type as QuestionType,
@@ -60,7 +61,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   const getSurveyData = useCallback(async () => {
     setIsDataLoading(true);
     const surveyData = await getFetch<SurveyWithAnswers>(
-      `/api/survey/${surveyId}`
+      `/api/survey/${surveyId}`,
     );
 
     if (!surveyData) {
@@ -73,6 +74,30 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
 
     toast.success(t('refreshSuccess'));
   }, [surveyId, router, t, fillSurveyData]);
+
+  const updateSurveyStatus = useCallback(async () => {
+    setIsStatusLoading(true);
+    try {
+      const surveyResult = await patchFetch(`/api/survey/${surveyId}`, {
+        actionType: 'UPDATE_ACTIVE',
+        isActive: !surveyData?.isActive,
+        userId: initialData.userId,
+      });
+      setSurveyData((prev) =>
+        prev ? { ...prev, isActive: !!surveyResult?.isActive } : prev,
+      );
+    } catch (_err) {
+      toast.error(t('updateStatusFailure'));
+    }
+    setIsStatusLoading(false);
+  }, [
+    initialData.userId,
+    setIsStatusLoading,
+    setSurveyData,
+    surveyData,
+    surveyId,
+    t,
+  ]);
 
   useEffect(() => {
     if (!surveyId) {
@@ -101,6 +126,8 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     surveyData,
     mappedAnswersData,
     isDataLoading,
+    isStatusLoading,
     onRemoveSuccess,
+    updateSurveyStatus,
   };
 };

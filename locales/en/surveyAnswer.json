@@ -19,5 +19,7 @@
   "copyLinkButtonTitle": "Copy link to clipboard",
   "deleteSurveyButtonTitle": "Delete survey",
   "tooltipValue": "value:",
-  "buttonShare": "Share"
+  "buttonShare": "Share",
+  "toggleShow":"Show",
+  "updateStatusFailure": "Failed to update the status"
 }

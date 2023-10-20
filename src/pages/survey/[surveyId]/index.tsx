@@ -10,7 +10,7 @@ import OneQuestionView from 'features/surveys/components/OneQuestionView/OneQues
 
 export async function getServerSideProps(context: NextPageContext) {
   const surveyData = await getSurveyData(context.query.surveyId as string);
-
+  
   return {
     props: {
       initialData: JSON.parse(JSON.stringify(surveyData)),
@@ -32,7 +32,7 @@ function AnswerPage({
     handlePreviousQuestion,
   } = useSurveyAnswerManager(initialData);
   const { t } = useTranslation('survey');
-
+  
   return (
     <>
       <Head>
