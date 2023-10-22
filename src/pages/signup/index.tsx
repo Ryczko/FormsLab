@@ -81,10 +81,10 @@ function SignupPage() {
                   onChange={handleChange('password')}
                 />
                 <span
-                  className="absolute top-2 right-3 cursor-pointer"
+                  className="absolute right-3 top-2 cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? '👀' : '🙈'}
+                  {showPassword ? '\u{1F440}' : '\u{1F648}'}
                 </span>
               </div>
               {!!errors.message && (
