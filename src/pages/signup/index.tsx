@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form, Formik } from 'formik';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -31,6 +32,8 @@ function SignupPage() {
   const { initialValues, onSubmit, SignupSchema, isRegistering } =
     useRegisterManager();
   const { t } = useTranslation('signup');
+  
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -67,15 +70,23 @@ function SignupPage() {
                 placeholder={t('email')}
                 onChange={handleChange('email')}
               />
-              <Input
-                type="password"
-                className="!my-1"
-                value={values.password}
-                error={touched.password ? errors.password : undefined}
-                required
-                placeholder={t('password')}
-                onChange={handleChange('password')}
-              />
+              <div className="relative">
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  className="!my-1"
+                  value={values.password}
+                  error={touched.password ? errors.password : undefined}
+                  required
+                  placeholder={t('password')}
+                  onChange={handleChange('password')}
+                />
+                <span
+                  className="absolute top-2 right-3 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? '👀' : '🙈'}
+                </span>
+              </div>
               {!!errors.message && (
                 <p className="mb-4 max-w-sm self-center text-center text-sm text-red-300">
                   {errors.message}

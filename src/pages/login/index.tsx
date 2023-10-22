@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form, Formik } from 'formik';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -41,6 +42,8 @@ function LoginPage() {
     isGithubLoading,
   } = useLoginManager();
   const { t } = useTranslation('login');
+  
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -84,15 +87,23 @@ function LoginPage() {
                 className="!mb-1 mt-3"
                 onChange={handleChange('email')}
               />
-              <Input
-                type="password"
-                value={values.password}
-                error={touched.password ? errors.password : undefined}
-                required
-                placeholder={t('login:password')}
-                className="!my-1"
-                onChange={handleChange('password')}
-              />
+              <div className="relative">
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  value={values.password}
+                  error={touched.password ? errors.password : undefined}
+                  required
+                  placeholder={t('login:password')}
+                  className="!my-1"
+                  onChange={handleChange('password')}
+                />
+                <span
+                  className="absolute top-2 right-3 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? '👀' : '🙈'}
+                </span>
+              </div>
 
               {!!errors.message && (
                 <p className="mb-4 max-w-sm self-center text-center text-sm text-red-300">
