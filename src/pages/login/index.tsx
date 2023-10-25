@@ -13,6 +13,7 @@ import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
 import { getSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
+import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -42,7 +43,6 @@ function LoginPage() {
     isGithubLoading,
   } = useLoginManager();
   const { t } = useTranslation('login');
-  
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -97,12 +97,17 @@ function LoginPage() {
                   className="!my-1"
                   onChange={handleChange('password')}
                 />
-                <span
-                  className="absolute right-3 top-2 cursor-pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? '\u{1F440}' : '\u{1F648}'}
-                </span>
+                {showPassword ? (
+                  <EyeIcon
+                    onClick={() => setShowPassword(false)}
+                    className="absolute right-4 top-4 h-6 w-6 text-gray-400 cursor-pointer"
+                  />
+                ) : (
+                  <EyeOffIcon
+                    onClick={() => setShowPassword(true)}
+                    className="absolute right-4 top-4 h-6 w-6 text-gray-400 cursor-pointer"
+                  />
+                )}
               </div>
 
               {!!errors.message && (

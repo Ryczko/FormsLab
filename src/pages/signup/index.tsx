@@ -11,6 +11,7 @@ import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
 import { getSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
+import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -32,7 +33,7 @@ function SignupPage() {
   const { initialValues, onSubmit, SignupSchema, isRegistering } =
     useRegisterManager();
   const { t } = useTranslation('signup');
-  
+
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -80,12 +81,17 @@ function SignupPage() {
                   placeholder={t('password')}
                   onChange={handleChange('password')}
                 />
-                <span
-                  className="absolute right-3 top-2 cursor-pointer"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? '\u{1F440}' : '\u{1F648}'}
-                </span>
+                {showPassword ? (
+                  <EyeIcon
+                    onClick={() => setShowPassword(false)}
+                    className="absolute right-4 top-4 h-6 w-6 text-gray-400 cursor-pointer"
+                  />
+                ) : (
+                  <EyeOffIcon
+                    onClick={() => setShowPassword(true)}
+                    className="absolute right-4 top-4 h-6 w-6 text-gray-400 cursor-pointer"
+                  />
+                )}
               </div>
               {!!errors.message && (
                 <p className="mb-4 max-w-sm self-center text-center text-sm text-red-300">
