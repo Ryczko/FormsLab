@@ -84,12 +84,12 @@ function SignupPage() {
                 {showPassword ? (
                   <EyeIcon
                     onClick={() => setShowPassword(false)}
-                    className="absolute right-4 top-4 h-6 w-6 text-gray-400 cursor-pointer"
+                    className="absolute right-4 top-4 h-6 w-6 cursor-pointer text-gray-400"
                   />
                 ) : (
                   <EyeOffIcon
                     onClick={() => setShowPassword(true)}
-                    className="absolute right-4 top-4 h-6 w-6 text-gray-400 cursor-pointer"
+                    className="absolute right-4 top-4 h-6 w-6 cursor-pointer text-gray-400"
                   />
                 )}
               </div>
