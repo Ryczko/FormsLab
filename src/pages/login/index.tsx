@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Form, Formik } from 'formik';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -13,7 +12,6 @@ import useTranslation from 'next-translate/useTranslation';
 import AuthFormWrapper from 'features/authorization/components/AuthFormWrapper';
 import { getSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -43,7 +41,6 @@ function LoginPage() {
     isGithubLoading,
   } = useLoginManager();
   const { t } = useTranslation('login');
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -87,28 +84,15 @@ function LoginPage() {
                 className="!mb-1 mt-3"
                 onChange={handleChange('email')}
               />
-              <div className="relative">
-                <Input
-                  type={showPassword ? 'text' : 'password'}
-                  value={values.password}
-                  error={touched.password ? errors.password : undefined}
-                  required
-                  placeholder={t('login:password')}
-                  className="!my-1"
-                  onChange={handleChange('password')}
-                />
-                {showPassword ? (
-                  <EyeIcon
-                    onClick={() => setShowPassword(false)}
-                    className="absolute right-4 top-4 h-6 w-6 cursor-pointer text-gray-400"
-                  />
-                ) : (
-                  <EyeOffIcon
-                    onClick={() => setShowPassword(true)}
-                    className="absolute right-4 top-4 h-6 w-6 cursor-pointer text-gray-400"
-                  />
-                )}
-              </div>
+              <Input
+                type="password"
+                value={values.password}
+                error={touched.password ? errors.password : undefined}
+                required
+                placeholder={t('login:password')}
+                className="!my-1"
+                onChange={handleChange('password')}
+              />
 
               {!!errors.message && (
                 <p className="mb-4 max-w-sm self-center text-center text-sm text-red-300">
