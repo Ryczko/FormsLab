@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import toast from 'react-hot-toast';
-import { LocalStorageKeys } from 'features/surveys/constants/types';
-import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
+import { LocalStorageKeys } from '../ESS/src/features/surveys/constants/types';
+import useLocalStorage from '../ESS/src/features/surveys/hooks/useLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { getFetch, postFetch } from '../../../../lib/axiosConfig';
-import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
+import { getFetch, postFetch } from '../../../../../ESS/lib/axiosConfig';
+import { SurveyWithQuestions } from '../ESS/src/types/SurveyWithQuestions';
 import { Question, Survey } from '@prisma/client';
 
 export type Answers = { [key: string]: string };
@@ -34,6 +34,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   );
 
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [QuestionLength] = useState(initialData.questions.length);
 
   const handleNextQuestion = () => {
     setIsSubmitted(true);
@@ -171,5 +172,6 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     activeQuestionIndex,
     handleNextQuestion,
     handlePreviousQuestion,
+    QuestionLength,
   };
 };

@@ -1,12 +1,13 @@
 import Head from 'next/head';
-import { ButtonVariant } from 'shared/components/Button/Button';
-import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
-import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import { ButtonVariant } from '../ESS/src/shared/components/Button/Button';
+import { useSurveyAnswerManager } from '../ESS/src/features/surveys/managers/surveyAnswerManager';
+import ButtonLink from '../ESS/src/shared/components/ButtonLink/ButtonLink';
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
-import { getSurveyData } from 'pages/api/answer/[id]';
-import AllQuestionsView from 'features/surveys/components/AllQuestionsView/AllQuestionsView';
-import OneQuestionView from 'features/surveys/components/OneQuestionView/OneQuestionView';
+import { getSurveyData } from '../ESS/src/pages/api/answer/[id]';
+import AllQuestionsView from '../ESS/src/features/surveys/components/AllQuestionsView/AllQuestionsView';
+import OneQuestionView from '../ESS/src/features/surveys/components/OneQuestionView/OneQuestionView';
+import Progressbar from 'shared/components/ProgressBar/ProgressBar';
 
 export async function getServerSideProps(context: NextPageContext) {
   const surveyData = await getSurveyData(context.query.surveyId as string);
@@ -30,15 +31,19 @@ function AnswerPage({
     activeQuestionIndex,
     handleNextQuestion,
     handlePreviousQuestion,
+    QuestionLength,
   } = useSurveyAnswerManager(initialData);
-  const { t } = useTranslation('survey');
 
+  const { t } = useTranslation('survey');
   return (
     <>
       <Head>
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
+      <div>
+        <Progressbar currentStep={activeQuestionIndex} totalSteps={QuestionLength} className="w-full" />
+      </div>
       <div className="w-full">
         {formData?.isActive ? (
           formData.oneQuestionPerStep ? (
