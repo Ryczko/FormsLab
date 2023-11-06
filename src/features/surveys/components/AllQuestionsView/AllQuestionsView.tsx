@@ -41,6 +41,7 @@ export default function AllQuestionView({
             handleAnswerChange={handleAnswerChange}
             isSubmitted={isSubmitted}
             isRequired={question.isRequired}
+            formData={formData}
           />
         );
       })}

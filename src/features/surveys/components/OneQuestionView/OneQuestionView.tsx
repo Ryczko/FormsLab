@@ -44,6 +44,7 @@ export default function OneQuestionView({
         activeQuestionIndex={activeQuestionIndex}
         isLastQuestion={isLastQuestion}
         isAnswering={isAnswering}
+        formData={formData}
       />
     </>
   );
