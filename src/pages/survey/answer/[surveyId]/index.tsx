@@ -91,7 +91,7 @@ function SurveyResultsPage({
             {surveyData?.title}
           </h1>
           <div className="flex w-full justify-center gap-2 sm:w-auto">
-            {surveyData?.userId===userId && typeof surveyData?.isActive==='boolean' && <Toggle isEnabled={surveyData?.isActive || false} onToggle={updateSurveyStatus} label={t('toggleShow')} />}
+            {surveyData?.userId===userId && <Toggle isEnabled={!!surveyData?.isActive} onToggle={updateSurveyStatus} label={t('isActive')} />}
             <Button
               title={t('buttonCopyLinkTitle')}
               onClick={openShareSurveyModal}

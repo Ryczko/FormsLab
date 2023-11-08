@@ -48,7 +48,9 @@ export async function updateSurveyActiveStatus({
 }
 export async function handlePatch(req: NextApiRequest, res: NextApiResponse) {
   const surveyId = String(req.query.id);
-  const { actionType, userId } = req.body as SurveyPatchPayloadI;
+  const { actionType,  } = req.body as SurveyPatchPayloadI;
+  const session = await serverAuth(req, res);
+  const userId = session.currentUser.id;
   const surveyFound = await prismadb.survey.findFirst({
     where: { id: surveyId, userId },
   });

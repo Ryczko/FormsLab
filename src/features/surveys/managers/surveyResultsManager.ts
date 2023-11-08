@@ -81,7 +81,6 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
       const surveyResult = await patchFetch(`/api/survey/${surveyId}`, {
         actionType: 'UPDATE_ACTIVE',
         isActive: !surveyData?.isActive,
-        userId: initialData.userId,
       });
       setSurveyData((prev) =>
         prev ? { ...prev, isActive: !!surveyResult?.isActive } : prev,
@@ -91,7 +90,6 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     }
     setIsStatusLoading(false);
   }, [
-    initialData.userId,
     setIsStatusLoading,
     setSurveyData,
     surveyData,
