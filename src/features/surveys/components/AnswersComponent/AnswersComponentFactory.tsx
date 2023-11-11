@@ -8,9 +8,11 @@ import Button, {
 } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
 import RateAnswersComponent from 'features/surveys/components/AnswersComponent/RateComponent/RateComponent';
+import Progressbar from '../../../../shared/components/ProgressBar/ProgressBar';
 
 interface AnswersComponentFactoryProps {
   type: QuestionType;
+  formData:any;
   options: string[];
   handleAnswerChange: (answer: string, questionId: string) => void;
   answer?: string;
@@ -41,6 +43,10 @@ export const AnswersComponentFactory = (
   return (
     <div className="mb-3 rounded-md border bg-white/50 px-6 py-4 shadow">
       <h2 className="mb-4 text-lg font-semibold">{props.question}</h2>
+      <div>
+        <Progressbar currentStep={props.activeQuestionIndex}
+                     totalSteps={props.formData?.questions.length}></Progressbar>
+      </div>
       {type === QuestionType.EMOJI && <ListAnswersComponent {...props} />}
       {type === QuestionType.INPUT && <TextAnswersComponent {...props} />}
       {type === QuestionType.CHOICE && <ChoiceComponent {...props} />}
