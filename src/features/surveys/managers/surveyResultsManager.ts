@@ -37,7 +37,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
           });
         } else {
           const questionData = surveyData.questions.find(
-            (q) => q.id === answerData.questionId,
+            (q) => q.id === answerData.questionId
           );
           mappedDataByQuestion[answerData.questionId] = {
             questionType: questionData?.type as QuestionType,
@@ -61,7 +61,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   const getSurveyData = useCallback(async () => {
     setIsDataLoading(true);
     const surveyData = await getFetch<SurveyWithAnswers>(
-      `/api/survey/${surveyId}`,
+      `/api/survey/${surveyId}`
     );
 
     if (!surveyData) {
@@ -83,19 +83,13 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
         isActive: !surveyData?.isActive,
       });
       setSurveyData((prev) =>
-        prev ? { ...prev, isActive: !!surveyResult?.isActive } : prev,
+        prev ? { ...prev, isActive: !!surveyResult?.isActive } : prev
       );
     } catch (_err) {
       toast.error(t('updateStatusFailure'));
     }
     setIsStatusLoading(false);
-  }, [
-    setIsStatusLoading,
-    setSurveyData,
-    surveyData,
-    surveyId,
-    t,
-  ]);
+  }, [setIsStatusLoading, setSurveyData, surveyData, surveyId, t]);
 
   useEffect(() => {
     if (!surveyId) {

@@ -20,6 +20,6 @@
   "deleteSurveyButtonTitle": "Delete survey",
   "tooltipValue": "value:",
   "buttonShare": "Share",
-  "isActive": "Is active",
-  "updateStatusFailure": "Failed to update the status"
+  "isActive": "Active",
+  "updateStatusFailure": "Failed to update survey's status"
 }

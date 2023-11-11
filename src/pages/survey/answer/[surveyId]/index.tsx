@@ -10,7 +10,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 
-import { getSurveyWithAnswers, } from 'pages/api/survey/[id]';
+import { getSurveyWithAnswers } from 'pages/api/survey/[id]';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import ResultComponent from 'features/surveys/components/ResultsComponents/ResultComponent';
 import useModal from 'features/surveys/hooks/useModal';
@@ -45,14 +45,12 @@ export async function getServerSideProps(context: NextPageContext) {
   return {
     props: {
       initialData: JSON.parse(JSON.stringify(surveyData)),
-      userId: session.user.id
     },
   };
 }
 
 function SurveyResultsPage({
   initialData,
-  userId
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     surveyId,
@@ -61,9 +59,10 @@ function SurveyResultsPage({
     mappedAnswersData,
     isDataLoading,
     onRemoveSuccess,
-    updateSurveyStatus
+    updateSurveyStatus,
+    isStatusLoading,
   } = useSurveyResultsManager(initialData);
-  
+
   const {
     isModalOpen: isDeleteSurveyModalOpen,
     closeModal: closeDeleteSurveyModal,
@@ -90,8 +89,17 @@ function SurveyResultsPage({
           <h1 className="flex min-h-[38px] items-center border-indigo-200 pb-4 text-xl font-semibold sm:border-l-4 sm:pb-0 sm:pl-4 sm:text-left">
             {surveyData?.title}
           </h1>
-          <div className="flex w-full justify-center gap-2 sm:w-auto">
-            {surveyData?.userId===userId && <Toggle isEnabled={!!surveyData?.isActive} onToggle={updateSurveyStatus} label={t('isActive')} />}
+          <div className="flex w-full flex-wrap justify-center gap-2 sm:w-auto sm:flex-nowrap">
+            <div className="flex w-full items-center justify-start">
+              <Toggle
+                classNames="mx-auto my-2 sm:my-0 sm:ml-0 sm:mr-2"
+                isEnabled={!!surveyData?.isActive}
+                onToggle={updateSurveyStatus}
+                label={t('isActive')}
+                isLoading={isStatusLoading}
+              />
+            </div>
+
             <Button
               title={t('buttonCopyLinkTitle')}
               onClick={openShareSurveyModal}

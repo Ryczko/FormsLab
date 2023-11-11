@@ -7,9 +7,9 @@ export enum SurveyActionTypes {
   UPDATE_ACTIVE = 'UPDATE_ACTIVE',
 }
 interface SurveyPatchPayloadI {
-  userId: string;
   actionType: SurveyActionTypes;
 }
+
 export async function getSurveyWithAnswers(surveyId: string, userId: string) {
   const survey = await prismadb.survey.findFirst({
     where: {
@@ -48,7 +48,7 @@ export async function updateSurveyActiveStatus({
 }
 export async function handlePatch(req: NextApiRequest, res: NextApiResponse) {
   const surveyId = String(req.query.id);
-  const { actionType,  } = req.body as SurveyPatchPayloadI;
+  const { actionType } = req.body as SurveyPatchPayloadI;
   const session = await serverAuth(req, res);
   const userId = session.currentUser.id;
   const surveyFound = await prismadb.survey.findFirst({
@@ -67,9 +67,7 @@ export async function handlePatch(req: NextApiRequest, res: NextApiResponse) {
       if (survey?.id) {
         return res.status(200).json(survey);
       }
-      return res
-        .status(500)
-        .json({ message: 'Failed to change the survey\'s status' });
+      return res.status(500).json({ message: 'Failed to change status' });
     }
     default: {
       return res.status(400).json({ message: 'actionType is invalid' });
@@ -78,7 +76,7 @@ export async function handlePatch(req: NextApiRequest, res: NextApiResponse) {
 }
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   try {
     const requestMethod = req.method;
@@ -89,7 +87,7 @@ export default async function handler(
       case 'GET': {
         const survey = await getSurveyWithAnswers(
           id as string,
-          session.currentUser.id,
+          session.currentUser.id
         );
 
         return res.status(200).json(survey);
