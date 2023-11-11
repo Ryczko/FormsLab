@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { LocalStorageKeys } from 'features/surveys/constants/types';
 import useLocalStorage from 'features/surveys/hooks/useLocalStorage';
@@ -61,18 +61,9 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     return true;
   };
 
-  const getSurveyData = useCallback(async () => {
-    if (!initialData.isActive) {
-      router.replace('/');
-      return;
-    } else {
-      setFormData(initialData);
-    }
-  }, [router, initialData]);
-
   useEffect(() => {
     if (surveyId) {
-      getSurveyData();
+      setFormData(initialData);
     }
     if (
       process.env.NEXT_PUBLIC_BLOCK_MULTIPLE_ANSWERS &&
@@ -152,7 +143,13 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
         await router.replace(`/survey/${surveyId}/thank-you`);
         toast.success(t('successfullSubmit'));
       } else {
-        await router.replace('/');
+        setFormData((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            isActive: false,
+          };
+        });
         toast.error(t('surveyInactive'));
       }
     } catch (error) {

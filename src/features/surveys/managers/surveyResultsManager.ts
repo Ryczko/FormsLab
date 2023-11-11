@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 
 import useTranslation from 'next-translate/useTranslation';
-import { getFetch } from '../../../../lib/axiosConfig';
+import { getFetch, patchFetch } from '../../../../lib/axiosConfig';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import { QuestionType } from '@prisma/client';
 import { MappedAnswers } from 'types/MappedAnswers';
@@ -16,6 +16,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   const { surveyId } = router.query as { surveyId: string };
 
   const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
+  const [isStatusLoading, setIsStatusLoading] = useState<boolean>(false);
   const [surveyData, setSurveyData] = useState<SurveyWithAnswers>();
   const [mappedAnswersData, setMappedAnswersData] = useState<MappedAnswers>({});
 
@@ -74,6 +75,22 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     toast.success(t('refreshSuccess'));
   }, [surveyId, router, t, fillSurveyData]);
 
+  const updateSurveyStatus = useCallback(async () => {
+    setIsStatusLoading(true);
+    try {
+      const surveyResult = await patchFetch(`/api/survey/${surveyId}`, {
+        actionType: 'UPDATE_ACTIVE',
+        isActive: !surveyData?.isActive,
+      });
+      setSurveyData((prev) =>
+        prev ? { ...prev, isActive: !!surveyResult?.isActive } : prev
+      );
+    } catch (_err) {
+      toast.error(t('updateStatusFailure'));
+    }
+    setIsStatusLoading(false);
+  }, [setIsStatusLoading, setSurveyData, surveyData, surveyId, t]);
+
   useEffect(() => {
     if (!surveyId) {
       router.replace('/');
@@ -101,6 +118,8 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     surveyData,
     mappedAnswersData,
     isDataLoading,
+    isStatusLoading,
     onRemoveSuccess,
+    updateSurveyStatus,
   };
 };

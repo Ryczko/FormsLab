@@ -1,12 +1,11 @@
 import { RefreshIcon, ShareIcon, TrashIcon } from '@heroicons/react/outline';
-
+import Toggle from 'shared/components/Toggle/Toggle';
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import AnswerHeader from 'features/surveys/components/AnswerHeader/AnswerHeader';
 import { useSurveyResultsManager } from 'features/surveys/managers/surveyResultsManager';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
-
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
@@ -31,7 +30,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const surveyData = (await getSurveyWithAnswers(
     context.query.surveyId as string,
-    session.user.id
+    session.user?.id
   )) as SurveyWithAnswers;
 
   if (!surveyData) {
@@ -60,6 +59,8 @@ function SurveyResultsPage({
     mappedAnswersData,
     isDataLoading,
     onRemoveSuccess,
+    updateSurveyStatus,
+    isStatusLoading,
   } = useSurveyResultsManager(initialData);
 
   const {
@@ -88,7 +89,17 @@ function SurveyResultsPage({
           <h1 className="flex min-h-[38px] items-center border-indigo-200 pb-4 text-xl font-semibold sm:border-l-4 sm:pb-0 sm:pl-4 sm:text-left">
             {surveyData?.title}
           </h1>
-          <div className="flex w-full justify-center gap-2 sm:w-auto">
+          <div className="flex w-full flex-wrap justify-center gap-2 sm:w-auto sm:flex-nowrap">
+            <div className="flex w-full items-center justify-start">
+              <Toggle
+                classNames="mx-auto my-2 sm:my-0 sm:ml-0 sm:mr-2"
+                isEnabled={!!surveyData?.isActive}
+                onToggle={updateSurveyStatus}
+                label={t('isActive')}
+                isLoading={isStatusLoading}
+              />
+            </div>
+
             <Button
               title={t('buttonCopyLinkTitle')}
               onClick={openShareSurveyModal}
@@ -122,7 +133,7 @@ function SurveyResultsPage({
           createDate={surveyData?.createdAt ?? ''}
         />
 
-        {surveyData?.answers.length === 0 && (
+        {surveyData?.answers?.length === 0 && (
           <div className="mt-6">{t('noAnswers')}</div>
         )}
 

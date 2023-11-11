@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import { ButtonVariant } from 'shared/components/Button/Button';
 import { useSurveyAnswerManager } from 'features/surveys/managers/surveyAnswerManager';
-import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSurveyData } from 'pages/api/answer/[id]';
@@ -62,15 +60,8 @@ function AnswerPage({
           )
         ) : (
           <>
-            <h1 className="text-5xl">🙁</h1>
-            <h1 className="my-5 text-xl">{t('surveyNoLongerActive')}</h1>
-            <ButtonLink
-              href={'/'}
-              variant={ButtonVariant.PRIMARY}
-              className="w-full sm:w-auto"
-            >
-              {t('backHomeButton')}
-            </ButtonLink>
+            <div className="text-5xl">🙁</div>
+            <div className="my-5 text-xl">{t('surveyNoLongerActive')}</div>
           </>
         )}
       </div>

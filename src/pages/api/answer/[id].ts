@@ -42,15 +42,16 @@ export default async function handler(
 
     const { id } = req.query;
 
+    const survey = await getSurveyData(id as string);
+
     switch (requestMethod) {
       case 'GET': {
-        const survey = await getSurveyData(id as string);
         return res.status(200).json(survey);
       }
       case 'POST': {
         const { answersData } = req.body as AnswerData;
 
-        if (!isAnswerDataValid(req.body)) {
+        if (!isAnswerDataValid(req.body) || !survey?.isActive) {
           return res.status(400).end();
         }
 
