@@ -5,6 +5,7 @@ import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSurveyData } from 'pages/api/answer/[id]';
 import AllQuestionsView from 'features/surveys/components/AllQuestionsView/AllQuestionsView';
 import OneQuestionView from 'features/surveys/components/OneQuestionView/OneQuestionView';
+import Progressbar from 'shared/components/ProgressBar/ProgressBar';
 
 export async function getServerSideProps(context: NextPageContext) {
   const surveyData = await getSurveyData(context.query.surveyId as string);
@@ -40,15 +41,21 @@ function AnswerPage({
       <div className="w-full">
         {formData?.isActive ? (
           formData.oneQuestionPerStep ? (
-            <OneQuestionView
-              activeQuestionIndex={activeQuestionIndex}
-              formData={formData}
-              handleNextQuestion={handleNextQuestion}
-              handlePreviousQuestion={handlePreviousQuestion}
-              isSubmitted={isSubmitted}
-              handleAnswerChange={handleAnswerChange}
-              isAnswering={isAnswering}
-            />
+            <div>
+              <OneQuestionView
+                activeQuestionIndex={activeQuestionIndex}
+                formData={formData}
+                handleNextQuestion={handleNextQuestion}
+                handlePreviousQuestion={handlePreviousQuestion}
+                isSubmitted={isSubmitted}
+                handleAnswerChange={handleAnswerChange}
+                isAnswering={isAnswering}
+              />
+              <Progressbar
+                currentStep={activeQuestionIndex}
+                totalSteps={formData?.questions.length}
+              />
+            </div>
           ) : (
             <AllQuestionsView
               formData={formData}
