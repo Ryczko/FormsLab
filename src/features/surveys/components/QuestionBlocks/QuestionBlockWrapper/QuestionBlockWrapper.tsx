@@ -78,25 +78,26 @@ export default function QuestionBlockWrapper({
     <div className="relative overflow-hidden rounded-md border bg-white/30 shadow-sm">
       <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
-          <button
-            onClick={onExpand}
-            className="cursor-pointer rounded-md border border-opacity-100 p-[13px]"
-          >
-            <ChevronDownIcon
-              className={clsx(
-                'w-[15px] transition-transform',
-                !expanded && '-rotate-90'
-              )}
-            />
-          </button>
+          <div className="flex flex-col items-center justify-center sm:flex-row">
+            <button
+              onClick={onExpand}
+              className="cursor-pointer rounded-md border border-opacity-100 p-[13px]"
+            >
+              <ChevronDownIcon
+                className={clsx(
+                  'w-[15px] transition-transform',
+                  !expanded && '-rotate-90'
+                )}
+              />
+            </button>
 
-          <div className="mx-1 hidden h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
-            {type === QuestionType.EMOJI && <EmojiIcon />}
-            {type === QuestionType.INPUT && <InputIcon />}
-            {type === QuestionType.CHOICE && <ChoiceIcon />}
-            {type === QuestionType.RATE && <RateIcon />}
+            <div className="mx-1 h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
+              {type === QuestionType.EMOJI && <EmojiIcon />}
+              {type === QuestionType.INPUT && <InputIcon/>}
+              {type === QuestionType.CHOICE && <ChoiceIcon/>}
+              {type === QuestionType.RATE && <RateIcon/>}
+            </div>
           </div>
-
           <div className=" w-full grow">
             <Input
               placeholder={t('questionPlaceholder')}
