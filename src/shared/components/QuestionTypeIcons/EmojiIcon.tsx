@@ -1,6 +1,12 @@
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import React from 'react';
 
-export default function EmojiIcon() {
-  return <EmojiHappyIcon />;
+interface EmojiIconProps {
+  'data-testid'?: string;
 }
+
+const EmojiIcon: React.FC<EmojiIconProps> = ({ 'data-testid': testId }) => {
+  return <EmojiHappyIcon data-testid={testId} />;
+};
+
+export default EmojiIcon;

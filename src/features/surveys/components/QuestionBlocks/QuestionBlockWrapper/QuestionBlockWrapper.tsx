@@ -92,8 +92,8 @@ export default function QuestionBlockWrapper({
             </button>
 
             <div className="mx-1 h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
-              {type === QuestionType.EMOJI && <EmojiIcon />}
-              {type === QuestionType.INPUT && <InputIcon/>}
+              {type === QuestionType.EMOJI && <EmojiIcon data-testid="emoji-icon" />}
+              {type === QuestionType.INPUT && <InputIcon data-testid="input-icon" />}
               {type === QuestionType.CHOICE && <ChoiceIcon/>}
               {type === QuestionType.RATE && <RateIcon/>}
             </div>
