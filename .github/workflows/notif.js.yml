@@ -1,0 +1,56 @@
+name: SendGrid Email on Build Completion
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Send Email
+        env:
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        run: |
+          curl --request POST \
+            --url https://api.sendgrid.com/v3/mail/send \
+            --header "Authorization: Bearer $SENDGRID_API_KEY" \
+            --header "Content-Type: application/json" \
+            --data '{
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": "slebodniksamuel@gmail.com"
+                    }
+                  ],
+                  "subject": "Build Completed"
+                }
+              ],
+              "from": {
+                "email": "smkslebodnik@gmail.com"
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": "Your build has been completed successfully!"
+                }
+              ]
+            }'
+
