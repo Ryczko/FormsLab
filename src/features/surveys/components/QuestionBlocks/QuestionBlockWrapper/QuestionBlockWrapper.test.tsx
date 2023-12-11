@@ -51,14 +51,14 @@ describe('QuestionBlockWrapper', () => {
     expect(emojiIcon).toBeInTheDocument();
   });
 
-  it('renders the Input icon for INPUT type in mobile view', () => {
+  it('renders InputIcon correctly in mobile view', () => {
     setMobileView();
     const { container } = render(<QuestionBlockWrapper {...mockProps} type={QuestionType.INPUT} />);
     const inputIcon = container.querySelector('svg[data-testid="input-icon"]');
     expect(inputIcon).toBeInTheDocument();
   });
 
-  it('renders the Input icon for INPUT type in desktop view', () => {
+  it('renders InputIcon correctly in mobile view', () => {
     setDesktopView();
     const { container } = render(<QuestionBlockWrapper {...mockProps} type={QuestionType.INPUT} />);
     const inputIcon = container.querySelector('svg[data-testid="input-icon"]');
@@ -83,6 +83,24 @@ describe('QuestionBlockWrapper', () => {
     }
     expect(wrapperDiv.className).toContain('sm:flex-row');
   });  
+
+  it('displays input component in a column on mobile view', () => {
+    setMobileView();
+    const { container } = render(<QuestionBlockWrapper {...mockProps} type={QuestionType.INPUT} />);
+    const wrapperDiv = container.querySelector('.flex.flex-col.sm\\:flex-row');
+    expect(wrapperDiv).toHaveClass('flex-col');
+    expect(wrapperDiv).not.toHaveClass('flex-row');
+  });
+
+  it('displays input component in a row on desktop view', () => {
+    setDesktopView();
+    const { container } = render(<QuestionBlockWrapper {...mockProps} type={QuestionType.INPUT} />);
+    const wrapperDiv = container.querySelector('.flex.flex-col.sm\\:flex-row');
   
+    if (!wrapperDiv) {
+      throw new Error('Element with the specified selector was not found.');
+    }
+    expect(wrapperDiv.className).toContain('sm:flex-row');
+  });  
 
 });
