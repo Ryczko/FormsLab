@@ -2,11 +2,11 @@ import { PencilIcon } from '@heroicons/react/outline';
 import React from 'react';
 
 interface InputIconProps {
-  'data-testid'?: string;
+  'data-test-id'?: string;
 }
 
-const InputIcon: React.FC<InputIconProps> = ({ 'data-testid': testId }) => {
-  return <PencilIcon data-testid={testId} />;
+const InputIcon: React.FC<InputIconProps> = ({ 'data-test-id': testId }) => {
+  return <PencilIcon data-test-id={testId} />;
 };
 
 export default InputIcon;

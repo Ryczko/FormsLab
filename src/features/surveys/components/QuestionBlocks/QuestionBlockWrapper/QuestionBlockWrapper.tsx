@@ -78,7 +78,7 @@ export default function QuestionBlockWrapper({
     <div className="relative overflow-hidden rounded-md border bg-white/30 shadow-sm">
       <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
-          <div className="flex flex-col items-center justify-center sm:flex-row">
+          <div className="flex flex-col items-center justify-center sm:flex-row" data-test-id='wrapper-div'>
             <button
               onClick={onExpand}
               className="cursor-pointer rounded-md border border-opacity-100 p-[13px]"
@@ -92,8 +92,8 @@ export default function QuestionBlockWrapper({
             </button>
 
             <div className="mx-1 h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
-              {type === QuestionType.EMOJI && <EmojiIcon data-testid="emoji-icon" />}
-              {type === QuestionType.INPUT && <InputIcon data-testid="input-icon" />}
+              {type === QuestionType.EMOJI && <EmojiIcon data-test-id="emoji-icon" />}
+              {type === QuestionType.INPUT && <InputIcon data-test-id="input-icon" />}
               {type === QuestionType.CHOICE && <ChoiceIcon/>}
               {type === QuestionType.RATE && <RateIcon/>}
             </div>
