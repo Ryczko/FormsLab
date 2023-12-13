@@ -23,12 +23,15 @@ export async function getUsersById(surveyId: string) {
   });
 
   const allUserIds = answers.map(item => item.userId);
-  const userNames = [];
+  const userNames = new Set<string | undefined>();
+
   for (const userId of allUserIds){
     const userName = await getUserName(userId);
-    userNames.push(userName);
+    if(userName !== null) userNames.add(userName);
   }
-  return userNames;
+
+  const uniqueUserNames = Array.from(userNames);
+  return uniqueUserNames;
 }
 
 export default async function handler(
