@@ -11,7 +11,7 @@ export async function getUserName(userId: string | null) {
     },
   });
 
-  return user?.name;
+  return user?.name ?? null;
 }
 
 export async function getUsersById(surveyId: string) {

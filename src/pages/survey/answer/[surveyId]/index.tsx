@@ -16,7 +16,7 @@ import ResultComponent from 'features/surveys/components/ResultsComponents/Resul
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import ShareSurveyModal from 'features/surveys/components/ShareSurveryModal/ShareSurveyModal';
-import DropDownMenu from 'features/surveys/components/DropdownMenu/dropDownMenu';
+import DropDownMenu from 'features/surveys/components/DropDownMenu/DropDownMenu';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Importujte Axios alebo inú knižnicu na HTTP požiadavky
+import axios from 'axios'; 
 
 type DropdownProps = {
   surveyId: string;
@@ -41,13 +41,23 @@ const Dropdown = ({ surveyId, onChange }: DropdownProps) => {
   };
 
   return (
-    <div className="dropdown-container" onClick={handleDropdownOpen} onBlur={handleDropdownClose}>
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      <label htmlFor="userDropdown" style={{ marginRight: '8px' }}>Filter by User:</label>
       <select
+        id='userDropdown'  // Make sure this id matches the htmlFor attribute of the label
         value={selectedValue}
         onChange={handleDropdownChange}
-        className="dropdown"
-      >
-        <option value="">Select a name</option>
+        style={{
+          padding: '8px',
+          fontSize: '16px',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          outline: 'none',
+        }}
+        onClick={handleDropdownOpen}
+        onBlur={handleDropdownClose}
+      >   
+        <option value="">None</option>
         {users.map((user) => (
           <option key={user} value={user}>
             {user}
