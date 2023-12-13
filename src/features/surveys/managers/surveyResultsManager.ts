@@ -60,6 +60,21 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     setMappedAnswersData(mappedDataByQuestion);
   }, []);
 
+  /*const getUsersForDropDown = useCallback(async () => {
+    setIsDataLoading(true);
+  
+    const users = await getFetch(`/api/survey/users/${surveyId}`);
+
+    if (!users) {
+      router.replace('/');
+      return;
+    }
+  
+    //fillSurveyData(surveyData);
+    setIsDataLoading(false);
+    toast.success(t('refreshSuccess'));
+  }, [surveyId, router, t, fillSurveyData]);*/
+
   const getSurveyData = useCallback(async (dropdownValue: string | undefined) => {
     setIsDataLoading(true);
   

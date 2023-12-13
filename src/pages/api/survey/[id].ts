@@ -10,18 +10,6 @@ interface SurveyPatchPayloadI {
   actionType: SurveyActionTypes;
 }
 
-export async function getUsersById(surveyId: string) {
-  
-  const answers = await prismadb.answer.findMany({
-    where: {
-      id: surveyId
-    },
-  });
-
-  console.log(answers);
-  return null;
-}
-
 export async function getSurveyWithAnswers(surveyId: string, userId: string, dropdownValue: string | undefined) {
   let filterUserId;
   if(dropdownValue === undefined){
