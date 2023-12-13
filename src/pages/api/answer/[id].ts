@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-
+import serverAuth from '../../../../lib/serverAuth';
 import prismadb from '../../../../lib/prismadb';
 import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
 
@@ -41,7 +41,7 @@ export default async function handler(
     const requestMethod = req.method;
 
     const { id } = req.query;
-
+    const session = await serverAuth(req, res);
     const survey = await getSurveyData(id as string);
 
     switch (requestMethod) {
@@ -62,6 +62,11 @@ export default async function handler(
                 id: id as string,
               },
             },
+            user: {
+              connect: {
+                id: session.currentUser.id,
+              },
+            }, 
             answerData: {
               create: answersData.map((answerData) => ({
                 providedAnswer: answerData.answer,

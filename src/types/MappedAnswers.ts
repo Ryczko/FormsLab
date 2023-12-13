@@ -6,5 +6,6 @@ export type MappedAnswers = {
     questionType: QuestionType;
     question: string;
     answers: MappedAnswerData[];
+    filterUserId: string | undefined;
   };
 };

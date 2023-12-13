@@ -10,7 +10,14 @@ interface SurveyPatchPayloadI {
   actionType: SurveyActionTypes;
 }
 
-export async function getSurveyWithAnswers(surveyId: string, userId: string) {
+export async function getSurveyWithAnswers(surveyId: string, userId: string, filterUserName: string | undefined) {
+  if(filterUserName === '' || filterUserName === undefined){
+    filterUserName = undefined;
+  }
+  //console.log(filterUserName);
+  filterUserName = '6574aa967d9d20ca02fe0e21';
+  //filterUserName = undefined;
+  
   const survey = await prismadb.survey.findFirst({
     where: {
       id: surveyId,
@@ -19,6 +26,9 @@ export async function getSurveyWithAnswers(surveyId: string, userId: string) {
     include: {
       questions: true,
       answers: {
+        where:{
+          userId: filterUserName,
+        },
         include: {
           answerData: true,
         },
@@ -82,12 +92,14 @@ export default async function handler(
     const requestMethod = req.method;
     const session = await serverAuth(req, res);
     const { id } = req.query;
+    const { userName } = req.query;
 
     switch (requestMethod) {
       case 'GET': {
         const survey = await getSurveyWithAnswers(
           id as string,
-          session.currentUser.id
+          session.currentUser.id,
+          userName as string | undefined
         );
 
         return res.status(200).json(survey);

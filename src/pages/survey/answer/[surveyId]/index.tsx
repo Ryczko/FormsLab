@@ -30,7 +30,8 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const surveyData = (await getSurveyWithAnswers(
     context.query.surveyId as string,
-    session.user?.id
+    session.user?.id,
+    undefined
   )) as SurveyWithAnswers;
 
   if (!surveyData) {
@@ -143,6 +144,7 @@ function SurveyResultsPage({
             question={mappedAnswersData[key].question}
             type={mappedAnswersData[key].questionType}
             answers={mappedAnswersData[key].answers}
+            filterUserId={mappedAnswersData[key].filterUserId}
           />
         ))}
 
