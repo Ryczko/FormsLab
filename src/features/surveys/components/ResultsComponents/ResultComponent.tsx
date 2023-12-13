@@ -10,7 +10,6 @@ type ResultComponentProps = {
   type: QuestionType;
   question: string;
   answers: MappedAnswerData[];
-  filterUserId?: string | undefined;
 };
 
 export default function ResultComponent({

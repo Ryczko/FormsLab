@@ -10,14 +10,35 @@ interface SurveyPatchPayloadI {
   actionType: SurveyActionTypes;
 }
 
-export async function getSurveyWithAnswers(surveyId: string, userId: string, filterUserName: string | undefined) {
-  if(filterUserName === '' || filterUserName === undefined){
-    filterUserName = undefined;
-  }
-  //console.log(filterUserName);
-  filterUserName = '6574aa967d9d20ca02fe0e21';
-  //filterUserName = undefined;
+export async function getUsersById(surveyId: string) {
   
+  const answers = await prismadb.answer.findMany({
+    where: {
+      id: surveyId
+    },
+  });
+
+  console.log(answers);
+  return null;
+}
+
+export async function getSurveyWithAnswers(surveyId: string, userId: string, dropdownValue: string | undefined) {
+  let filterUserId;
+  if(dropdownValue === undefined){
+    filterUserId = undefined;
+  }
+  console.log(dropdownValue);
+
+  if(dropdownValue !== undefined){
+    const filterUser = await prismadb.user.findFirst({
+      where: {
+        name: dropdownValue
+      }
+    });
+    filterUserId = filterUser?.id;
+  }
+
+  console.log(filterUserId);
   const survey = await prismadb.survey.findFirst({
     where: {
       id: surveyId,
@@ -27,7 +48,7 @@ export async function getSurveyWithAnswers(surveyId: string, userId: string, fil
       questions: true,
       answers: {
         where:{
-          userId: filterUserName,
+          userId: filterUserId,
         },
         include: {
           answerData: true,
@@ -92,14 +113,14 @@ export default async function handler(
     const requestMethod = req.method;
     const session = await serverAuth(req, res);
     const { id } = req.query;
-    const { userName } = req.query;
+    const { dropdownValue } = req.query;
 
     switch (requestMethod) {
       case 'GET': {
         const survey = await getSurveyWithAnswers(
           id as string,
           session.currentUser.id,
-          userName as string | undefined
+          dropdownValue as string | undefined
         );
 
         return res.status(200).json(survey);

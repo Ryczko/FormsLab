@@ -16,6 +16,7 @@ import ResultComponent from 'features/surveys/components/ResultsComponents/Resul
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import ShareSurveyModal from 'features/surveys/components/ShareSurveryModal/ShareSurveyModal';
+import DropDownMenu from 'features/surveys/components/DropdownMenu/dropDownMenu';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -111,7 +112,7 @@ function SurveyResultsPage({
 
             <Button
               title={t('buttonRefreshTitle')}
-              onClick={getSurveyData}
+              onClick={() => getSurveyData(undefined)}
               isLoading={isDataLoading}
               className="grow sm:grow-0"
               variant={ButtonVariant.OUTLINE}
@@ -138,13 +139,14 @@ function SurveyResultsPage({
           <div className="mt-6">{t('noAnswers')}</div>
         )}
 
+        <DropDownMenu surveyId={surveyId} onChange={(value) => getSurveyData(value)} />
+
         {Object.keys(mappedAnswersData).map((key) => (
           <ResultComponent
             key={key}
             question={mappedAnswersData[key].question}
             type={mappedAnswersData[key].questionType}
             answers={mappedAnswersData[key].answers}
-            filterUserId={mappedAnswersData[key].filterUserId}
           />
         ))}
 
