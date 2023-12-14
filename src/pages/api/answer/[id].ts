@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import serverAuth from '../../../../lib/serverAuth';
 import prismadb from '../../../../lib/prismadb';
 import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
+import { getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
 interface AnswerData {
   answersData: { questionId: string; answer?: string }[];
@@ -41,8 +42,9 @@ export default async function handler(
     const requestMethod = req.method;
 
     const { id } = req.query;
-    const session = await serverAuth(req, res);
+    const session = await getServerSession(req, res, authOptions);
     const survey = await getSurveyData(id as string);
+
 
     switch (requestMethod) {
       case 'GET': {
@@ -54,27 +56,46 @@ export default async function handler(
         if (!isAnswerDataValid(req.body) || !survey?.isActive) {
           return res.status(400).end();
         }
-
-        await prismadb.answer.create({
-          data: {
-            survey: {
-              connect: {
-                id: id as string,
+        if(!session){
+          await prismadb.answer.create({
+            data: {
+              survey: {
+                connect: {
+                  id: id as string,
+                },
+              },
+              answerData: {
+                create: answersData.map((answerData) => ({
+                  providedAnswer: answerData.answer,
+                  questionId: answerData.questionId,
+                })),
               },
             },
-            user: {
-              connect: {
-                id: session.currentUser.id,
+          });
+        }
+        else{
+          await prismadb.answer.create({
+            data: {
+              survey: {
+                connect: {
+                  id: id as string,
+                },
               },
-            }, 
-            answerData: {
-              create: answersData.map((answerData) => ({
-                providedAnswer: answerData.answer,
-                questionId: answerData.questionId,
-              })),
+              user: {
+                connect: {
+                  id: session.user.id,
+                },
+              },
+              answerData: {
+                create: answersData.map((answerData) => ({
+                  providedAnswer: answerData.answer,
+                  questionId: answerData.questionId,
+                })),
+              },
             },
-          },
-        });
+          });
+        }
+       
 
         return res.status(200).end();
       }
