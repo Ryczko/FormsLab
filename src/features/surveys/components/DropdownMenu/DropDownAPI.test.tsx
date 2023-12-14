@@ -44,7 +44,7 @@ describe('getUserName', () => {
 
   it('returns null for null userId', async () => {
     const result = await getUserName(null);
-    expect(result).toBeNull();
+    expect(result).toEqual('');
   });
 
   it('returns user name for a valid userId', async () => {

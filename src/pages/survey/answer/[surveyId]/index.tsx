@@ -9,8 +9,8 @@ import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
-
 import { getSurveyWithAnswers } from 'pages/api/survey/[id]';
+import { getUsersById } from 'pages/api/survey/users/[id]';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import ResultComponent from 'features/surveys/components/ResultsComponents/ResultComponent';
 import useModal from 'features/surveys/hooks/useModal';
@@ -44,18 +44,22 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
 
+  const userList = await getUsersById(context.query.surveyId as string);
   return {
     props: {
       initialData: JSON.parse(JSON.stringify(surveyData)),
+      userList,
     },
   };
 }
 
 function SurveyResultsPage({
   initialData,
+  userList,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     surveyId,
+    getUsersForDropDown,
     getSurveyData,
     surveyData,
     mappedAnswersData,
@@ -78,7 +82,6 @@ function SurveyResultsPage({
   } = useModal();
 
   const { t } = useTranslation('surveyAnswer');
-
   return (
     <>
       <Head>
@@ -139,7 +142,11 @@ function SurveyResultsPage({
           <div className="mt-6">{t('noAnswers')}</div>
         )}
 
-        <DropDownMenu surveyId={surveyId} onChange={(value) => getSurveyData(value)} />
+        <DropDownMenu surveyId={surveyId} 
+          onChange={(value) => getSurveyData(value)}
+          onOpen={getUsersForDropDown}
+          userList={userList}
+        />
 
         {Object.keys(mappedAnswersData).map((key) => (
           <ResultComponent

@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from '../../../../../lib/prismadb';
 
 export async function getUserName(userId: string | null) {
-  if(userId === null) return null;
+  if(userId === null) return '';
 
   const user = await prismadb.user.findFirst({
     where: {
@@ -11,7 +11,7 @@ export async function getUserName(userId: string | null) {
     },
   });
 
-  return user?.name ?? null;
+  return user?.name ?? '';
 }
 
 export async function getUsersById(surveyId: string) {
@@ -22,12 +22,14 @@ export async function getUsersById(surveyId: string) {
     },
   });
 
+  //if(answers === ) return [];
+
   const allUserIds = answers.map(item => item.userId);
-  const userNames = new Set<string | undefined>();
+  const userNames = new Set<string>();
 
   for (const userId of allUserIds){
     const userName = await getUserName(userId);
-    if(userName !== null) userNames.add(userName);
+    if(userName !== '') userNames.add(userName);
   }
 
   const uniqueUserNames = Array.from(userNames);

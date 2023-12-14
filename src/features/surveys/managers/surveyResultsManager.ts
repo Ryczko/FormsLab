@@ -19,7 +19,6 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   const [isStatusLoading, setIsStatusLoading] = useState<boolean>(false);
   const [surveyData, setSurveyData] = useState<SurveyWithAnswers>();
   const [mappedAnswersData, setMappedAnswersData] = useState<MappedAnswers>({});
-  //const [filterUserName] = useState<string | undefined>('');
 
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyAnswer');
@@ -60,20 +59,12 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     setMappedAnswersData(mappedDataByQuestion);
   }, []);
 
-  /*const getUsersForDropDown = useCallback(async () => {
-    setIsDataLoading(true);
-  
-    const users = await getFetch(`/api/survey/users/${surveyId}`);
+  const getUsersForDropDown = useCallback(async () => {
+    const users: string[] = await getFetch<string[]>(`/api/survey/users/${surveyId}`);
 
-    if (!users) {
-      router.replace('/');
-      return;
-    }
-  
-    //fillSurveyData(surveyData);
-    setIsDataLoading(false);
-    toast.success(t('refreshSuccess'));
-  }, [surveyId, router, t, fillSurveyData]);*/
+    if (users === null || users === undefined) return [];
+    return users;
+  }, [surveyId]);
 
   const getSurveyData = useCallback(async (dropdownValue: string | undefined) => {
     setIsDataLoading(true);
@@ -133,6 +124,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   return {
     handleCopyLink,
     surveyId,
+    getUsersForDropDown,
     getSurveyData,
     surveyData,
     mappedAnswersData,

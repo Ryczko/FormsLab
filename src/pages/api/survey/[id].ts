@@ -15,7 +15,6 @@ export async function getSurveyWithAnswers(surveyId: string, userId: string, dro
   if(dropdownValue === undefined){
     filterUserId = undefined;
   }
-  console.log(dropdownValue);
 
   if(dropdownValue !== undefined){
     const filterUser = await prismadb.user.findFirst({
@@ -26,7 +25,6 @@ export async function getSurveyWithAnswers(surveyId: string, userId: string, dro
     filterUserId = filterUser?.id;
   }
 
-  console.log(filterUserId);
   const survey = await prismadb.survey.findFirst({
     where: {
       id: surveyId,

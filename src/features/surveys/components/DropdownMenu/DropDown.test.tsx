@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Dropdown from 'features/surveys/components/DropDownMenu/DropDownMenu'; // Opravte cestu podle vašich potřeb
 
 jest.mock('axios');
@@ -11,7 +11,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 describe('Dropdown', () => {
   it('renders with default values', async () => {
     const noop = () => undefined;
-    render(<Dropdown surveyId="1" onChange={noop} />);
+    render(<Dropdown surveyId="1" onChange={noop} onOpen={async () => []} userList={[]} />);
 
     // Ensure the label and default option are present
     const label = screen.getByText('Filter by User:');
@@ -45,7 +45,7 @@ describe('Dropdown', () => {
     mockedAxios.get.mockResolvedValue({ data: mockedUsers });
 
     const noop = () => undefined;
-    render(<Dropdown surveyId="1" onChange={noop} />);
+    render(<Dropdown surveyId="1" onChange={noop} onOpen={async () => mockedUsers} userList={['User1', 'User2']} />);
 
     // Open the dropdown
     fireEvent.click(screen.getByLabelText('Filter by User:'));
@@ -58,26 +58,19 @@ describe('Dropdown', () => {
     await waitFor(() => {
       expect(screen.getByText('User2')).toBeInTheDocument();
     });
-    
   });
 
   it('handles user selection and triggers onChange', async () => {
     const mockedOnChange = jest.fn();
 
-    // Mock the API response
-    (axios.get as jest.Mock).mockResolvedValue({
-      data: ['SelectedUser', 'OtherUser'],
-    } as AxiosResponse<string[]>);
-
-    render(<Dropdown surveyId="1" onChange={mockedOnChange} />);
+    render(<Dropdown surveyId="1" onChange={mockedOnChange} onOpen={async () => []} userList={['User1', 'User2', 'SelectedUser']} />);
 
     // Open dropdown
     fireEvent.click(screen.getByLabelText('Filter by User:'));
 
-    // Wait for the API call to complete
-    await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith('/api/survey/users/1');
-    });
+    // Ensure that the dropdown options are rendered
+    expect(screen.getByText('User1')).toBeInTheDocument();
+    expect(screen.getByText('User2')).toBeInTheDocument();
 
     // Select user from dropdown
     fireEvent.change(screen.getByLabelText('Filter by User:'), {
@@ -93,7 +86,7 @@ describe('Dropdown', () => {
   it('handles selecting "None" and triggers onChange with an empty string', async () => {
     const mockedOnChange = jest.fn();
 
-    render(<Dropdown surveyId="1" onChange={mockedOnChange} />);
+    render(<Dropdown surveyId="1" onChange={mockedOnChange} onOpen={async () => []} userList={[]} />);
 
     // Open dropdown
     fireEvent.click(screen.getByLabelText('Filter by User:'));
@@ -112,20 +105,10 @@ describe('Dropdown', () => {
   it('closes the dropdown after selecting an option', async () => {
     const mockedOnChange = jest.fn();
 
-    // Mock the API response
-    (axios.get as jest.Mock).mockResolvedValue({
-      data: ['SelectedUser', 'OtherUser'],
-    } as AxiosResponse<string[]>);
-
-    render(<Dropdown surveyId="1" onChange={mockedOnChange} />);
+    render(<Dropdown surveyId="1" onChange={mockedOnChange} onOpen={async () => []} userList={['SelectedUser', 'OtherUser']} />);
 
     // Open dropdown
     fireEvent.click(screen.getByLabelText('Filter by User:'));
-
-    // Wait for the API call to complete
-    await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith('/api/survey/users/1');
-    });
 
     // Select user from dropdown
     fireEvent.change(screen.getByLabelText('Filter by User:'), {
@@ -145,7 +128,7 @@ describe('Dropdown', () => {
   it('closes the dropdown when clicking outside', async () => {
     const mockedOnChange = jest.fn();
 
-    render(<Dropdown surveyId="1" onChange={mockedOnChange} />);
+    render(<Dropdown surveyId="1" onChange={mockedOnChange} onOpen={async () => []} userList={[]} />);
 
     // Open dropdown
     fireEvent.click(screen.getByLabelText('Filter by User:'));
@@ -161,7 +144,7 @@ describe('Dropdown', () => {
   it('starts with the dropdown closed and opens on user interaction', async () => {
     const mockedOnChange = jest.fn();
 
-    render(<Dropdown surveyId="1" onChange={mockedOnChange} />);
+    render(<Dropdown surveyId="1" onChange={mockedOnChange} onOpen={async () => []} userList={['User1', 'User2', 'SelectedUser']} />);
 
     // Check that the dropdown is initially closed
     const dropdown = screen.getByLabelText('Filter by User:');
@@ -170,24 +153,9 @@ describe('Dropdown', () => {
     // Open dropdown
     fireEvent.click(screen.getByLabelText('Filter by User:'));
 
-    // Wait for the dropdown to open
-
-    await waitFor(() => {
-      const dropdownElement = screen.getByRole('combobox');
-      const noneOption = screen.getByRole('option', { name: 'None' });
-      expect(dropdownElement.contains(noneOption)).toBe(true);
-    });
-
-    await waitFor(() => {
-      const dropdownElement = screen.getByRole('combobox');
-      const selectedUserOption = screen.getByRole('option', { name: 'SelectedUser' });
-      expect(dropdownElement.contains(selectedUserOption)).toBe(true);
-    });
-
-    await waitFor(() => {
-      const dropdownElement = screen.getByRole('combobox');
-      const otherUserOption = screen.getByRole('option', { name: 'OtherUser' });
-      expect(dropdownElement.contains(otherUserOption)).toBe(true);
-    });
+    expect(screen.getByText('None')).toBeInTheDocument();
+    expect(screen.getByText('User1')).toBeInTheDocument();
+    expect(screen.getByText('User2')).toBeInTheDocument();
+    expect(screen.getByText('SelectedUser')).toBeInTheDocument();
   });
 });
