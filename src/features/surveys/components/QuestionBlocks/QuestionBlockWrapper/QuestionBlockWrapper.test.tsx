@@ -70,8 +70,9 @@ describe('QuestionBlockWrapper', () => {
     setMobileView();
     render(<QuestionBlockWrapper {...mockProps} type={QuestionType.EMOJI} />);
     const wrapperDiv = screen.getByTestId('wrapper-div');
-    expect(wrapperDiv).toHaveClass('flex-col');
-    expect(wrapperDiv).not.toHaveClass('flex-row');
+    expect(wrapperDiv).toHaveClass('flex-row');
+    expect(wrapperDiv).toHaveClass('w-full');
+    expect(wrapperDiv).toHaveClass('justify-between');
   });
 
   it('displays components in a row on desktop view', () => {
@@ -82,15 +83,18 @@ describe('QuestionBlockWrapper', () => {
     if (!wrapperDiv) {
       throw new Error('Element with the specified selector was not found.');
     }
-    expect(wrapperDiv.className).toContain('sm:flex-row');
+    expect(wrapperDiv).toHaveClass('flex-row');
+    expect(wrapperDiv).toHaveClass('sm:w-fit');
+    expect(wrapperDiv).toHaveClass('justify-between');
   });  
 
   it('displays input component in a column on mobile view', () => {
     setMobileView();
     render(<QuestionBlockWrapper {...mockProps} type={QuestionType.INPUT} />);
     const wrapperDiv = screen.getByTestId('wrapper-div');
-    expect(wrapperDiv).toHaveClass('flex-col');
-    expect(wrapperDiv).not.toHaveClass('flex-row');
+    expect(wrapperDiv).toHaveClass('flex-row');
+    expect(wrapperDiv).toHaveClass('w-full');
+    expect(wrapperDiv).toHaveClass('justify-between');
   });
 
   it('displays input component in a row on desktop view', () => {
@@ -101,7 +105,8 @@ describe('QuestionBlockWrapper', () => {
     if (!wrapperDiv) {
       throw new Error('Element with the specified selector was not found.');
     }
-    expect(wrapperDiv.className).toContain('sm:flex-row');
-  });  
+    expect(wrapperDiv).toHaveClass('flex-row');
+    expect(wrapperDiv).toHaveClass('sm:w-fit');
+    expect(wrapperDiv).toHaveClass('justify-between');  });  
 
 });
