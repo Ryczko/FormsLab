@@ -15,7 +15,6 @@ describe('getUserName', () => {
   let testUserId: string;
 
   beforeEach(async () => {
-    // Vložte testovacie údaje do databázy pred každým testom
     const user = await prisma.user.create({
       data: {
         name: 'John Doe',
@@ -25,14 +24,12 @@ describe('getUserName', () => {
         image: 'path/to/image',
         createdAt: new Date(),
         updatedAt: new Date(),
-        // zahrnúť ostatné vlastnosti podľa potreby
       },
     });
-    testUserId = user.id; // Uložte ID vloženého používateľ
+    testUserId = user.id;
   });
 
   afterEach(async () => {
-    // Odstráňte testovacie údaje z databázy po každom teste pomocou konkrétneho ID
     if (testUserId) {
       await prisma.user.delete({
         where: {
