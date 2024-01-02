@@ -11,10 +11,7 @@ import Toggle from 'shared/components/Toggle/Toggle';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import { QuestionType } from '@prisma/client';
-import EmojiIcon from 'shared/components/QuestionTypeIcons/EmojiIcon';
-import InputIcon from 'shared/components/QuestionTypeIcons/InputIcon';
-import ChoiceIcon from 'shared/components/QuestionTypeIcons/ChoiceIcon';
-import RateIcon from 'shared/components/QuestionTypeIcons/RateIcon';
+import QuestionTypeIcons from 'shared/components/QuestionTypeIcons/QuestionTypeIcons';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -90,14 +87,11 @@ export default function QuestionBlockWrapper({
             />
           </button>
 
-          <div className="mx-1 hidden h-[42px] w-[30px] items-center justify-center px-[1px] text-gray-400 sm:flex">
-            {type === QuestionType.EMOJI && <EmojiIcon />}
-            {type === QuestionType.INPUT && <InputIcon />}
-            {type === QuestionType.CHOICE && <ChoiceIcon />}
-            {type === QuestionType.RATE && <RateIcon />}
+          <div className="hidden sm:block">
+            <QuestionTypeIcons type={type} />
           </div>
 
-          <div className=" w-full grow">
+          <div className="w-full grow">
             <Input
               placeholder={t('questionPlaceholder')}
               onInput={handleQuestionChange}
@@ -110,27 +104,33 @@ export default function QuestionBlockWrapper({
           </div>
         </div>
 
-        {(isDraggingPossible || isRemovingPossible) && (
-          <div className="mb-2 flex w-full items-start justify-end gap-2 sm:w-auto">
-            {isDraggingPossible && (
-              <div
-                className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
-                {...dragHandleProps}
-              >
-                <SelectorIcon className="w-[15px]" />
-              </div>
-            )}
-            {isRemovingPossible && (
-              <button
-                onClick={removeQuestion}
-                data-test-id={`remove-question-${index}`}
-                className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
-              >
-                <TrashIcon className="w-[15px] text-red-700" />
-              </button>
-            )}
+        <div className="mb-2 flex w-full items-center justify-end gap-2 sm:mb-0 sm:w-auto">
+          <div className="mr-1 sm:hidden">
+            <QuestionTypeIcons type={type} />
           </div>
-        )}
+
+          {(isDraggingPossible || isRemovingPossible) && (
+            <div className="flex gap-2">
+              {isDraggingPossible && (
+                <div
+                  className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+                  {...dragHandleProps}
+                >
+                  <SelectorIcon className="w-[15px]" />
+                </div>
+              )}
+              {isRemovingPossible && (
+                <button
+                  onClick={removeQuestion}
+                  data-test-id={`remove-question-${index}`}
+                  className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+                >
+                  <TrashIcon className="w-[15px] text-red-700" />
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {expanded && (
