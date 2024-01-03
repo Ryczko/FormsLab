@@ -2,6 +2,7 @@ import { SurveyWithQuestionsAndUsersAnswers } from 'features/surveys/managers/su
 import React from 'react';
 import { AnswersComponentFactory } from 'features/surveys/components/AnswersComponent/AnswersComponentFactory';
 import Header from 'shared/components/Header/Header';
+import Progressbar from 'shared/components/ProgressBar/ProgressBar';
 
 interface OneQuestionViewProps {
   formData: SurveyWithQuestionsAndUsersAnswers;
@@ -44,6 +45,12 @@ export default function OneQuestionView({
         activeQuestionIndex={activeQuestionIndex}
         isLastQuestion={isLastQuestion}
         isAnswering={isAnswering}
+      />
+
+      <Progressbar
+        currentStep={activeQuestionIndex + 1}
+        totalSteps={formData?.questions.length}
+        isSubmitted={isAnswering}
       />
     </>
   );
