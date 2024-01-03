@@ -41,4 +41,13 @@ describe('LoginButton', () => {
     );
     expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
   });
+
+  it('should apply custom class when provided', () => {
+    render(
+      <LoginButton image="https://via.placeholder.com/24x24" className="custom-button">
+        Hello
+      </LoginButton>
+    );
+    expect(screen.getByRole('button')).toHaveClass('custom-button');
+  });
 });
