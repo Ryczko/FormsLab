@@ -50,10 +50,14 @@ function Input({
         {type === 'password' && (
           <button
             type="button"
-            className="absolute right-4 top-2"
+            className="absolute right-4 top-2.5"
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? <EyeIcon className="h-6 w-6 text-gray-500" /> : <EyeOffIcon className="h-6 w-6 text-gray-500" />}
+            {showPassword ? (
+              <EyeIcon className="h-5 w-5 text-gray-400" />
+            ) : (
+              <EyeOffIcon className="h-5 w-5 text-gray-400" />
+            )}
           </button>
         )}
       </div>

@@ -7,19 +7,26 @@ interface AnswerData {
   answersData: { questionId: string; answer?: string }[];
 }
 
-export async function getSurveyData(surveyId?: string) {
-  if (surveyId) {
-    const survey = await prismadb.survey.findUnique({
+export async function getSurveyData(surveyId: string, userId?: string) {
+  try {
+    const survey = await prismadb.survey.findFirst({
       where: {
         id: surveyId,
+        userId,
       },
       include: {
-        questions: true,
+        questions: {
+          orderBy: {
+            order: 'asc',
+          },
+        },
         answers: false,
       },
     });
 
     return survey;
+  } catch (error) {
+    return null;
   }
 }
 

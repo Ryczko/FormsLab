@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { QuestionType } from '@prisma/client';
-import { postFetch } from '../../../../lib/axiosConfig';
+import { postFetch, putFetch } from '../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
@@ -41,7 +41,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   );
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
-    displayTitle: initialData?.oneQuestionPerStep ?? true,
+    displayTitle: initialData?.displayTitle ?? true,
   });
 
   const [error, setError] = useState('');
@@ -264,6 +264,40 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setIsCreating(false);
   };
 
+  const confirmEditSurvey = async () => {
+    if (!isSurveyValid() || !initialData) return;
+
+    setIsCreating(true);
+
+    try {
+      const newSurvey = await putFetch(`/api/survey/${initialData.id}`, {
+        title,
+        oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
+        displayTitle: surveyOptions.displayTitle,
+        questions: questions.map((question) => ({
+          id: question.id,
+          title: question.title,
+          options: question.options,
+          type: question.type,
+          isRequired: question.isRequired,
+        })),
+      });
+
+      await router.push(`/survey/answer/${newSurvey.id}`, undefined, {
+        scroll: false,
+      });
+    } catch (error) {
+      toast.error(t('surveyCreationFailed'));
+    }
+    setIsCreating(false);
+  };
+
+  const discardChanges = () => {
+    router.push(`/survey/answer/${initialData?.id}`, undefined, {
+      scroll: false,
+    });
+  };
+
   const reorderQuestion = (startIndex: number, endIndex: number) => {
     const newOrderedQuestions = Array.from(questions);
 
@@ -304,5 +338,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     updateSurveyOptions,
     signInToCreateSurvey,
     isEditMode,
+    confirmEditSurvey,
+    discardChanges,
   };
 };

@@ -14,7 +14,7 @@ interface AddQuestionButtonProps {
 export const AddQuestionButton = ({ onClick }: AddQuestionButtonProps) => {
   const { closeModal, isModalOpen, openModal } = useModal();
   return (
-    <div className="mt-4">
+    <div>
       <Button
         onClick={openModal}
         variant={ButtonVariant.OUTLINE}

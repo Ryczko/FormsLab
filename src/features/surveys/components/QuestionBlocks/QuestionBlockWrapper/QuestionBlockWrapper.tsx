@@ -27,6 +27,7 @@ interface QuestionBlockWrapperProps {
   expanded: boolean;
   expandQuestion: (questionIndex: number) => void;
   type: QuestionType;
+  isEditMode: boolean;
 }
 
 export default function QuestionBlockWrapper({
@@ -44,6 +45,7 @@ export default function QuestionBlockWrapper({
   expanded,
   expandQuestion,
   type,
+  isEditMode,
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
 
@@ -119,7 +121,7 @@ export default function QuestionBlockWrapper({
                   <SelectorIcon className="w-[15px]" />
                 </div>
               )}
-              {isRemovingPossible && (
+              {isRemovingPossible && !isEditMode && (
                 <button
                   onClick={removeQuestion}
                   data-test-id={`remove-question-${index}`}
@@ -135,7 +137,7 @@ export default function QuestionBlockWrapper({
 
       {expanded && (
         <div className="mb-4 px-3">
-          {children}
+          {!isEditMode && children}
 
           <div className="mt-2 flex justify-end border-t">
             <Toggle

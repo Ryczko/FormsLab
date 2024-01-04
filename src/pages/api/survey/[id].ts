@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import prismadb from '../../../../lib/prismadb';
 import serverAuth from '../../../../lib/serverAuth';
+import { SurveyData, isSurveyValid } from '.';
 
 export enum SurveyActionTypes {
   UPDATE_ACTIVE = 'UPDATE_ACTIVE',
@@ -11,26 +12,35 @@ interface SurveyPatchPayloadI {
 }
 
 export async function getSurveyWithAnswers(surveyId: string, userId: string) {
-  const survey = await prismadb.survey.findFirst({
-    where: {
-      id: surveyId,
-      userId: userId,
-    },
-    include: {
-      questions: true,
-      answers: {
-        include: {
-          answerData: true,
+  try {
+    const survey = await prismadb.survey.findFirst({
+      where: {
+        id: surveyId,
+        userId: userId,
+      },
+      include: {
+        questions: {
+          orderBy: {
+            order: 'asc',
+          },
         },
-        orderBy: {
-          createdAt: 'desc',
+        answers: {
+          include: {
+            answerData: true,
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
         },
       },
-    },
-  });
+    });
 
-  return survey;
+    return survey;
+  } catch (error) {
+    return null;
+  }
 }
+
 export async function updateSurveyActiveStatus({
   surveyId,
   isActive,
@@ -46,6 +56,7 @@ export async function updateSurveyActiveStatus({
   });
   return survey;
 }
+
 export async function handlePatch(req: NextApiRequest, res: NextApiResponse) {
   const surveyId = String(req.query.id);
   const { actionType } = req.body as SurveyPatchPayloadI;
@@ -74,6 +85,7 @@ export async function handlePatch(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 }
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -81,6 +93,7 @@ export default async function handler(
   try {
     const requestMethod = req.method;
     const session = await serverAuth(req, res);
+    const userId = session.currentUser.id;
     const { id } = req.query;
 
     switch (requestMethod) {
@@ -92,7 +105,6 @@ export default async function handler(
 
         return res.status(200).json(survey);
       }
-
       case 'DELETE': {
         const survey = await prismadb.survey.findFirst({
           where: {
@@ -115,6 +127,72 @@ export default async function handler(
       }
       case 'PATCH': {
         return handlePatch(req, res);
+      }
+      case 'PUT': {
+        const {
+          title,
+          description,
+          questions,
+          oneQuestionPerStep,
+          displayTitle,
+        } = req.body as SurveyData;
+        if (!isSurveyValid(req.body)) {
+          return res.status(400).end();
+        }
+
+        const surveyFound = await prismadb.survey.findFirst({
+          where: { id: id as string, userId },
+        });
+
+        if (!surveyFound?.id) {
+          return res.status(404).end();
+        }
+
+        const surveyQuestions = await prismadb.question.findMany({
+          where: {
+            surveyId: id as string,
+          },
+        });
+
+        const newQuestions = [];
+
+        surveyQuestions.forEach(async (question) => {
+          const foundQuestionIndex = questions.findIndex(
+            (q) => q.id === question.id
+          );
+
+          if (foundQuestionIndex === -1) return;
+
+          const questionFound = questions[foundQuestionIndex];
+
+          const newQuestion = await prismadb.question.update({
+            where: {
+              id: question.id,
+            },
+            data: {
+              title: questionFound.title,
+              description: questionFound.description,
+              isRequired: questionFound.isRequired,
+              order: foundQuestionIndex,
+            },
+          });
+
+          newQuestions.push(newQuestion);
+        });
+
+        const survey = await prismadb.survey.update({
+          where: {
+            id: id as string,
+          },
+          data: {
+            title,
+            description,
+            oneQuestionPerStep,
+            displayTitle,
+          },
+        });
+
+        return res.status(200).json({ id: survey.id });
       }
       default:
         return res.status(405).end();
