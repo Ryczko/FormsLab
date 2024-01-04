@@ -219,6 +219,7 @@ function SurveyCreatePage({
               </Button>
             )}
             <Button
+              name="create-survey"
               onClick={isEditMode ? confirmEditSurvey : createSurvey}
               className="z-0 mt-2 w-full"
               variant={ButtonVariant.PRIMARY}
