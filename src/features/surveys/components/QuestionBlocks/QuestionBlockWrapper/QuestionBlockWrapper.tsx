@@ -121,11 +121,12 @@ export default function QuestionBlockWrapper({
                   <SelectorIcon className="w-[15px]" />
                 </div>
               )}
-              {isRemovingPossible && !isEditMode && (
+              {isRemovingPossible && (
                 <button
                   onClick={removeQuestion}
+                  disabled={isEditMode}
                   data-test-id={`remove-question-${index}`}
-                  className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+                  className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
                 >
                   <TrashIcon className="w-[15px] text-red-700" />
                 </button>
@@ -137,7 +138,15 @@ export default function QuestionBlockWrapper({
 
       {expanded && (
         <div className="mb-4 px-3">
-          {!isEditMode && children}
+          {isEditMode ? (
+            <div className="relative opacity-50">
+              <div className="absolute z-50 h-full w-full cursor-not-allowed"></div>
+
+              {children}
+            </div>
+          ) : (
+            children
+          )}
 
           <div className="mt-2 flex justify-end border-t">
             <Toggle

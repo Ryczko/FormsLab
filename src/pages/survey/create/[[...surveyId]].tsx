@@ -207,11 +207,11 @@ function SurveyCreatePage({
         )}
 
         {user ? (
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row">
             {isEditMode && (
               <Button
                 onClick={discardChanges}
-                className="z-0 mt-2 w-full"
+                className="z-0 w-full"
                 variant={ButtonVariant.OUTLINE}
                 disabled={isCreating}
               >
@@ -221,7 +221,7 @@ function SurveyCreatePage({
             <Button
               name="create-survey"
               onClick={isEditMode ? confirmEditSurvey : createSurvey}
-              className="z-0 mt-2 w-full"
+              className="z-0 w-full"
               variant={ButtonVariant.PRIMARY}
               isLoading={isCreating}
             >

@@ -50,19 +50,22 @@ export default function StyledDialog({
                   contentClassName
                 )}
               >
-                <Dialog.Title
-                  as="h3"
-                  className={clsx(
-                    'flex items-center border-b pb-2 text-lg font-medium leading-6 text-zinc-900'
-                  )}
-                >
-                  <span className="w-full text-left">{title}</span>
-                  <XIcon
-                    onClick={onClose}
-                    data-test-id={'close-modal'}
-                    className=" h-5 w-5 cursor-pointer"
-                  />
-                </Dialog.Title>
+                {!!title && (
+                  <Dialog.Title
+                    as="h3"
+                    className={clsx(
+                      'flex items-center border-b pb-2 text-lg font-medium leading-6 text-zinc-900'
+                    )}
+                  >
+                    <span className="w-full text-left">{title}</span>
+                    <XIcon
+                      onClick={onClose}
+                      data-test-id={'close-modal'}
+                      className=" h-5 w-5 cursor-pointer"
+                    />
+                  </Dialog.Title>
+                )}
+
                 {content}
               </Dialog.Panel>
             </Transition.Child>
