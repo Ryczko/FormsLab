@@ -71,8 +71,8 @@ model Survey {
   description String?
   questions   Question[]
   answers     Answer[]
-  oneQuestionPerStep Boolean?
-  displayTitle Boolean?
+  oneQuestionPerStep Boolean
+  displayTitle Boolean
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -86,6 +86,7 @@ model Question {
   type        QuestionType
   isRequired  Boolean
   options     String[]
+  order       Int
 
   survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
 }

@@ -11,7 +11,7 @@ import {
   MIN_QUESTIONS,
 } from 'shared/constants/surveysConfig';
 
-interface SurveyData {
+export interface SurveyData {
   title: string;
   description: string;
   questions: Question[];
@@ -38,7 +38,7 @@ export async function getAllUserSurveys(userId: string) {
   return surveys;
 }
 
-const isSurveyValid = (survey: SurveyData) => {
+export const isSurveyValid = (survey: SurveyData) => {
   if (
     survey.title.trim() === '' ||
     survey.title.length > MAX_TITLE_LENGTH ||
@@ -70,8 +70,13 @@ export default async function handler(
         return res.status(200).json({ surveys });
       }
       case 'POST': {
-        const { title, description, questions, oneQuestionPerStep, displayTitle } =
-          req.body as SurveyData;
+        const {
+          title,
+          description,
+          questions,
+          oneQuestionPerStep,
+          displayTitle,
+        } = req.body as SurveyData;
 
         if (!isSurveyValid(req.body)) {
           return res.status(400).end();
@@ -86,12 +91,13 @@ export default async function handler(
             oneQuestionPerStep,
             displayTitle,
             questions: {
-              create: questions.map((question) => ({
+              create: questions.map((question, index) => ({
                 type: question.type,
                 title: question.title,
                 description: question.description,
                 options: question.options,
                 isRequired: question.isRequired,
+                order: index,
               })),
             },
           },

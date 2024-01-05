@@ -1,5 +1,11 @@
-import { RefreshIcon, ShareIcon, TrashIcon } from '@heroicons/react/outline';
 import Toggle from 'shared/components/Toggle/Toggle';
+import {
+  PencilIcon,
+  RefreshIcon,
+  ShareIcon,
+  TrashIcon,
+} from '@heroicons/react/outline';
+
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
@@ -16,6 +22,7 @@ import ResultComponent from 'features/surveys/components/ResultsComponents/Resul
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import ShareSurveyModal from 'features/surveys/components/ShareSurveryModal/ShareSurveyModal';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -77,6 +84,12 @@ function SurveyResultsPage({
 
   const { t } = useTranslation('surveyAnswer');
 
+  const router = useRouter();
+
+  const handleEditSurvey = () => {
+    router.push(`/survey/create/${surveyId}`);
+  };
+
   return (
     <>
       <Head>
@@ -100,6 +113,13 @@ function SurveyResultsPage({
               />
             </div>
 
+            <Button
+              title={'Edit survey'}
+              onClick={handleEditSurvey}
+              className="grow sm:grow-0"
+              variant={ButtonVariant.PRIMARY}
+              icon={<PencilIcon className="h-5 w-5" />}
+            />
             <Button
               title={t('buttonCopyLinkTitle')}
               onClick={openShareSurveyModal}

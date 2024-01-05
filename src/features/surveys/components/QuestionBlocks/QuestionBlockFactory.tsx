@@ -33,6 +33,7 @@ interface QuestionBlockFactoryProps {
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
   expanded: boolean;
   expandQuestion: (questionIndex: number) => void;
+  isEditMode: boolean;
 }
 
 export default function QuestionBlockFactory({
@@ -53,6 +54,7 @@ export default function QuestionBlockFactory({
   dragHandleProps,
   expanded,
   expandQuestion,
+  isEditMode,
 }: QuestionBlockFactoryProps) {
   return (
     <QuestionBlockWrapper
@@ -69,6 +71,7 @@ export default function QuestionBlockFactory({
       expanded={expanded}
       expandQuestion={expandQuestion}
       type={type}
+      isEditMode={isEditMode}
     >
       {type === QuestionType.RATE && <RateQuestionBlock />}
       {type === QuestionType.INPUT && <InputQuestionBlock />}

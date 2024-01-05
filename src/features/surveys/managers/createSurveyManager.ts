@@ -4,9 +4,11 @@ import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { QuestionType } from '@prisma/client';
-import { postFetch } from '../../../../lib/axiosConfig';
+import { postFetch, putFetch } from '../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
+import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
+import { Question as QuestionDto } from '@prisma/client';
 
 export interface Question {
   id: string;
@@ -22,19 +24,32 @@ export interface SurveyOptions {
   displayTitle: boolean;
 }
 
-export const useCreateSurveyManager = () => {
-  const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState<Question[]>(defaultQuestions);
+export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
+  const [isEditMode] = useState(!!initialData);
+
+  const [title, setTitle] = useState(initialData?.title ?? '');
+
+  const mapQuestionsWithExpanded = (questions?: QuestionDto[]) => {
+    return questions?.map((question) => ({
+      ...question,
+      expanded: false,
+    }));
+  };
+
+  const [questions, setQuestions] = useState<Question[]>(
+    mapQuestionsWithExpanded(initialData?.questions) ?? defaultQuestions
+  );
+  const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
+    oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
+    displayTitle: initialData?.displayTitle ?? true,
+  });
+
   const [error, setError] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const router = useRouter();
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
-  const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
-    oneQuestionPerStep: true,
-    displayTitle: true,
-  });
 
   const signInToCreateSurvey = () => {
     router.push('/login');
@@ -249,6 +264,40 @@ export const useCreateSurveyManager = () => {
     setIsCreating(false);
   };
 
+  const confirmEditSurvey = async () => {
+    if (!isSurveyValid() || !initialData) return;
+
+    setIsCreating(true);
+
+    try {
+      const newSurvey = await putFetch(`/api/survey/${initialData.id}`, {
+        title,
+        oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
+        displayTitle: surveyOptions.displayTitle,
+        questions: questions.map((question) => ({
+          id: question.id,
+          title: question.title,
+          options: question.options,
+          type: question.type,
+          isRequired: question.isRequired,
+        })),
+      });
+
+      await router.push(`/survey/answer/${newSurvey.id}`, undefined, {
+        scroll: false,
+      });
+    } catch (error) {
+      toast.error(t('surveyCreationFailed'));
+    }
+    setIsCreating(false);
+  };
+
+  const discardChanges = () => {
+    router.push(`/survey/answer/${initialData?.id}`, undefined, {
+      scroll: false,
+    });
+  };
+
   const reorderQuestion = (startIndex: number, endIndex: number) => {
     const newOrderedQuestions = Array.from(questions);
 
@@ -288,5 +337,8 @@ export const useCreateSurveyManager = () => {
     surveyOptions,
     updateSurveyOptions,
     signInToCreateSurvey,
+    isEditMode,
+    confirmEditSurvey,
+    discardChanges,
   };
 };

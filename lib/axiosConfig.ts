@@ -19,6 +19,7 @@ export const postFetch = (url: string, data = {}) => {
     data,
   }).then((response) => response.data);
 };
+
 export const patchFetch = (url: string, data = {}) => {
   return instance({
     method: 'PATCH',
@@ -26,6 +27,15 @@ export const patchFetch = (url: string, data = {}) => {
     data,
   }).then((response) => response.data);
 };
+
+export const putFetch = (url: string, data = {}) => {
+  return instance({
+    method: 'PUT',
+    url,
+    data,
+  }).then((response) => response.data);
+};
+
 export const deleteFetch = (url: string) => {
   return instance({
     method: 'DELETE',

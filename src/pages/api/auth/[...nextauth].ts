@@ -60,9 +60,20 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session: async ({ session, token }) => {
-      if (session?.user) {
+      if (session?.user && token.uid) {
+        const isSessionValid = await prismadb.user.findUnique({
+          where: {
+            id: token.uid as string,
+          },
+        });
+
+        if (!isSessionValid) {
+          return Promise.reject(new Error('Session not valid'));
+        }
+
         session.user.id = token.uid;
       }
+
       return session;
     },
     jwt: async ({ user, token }) => {

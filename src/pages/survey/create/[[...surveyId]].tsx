@@ -24,8 +24,45 @@ import { CogIcon } from '@heroicons/react/outline';
 import useModal from 'features/surveys/hooks/useModal';
 import SurveyOptionsModalModal from 'features/surveys/components/SurveyOptionsModal/SurveyOptionsModal';
 import { useApplicationContext } from 'features/application/context';
+import { InferGetServerSidePropsType, NextPageContext } from 'next';
+import { getSurveyData } from 'pages/api/answer/[id]';
+import { getSession } from 'next-auth/react';
 
-function SurveyCreatePage() {
+export async function getServerSideProps(context: NextPageContext) {
+  const surveyId = context.query.surveyId?.[0];
+  let surveyData;
+
+  if (surveyId) {
+    const session = await getSession(context);
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/login',
+        },
+      };
+    }
+
+    surveyData = await getSurveyData(surveyId, session.user?.id);
+
+    if (!surveyData) {
+      return {
+        redirect: {
+          destination: '/survey/create',
+        },
+      };
+    }
+  }
+
+  return {
+    props: {
+      initialData: surveyData ? JSON.parse(JSON.stringify(surveyData)) : null,
+    },
+  };
+}
+
+function SurveyCreatePage({
+  initialData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user } = useApplicationContext();
 
   const {
@@ -48,7 +85,10 @@ function SurveyCreatePage() {
     surveyOptions,
     updateSurveyOptions,
     signInToCreateSurvey,
-  } = useCreateSurveyManager();
+    isEditMode,
+    confirmEditSurvey,
+    discardChanges,
+  } = useCreateSurveyManager(initialData);
   const { t } = useTranslation('surveyCreate');
 
   const onDragEnd = (result: DropResult) => {
@@ -72,7 +112,7 @@ function SurveyCreatePage() {
         <meta name="description" content={t('content')} />
       </Head>
 
-      <Header>{t('heading')}</Header>
+      <Header>{isEditMode ? t('editHeading') : t('heading')}</Header>
 
       <div className="flex flex-col gap-x-2 sm:flex-row">
         <div className="w-full">
@@ -98,6 +138,16 @@ function SurveyCreatePage() {
       </div>
 
       <div className="mt-4">
+        {isEditMode && (
+          <div
+            className="mb-3 rounded-sm border-l-4 border-indigo-500 bg-indigo-100 px-4 py-2 text-left text-xs text-indigo-700"
+            role="alert"
+          >
+            <p className="font-bold">{t('editNoteTitle')}</p>
+
+            <p>{t('editNote')}</p>
+          </div>
+        )}
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (
@@ -138,6 +188,7 @@ function SurveyCreatePage() {
                           updateQuestionRequired={updateQuestionRequired}
                           expanded={question.expanded}
                           expandQuestion={expandQuestion}
+                          isEditMode={isEditMode}
                         />
                       </div>
                     )}
@@ -150,28 +201,43 @@ function SurveyCreatePage() {
         </DragDropContext>
       </div>
 
-      {questions.length < MAX_QUESTIONS && (
-        <AddQuestionButton onClick={addQuestion} />
-      )}
-      {user ? (
-        <Button
-          name="create-survey"
-          onClick={createSurvey}
-          className="z-0 mt-2 w-full"
-          variant={ButtonVariant.PRIMARY}
-          isLoading={isCreating}
-        >
-          {t('buttonCreate')}
-        </Button>
-      ) : (
-        <Button
-          onClick={signInToCreateSurvey}
-          variant={ButtonVariant.PRIMARY}
-          className="z-0 mt-2 w-full"
-        >
-          {t('signInToCreateSurvey')}
-        </Button>
-      )}
+      <div className="mt-4">
+        {questions.length < MAX_QUESTIONS && !isEditMode && (
+          <AddQuestionButton onClick={addQuestion} />
+        )}
+
+        {user ? (
+          <div className="flex flex-col gap-2 sm:flex-row">
+            {isEditMode && (
+              <Button
+                onClick={discardChanges}
+                className="z-0 w-full"
+                variant={ButtonVariant.OUTLINE}
+                disabled={isCreating}
+              >
+                {t('discardChanges')}
+              </Button>
+            )}
+            <Button
+              name="create-survey"
+              onClick={isEditMode ? confirmEditSurvey : createSurvey}
+              className="z-0 w-full"
+              variant={ButtonVariant.PRIMARY}
+              isLoading={isCreating}
+            >
+              {isEditMode ? t('buttonSave') : t('buttonCreate')}
+            </Button>
+          </div>
+        ) : (
+          <Button
+            onClick={signInToCreateSurvey}
+            variant={ButtonVariant.PRIMARY}
+            className="z-0 mt-2 w-full"
+          >
+            {t('signInToCreateSurvey')}
+          </Button>
+        )}
+      </div>
 
       <SurveyOptionsModalModal
         isOpened={isOptionsModalOpen}
