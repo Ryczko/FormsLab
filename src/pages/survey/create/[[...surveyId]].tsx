@@ -27,6 +27,7 @@ import { useApplicationContext } from 'features/application/context';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
 import { getSurveyData } from 'pages/api/answer/[id]';
 import { getSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 export async function getServerSideProps(context: NextPageContext) {
   const surveyId = context.query.surveyId?.[0];
@@ -64,6 +65,14 @@ function SurveyCreatePage({
   initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user } = useApplicationContext();
+
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsBrowser(true);
+    }
+  }, []);
 
   const {
     title,
@@ -149,55 +158,59 @@ function SurveyCreatePage({
           </div>
         )}
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided, snapshot) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className={clsx(snapshot.isDraggingOver && '')}
-              >
-                {questions.map((question, index) => (
-                  <Draggable
-                    key={question.id}
-                    draggableId={question.id}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <div
-                        className={clsx('mb-3', snapshot.isDragging && '')}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        style={provided.draggableProps.style}
-                      >
-                        <QuestionBlockFactory
-                          key={question.id}
-                          type={question.type}
-                          dragHandleProps={provided.dragHandleProps}
-                          handleAddingNewOption={handleAddingNewOption}
-                          options={question.options ?? []}
-                          handleOptionChange={handleOptionChange}
-                          handleOptionRemove={handleOptionRemove}
-                          questionIndex={index}
-                          onQuestionRemove={removeQuestion}
-                          updateQuestion={updateQuestion}
-                          questionTitle={question.title}
-                          isSubmitted={isSubmitted}
-                          isRemovingPossible={questions.length > MIN_QUESTIONS}
-                          isDraggingPossible={questions.length > 1}
-                          isRequired={question.isRequired}
-                          updateQuestionRequired={updateQuestionRequired}
-                          expanded={question.expanded}
-                          expandQuestion={expandQuestion}
-                          isEditMode={isEditMode}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+          {isBrowser ? (
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className={clsx(snapshot.isDraggingOver && '')}
+                >
+                  {questions.map((question, index) => (
+                    <Draggable
+                      key={question.id}
+                      draggableId={question.id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          className={clsx('mb-3', snapshot.isDragging && '')}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          style={provided.draggableProps.style}
+                        >
+                          <QuestionBlockFactory
+                            key={question.id}
+                            type={question.type}
+                            dragHandleProps={provided.dragHandleProps}
+                            handleAddingNewOption={handleAddingNewOption}
+                            options={question.options ?? []}
+                            handleOptionChange={handleOptionChange}
+                            handleOptionRemove={handleOptionRemove}
+                            questionIndex={index}
+                            onQuestionRemove={removeQuestion}
+                            updateQuestion={updateQuestion}
+                            questionTitle={question.title}
+                            isSubmitted={isSubmitted}
+                            isRemovingPossible={
+                              questions.length > MIN_QUESTIONS
+                            }
+                            isDraggingPossible={questions.length > 1}
+                            isRequired={question.isRequired}
+                            updateQuestionRequired={updateQuestionRequired}
+                            expanded={question.expanded}
+                            expandQuestion={expandQuestion}
+                            isEditMode={isEditMode}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ) : null}
         </DragDropContext>
       </div>
 
