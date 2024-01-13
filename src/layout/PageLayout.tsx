@@ -26,7 +26,8 @@ function PageLayout({ children }: PropsWithChildren) {
             'mx-auto w-full px-6 py-8 text-center',
             HIDDEN_ELEMENTS_ROUTES.includes(router.pathname)
               ? 'w-100 flex max-w-[54rem] flex-grow items-center justify-center'
-              : 'mb-4 mt-[60px] max-w-[58rem]'
+              : 'mb-4 mt-[60px] max-w-[58rem]',
+            loading && 'hidden'
           )}
         >
           <AnimatePresence exitBeforeEnter initial={false}>
