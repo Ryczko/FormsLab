@@ -31,7 +31,7 @@ export default function MainSection({
         )}
       >
         <h2 className="mb-2 text-lg font-semibold">{title}</h2>
-        <p>{description}</p>
+        <p className="text-md">{description}</p>
       </div>
       <Image
         alt={alt}

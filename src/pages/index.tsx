@@ -30,14 +30,14 @@ function IndexPage({
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
-      <div className="pt-16">
-        <h1 className="leading-tighter mb-4 text-4xl font-extrabold tracking-tighter md:text-6xl">
+      <div className="pt-12 sm:pt-16">
+        <h1 className="leading-tighter mb-4 text-3xl font-extrabold tracking-tighter sm:text-4xl md:text-6xl">
           {t('firstPartHeading')}&nbsp;
           <span className="bg-gradient-to-r from-indigo-600 to-indigo-100 bg-clip-text text-transparent">
             {t('secondPartHeading')}
           </span>
         </h1>
-        <p className="mx-auto mb-6 mt-4 max-w-lg text-xl text-zinc-600">
+        <p className="text-md mx-auto mb-6 mt-4 max-w-lg text-zinc-600 sm:text-lg md:text-xl">
           {t('Description')}
         </p>
 
