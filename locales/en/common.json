@@ -27,8 +27,8 @@
     "cancelButton": "Cancel"
   },
   "surveyOptionsModal": {
-    "title": "Survey options",
+    "title": "Display options",
     "OneQuestionPerStep": "One question per step",
-    "DisplayTitle":"Display title"
+    "DisplayTitle": "Display title"
   }
 }
