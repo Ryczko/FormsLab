@@ -136,13 +136,13 @@ function SurveyCreatePage({
         </div>
 
         <Button
-          className="h-[42px] border border-transparent sm:mt-2"
+          className="h-[42px] whitespace-nowrap border border-transparent sm:mt-2"
           variant={ButtonVariant.PRIMARY}
           onClick={openOptionsSurveyModal}
           icon={<CogIcon className="h-5 w-5" />}
           data-test-id="options-button"
         >
-          Options
+          {t('options')}
         </Button>
       </div>
 
