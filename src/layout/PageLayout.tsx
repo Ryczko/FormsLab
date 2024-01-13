@@ -19,11 +19,11 @@ function PageLayout({ children }: PropsWithChildren) {
     <>
       <Background />
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
-      <div className="flex min-h-screen flex-col justify-between overflow-x-hidden">
+      <div className="min-h-screen-dvh flex flex-col justify-between overflow-x-hidden">
         {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Navigation />}
         <div
           className={clsx(
-            'mx-auto  w-full  px-6 py-8 text-center',
+            'mx-auto w-full px-6 py-8 text-center',
             HIDDEN_ELEMENTS_ROUTES.includes(router.pathname)
               ? 'w-100 flex max-w-[54rem] flex-grow items-center justify-center'
               : 'mb-4 mt-[60px] max-w-[58rem]'
