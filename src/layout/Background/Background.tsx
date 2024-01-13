@@ -1,49 +1,20 @@
+import { useRouter } from 'next/router';
+import { HIDDEN_ELEMENTS_ROUTES } from 'shared/constants/routesConfig';
+
+/* eslint-disable tailwindcss/no-contradicting-classname */
 export default function Background() {
+  const router = useRouter();
+
   return (
-    <div
-      className="pointer-events-none fixed left-1/2 -z-10 mt-8 hidden -translate-x-1/2 overflow-hidden opacity-70 xl:block"
-      aria-hidden="true"
-    >
-      <svg
-        width="1360"
-        height="578"
-        viewBox="0 0 1360 578"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient
-            x1="50%"
-            y1="0%"
-            x2="50%"
-            y2="100%"
-            id="illustration-01"
-          >
-            <stop stopColor="#FFF" offset="0%" />
-            <stop stopColor="#EAEAEA" offset="77.402%" />
-            <stop stopColor="#DFDFDF" offset="100%" />
-          </linearGradient>
-        </defs>
-        <g fill="url(#illustration-01)" fillRule="evenodd">
-          <circle cx="1232" cy="128" r="128" />
-          <circle cx="155" cy="443" r="64" />
-        </g>
-        <image
-          className="rotate-6 opacity-70"
-          y={180}
-          x={1200}
-          width="200"
-          height="200"
-          xlinkHref={'/images/emote2.svg'}
-        />
-        <image
-          className="-rotate-6 opacity-70"
-          y={100}
-          x={0}
-          width="200"
-          height="200"
-          xlinkHref={'/images/emote.svg'}
-        />
-      </svg>
-    </div>
+    <>
+      <div className="fixed inset-0 -z-10  h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
+        {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && (
+          <>
+            <div className="absolute bottom-auto left-auto right-0 top-0 hidden h-[300px] w-[300px] translate-x-[-30%] translate-y-[20%] rounded-full bg-[#C6D4FB] opacity-50 blur-[80px] xl:block"></div>
+            <div className="absolute bottom-auto left-0 right-auto top-0 hidden h-[400px] w-[400px] translate-x-[0%] translate-y-[100%] rounded-full bg-[#C6D4FB] opacity-50 blur-[80px] xl:block"></div>
+          </>
+        )}
+      </div>
+    </>
   );
 }

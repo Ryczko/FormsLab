@@ -13,7 +13,7 @@ export default function Progressbar({
     ((currentStep - 1 + (isSubmitted ? 1 : 0)) / totalSteps) * 100;
 
   return (
-    <div className="relative my-4 h-[24px] w-full overflow-hidden rounded-lg bg-indigo-100">
+    <div className="relative mt-4 h-[24px] w-full overflow-hidden rounded-lg bg-indigo-100">
       <div
         data-testid="progressbar"
         style={{ width: `${percentage}%` }}

@@ -36,8 +36,8 @@ export default function MainSection({
       <Image
         alt={alt}
         src={image}
-        width={400}
-        height={500}
+        width={500}
+        height={215}
         className="rounded-md border shadow-sm"
       />
     </article>

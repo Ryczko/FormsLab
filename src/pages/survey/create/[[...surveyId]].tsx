@@ -142,7 +142,7 @@ function SurveyCreatePage({
           icon={<CogIcon className="h-5 w-5" />}
           data-test-id="options-button"
         >
-          {t('options')}
+          <span className="ms-1">{t('options')}</span>
         </Button>
       </div>
 

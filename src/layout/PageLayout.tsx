@@ -17,21 +17,21 @@ function PageLayout({ children }: PropsWithChildren) {
 
   return (
     <>
+      <Background />
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
-      <div className="max-h-screen-dvh relative flex h-screen flex-col justify-between">
+      <div className="flex min-h-screen flex-col justify-between overflow-x-hidden">
         {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Navigation />}
         <div
           className={clsx(
-            'mx-auto w-full overflow-auto px-6 py-8 text-center',
+            'mx-auto  w-full  px-6 py-8 text-center',
             HIDDEN_ELEMENTS_ROUTES.includes(router.pathname)
-              ? 'my-auto'
-              : 'flex-grow'
+              ? 'w-100 flex max-w-[54rem] flex-grow items-center justify-center'
+              : 'mb-4 mt-[60px] max-w-[58rem]'
           )}
         >
-          {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Background />}
           <AnimatePresence exitBeforeEnter initial={false}>
             <Fragment key={router.asPath}>
-              <div className={clsx('mx-auto max-w-[54rem]')}>{children}</div>
+              <div className={clsx('w-full')}>{children}</div>
             </Fragment>
           </AnimatePresence>
         </div>
