@@ -38,6 +38,7 @@ export default function MainSection({
         src={image}
         width={500}
         height={215}
+        priority
         className="rounded-md border shadow-sm"
       />
     </article>
