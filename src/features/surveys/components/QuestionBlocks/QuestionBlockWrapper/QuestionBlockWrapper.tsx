@@ -12,6 +12,7 @@ import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import { QuestionType } from '@prisma/client';
 import QuestionTypeIcons from 'shared/components/QuestionTypeIcons/QuestionTypeIcons';
+import { Tooltip } from 'react-tooltip';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -89,7 +90,9 @@ export default function QuestionBlockWrapper({
             />
           </button>
 
-          <div className="hidden sm:block">
+          <Tooltip className='z-10'  id={`my-tooltip-${index}`}  place='top' />
+
+          <div className="hidden sm:block" data-tooltip-id={`my-tooltip-${index}`} data-tooltip-content={`${type} QUESTION`}>
             <QuestionTypeIcons type={type} />
           </div>
 
@@ -107,7 +110,7 @@ export default function QuestionBlockWrapper({
         </div>
 
         <div className="mb-2 flex w-full items-center justify-end gap-2 sm:mb-0 sm:w-auto">
-          <div className="mr-1 sm:hidden">
+          <div className="mr-1 sm:hidden" data-tooltip-id={`my-tooltip-${index}`} data-tooltip-content={`${type} QUESTION`}>
             <QuestionTypeIcons type={type} />
           </div>
 
