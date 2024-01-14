@@ -86,15 +86,15 @@ function SurveyListPage({
           ) : (
             <>
               <Image
-                className="mt-2 w-[160px] -translate-x-3"
+                className="mt-2 w-[160px] -translate-x-1"
                 src={NoSurveys}
                 alt="no surveys"
               />
-              <p className="my-8">{t('noSurveys')}</p>
+              <p className="my-6">{t('noSurveys')}</p>
               <ButtonLink
                 href={'/survey/create'}
-                variant={ButtonVariant.OUTLINE_PRIMARY}
-                className="w-full sm:w-auto"
+                variant={ButtonVariant.PRIMARY}
+                className="w-full sm:w-[200px]"
               >
                 {t('buttonCreateSurvey')}
               </ButtonLink>

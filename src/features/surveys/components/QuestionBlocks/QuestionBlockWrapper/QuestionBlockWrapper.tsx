@@ -79,7 +79,7 @@ export default function QuestionBlockWrapper({
         <div className="flex w-full items-start gap-2">
           <button
             onClick={onExpand}
-            className="cursor-pointer rounded-md border border-opacity-100 p-[13px]"
+            className="cursor-pointer rounded-md border border-opacity-100 bg-zinc-50 p-[13px]"
           >
             <ChevronDownIcon
               className={clsx(
@@ -115,7 +115,7 @@ export default function QuestionBlockWrapper({
             <div className="flex gap-2">
               {isDraggingPossible && (
                 <div
-                  className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95"
+                  className="cursor-pointer rounded-md border  bg-zinc-50 p-[13px] shadow-sm hover:scale-95"
                   {...dragHandleProps}
                 >
                   <SelectorIcon className="w-[15px]" />
@@ -126,9 +126,9 @@ export default function QuestionBlockWrapper({
                   onClick={removeQuestion}
                   disabled={isEditMode}
                   data-test-id={`remove-question-${index}`}
-                  className="cursor-pointer rounded-md border bg-white p-[13px] shadow-sm hover:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+                  className="cursor-pointer rounded-md border border-red-200 bg-red-200 p-[13px] shadow-sm hover:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
                 >
-                  <TrashIcon className="w-[15px] text-red-700" />
+                  <TrashIcon className="w-[15px] text-red-900" />
                 </button>
               )}
             </div>

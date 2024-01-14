@@ -5,6 +5,8 @@ import {
   ShareIcon,
   TrashIcon,
 } from '@heroicons/react/outline';
+import NoAnswers from '/public/images/no-answers.svg';
+import Image from 'next/image';
 
 import Head from 'next/head';
 import withAnimation from 'shared/HOC/withAnimation';
@@ -99,7 +101,7 @@ function SurveyResultsPage({
 
       <>
         <div className="mb-6 flex flex-col items-center justify-between gap-x-8 sm:mb-4 sm:flex-row">
-          <h1 className="flex min-h-[38px] items-center border-indigo-200 pb-4 text-xl font-semibold sm:border-l-4 sm:pb-0 sm:pl-4 sm:text-left">
+          <h1 className="flex min-h-[38px] items-center border-indigo-200 pb-2 text-xl font-semibold sm:border-l-4 sm:pb-0 sm:pl-4 sm:text-left">
             {surveyData?.title}
           </h1>
           <div className="flex w-full flex-wrap justify-center gap-2 sm:w-auto sm:flex-nowrap">
@@ -121,7 +123,7 @@ function SurveyResultsPage({
               icon={<PencilIcon className="h-5 w-5" />}
             />
             <Button
-              title={t('buttonCopyLinkTitle')}
+              title={t('shareSurvey')}
               onClick={openShareSurveyModal}
               className="grow sm:grow-0"
               variant={ButtonVariant.PRIMARY}
@@ -154,7 +156,23 @@ function SurveyResultsPage({
         />
 
         {surveyData?.answers?.length === 0 && (
-          <div className="mt-6">{t('noAnswers')}</div>
+          <>
+            <Image
+              className="mx-auto mt-12 w-[140px]"
+              src={NoAnswers}
+              alt="no answers"
+            />
+            <div className="my-6">{t('noAnswers')}</div>
+            <Button
+              title={t('shareSurvey')}
+              onClick={openShareSurveyModal}
+              className="mx-auto w-full sm:w-[200px]"
+              variant={ButtonVariant.PRIMARY}
+              icon={<ShareIcon className="h-5 w-5" />}
+            >
+              <span className="ml-2">{t('shareSurvey')}</span>
+            </Button>
+          </>
         )}
 
         {Object.keys(mappedAnswersData).map((key) => (

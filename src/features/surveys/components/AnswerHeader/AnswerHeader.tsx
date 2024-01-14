@@ -10,7 +10,7 @@ interface AnswerHeaderProps {
 function AnswerHeader({ totalVotes, createDate }: AnswerHeaderProps) {
   const { t } = useTranslation('surveyAnswer');
   return (
-    <div className={'my-6 flex flex-col gap-1 md:flex-row'}>
+    <div className={'my-6 flex flex-col gap-2 md:flex-row'}>
       <DataCard
         title={t('createDateInformation')}
         value={formatDate(createDate)}
