@@ -41,7 +41,7 @@ function Input({
           placeholder={placeholder}
           onChange={onChange}
           className={clsx(
-            'my-2 block w-full rounded-md border bg-white/50 px-4 py-2 shadow-sm focus:outline-none',
+            'my-2 block w-full rounded-md border bg-zinc-50 px-4 py-2 shadow-sm focus:outline-none',
             error && 'border-red-400',
             className
           )}
