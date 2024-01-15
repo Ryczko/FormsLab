@@ -18,10 +18,10 @@ export const defaultQuestions: Question[] = [
     id: v4(),
     title: '',
     options: [
-      ':smiley:',
-      ':slightly_smiling_face:',
-      ':slightly_frowning_face:',
       ':rage:',
+      ':slightly_frowning_face:',
+      ':slightly_smiling_face:',
+      ':smiley:',
     ],
     type: QuestionType.EMOJI,
     isRequired: true,

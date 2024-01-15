@@ -66,7 +66,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
       setFormData(initialData);
     }
     if (
-      process.env.NEXT_PUBLIC_BLOCK_MULTIPLE_ANSWERS &&
+      !process.env.NEXT_PUBLIC_ALLOW_MULTIPLE_ANSWERS &&
       localStorageValue.includes(surveyId) &&
       !isAnswering
     ) {

@@ -1,7 +1,6 @@
 {
-  "title": "Settings",
-  "content": "Settings - FormsLab",
-  "heading": "Hi",
+  "title": "Account",
+  "content": "Account - FormsLab",
   "deleteAccountButtonTitle": "Delete my account",
   "deleteAccountButton": "Delete my account",
   "dialogTitle": "Delete my account",

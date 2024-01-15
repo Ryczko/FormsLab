@@ -160,6 +160,7 @@ function SurveyResultsPage({
             <Image
               className="mx-auto mt-12 w-[140px]"
               src={NoAnswers}
+              height={160}
               alt="no answers"
             />
             <div className="my-6">{t('noAnswers')}</div>

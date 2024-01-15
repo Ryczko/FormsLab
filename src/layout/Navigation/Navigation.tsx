@@ -1,17 +1,18 @@
-import { CogIcon, LogoutIcon, MenuIcon } from '@heroicons/react/outline';
+import { LogoutIcon, MenuIcon, UserIcon } from '@heroicons/react/outline';
 import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import Image from 'next/image';
 import Logo from 'layout/Logo/Logo';
-import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import BurgerMenu from 'layout/BurgerMenu/BurgerMenu';
-import Button, { ButtonVariant } from 'shared/components/Button/Button';
-import AvatarIcon from '../../../public/images/avatar.svg';
+import Button, {
+  ButtonSize,
+  ButtonVariant,
+} from 'shared/components/Button/Button';
 import GithubCorner from 'layout/GithubCorner/GithubCorner';
 import { useApplicationContext } from 'features/application/context';
-import IconButtonLink from 'shared/components/IconButtonLink/IconButtonLink';
 import useTranslation from 'next-translate/useTranslation';
 import { signOut } from 'next-auth/react';
+import Avatar from 'shared/components/Avatar/Avatar';
+import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 
 function Navigation() {
   const { user, loading } = useApplicationContext();
@@ -57,23 +58,7 @@ function Navigation() {
                   <p className="ml-2 mr-4 hidden items-center truncate sm:block">
                     {user.name}
                   </p>
-                  {user.image ? (
-                    <Image
-                      src={user.image}
-                      alt="user photo"
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <Image
-                      src={AvatarIcon}
-                      alt="user photo"
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                    />
-                  )}
+                  <Avatar src={user.image} />
                 </Menu.Button>
                 <Transition
                   as={Fragment}
@@ -84,24 +69,27 @@ function Navigation() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-zinc-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="flex flex-col justify-end p-1">
-                      {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
+                  <Menu.Items className="absolute right-0 mt-2 min-w-[160px] origin-top-right divide-y divide-zinc-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="p-1">
+                      {process.env.NEXT_PUBLIC_PROFILE_SETTINGS && (
                         <Menu.Item>
-                          <IconButtonLink
+                          <ButtonLink
                             variant={ButtonVariant.FLAT}
-                            href={'/settings'}
-                            icon={<CogIcon className="h-5 w-5" />}
+                            sizeType={ButtonSize.FULL}
+                            href={'/account'}
+                            icon={<UserIcon className="h-5 w-5" />}
                           >
-                            {t('navigation.settingsButton')}
-                          </IconButtonLink>
+                            <span className="ms-1">Account</span>
+                          </ButtonLink>
                         </Menu.Item>
                       )}
+
                       <Menu.Item>
                         <Button
                           onClick={logout}
+                          sizeType={ButtonSize.FULL}
                           variant={ButtonVariant.FLAT}
-                          className="w-40 text-red-600 hover:bg-red-100"
+                          className="text-red-600 hover:bg-red-100"
                           icon={<LogoutIcon className="h-5 w-5" />}
                         >
                           {t('navigation.signOutButton')}
@@ -132,28 +120,28 @@ function Navigation() {
           href={'/survey/create'}
           onClick={() => setIsOpen(!isOpen)}
           variant={ButtonVariant.FLAT}
-          className="mb-3 w-[95%] lg:w-auto"
+          className="mb-2 w-[95%] lg:w-auto"
         >
           {t('navigation.createSurveyButton')}
         </ButtonLink>
         <ButtonLink
           href={'/surveys'}
-          className="mb-3 w-[95%] lg:w-auto"
           onClick={() => setIsOpen(!isOpen)}
+          className="mb-2 w-[95%] lg:w-auto"
           variant={ButtonVariant.FLAT}
         >
           {t('navigation.mySurveysButton')}
         </ButtonLink>
-        {process.env.NEXT_PUBLIC_REMOVE_ACCOUNT && (
-          <IconButtonLink
-            className="mb-3 w-[95%] justify-center lg:w-auto"
-            href="/settings"
+        {process.env.NEXT_PUBLIC_PROFILE_SETTINGS && (
+          <Button
+            className="mb-2 w-[95%] justify-center lg:w-auto"
+            href={'/account'}
             onClick={() => setIsOpen(!isOpen)}
             variant={ButtonVariant.FLAT}
-            icon={<CogIcon className="h-5 w-5" />}
+            icon={<UserIcon className="h-5 w-5" />}
           >
-            {t('navigation.settingsButton')}
-          </IconButtonLink>
+            Account
+          </Button>
         )}
         <Button
           onClick={logout}

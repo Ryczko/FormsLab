@@ -37,7 +37,7 @@ export default function MainSection({
         alt={alt}
         src={image}
         width={500}
-        height={215}
+        height={265}
         priority
         className="rounded-md border shadow-sm"
       />

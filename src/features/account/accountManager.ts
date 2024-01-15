@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useApplicationContext } from 'features/application/context';
 
-export const useSettingsManager = () => {
+export const useAccountManager = () => {
   const { error, user } = useApplicationContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isRemoving] = useState(false);

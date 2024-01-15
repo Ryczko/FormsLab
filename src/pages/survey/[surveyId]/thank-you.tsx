@@ -16,7 +16,7 @@ const ThankyouPage = () => {
         <Image
           src="/images/thankyou.svg"
           alt="thankyou"
-          height="200"
+          height="151"
           width="140"
         />
 

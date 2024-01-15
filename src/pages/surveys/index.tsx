@@ -89,6 +89,7 @@ function SurveyListPage({
                 className="mt-2 w-[160px] -translate-x-1"
                 src={NoSurveys}
                 alt="no surveys"
+                height={165}
               />
               <p className="my-6">{t('noSurveys')}</p>
               <ButtonLink
