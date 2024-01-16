@@ -11,13 +11,13 @@ export default function FourOhFour() {
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
-      <section className="absolute left-1/2 top-1/3 w-full -translate-x-1/2 -translate-y-1/2">
-        <div className="px-4 py-8 lg:px-6 lg:py-16">
+      <section>
+        <div className="mt-12 px-4 py-8 lg:px-6 lg:py-16">
           <h1 className="text-primary-300 mb-2 text-7xl font-extrabold tracking-tight text-indigo-300 lg:text-8xl">
             404
           </h1>
 
-          <p className="mb-7 text-lg font-light text-gray-500 dark:text-gray-400">
+          <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
             {t('header')}
           </p>
           <ButtonLink href="/" variant={ButtonVariant.PRIMARY}>
