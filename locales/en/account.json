@@ -1,0 +1,15 @@
+{
+  "title": "Account",
+  "content": "Account - FormsLab",
+  "deleteAccountButtonTitle": "Delete my account",
+  "deleteAccountButton": "Delete my account",
+  "dialogTitle": "Delete my account",
+  "buttonCancle": "Cancel",
+  "buttonConfirm": "Confirm",
+  "dialogContentFirst": "Are you sure you want to",
+  "dialogContentSecond": "delete",
+  "dialogContentThird": "your account?",
+  "deleteAccountSuccess": "Your account has been deleted successfully.",
+  "deleteAccountError": "Error deleting account.",
+  "reauthorize": "'For security reasons, please sign in and delete your account again'"
+}

@@ -6,18 +6,17 @@ import data from '@emoji-mart/data/sets/14/apple.json';
 import { init as emojisInit } from 'emoji-mart';
 import { EMOJI_STYLE, customEmojisData } from 'shared/constants/emojisConfig';
 
-export interface ApplicationManager {
-  user: User | undefined;
-  loading: boolean;
-  error: boolean;
-}
-
-export const useApplicationManager = (): ApplicationManager => {
+export const useApplicationManager = () => {
   const [loading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [user, setUser] = useState<User>();
+  const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsBrowser(true);
+    }
+
     init();
   }, []);
 
@@ -37,5 +36,8 @@ export const useApplicationManager = (): ApplicationManager => {
     user,
     loading,
     error,
+    isBrowser,
   };
 };
+
+export type ApplicationManager = ReturnType<typeof useApplicationManager>;

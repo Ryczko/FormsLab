@@ -7,6 +7,8 @@
   *::before,
   *::after {
     @apply box-border antialiased;
+
+    border-color: #d4d6da;
   }
   * {
     font-family: 'Montserrat', 'sans-serif';
@@ -25,12 +27,12 @@
     }
   }
   body {
-    @apply text-zinc-900 bg-zinc-100;
+    @apply text-zinc-900;
   }
 }
 
-.max-h-screen-dvh {
-  max-height: 100dvh;
+.min-h-screen-dvh {
+  min-height: 100dvh;
 }
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
@@ -59,7 +61,7 @@
     @apply text-zinc-900 bg-zinc-100 shadow-zinc-600/50 hover:bg-zinc-50 border;
   }
   .btn-outline {
-    @apply text-indigo-900 bg-transparent border border-zinc-600/50 shadow-zinc-400/50 hover:bg-zinc-50;
+    @apply text-indigo-900 bg-zinc-50 border border-zinc-600/50 shadow-zinc-400/50 hover:bg-zinc-50;
   }
   .btn-outline-primary {
     @apply text-indigo-900 bg-transparent border border-indigo-900 shadow-indigo-400/50 hover:bg-indigo-50;

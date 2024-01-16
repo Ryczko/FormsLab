@@ -26,7 +26,7 @@ function LoginButton({
       onClick={onClick}
       disabled={isLoading}
       className={clsx(
-        'btn relative my-1 flex w-full items-center justify-center rounded-lg bg-white py-2 pl-2 pr-4 font-semibold text-zinc-900 shadow hover:bg-zinc-50  active:bg-zinc-50',
+        'btn relative my-1 flex w-full items-center justify-center rounded-lg border bg-white py-2 pl-2 pr-4 font-semibold text-zinc-900 shadow-sm hover:bg-zinc-50  active:bg-zinc-50',
         className
       )}
       {...props}

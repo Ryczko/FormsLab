@@ -23,6 +23,7 @@ const ButtonLink = ({
   variant = ButtonLinkVariant.SECONDARY,
   sizeType = ButtonLinkSize.DEFAULT,
   target,
+  icon,
   ...props
 }: PropsWithChildren<ButtonLinkProps>) => (
   <Link
@@ -30,8 +31,14 @@ const ButtonLink = ({
     target={target}
     {...props}
     scroll={false}
-    className={clsx('btn', variant, sizeType, 'hover:no-underline', className)}
+    className={clsx(
+      'btn relative flex items-center justify-center',
+      variant,
+      sizeType,
+      className
+    )}
   >
+    {!!icon && <div className={children ? 'pr-1' : 'px-1'}>{icon}</div>}
     {children}
   </Link>
 );

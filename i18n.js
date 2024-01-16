@@ -9,11 +9,11 @@ module.exports = {
       '404',
       'login',
       'signup',
-      'settings',
+      'account',
       'surveys',
       'surveyAnswer',
       'survey',
-      'thankyou'
+      'thankyou',
     ],
   },
   loadLocaleFrom: (lang, ns) =>
