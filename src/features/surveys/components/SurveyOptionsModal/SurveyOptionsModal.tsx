@@ -2,7 +2,7 @@ import React from 'react';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import useTranslation from 'next-translate/useTranslation';
 import Toggle from 'shared/components/Toggle/Toggle';
-import { SurveyOptions } from 'features/surveys/managers/createSurveyManager';
+import { SurveyOptions } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager';
 
 type SurveyOptionsModalProps = {
   isOpened: boolean;
@@ -43,10 +43,7 @@ export default function SurveyOptionsModalModal({
             classNames="gap-2 mt-4"
             testId="display-title-toggle"
             onToggle={() => {
-              updateOptions(
-                'displayTitle',
-                !surveyOptions.displayTitle
-              );
+              updateOptions('displayTitle', !surveyOptions.displayTitle);
             }}
             label={t('surveyOptionsModal.DisplayTitle')}
           />
