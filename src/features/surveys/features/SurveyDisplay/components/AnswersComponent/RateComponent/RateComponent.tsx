@@ -2,23 +2,19 @@ import React, { useState } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import clsx from 'clsx';
 import StarComponent from 'features/surveys/features/SurveyDisplay/components/AnswersComponent/RateComponent/StarComponent/StarComponent';
+import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
+import { DraftQuestionWithAnswer } from 'features/surveys/features/SurveyDisplay/managers/surveyAnswerManager';
 
 interface RateAnswersComponentProps {
-  handleAnswerChange: (answer: string, questionId: string) => void;
-  answer?: string;
-  questionId: string;
-  isSubmitted: boolean;
-  isRequired: boolean;
+  questionData: DraftQuestionWithAnswer;
 }
 
 export default function RateAnswersComponent({
-  handleAnswerChange,
-  answer,
-  questionId,
-  isSubmitted,
-  isRequired,
+  questionData,
 }: RateAnswersComponentProps) {
   const { t } = useTranslation('survey');
+
+  const { handleAnswerChange, isSubmitted } = useSurveyDisplayContext();
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -29,7 +25,9 @@ export default function RateAnswersComponent({
           <StarComponent
             key={index}
             classNames={clsx(
-              answer && index < +answer ? 'text-yellow-400' : 'text-gray-300',
+              questionData.answer && index < +questionData.answer
+                ? 'text-yellow-400'
+                : 'text-gray-300',
               hoveredIndex !== null
                 ? hoveredIndex >= index
                   ? '!text-yellow-400'
@@ -39,12 +37,12 @@ export default function RateAnswersComponent({
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             onClick={() =>
-              handleAnswerChange((index + 1).toString(), questionId)
+              handleAnswerChange((index + 1).toString(), questionData.id)
             }
           />
         ))}
       </div>
-      {isSubmitted && !answer && isRequired && (
+      {isSubmitted && !questionData.answer && questionData.isRequired && (
         <p className="mt-4 text-sm text-red-500">{t('requiredField')}</p>
       )}
     </>
