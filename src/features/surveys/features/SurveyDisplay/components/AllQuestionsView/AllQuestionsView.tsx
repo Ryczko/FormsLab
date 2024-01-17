@@ -1,4 +1,3 @@
-import { SurveyWithQuestionsAndUsersAnswers } from 'features/surveys/features/SurveyDisplay/managers/surveyAnswerManager';
 import React from 'react';
 import Header from 'shared/components/Header/Header';
 import Button, {
@@ -7,41 +6,20 @@ import Button, {
 } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
 import { AnswersComponentFactory } from 'features/surveys/features/SurveyDisplay/components/AnswersComponent/AnswersComponentFactory';
+import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
 
-interface AllQuestionsViewProps {
-  formData: SurveyWithQuestionsAndUsersAnswers;
-  handleSave: () => Promise<void>;
-  isAnswering: boolean;
-  isSubmitted: boolean;
-  handleAnswerChange: (questionId: string, answer: string) => void;
-}
-
-export default function AllQuestionView({
-  formData,
-  handleSave,
-  handleAnswerChange,
-  isAnswering,
-  isSubmitted,
-}: AllQuestionsViewProps) {
+export default function AllQuestionView() {
   const { t } = useTranslation('survey');
+
+  const { handleSave, isAnswering, formData } = useSurveyDisplayContext();
 
   return (
     <>
       {formData?.displayTitle && <Header>{formData?.title}</Header>}
 
-      {formData?.questions.map((question) => {
+      {formData?.questions.map((question, index) => {
         return (
-          <AnswersComponentFactory
-            key={question.id}
-            question={question.title}
-            type={question.type}
-            options={question.options}
-            answer={question.answer}
-            questionId={question.id}
-            handleAnswerChange={handleAnswerChange}
-            isSubmitted={isSubmitted}
-            isRequired={question.isRequired}
-          />
+          <AnswersComponentFactory key={question.id} questionIndex={index} />
         );
       })}
 

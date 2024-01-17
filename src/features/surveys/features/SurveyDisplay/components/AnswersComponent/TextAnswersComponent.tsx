@@ -2,31 +2,31 @@ import React, { ChangeEvent } from 'react';
 import Input from 'shared/components/Input/Input';
 import { MAX_ANSWER_LENGTH } from 'shared/constants/surveysConfig';
 import useTranslation from 'next-translate/useTranslation';
+import { DraftQuestionWithAnswer } from 'features/surveys/features/SurveyDisplay/managers/surveyAnswerManager';
+import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
 
 interface TextAnswersComponentProps {
-  handleAnswerChange: (answer: string, questionId: string) => void;
-  answer?: string;
-  questionId: string;
-  isSubmitted: boolean;
-  isRequired: boolean;
+  questionData: DraftQuestionWithAnswer;
 }
 
 export default function TextAnswersComponent({
-  handleAnswerChange,
-  answer,
-  questionId,
-  isSubmitted,
-  isRequired,
+  questionData,
 }: TextAnswersComponentProps) {
   const { t } = useTranslation('survey');
 
+  const { handleAnswerChange, isSubmitted } = useSurveyDisplayContext();
+
   const onAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    handleAnswerChange(e.target.value, questionId);
+    handleAnswerChange(e.target.value, questionData.id);
   };
 
   const getAnswerError = () => {
-    if ((!answer || answer?.trim() === '') && isSubmitted && isRequired) {
+    if (
+      (!questionData.answer || questionData.answer?.trim() === '') &&
+      isSubmitted &&
+      questionData.isRequired
+    ) {
       return t('requiredField');
     }
     return undefined;
@@ -35,7 +35,7 @@ export default function TextAnswersComponent({
   return (
     <div>
       <Input
-        value={answer}
+        value={questionData.answer}
         onInput={onAnswerChange}
         placeholder="Answer..."
         error={getAnswerError()}

@@ -12,8 +12,10 @@ export type Answers = { [key: string]: string };
 
 const DEFAULT_VALUE: string[] = [];
 
+export type DraftQuestionWithAnswer = Question & { answer?: string };
+
 export type SurveyWithQuestionsAndUsersAnswers = Survey & {
-  questions: (Question & { answer?: string })[];
+  questions: DraftQuestionWithAnswer[];
 };
 
 export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
@@ -25,7 +27,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   const { surveyId } = router.query as { surveyId: string };
 
   const [formData, setFormData] =
-    useState<SurveyWithQuestionsAndUsersAnswers>();
+    useState<SurveyWithQuestionsAndUsersAnswers>(initialData);
 
   const [isAnswering, setIsAnswering] = useState(false);
   const [localStorageValue, setLocalStorageValue] = useLocalStorage<string[]>(
@@ -62,9 +64,6 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   };
 
   useEffect(() => {
-    if (surveyId) {
-      setFormData(initialData);
-    }
     if (
       !process.env.NEXT_PUBLIC_ALLOW_MULTIPLE_ANSWERS &&
       localStorageValue.includes(surveyId) &&
@@ -170,3 +169,5 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     handlePreviousQuestion,
   };
 };
+
+export type SurveyAnswerManager = ReturnType<typeof useSurveyAnswerManager>;

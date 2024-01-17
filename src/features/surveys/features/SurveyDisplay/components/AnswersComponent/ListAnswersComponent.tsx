@@ -1,44 +1,38 @@
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import EmojiListItem from 'features/surveys/features/SurveyDisplay/components/AnswersComponent/EmojiListItem/EmojiListItem';
+import { DraftQuestionWithAnswer } from 'features/surveys/features/SurveyDisplay/managers/surveyAnswerManager';
+import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
 
 interface ListAnswersComponentProps {
-  options: string[];
-  handleAnswerChange: (answer: string, questionId: string) => void;
-  answer?: string;
-  questionId: string;
-  isSubmitted: boolean;
-  isRequired: boolean;
+  questionData: DraftQuestionWithAnswer;
 }
 
 export default function ListAnswersComponent({
-  options,
-  handleAnswerChange,
-  answer,
-  questionId,
-  isSubmitted,
-  isRequired,
+  questionData,
 }: ListAnswersComponentProps) {
   const { t } = useTranslation('survey');
 
+  const { handleAnswerChange, isSubmitted } = useSurveyDisplayContext();
+
   const onAnswerChange = (answer: string) => {
-    handleAnswerChange(answer, questionId);
+    handleAnswerChange(answer, questionData.id);
   };
 
   return (
     <>
       <div className="mb-2 flex flex-wrap justify-center gap-y-2">
-        {options.map((icon, idx) => (
+        {questionData.options.map((icon, idx) => (
           <EmojiListItem
             icon={icon}
-            selected={answer === icon}
-            isAnySelected={!!answer}
+            selected={questionData.answer === icon}
+            isAnySelected={!!questionData.answer}
             key={icon}
             onClick={onAnswerChange}
           />
         ))}
       </div>
-      {isSubmitted && !answer && isRequired && (
+      {isSubmitted && !questionData.answer && questionData.isRequired && (
         <p className="mt-4 text-sm text-red-500">{t('requiredField')}</p>
       )}
     </>

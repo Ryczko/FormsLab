@@ -1,41 +1,35 @@
 import clsx from 'clsx';
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation';
+import { DraftQuestionWithAnswer } from 'features/surveys/features/SurveyDisplay/managers/surveyAnswerManager';
+import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
 
 interface ChoiceComponentProps {
-  options: string[];
-  handleAnswerChange: (answer: string, questionId: string) => void;
-  answer?: string;
-  questionId: string;
-  isSubmitted: boolean;
-  isRequired: boolean;
+  questionData: DraftQuestionWithAnswer;
 }
 
 export default function ChoiceComponent({
-  handleAnswerChange,
-  isRequired,
-  isSubmitted,
-  options,
-  questionId,
-  answer,
+  questionData,
 }: ChoiceComponentProps) {
   const { t } = useTranslation('survey');
 
+  const { handleAnswerChange, isSubmitted } = useSurveyDisplayContext();
+
   return (
     <div>
-      {options.map((option, idx) => (
+      {questionData.options.map((option, idx) => (
         <button
           key={idx}
           className={clsx(
             'mb-2 w-full rounded border p-4 text-center text-sm font-medium hover:bg-gray-100',
-            answer === option && 'bg-gray-200'
+            questionData.answer === option && 'bg-gray-200'
           )}
-          onClick={() => handleAnswerChange(option, questionId)}
+          onClick={() => handleAnswerChange(option, questionData.id)}
         >
           {option}
         </button>
       ))}
-      {isSubmitted && !answer && isRequired && (
+      {isSubmitted && !questionData.answer && questionData.isRequired && (
         <p className="mt-2 text-sm text-red-500">{t('requiredField')}</p>
       )}
     </div>
