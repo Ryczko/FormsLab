@@ -18,7 +18,7 @@ function EmojiListItem({
     <button
       type="button"
       className={clsx(
-        'flex w-[60px] justify-center rounded-lg duration-200 hover:scale-125',
+        'flex w-[56px] justify-center rounded-lg duration-200 hover:scale-125',
         isAnySelected ? 'grayscale' : '',
         selected ? 'scale-125 grayscale-0' : ''
       )}

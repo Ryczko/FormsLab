@@ -26,7 +26,7 @@ export default function ChoiceComponent({
           )}
           onClick={() => handleAnswerChange(option, questionData.id)}
         >
-          {option}
+          {option.trim() || '-'}
         </button>
       ))}
       {isSubmitted && !questionData.answer && questionData.isRequired && (

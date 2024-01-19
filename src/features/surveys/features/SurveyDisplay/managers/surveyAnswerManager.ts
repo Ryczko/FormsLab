@@ -133,7 +133,7 @@ export const useSurveyAnswerManager = (
   const handleSave = async () => {
     setIsSubmitted(true);
 
-    if (!isAnswersValid() || previewMode) return;
+    if (previewMode || !isAnswersValid()) return;
 
     setIsAnswering(true);
 

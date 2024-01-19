@@ -21,11 +21,11 @@ export default function SurveyCreator() {
     <>
       <div
         className={clsx(
-          'flex-grow px-6 py-8 transition-all duration-500 ease-in-out xl:px-10',
+          'flex-grow py-8 transition-all duration-500 ease-in-out',
           isPanelOpened && 'xl:mr-[550px]'
         )}
       >
-        <div className="mx-auto max-w-[58rem]">
+        <div className="mx-auto max-w-[58rem] px-6 xl:px-10">
           <Header>{isEditMode ? t('editHeading') : t('heading')}</Header>
           <TitleAndConfigSection />
           <QuestionsSection />

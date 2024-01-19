@@ -75,7 +75,7 @@ export const AnswersComponentFactory = (
               onClick={handleNextQuestion}
               isLoading={isAnswering}
             >
-              {isLastQuestion ? t('finish') : t('next')}
+              {isLastQuestion ? t('sendButton') : t('next')}
             </Button>
           )}
         </div>
