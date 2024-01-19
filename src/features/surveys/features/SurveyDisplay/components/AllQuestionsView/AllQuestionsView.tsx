@@ -23,16 +23,18 @@ export default function AllQuestionView() {
         );
       })}
 
-      <div className="flex justify-center">
-        <Button
-          onClick={handleSave}
-          variant={ButtonVariant.PRIMARY}
-          sizeType={ButtonSize.FULL}
-          isLoading={isAnswering}
-        >
-          {t('sendButton')}
-        </Button>
-      </div>
+      {formData.questions.length > 0 && (
+        <div className="flex justify-center">
+          <Button
+            onClick={handleSave}
+            variant={ButtonVariant.PRIMARY}
+            sizeType={ButtonSize.FULL}
+            isLoading={isAnswering}
+          >
+            {t('sendButton')}
+          </Button>
+        </div>
+      )}
     </>
   );
 }

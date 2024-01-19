@@ -14,8 +14,8 @@ import Toggle from 'shared/components/Toggle/Toggle';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import QuestionTypeIcons from 'shared/components/QuestionTypeIcons/QuestionTypeIcons';
-import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/context';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager';
+import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
+import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
 interface QuestionBlockWrapperProps {
   index: number;

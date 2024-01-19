@@ -2,7 +2,7 @@ import React from 'react';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import useTranslation from 'next-translate/useTranslation';
 import Toggle from 'shared/components/Toggle/Toggle';
-import { SurveyOptions } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager';
+import { SurveyOptions } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
 type SurveyOptionsModalProps = {
   isOpened: boolean;

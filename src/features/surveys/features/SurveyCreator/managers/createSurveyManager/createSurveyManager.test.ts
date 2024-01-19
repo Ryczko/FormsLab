@@ -1,4 +1,4 @@
-import { useCreateSurveyManager } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager';
+import { useCreateSurveyManager } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import { v4 } from 'uuid';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { defaultQuestions } from 'shared/constants/surveysConfig';

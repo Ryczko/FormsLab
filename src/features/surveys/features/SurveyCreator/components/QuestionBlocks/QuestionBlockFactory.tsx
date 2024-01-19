@@ -5,7 +5,7 @@ import EmojiQuestionBlock from 'features/surveys/features/SurveyCreator/componen
 import InputQuestionBlock from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/InputQuestionBlock/InputQuestionBlock';
 import QuestionBlockWrapper from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
 import RateQuestionBlock from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/RateQuestionBlock/RateQuestionBlock';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager';
+import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
 interface QuestionBlockFactoryProps {
   questionData: Question;

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import QuestionBlockFactory from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/QuestionBlockFactory';
-import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/context';
+import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { useApplicationContext } from 'features/application/context';
 import useTranslation from 'next-translate/useTranslation';
 import Note from 'shared/components/Note/Note';

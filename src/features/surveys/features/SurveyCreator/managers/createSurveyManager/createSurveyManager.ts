@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { QuestionType } from '@prisma/client';
-import { postFetch, putFetch } from '../../../../../../lib/axiosConfig';
+import { postFetch, putFetch } from '../../../../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
@@ -28,7 +28,7 @@ export interface SurveyOptions {
 export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   const [isEditMode] = useState(!!initialData);
 
-  const [title, setTitle] = useState(initialData?.title ?? '');
+  const [title, setTitle] = useState(initialData?.title ?? 'My survey');
 
   const mapQuestionsWithExpanded = (questions?: QuestionDto[]) => {
     return questions?.map((question) => ({

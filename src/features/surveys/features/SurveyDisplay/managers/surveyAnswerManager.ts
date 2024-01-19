@@ -18,7 +18,10 @@ export type SurveyWithQuestionsAndUsersAnswers = Survey & {
   questions: DraftQuestionWithAnswer[];
 };
 
-export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
+export const useSurveyAnswerManager = (
+  initialData: SurveyWithQuestions,
+  previewMode: boolean
+) => {
   const router = useRouter();
   const { t } = useTranslation('survey');
 
@@ -36,6 +39,20 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   );
 
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+
+  useEffect(() => {
+    if (previewMode) {
+      setFormData(initialData);
+      setIsSubmitted(false);
+
+      const questionsCount = initialData.questions.length;
+
+      if (questionsCount <= activeQuestionIndex && questionsCount > 0) {
+        setActiveQuestionIndex(questionsCount - 1);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData, previewMode]);
 
   const handleNextQuestion = () => {
     setIsSubmitted(true);
@@ -116,7 +133,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
   const handleSave = async () => {
     setIsSubmitted(true);
 
-    if (!isAnswersValid()) return;
+    if (!isAnswersValid() || previewMode) return;
 
     setIsAnswering(true);
 
@@ -167,6 +184,7 @@ export const useSurveyAnswerManager = (initialData: SurveyWithQuestions) => {
     activeQuestionIndex,
     handleNextQuestion,
     handlePreviousQuestion,
+    previewMode,
   };
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager';
+import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import { QuestionType } from '@prisma/client';
 import { v4 } from 'uuid';
 import NewQuestionModalButton from 'features/surveys/features/SurveyCreator/components/NewQuestionModal/components/NewQuestionModalButton';
@@ -28,10 +28,10 @@ export default function NewQuestionModal({
       title: '',
       isRequired: true,
       options: [
-        ':smiley:',
-        ':slightly_smiling_face:',
-        ':slightly_frowning_face:',
         ':rage:',
+        ':slightly_frowning_face:',
+        ':slightly_smiling_face:',
+        ':smiley:',
       ],
       expanded: true,
     });

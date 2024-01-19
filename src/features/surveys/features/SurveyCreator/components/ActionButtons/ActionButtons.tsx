@@ -2,7 +2,7 @@ import { useApplicationContext } from 'features/application/context';
 import React from 'react';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import { MAX_QUESTIONS } from 'shared/constants/surveysConfig';
-import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/context';
+import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { AddQuestionButton } from 'features/surveys/features/SurveyCreator/components/AddQuestionButton/AddQuestionButton';
 import useTranslation from 'next-translate/useTranslation';
 
