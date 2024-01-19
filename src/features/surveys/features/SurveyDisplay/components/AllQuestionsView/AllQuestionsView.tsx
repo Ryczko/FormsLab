@@ -15,7 +15,9 @@ export default function AllQuestionView() {
 
   return (
     <>
-      {formData?.displayTitle && <Header>{formData?.title}</Header>}
+      {formData?.displayTitle && (
+        <Header>{formData?.title.trim() || '-'}</Header>
+      )}
 
       {formData?.questions.map((question, index) => {
         return (

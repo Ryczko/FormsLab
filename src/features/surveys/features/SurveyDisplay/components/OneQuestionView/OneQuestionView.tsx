@@ -10,7 +10,9 @@ export default function OneQuestionView() {
 
   return (
     <>
-      {formData?.displayTitle && <Header>{formData?.title}</Header>}
+      {formData?.displayTitle && (
+        <Header>{formData?.title.trim() || '-'}</Header>
+      )}
 
       {formData.questions.length > 0 && (
         <>
