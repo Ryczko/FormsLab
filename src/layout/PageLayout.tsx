@@ -7,7 +7,10 @@ import Navigation from 'layout/Navigation/Navigation';
 import { useApplicationContext } from 'features/application/context';
 import { useGlobalProgressBar } from 'layout/hooks/useGlobalProgressBar';
 import Footer from 'layout/Footer/Footer';
-import { HIDDEN_ELEMENTS_ROUTES } from 'shared/constants/routesConfig';
+import {
+  EXTERNAL_ROUTES,
+  FULL_PAGE_ROUTES,
+} from 'shared/constants/routesConfig';
 import clsx from 'clsx';
 
 function PageLayout({ children }: PropsWithChildren) {
@@ -15,28 +18,21 @@ function PageLayout({ children }: PropsWithChildren) {
   const { loading } = useApplicationContext();
   const router = useRouter();
 
+  const isExternalRoute = EXTERNAL_ROUTES.includes(router.pathname);
+  const isFullPageRoute = FULL_PAGE_ROUTES.includes(router.pathname);
+
   return (
     <>
       <Background />
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
       <div className="min-h-screen-dvh flex flex-col justify-between overflow-x-hidden">
-        {!HIDDEN_ELEMENTS_ROUTES.includes(router.pathname) && <Navigation />}
-        <div
-          className={clsx(
-            'mx-auto w-full px-6 py-8 text-center',
-            HIDDEN_ELEMENTS_ROUTES.includes(router.pathname)
-              ? 'w-100 flex max-w-[54rem] flex-grow items-center justify-center'
-              : 'mb-4 mt-[60px] max-w-[58rem]',
-            loading && 'hidden'
-          )}
-        >
+        {!isExternalRoute && <Navigation />}
+        <div className={clsx('contents text-center', loading && 'hidden')}>
           <AnimatePresence exitBeforeEnter initial={false}>
-            <Fragment key={router.asPath}>
-              <div className={clsx('w-full')}>{children}</div>
-            </Fragment>
+            <Fragment key={router.asPath}>{children}</Fragment>
           </AnimatePresence>
         </div>
-        <Footer />
+        {!isFullPageRoute && <Footer />}
       </div>
     </>
   );

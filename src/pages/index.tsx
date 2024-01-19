@@ -1,11 +1,12 @@
 import Head from 'next/head';
-import withAnimation from 'shared/HOC/withAnimation';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import { ButtonVariant } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
 import { StarIcon } from '@heroicons/react/solid';
 import { InferGetServerSidePropsType } from 'next';
 import MainSection from 'features/application/components/MainSection';
+import StandardPageWrapper from 'layout/StandardPageWrapper';
+import withAnimation from 'shared/HOC/withAnimation';
 
 export async function getServerSideProps() {
   const repositoryData = await fetch(
@@ -25,7 +26,7 @@ function IndexPage({
   const { t } = useTranslation('home');
 
   return (
-    <>
+    <StandardPageWrapper>
       <Head>
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
@@ -89,7 +90,7 @@ function IndexPage({
           description={t('resultDescription')}
         />
       </div>
-    </>
+    </StandardPageWrapper>
   );
 }
 

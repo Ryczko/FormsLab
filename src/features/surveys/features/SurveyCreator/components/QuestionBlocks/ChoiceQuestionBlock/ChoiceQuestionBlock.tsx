@@ -3,7 +3,7 @@ import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import Input from 'shared/components/Input/Input';
 import { MAX_OPTIONS, MIN_OPTIONS } from 'shared/constants/surveysConfig';
 import useTranslation from 'next-translate/useTranslation';
-import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/context';
+import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 
 interface ChoiceQuestionBlockProps {
   options: string[];

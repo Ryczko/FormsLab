@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import withAnimation from 'shared/HOC/withAnimation';
 import withProtectedRoute from 'shared/HOC/withProtectedRoute';
 import useTranslation from 'next-translate/useTranslation';
 import { InferGetServerSidePropsType, NextPageContext } from 'next';
@@ -8,6 +7,8 @@ import { getSession } from 'next-auth/react';
 import { getSurveyWithAnswers } from 'pages/api/survey/[id]';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import SurveyResults from 'features/surveys/features/SurveyResults/SurveyResults';
+import StandardPageWrapper from 'layout/StandardPageWrapper';
+import withAnimation from 'shared/HOC/withAnimation';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -47,14 +48,14 @@ function SurveyResultsPage({
   const { t } = useTranslation('surveyAnswer');
 
   return (
-    <>
+    <StandardPageWrapper>
       <Head>
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
       </Head>
 
       <SurveyResults initialData={initialData} />
-    </>
+    </StandardPageWrapper>
   );
 }
 

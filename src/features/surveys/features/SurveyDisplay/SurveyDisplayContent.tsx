@@ -3,9 +3,11 @@ import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay
 import OneQuestionView from 'features/surveys/features/SurveyDisplay/components/OneQuestionView/OneQuestionView';
 import AllQuestionsView from 'features/surveys/features/SurveyDisplay/components/AllQuestionsView/AllQuestionsView';
 import SurveyNoActive from 'features/surveys/features/SurveyDisplay/components/SurveyNoActive/SurveyNoActive';
+import Note from 'shared/components/Note/Note';
+import clsx from 'clsx';
 
 export default function SurveyDisplayContent() {
-  const { formData } = useSurveyDisplayContext();
+  const { formData, previewMode } = useSurveyDisplayContext();
 
   return (
     <div className="w-full">
@@ -17,6 +19,16 @@ export default function SurveyDisplayContent() {
         )
       ) : (
         <SurveyNoActive />
+      )}
+
+      {previewMode && (
+        <div className={clsx(formData.questions.length > 0 && 'mt-4')}>
+          <Note
+            title="Preview mode"
+            classNames="text-center"
+            description="You can not submit a response in preview mode"
+          />
+        </div>
       )}
     </div>
   );

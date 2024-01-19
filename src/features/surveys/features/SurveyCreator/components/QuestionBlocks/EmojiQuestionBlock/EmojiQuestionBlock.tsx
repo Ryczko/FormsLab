@@ -1,6 +1,6 @@
 import EmojiPicker from 'features/surveys/features/SurveyCreator/components/EmojiPicker/EmojiPicker';
 import { MAX_EMOJIS, MIN_EMOJIS } from 'shared/constants/emojisConfig';
-import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/context';
+import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 
 interface EmojiQuestionBlockProps {
   pack: string[];

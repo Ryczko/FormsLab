@@ -24,7 +24,7 @@ export default function Progressbar({
           <span>Submitting...</span>
         ) : (
           <span>
-            {currentStep} of {totalSteps}
+            {currentStep - 1} of {totalSteps} completed
           </span>
         )}
       </span>

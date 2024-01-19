@@ -26,7 +26,7 @@ function Navigation() {
   };
 
   return (
-    <nav className="fixed left-0 top-0 z-40 flex min-h-[60px] w-full items-center border-b bg-white/70 backdrop-blur-md">
+    <nav className="fixed left-0 top-0 z-40 flex h-[var(--navigation-height)] w-full items-center border-b bg-white/70 backdrop-blur-md">
       <GithubCorner />
 
       <div

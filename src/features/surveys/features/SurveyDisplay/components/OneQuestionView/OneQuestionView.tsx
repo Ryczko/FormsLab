@@ -12,13 +12,16 @@ export default function OneQuestionView() {
     <>
       {formData?.displayTitle && <Header>{formData?.title}</Header>}
 
-      <AnswersComponentFactory questionIndex={activeQuestionIndex} />
-
-      <Progressbar
-        currentStep={activeQuestionIndex + 1}
-        totalSteps={formData?.questions.length}
-        isSubmitted={isAnswering}
-      />
+      {formData.questions.length > 0 && (
+        <>
+          <AnswersComponentFactory questionIndex={activeQuestionIndex} />
+          <Progressbar
+            currentStep={activeQuestionIndex + 1}
+            totalSteps={formData?.questions.length}
+            isSubmitted={isAnswering}
+          />
+        </>
+      )}
     </>
   );
 }

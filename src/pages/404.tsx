@@ -2,11 +2,12 @@ import Head from 'next/head';
 import useTranslation from 'next-translate/useTranslation';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import { ButtonVariant } from 'shared/components/Button/Button';
+import StandardPageWrapper from 'layout/StandardPageWrapper';
 
 export default function FourOhFour() {
   const { t } = useTranslation('404');
   return (
-    <>
+    <StandardPageWrapper>
       <Head>
         <title>{t('title')}</title>
         <meta name="description" content={t('content')} />
@@ -25,6 +26,6 @@ export default function FourOhFour() {
           </ButtonLink>
         </div>
       </section>
-    </>
+    </StandardPageWrapper>
   );
 }

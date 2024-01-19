@@ -31,6 +31,22 @@
   }
 }
 
+:root {
+  --navigation-height: 60px;
+  --footer-height: 45px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 .min-h-screen-dvh {
   min-height: 100dvh;
 }
