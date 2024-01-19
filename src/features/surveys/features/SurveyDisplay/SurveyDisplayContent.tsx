@@ -22,7 +22,7 @@ export default function SurveyDisplayContent() {
       )}
 
       {previewMode && (
-        <div className={clsx(formData.questions.length > 0 && 'mt-4')}>
+        <div className={clsx(formData.questions.length > 0 && 'my-4')}>
           <Note
             title="Preview mode"
             classNames="text-center"
