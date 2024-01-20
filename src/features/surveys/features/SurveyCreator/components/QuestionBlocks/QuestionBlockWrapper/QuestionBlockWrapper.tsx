@@ -76,7 +76,6 @@ export default function QuestionBlockWrapper({
             />
           </button>
 
-
           <div className="hidden sm:block">
             <QuestionTypeIcons type={questionData.type} index={index} />
           </div>

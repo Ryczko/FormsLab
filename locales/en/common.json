@@ -32,10 +32,10 @@
     "DisplayTitle": "Display title"
   },
   "questionType": {
-    "question": "QUESTION",
-    "emoji": "EMOJI",
-    "input": "INPUT",
-    "choice": "CHOICE",
-    "rate": "RATE"
+    "question": "Question",
+    "emoji": "Emoji",
+    "input": "Input",
+    "choice": "Choice",
+    "rate": "Rate"
   }
 }
