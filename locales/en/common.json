@@ -30,5 +30,12 @@
     "title": "Display options",
     "OneQuestionPerStep": "One question per step",
     "DisplayTitle": "Display title"
+  },
+  "questionType": {
+    "question": "Question",
+    "emoji": "Emoji",
+    "input": "Input",
+    "choice": "Choice",
+    "rate": "Rate"
   }
 }

@@ -77,7 +77,7 @@ export default function QuestionBlockWrapper({
           </button>
 
           <div className="hidden sm:block">
-            <QuestionTypeIcons type={questionData.type} />
+            <QuestionTypeIcons type={questionData.type} index={index} />
           </div>
 
           <div className="w-full grow">
@@ -97,7 +97,7 @@ export default function QuestionBlockWrapper({
 
         <div className="mb-2 flex w-full items-center justify-end gap-2 sm:mb-0 sm:w-auto">
           <div className="mr-1 sm:hidden">
-            <QuestionTypeIcons type={questionData.type} />
+            <QuestionTypeIcons type={questionData.type} index={index} />
           </div>
 
           {(isDraggingPossible || isRemovingPossible) && (
