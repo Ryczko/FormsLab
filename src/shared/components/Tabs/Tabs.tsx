@@ -12,7 +12,7 @@ export default function Tabs({ categories }: TabsProps) {
   return (
     <div className="w-full px-2 sm:px-0">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-md bg-indigo-200 p-1">
+        <Tab.List className="flex space-x-2 rounded-md bg-indigo-200 p-1">
           {Object.keys(categories).map((category) => (
             <Tab
               key={category}
