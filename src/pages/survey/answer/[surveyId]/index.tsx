@@ -9,6 +9,8 @@ import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import SurveyResults from 'features/surveys/features/SurveyResults/SurveyResults';
 import StandardPageWrapper from 'layout/StandardPageWrapper';
 import withAnimation from 'shared/HOC/withAnimation';
+import { useSurveyResultsManager } from 'features/surveys/features/SurveyResults/managers/surveyResultsManager';
+import { SurveyResultsContext } from 'features/surveys/features/SurveyResults/managers/context';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -47,6 +49,8 @@ function SurveyResultsPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation('surveyAnswer');
 
+  const manager = useSurveyResultsManager(initialData);
+
   return (
     <StandardPageWrapper>
       <Head>
@@ -54,7 +58,9 @@ function SurveyResultsPage({
         <meta name="description" content={t('content')} />
       </Head>
 
-      <SurveyResults initialData={initialData} />
+      <SurveyResultsContext.Provider value={manager}>
+        <SurveyResults />
+      </SurveyResultsContext.Provider>
     </StandardPageWrapper>
   );
 }

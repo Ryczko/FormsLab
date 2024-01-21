@@ -9,34 +9,30 @@ import NoAnswers from '/public/images/no-answers.svg';
 import Image from 'next/image';
 
 import AnswerHeader from 'features/surveys/features/SurveyResults/components/AnswerHeader/AnswerHeader';
-import { useSurveyResultsManager } from 'features/surveys/features/SurveyResults/managers/surveyResultsManager';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
 
-import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
-import ResultComponent from 'features/surveys/features/SurveyResults/components/ResultsComponents/ResultComponent';
 import useModal from 'features/surveys/hooks/useModal';
 import DeleteSurveyModal from 'features/surveys/components/DeleteSurveyModal/DeleteSurveyModal';
 import ShareSurveyModal from 'features/surveys/components/ShareSurveryModal/ShareSurveyModal';
 import { useRouter } from 'next/router';
+import Tabs from 'shared/components/Tabs/Tabs';
+import { useSurveyResultsContext } from 'features/surveys/features/SurveyResults/managers/context';
+import SummaryResults from 'features/surveys/features/SurveyResults/components/SummaryResults/SummaryResults';
+import IndividualResults from 'features/surveys/features/SurveyResults/components/IndividualResults/IndividualResults';
 
-interface SurveyResultsProps {
-  initialData: SurveyWithAnswers;
-}
-
-export default function SurveyResults({ initialData }: SurveyResultsProps) {
+export default function SurveyResults() {
   const { t } = useTranslation('surveyAnswer');
 
   const {
     surveyId,
     getSurveyData,
     surveyData,
-    mappedAnswersData,
     isDataLoading,
     onRemoveSuccess,
     updateSurveyStatus,
     isStatusLoading,
-  } = useSurveyResultsManager(initialData);
+  } = useSurveyResultsContext();
 
   const {
     isModalOpen: isDeleteSurveyModalOpen,
@@ -113,6 +109,17 @@ export default function SurveyResults({ initialData }: SurveyResultsProps) {
         createDate={surveyData?.createdAt ?? ''}
       />
 
+      {process.env.NEXT_PUBLIC_INDIVIDUAL_RESULTS ? (
+        <Tabs
+          categories={{
+            Summary: <SummaryResults />,
+            Individual: <IndividualResults />,
+          }}
+        />
+      ) : (
+        <SummaryResults />
+      )}
+
       {surveyData?.answers?.length === 0 && (
         <>
           <Image
@@ -133,15 +140,6 @@ export default function SurveyResults({ initialData }: SurveyResultsProps) {
           </Button>
         </>
       )}
-
-      {Object.keys(mappedAnswersData).map((key) => (
-        <ResultComponent
-          key={key}
-          question={mappedAnswersData[key].question}
-          type={mappedAnswersData[key].questionType}
-          answers={mappedAnswersData[key].answers}
-        />
-      ))}
 
       <DeleteSurveyModal
         surveyId={surveyId}

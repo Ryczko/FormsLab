@@ -123,3 +123,5 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
     updateSurveyStatus,
   };
 };
+
+export type SurveyResultsManager = ReturnType<typeof useSurveyResultsManager>;
