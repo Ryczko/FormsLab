@@ -5,10 +5,11 @@ import EmojiQuestionBlock from 'features/surveys/features/SurveyCreator/componen
 import InputQuestionBlock from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/InputQuestionBlock/InputQuestionBlock';
 import QuestionBlockWrapper from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/QuestionBlockWrapper/QuestionBlockWrapper';
 import RateQuestionBlock from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/RateQuestionBlock/RateQuestionBlock';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import RateAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/RateAdvancedSettings';
 
 interface QuestionBlockFactoryProps {
-  questionData: Question;
+  questionData: DraftQuestion;
   questionIndex: number;
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
 }
@@ -18,11 +19,25 @@ export default function QuestionBlockFactory({
   dragHandleProps,
   questionData,
 }: QuestionBlockFactoryProps) {
+  const getAdvancedSettings = () => {
+    if (questionData.type === QuestionType.RATE) {
+      return (
+        <RateAdvancedSettings
+          questionData={questionData}
+          questionIndex={questionIndex}
+        />
+      );
+    }
+
+    return null;
+  };
+
   return (
     <QuestionBlockWrapper
       dragHandleProps={dragHandleProps}
       index={questionIndex}
       questionData={questionData}
+      advancedSettings={getAdvancedSettings()}
     >
       {questionData.type === QuestionType.RATE && <RateQuestionBlock />}
       {questionData.type === QuestionType.INPUT && <InputQuestionBlock />}

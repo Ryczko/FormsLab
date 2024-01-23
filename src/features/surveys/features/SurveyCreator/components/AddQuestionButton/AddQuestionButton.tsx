@@ -5,10 +5,10 @@ import Button, {
 } from 'shared/components/Button/Button';
 import NewQuestionModal from 'features/surveys/features/SurveyCreator/components/NewQuestionModal/NewQuestionModal';
 import useModal from 'features/surveys/hooks/useModal';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
 interface AddQuestionButtonProps {
-  onClick: (newQuestion: Question) => void;
+  onClick: (newQuestion: DraftQuestion) => void;
 }
 
 export const AddQuestionButton = ({ onClick }: AddQuestionButtonProps) => {

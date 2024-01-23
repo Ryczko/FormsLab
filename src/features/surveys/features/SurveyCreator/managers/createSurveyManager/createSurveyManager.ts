@@ -8,15 +8,17 @@ import { postFetch, putFetch } from '../../../../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
-import { Question as QuestionDto } from '@prisma/client';
+import { Question as QuestionDto, LogicPath } from '@prisma/client';
 import { DropResult } from 'react-beautiful-dnd';
+import { v4 } from 'uuid';
 
-export interface Question {
+export interface DraftQuestion {
   id: string;
   title: string;
   options?: string[];
   type: QuestionType;
   isRequired: boolean;
+  logicPath?: Partial<LogicPath>[];
   expanded: boolean;
 }
 
@@ -38,7 +40,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     }));
   };
 
-  const [questions, setQuestions] = useState<Question[]>(
+  const [questions, setQuestions] = useState<DraftQuestion[]>(
     mapQuestionsWithExpanded(initialData?.questions) ?? defaultQuestions
   );
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
@@ -85,7 +87,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setSurveyOptions((oldOptions) => ({ ...oldOptions, [option]: value }));
   };
 
-  const addQuestion = (newQuestion: Question) => {
+  const addQuestion = (newQuestion: DraftQuestion) => {
     setQuestions((oldQuestions) => [...oldQuestions, newQuestion]);
     setIsSubmitted(false);
     setError('');
@@ -195,7 +197,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     return true;
   };
 
-  const areQuestionsValid = (questions: Question[]) => {
+  const areQuestionsValid = (questions: DraftQuestion[]) => {
     setQuestions((oldQuestions) =>
       oldQuestions.map((question) => {
         if (question.options?.includes('')) {
@@ -333,6 +335,55 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     reorderQuestion(result.source.index, result.destination.index);
   };
 
+  const addLogicPath = (questionIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      newQuestion.logicPath = [
+        ...(newQuestion.logicPath ?? []),
+        {
+          id: v4(),
+        },
+      ];
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
+  const removeLogicPath = (questionIndex: number, logicPathIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      const newLogicPath = [...(newQuestion.logicPath ?? [])];
+      newLogicPath.splice(logicPathIndex, 1);
+      newQuestion.logicPath = newLogicPath;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
+  const updateLogicPath = (
+    questionIndex: number,
+    logicPathIndex: number,
+    conditions: Partial<LogicPath>
+  ) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+
+      const newLogicPath = [...(newQuestion.logicPath ?? [])];
+      const newLogicPathItem = {
+        ...newLogicPath[logicPathIndex],
+        ...conditions,
+      };
+
+      newLogicPath.splice(logicPathIndex, 1, newLogicPathItem);
+      newQuestion.logicPath = newLogicPath;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
   return {
     title,
     error,
@@ -357,6 +408,9 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     confirmEditSurvey,
     discardChanges,
     onDragQuestionEnd,
+    addLogicPath,
+    removeLogicPath,
+    updateLogicPath,
   };
 };
 

@@ -1,9 +1,10 @@
 import {
   ChevronDownIcon,
+  ChevronRightIcon,
   SelectorIcon,
   TrashIcon,
 } from '@heroicons/react/outline';
-import { ChangeEvent, PropsWithChildren } from 'react';
+import React, { ChangeEvent, PropsWithChildren, useState } from 'react';
 import Input from 'shared/components/Input/Input';
 import useTranslation from 'next-translate/useTranslation';
 import {
@@ -15,12 +16,13 @@ import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import QuestionTypeIcons from 'shared/components/QuestionTypeIcons/QuestionTypeIcons';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
 interface QuestionBlockWrapperProps {
   index: number;
-  questionData: Question;
+  questionData: DraftQuestion;
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
+  advancedSettings?: React.ReactNode;
 }
 
 export default function QuestionBlockWrapper({
@@ -28,8 +30,11 @@ export default function QuestionBlockWrapper({
   index,
   dragHandleProps,
   questionData,
+  advancedSettings,
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
+
+  const [isAdvancedSettingsOpen, setIsAdvancedSettingsOpen] = useState(false);
 
   const {
     removeQuestion,
@@ -48,6 +53,10 @@ export default function QuestionBlockWrapper({
     updateQuestionRequired(index);
   };
 
+  const toggleAdvancedSettings = () => {
+    setIsAdvancedSettingsOpen((prev) => !prev);
+  };
+
   const questionError = () => {
     if (isSubmitted && questionData.title.length === 0) {
       return t('required');
@@ -61,7 +70,7 @@ export default function QuestionBlockWrapper({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-md border bg-white/30 shadow-sm">
+    <div className="relative overflow-hidden rounded-md border border-l-4 border-indigo-200 bg-white/30 shadow-sm">
       <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
           <button
@@ -135,6 +144,26 @@ export default function QuestionBlockWrapper({
             </div>
           ) : (
             children
+          )}
+
+          {!!advancedSettings && (
+            <div className="mt-2 border-l-2 border-indigo-200 text-left text-sm">
+              <button
+                onClick={toggleAdvancedSettings}
+                className="flex w-auto cursor-pointer items-center gap-2  py-1 pl-2"
+              >
+                <ChevronDownIcon
+                  className={clsx(
+                    'w-[15px] transition-transform',
+                    !isAdvancedSettingsOpen && '-rotate-90'
+                  )}
+                />
+                Show advanced settings
+              </button>
+              {isAdvancedSettingsOpen && (
+                <div className="ml-8 mr-2 mt-2 py-2">{advancedSettings}</div>
+              )}
+            </div>
           )}
 
           <div className="mt-2 flex justify-end border-t">
