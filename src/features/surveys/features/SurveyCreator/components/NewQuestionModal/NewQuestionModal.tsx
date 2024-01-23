@@ -1,6 +1,6 @@
 import React from 'react';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import { QuestionType } from '@prisma/client';
 import { v4 } from 'uuid';
 import NewQuestionModalButton from 'features/surveys/features/SurveyCreator/components/NewQuestionModal/components/NewQuestionModalButton';
@@ -12,7 +12,7 @@ import RateIcon from 'shared/components/QuestionTypeIcons/RateIcon';
 type NewQuestionModalProps = {
   isOpened: boolean;
   closeModal: () => void;
-  onSuccess?: (newQuestion: Question) => void;
+  onSuccess?: (newQuestion: DraftQuestion) => void;
 };
 
 export default function NewQuestionModal({
@@ -25,7 +25,7 @@ export default function NewQuestionModal({
     onSuccess?.({
       id: v4(),
       type: QuestionType.EMOJI,
-      title: '',
+      title: 'How are you feeling today?',
       isRequired: true,
       options: [
         ':rage:',
@@ -53,9 +53,9 @@ export default function NewQuestionModal({
     onSuccess?.({
       id: v4(),
       type: QuestionType.CHOICE,
-      title: '',
+      title: 'What came first?',
       isRequired: true,
-      options: ['', '', ''],
+      options: ['Chicken 🐔', 'Egg 🥚'],
       expanded: true,
     });
   };
@@ -65,9 +65,10 @@ export default function NewQuestionModal({
     onSuccess?.({
       id: v4(),
       type: QuestionType.RATE,
-      title: '',
+      title: 'How do you rate the process?',
       isRequired: true,
       expanded: true,
+      logicPath: [],
     });
   };
 

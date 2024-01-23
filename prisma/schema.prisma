@@ -63,14 +63,14 @@ model VerificationToken {
 }
 
 model Survey {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String     @db.ObjectId
-  createdAt   DateTime   @default(now())
-  title       String
-  isActive    Boolean
-  description String?
-  questions   Question[]
-  answers     Answer[]
+  id                 String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String     @db.ObjectId
+  createdAt          DateTime   @default(now())
+  title              String
+  isActive           Boolean
+  description        String?
+  questions          Question[]
+  answers            Answer[]
   oneQuestionPerStep Boolean
   displayTitle Boolean
   hideProgressBar Boolean?
@@ -89,16 +89,26 @@ model Question {
   isRequired  Boolean
   options     String[]
   order       Int
+  logicPaths  LogicPath[]
 
   survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
 }
 
+model LogicPath {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  questionId     String         @db.ObjectId
+  comparisonType ComparisonType
+  selectedOption String
+  nextQuestionId String
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
 
 model Answer {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String?  @db.ObjectId
-  createdAt  DateTime @default(now())
-  surveyId   String   @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  surveyId  String   @db.ObjectId
 
   answerData AnswerData[]
 
@@ -107,17 +117,23 @@ model Answer {
 }
 
 model AnswerData {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  answerId       String @db.ObjectId
-  questionId     String @db.ObjectId
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  answerId       String  @db.ObjectId
+  questionId     String  @db.ObjectId
   providedAnswer String?
 
-  answer   Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
- }
+  answer Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+}
 
 enum QuestionType {
   EMOJI
   INPUT
   CHOICE
   RATE
+}
+
+enum ComparisonType {
+  EQUAL
+  GREATER_THAN
+  LESS_THAN
 }
