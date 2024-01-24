@@ -35,7 +35,7 @@ export default function TextAnswersComponent({
   return (
     <div>
       <Input
-        value={questionData.answer}
+        value={questionData.answer || ''}
         onInput={onAnswerChange}
         placeholder="Answer..."
         error={getAnswerError()}
