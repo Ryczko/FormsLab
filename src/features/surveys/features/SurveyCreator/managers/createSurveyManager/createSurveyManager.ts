@@ -23,6 +23,7 @@ export interface Question {
 export interface SurveyOptions {
   oneQuestionPerStep: boolean;
   displayTitle: boolean;
+  hideProgressBar: boolean;
 }
 
 export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
@@ -43,6 +44,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
     displayTitle: initialData?.displayTitle ?? true,
+    hideProgressBar: true
   });
 
   const [error, setError] = useState('');

@@ -47,6 +47,15 @@ export default function SurveyOptionsModalModal({
             }}
             label={t('surveyOptionsModal.DisplayTitle')}
           />
+          <Toggle
+            isEnabled={surveyOptions.hideProgressBar}
+            classNames="gap-2 mt-4"
+            testId="display-title-toggle"
+            onToggle={() => {
+              updateOptions('hideProgressBar', !surveyOptions.hideProgressBar);
+            }}
+            label={t('surveyOptionsModal.HideProgressBar')}
+          />
         </div>
       }
     />

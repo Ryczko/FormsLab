@@ -29,7 +29,8 @@
   "surveyOptionsModal": {
     "title": "Display options",
     "OneQuestionPerStep": "One question per step",
-    "DisplayTitle": "Display title"
+    "DisplayTitle": "Display title",
+    "HideProgressBar": "Hide progress bar"
   },
   "questionType": {
     "question": "Question",
