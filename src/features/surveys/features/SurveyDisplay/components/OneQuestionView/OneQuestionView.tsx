@@ -9,7 +9,7 @@ export default function OneQuestionView() {
   const { isAnswering, formData, activeQuestionIndex } =
     useSurveyDisplayContext();
 
-    const { surveyOptions } = useSurveyCreatorContext();
+  const { surveyOptions } = useSurveyCreatorContext();
 
   return (
     <>
@@ -20,11 +20,15 @@ export default function OneQuestionView() {
       {formData.questions.length > 0 && (
         <>
           <AnswersComponentFactory questionIndex={activeQuestionIndex} />
-          {!surveyOptions.hideProgressBar ? <Progressbar
-            currentStep={activeQuestionIndex + 1}
-            totalSteps={formData?.questions.length}
-            isSubmitted={isAnswering}
-          /> : <></>}
+          {!surveyOptions.hideProgressBar ? (
+            <Progressbar
+              currentStep={activeQuestionIndex + 1}
+              totalSteps={formData?.questions.length}
+              isSubmitted={isAnswering}
+            />
+          ) : (
+            <></>
+          )}
         </>
       )}
     </>
