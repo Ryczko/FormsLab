@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import useTranslation from 'next-translate/useTranslation';
 import Toggle from 'shared/components/Toggle/Toggle';
@@ -19,6 +19,10 @@ export default function SurveyOptionsModalModal({
 }: SurveyOptionsModalProps) {
   const { t } = useTranslation('common');
 
+  const [showProgressBar, setShowProgressBar] = useState(
+    surveyOptions.oneQuestionPerStep
+  );
+
   return (
     <StyledDialog
       isOpen={isOpened}
@@ -35,6 +39,9 @@ export default function SurveyOptionsModalModal({
                 'oneQuestionPerStep',
                 !surveyOptions.oneQuestionPerStep
               );
+
+              setShowProgressBar(!surveyOptions.oneQuestionPerStep);
+              updateOptions('hideProgressBar', false);
             }}
             label={t('surveyOptionsModal.OneQuestionPerStep')}
           />
@@ -47,15 +54,22 @@ export default function SurveyOptionsModalModal({
             }}
             label={t('surveyOptionsModal.DisplayTitle')}
           />
-          <Toggle
-            isEnabled={surveyOptions.hideProgressBar}
-            classNames="gap-2 mt-4"
-            testId="display-title-toggle"
-            onToggle={() => {
-              updateOptions('hideProgressBar', !surveyOptions.hideProgressBar);
-            }}
-            label={t('surveyOptionsModal.HideProgressBar')}
-          />
+          {showProgressBar ? (
+            <Toggle
+              isEnabled={surveyOptions.hideProgressBar}
+              classNames="gap-2 mt-4"
+              testId="display-title-toggle"
+              onToggle={() => {
+                updateOptions(
+                  'hideProgressBar',
+                  !surveyOptions.hideProgressBar
+                );
+              }}
+              label={t('surveyOptionsModal.HideProgressBar')}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       }
     />
