@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import clsx from 'clsx';
 import Loader from 'shared/components/Loader/Loader';
 
@@ -25,6 +25,7 @@ export interface ButtonProps {
   className?: string | undefined;
   type?: 'button' | 'submit' | 'reset' | undefined;
   icon?: React.ReactNode;
+  style?: CSSProperties;
 }
 
 const Button = ({
@@ -36,6 +37,7 @@ const Button = ({
   disabled = false,
   type = 'button',
   icon,
+  style,
   ...props
 }: ButtonProps & React.HTMLProps<HTMLButtonElement>) => (
   <button
@@ -45,6 +47,7 @@ const Button = ({
       sizeType,
       className
     )}
+    style={style}
     disabled={disabled || isLoading}
     type={type}
     {...props}

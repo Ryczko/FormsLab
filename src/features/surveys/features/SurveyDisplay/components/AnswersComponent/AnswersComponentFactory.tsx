@@ -10,6 +10,7 @@ import ListAnswersComponent from 'features/surveys/features/SurveyDisplay/compon
 import RateAnswersComponent from 'features/surveys/features/SurveyDisplay/components/AnswersComponent/RateComponent/RateComponent';
 import TextAnswersComponent from 'features/surveys/features/SurveyDisplay/components/AnswersComponent/TextAnswersComponent';
 import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
+import { getFontColor } from 'features/surveys/features/SurveyDisplay/utils/getFontColor';
 
 interface AnswersComponentFactoryProps {
   questionIndex: number;
@@ -63,6 +64,7 @@ export const AnswersComponentFactory = (
               sizeType={ButtonSize.FULL}
               onClick={handlePreviousQuestion}
               disabled={isAnswering}
+              className="text-black"
             >
               {t('back')}
             </Button>
@@ -74,6 +76,10 @@ export const AnswersComponentFactory = (
               sizeType={ButtonSize.FULL}
               onClick={handleNextQuestion}
               isLoading={isAnswering}
+              style={{
+                backgroundColor: formData.accentColor ?? undefined,
+                color: getFontColor(formData.accentColor),
+              }}
             >
               {isLastQuestion ? t('sendButton') : t('next')}
             </Button>

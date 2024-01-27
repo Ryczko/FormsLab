@@ -73,6 +73,7 @@ model Survey {
   answers     Answer[]
   oneQuestionPerStep Boolean
   displayTitle Boolean
+  accentColor String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
