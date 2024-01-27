@@ -135,6 +135,7 @@ export default async function handler(
           questions,
           oneQuestionPerStep,
           displayTitle,
+          accentColor,
         } = req.body as SurveyData;
         if (!isSurveyValid(req.body)) {
           return res.status(400).end();
@@ -189,6 +190,7 @@ export default async function handler(
             description,
             oneQuestionPerStep,
             displayTitle,
+            accentColor,
           },
         });
 

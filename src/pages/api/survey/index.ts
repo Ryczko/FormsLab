@@ -17,6 +17,7 @@ export interface SurveyData {
   questions: Question[];
   oneQuestionPerStep: boolean;
   displayTitle: boolean;
+  accentColor: string;
 }
 
 export async function getAllUserSurveys(userId: string) {
@@ -76,6 +77,7 @@ export default async function handler(
           questions,
           oneQuestionPerStep,
           displayTitle,
+          accentColor,
         } = req.body as SurveyData;
 
         if (!isSurveyValid(req.body)) {
@@ -87,6 +89,7 @@ export default async function handler(
             user: { connect: { id: session.currentUser.id } },
             title,
             description,
+            accentColor,
             isActive: true,
             oneQuestionPerStep,
             displayTitle,
