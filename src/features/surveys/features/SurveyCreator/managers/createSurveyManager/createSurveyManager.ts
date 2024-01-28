@@ -45,7 +45,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
     displayTitle: initialData?.displayTitle ?? true,
-    hideProgressBar: initialData?.oneQuestionPerStep ?? false,
+    hideProgressBar: initialData?.hideProgressBar ?? false,
     accentColor: initialData?.accentColor ?? '#C7D2FE',
   });
 
