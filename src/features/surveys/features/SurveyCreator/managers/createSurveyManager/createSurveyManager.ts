@@ -247,6 +247,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         title,
         oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
         displayTitle: surveyOptions.displayTitle,
+        hideProgressBar: surveyOptions.hideProgressBar,
         accentColor: surveyOptions.accentColor,
         questions: questions.map((question) => ({
           title: question.title,
@@ -283,6 +284,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         title,
         oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
         displayTitle: surveyOptions.displayTitle,
+        hideProgressBar: surveyOptions.hideProgressBar,
         accentColor: surveyOptions.accentColor,
         questions: questions.map((question) => ({
           id: question.id,

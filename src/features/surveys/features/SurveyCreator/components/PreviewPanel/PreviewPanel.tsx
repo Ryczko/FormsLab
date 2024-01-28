@@ -41,6 +41,7 @@ export default function PreviewPanel() {
               id: '',
               displayTitle: surveyOptions.displayTitle,
               oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
+              hideProgressBar: surveyOptions.hideProgressBar,
               userId: '',
               title,
               accentColor: surveyOptions.accentColor,
