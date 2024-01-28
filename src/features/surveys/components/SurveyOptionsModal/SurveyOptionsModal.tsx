@@ -27,6 +27,18 @@ export default function SurveyOptionsModalModal({
       content={
         <div className="mb-2 mt-4">
           <Toggle
+            isEnabled={surveyOptions.displayTitle}
+            classNames="gap-2 mb-4"
+            testId="display-title-toggle"
+            onToggle={() => {
+              updateOptions('displayTitle', !surveyOptions.displayTitle);
+            }}
+            label={t('surveyOptionsModal.DisplayTitle')}
+          />
+
+          <hr className="my-4" />
+
+          <Toggle
             isEnabled={surveyOptions.oneQuestionPerStep}
             classNames="gap-2"
             testId="one-per-step-toggle"
@@ -35,18 +47,28 @@ export default function SurveyOptionsModalModal({
                 'oneQuestionPerStep',
                 !surveyOptions.oneQuestionPerStep
               );
+
+              updateOptions('hideProgressBar', false);
             }}
             label={t('surveyOptionsModal.OneQuestionPerStep')}
           />
-          <Toggle
-            isEnabled={surveyOptions.displayTitle}
-            classNames="gap-2 mt-4"
-            testId="display-title-toggle"
-            onToggle={() => {
-              updateOptions('displayTitle', !surveyOptions.displayTitle);
-            }}
-            label={t('surveyOptionsModal.DisplayTitle')}
-          />
+
+          {surveyOptions.oneQuestionPerStep ? (
+            <Toggle
+              isEnabled={surveyOptions.hideProgressBar}
+              classNames="gap-2 mt-4"
+              testId="display-title-toggle"
+              onToggle={() => {
+                updateOptions(
+                  'hideProgressBar',
+                  !surveyOptions.hideProgressBar
+                );
+              }}
+              label={t('surveyOptionsModal.HideProgressBar')}
+            />
+          ) : (
+            <></>
+          )}
 
           <hr className="my-4" />
           <div className="flex items-center gap-3 text-sm">

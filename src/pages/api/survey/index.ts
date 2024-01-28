@@ -17,6 +17,7 @@ export interface SurveyData {
   questions: Question[];
   oneQuestionPerStep: boolean;
   displayTitle: boolean;
+  hideProgressBar: boolean;
   accentColor: string;
 }
 
@@ -77,6 +78,7 @@ export default async function handler(
           questions,
           oneQuestionPerStep,
           displayTitle,
+          hideProgressBar,
           accentColor,
         } = req.body as SurveyData;
 
@@ -93,6 +95,7 @@ export default async function handler(
             isActive: true,
             oneQuestionPerStep,
             displayTitle,
+            hideProgressBar,
             questions: {
               create: questions.map((question, index) => ({
                 type: question.type,

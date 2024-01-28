@@ -23,6 +23,7 @@ export interface Question {
 export interface SurveyOptions {
   oneQuestionPerStep: boolean;
   displayTitle: boolean;
+  hideProgressBar: boolean;
   accentColor: string;
 }
 
@@ -44,6 +45,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
     displayTitle: initialData?.displayTitle ?? true,
+    hideProgressBar: initialData?.hideProgressBar ?? false,
     accentColor: initialData?.accentColor ?? '#C7D2FE',
   });
 
@@ -245,6 +247,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         title,
         oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
         displayTitle: surveyOptions.displayTitle,
+        hideProgressBar: surveyOptions.hideProgressBar,
         accentColor: surveyOptions.accentColor,
         questions: questions.map((question) => ({
           title: question.title,
@@ -281,6 +284,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         title,
         oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
         displayTitle: surveyOptions.displayTitle,
+        hideProgressBar: surveyOptions.hideProgressBar,
         accentColor: surveyOptions.accentColor,
         questions: questions.map((question) => ({
           id: question.id,
