@@ -72,6 +72,7 @@ model Survey {
   questions   Question[]
   answers     Answer[]
   oneQuestionPerStep Boolean
+  hideProgressBar Boolean
   displayTitle Boolean
   accentColor String?
 
