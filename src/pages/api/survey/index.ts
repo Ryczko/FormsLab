@@ -82,8 +82,6 @@ export default async function handler(
           accentColor,
         } = req.body as SurveyData;
 
-        console.log('adfsssssssssssss', req.body);
-
         if (!isSurveyValid(req.body)) {
           return res.status(400).end();
         }

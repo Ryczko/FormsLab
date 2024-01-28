@@ -32,8 +32,6 @@ export const useSurveyAnswerManager = (
   const [formData, setFormData] =
     useState<SurveyWithQuestionsAndUsersAnswers>(initialData);
 
-  console.log(initialData);
-
   const [isAnswering, setIsAnswering] = useState(false);
   const [localStorageValue, setLocalStorageValue] = useLocalStorage<string[]>(
     DEFAULT_VALUE,
