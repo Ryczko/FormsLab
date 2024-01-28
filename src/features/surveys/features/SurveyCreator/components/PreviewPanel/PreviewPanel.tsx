@@ -43,6 +43,7 @@ export default function PreviewPanel() {
               oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
               userId: '',
               title,
+              accentColor: surveyOptions.accentColor,
               createdAt: new Date(),
               questions: questions.map((question, index) => ({
                 surveyId: '',

@@ -9,6 +9,15 @@ import ExternalPageWrapper from 'layout/ExternalRouteWrapper';
 export async function getServerSideProps(context: NextPageContext) {
   const surveyData = await getSurveyData(context.query.surveyId as string);
 
+  if (surveyData) {
+    surveyData.questions = surveyData?.questions.map((question) => {
+      return {
+        ...question,
+        answer: '',
+      };
+    });
+  }
+
   return {
     props: {
       initialData: JSON.parse(JSON.stringify(surveyData)),

@@ -25,6 +25,7 @@ export default function OneQuestionView() {
               currentStep={activeQuestionIndex + 1}
               totalSteps={formData?.questions.length}
               isSubmitted={isAnswering}
+              accentColor={formData?.accentColor}
             />
           ) : (
             <></>

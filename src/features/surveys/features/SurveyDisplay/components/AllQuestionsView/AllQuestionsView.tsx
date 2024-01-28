@@ -7,6 +7,7 @@ import Button, {
 import useTranslation from 'next-translate/useTranslation';
 import { AnswersComponentFactory } from 'features/surveys/features/SurveyDisplay/components/AnswersComponent/AnswersComponentFactory';
 import { useSurveyDisplayContext } from 'features/surveys/features/SurveyDisplay/context';
+import { getFontColor } from 'features/surveys/features/SurveyDisplay/utils/getFontColor';
 
 export default function AllQuestionView() {
   const { t } = useTranslation('survey');
@@ -32,6 +33,10 @@ export default function AllQuestionView() {
             variant={ButtonVariant.PRIMARY}
             sizeType={ButtonSize.FULL}
             isLoading={isAnswering}
+            style={{
+              backgroundColor: formData.accentColor ?? undefined,
+              color: getFontColor(formData?.accentColor),
+            }}
           >
             {t('sendButton')}
           </Button>
