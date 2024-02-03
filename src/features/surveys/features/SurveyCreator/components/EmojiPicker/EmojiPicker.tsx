@@ -58,22 +58,20 @@ function EmojiPicker({
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (
-          <div className=''>
-            <Emoji size={28} shortcodes={pickedEmoji || ''} />
-            <div
-              className="flex rounded-md border bg-zinc-50 p-3 shadow-sm transition hover:scale-95"
-              {...dragHandleProps}
-              style={{
-                height: '10px'
-              }}
-            >
-              move
-            </div>
-          </div>
+          <Emoji size={28} shortcodes={pickedEmoji || ''} />
         ) : (
           <PlusSmIcon className="w-[22px]" />
         )}
       </button>
+
+      {!addEmoji && (
+        <div
+          className="mt-1 w-14 cursor-pointer rounded-md border bg-zinc-50 shadow-sm hover:scale-95"
+          {...dragHandleProps}
+        >
+          m
+        </div>
+      )}
 
       {onEmoteRemove && (
         <Button

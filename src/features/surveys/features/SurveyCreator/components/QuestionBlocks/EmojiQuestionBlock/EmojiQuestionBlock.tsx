@@ -22,31 +22,24 @@ export default function EmojiQuestionBlock({
 
   return (
     <div
-      className="mb-3 mt-1"
       style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, 58px)',
+        display: 'flex',
         justifyContent: 'space-between',
-        gridGap: '8px',
+        flexGrow: '1',
       }}
     >
       <DragDropContext
         onDragEnd={(result) => onDragEmojiEnd(result, questionIndex)}
       >
-        <Droppable droppableId="droppable">
+        <Droppable droppableId="droppable-emoji" direction="horizontal">
           {(provided, snapshot) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className={clsx(snapshot.isDraggingOver && '')}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: '50px'
-              }}
+              className={clsx('flex', snapshot.isDraggingOver && '')}
             >
-              {pack.map((emote, idx) => (
-                <Draggable key={emote} draggableId={emote} index={idx}>
+              {pack.map((emote, index) => (
+                <Draggable key={emote} draggableId={emote} index={index}>
                   {(provided, snapshot) => (
                     <div
                       className={clsx('mb-3', snapshot.isDragging && '')}
@@ -56,7 +49,7 @@ export default function EmojiQuestionBlock({
                     >
                       <EmojiPicker
                         key={emote}
-                        index={idx}
+                        index={index}
                         pickedEmoji={emote}
                         questionIndex={questionIndex}
                         onEmotePick={handleOptionChange}
@@ -71,18 +64,18 @@ export default function EmojiQuestionBlock({
                   )}
                 </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
-
-        {pack.length < MAX_EMOJIS && (
-          <EmojiPicker
-            questionIndex={questionIndex}
-            addEmoji={true}
-            onEmoteAdd={handleAddingNewOption}
-          />
-        )}
       </DragDropContext>
+      {pack.length < MAX_EMOJIS && (
+        <EmojiPicker
+          questionIndex={questionIndex}
+          addEmoji={true}
+          onEmoteAdd={handleAddingNewOption}
+        />
+      )}
     </div>
   );
 }
