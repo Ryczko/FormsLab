@@ -22,7 +22,7 @@ export default function QuestionsSection() {
 
       <DragDropContext onDragEnd={onDragQuestionEnd}>
         {isBrowser ? (
-          <Droppable droppableId="droppable">
+          <Droppable droppableId="droppable-question">
             {(provided, snapshot) => (
               <div
                 {...provided.droppableProps}
