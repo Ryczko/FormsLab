@@ -36,7 +36,7 @@ export default function EmojiQuestionBlock({
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className={clsx('flex', snapshot.isDraggingOver && '')}
+              className={clsx('flex flex-wrap', snapshot.isDraggingOver && '')}
             >
               {pack.map((emote, index) => (
                 <Draggable key={emote} draggableId={emote} index={index}>
