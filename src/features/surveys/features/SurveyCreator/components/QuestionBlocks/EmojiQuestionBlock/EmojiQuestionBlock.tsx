@@ -42,7 +42,7 @@ export default function EmojiQuestionBlock({
                 <Draggable key={emote} draggableId={emote} index={index}>
                   {(provided, snapshot) => (
                     <div
-                      className={clsx('mb-3', snapshot.isDragging && '')}
+                      className={clsx('mb-3 mr-5', snapshot.isDragging && '')}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       style={provided.draggableProps.style}
