@@ -245,6 +245,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setIsCreating(true);
 
     try {
+      console.log(questions);
       const newSurvey = await postFetch('/api/survey', {
         title,
         oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
@@ -252,10 +253,12 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         hideProgressBar: surveyOptions.hideProgressBar,
         accentColor: surveyOptions.accentColor,
         questions: questions.map((question) => ({
+          draftId: question.id,
           title: question.title,
           options: question.options,
           type: question.type,
           isRequired: question.isRequired,
+          logicPaths: question.logicPath ?? [],
         })),
       });
 
@@ -294,6 +297,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
           options: question.options,
           type: question.type,
           isRequired: question.isRequired,
+          logicPaths: question.logicPath,
         })),
       });
 
@@ -371,6 +375,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     logicPathIndex: number,
     conditions: Partial<LogicPath>
   ) => {
+    console.log('update', conditions);
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };

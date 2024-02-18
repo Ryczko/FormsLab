@@ -97,9 +97,9 @@ model Question {
 model LogicPath {
   id             String         @id @default(auto()) @map("_id") @db.ObjectId
   questionId     String         @db.ObjectId
+  nextQuestionId String?        @db.ObjectId
   comparisonType ComparisonType
   selectedOption String
-  nextQuestionId String
 
   question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }

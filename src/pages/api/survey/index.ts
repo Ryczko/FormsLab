@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from '../../../../lib/prismadb';
 
 import serverAuth from '../../../../lib/serverAuth';
-import { Question } from '@prisma/client';
+import { LogicPath, Question } from '@prisma/client';
 import {
   MAX_QUESTIONS,
   MAX_QUESTION_LENGTH,
@@ -14,7 +14,7 @@ import {
 export interface SurveyData {
   title: string;
   description: string;
-  questions: Question[];
+  questions: ({ draftId: string; logicPaths: LogicPath[] } & Question)[];
   oneQuestionPerStep: boolean;
   displayTitle: boolean;
   hideProgressBar: boolean;
@@ -82,6 +82,8 @@ export default async function handler(
           accentColor,
         } = req.body as SurveyData;
 
+        console.log('req.body', questions);
+
         if (!isSurveyValid(req.body)) {
           return res.status(400).end();
         }
@@ -108,6 +110,34 @@ export default async function handler(
             },
           },
         });
+
+        const createdQuestions = await prismadb.question.findMany({
+          where: {
+            surveyId: survey.id,
+          },
+        });
+
+        console.log('result', createdQuestions);
+
+        //create logic paths to questions
+        for (let i = 0; i < questions.length; i++) {
+          const question = questions[i];
+          for (let j = 0; j < question.logicPaths.length; j++) {
+            const path = question.logicPaths[j];
+            await prismadb.logicPath.create({
+              data: {
+                comparisonType: path.comparisonType,
+                selectedOption: path.selectedOption,
+                nextQuestionId: path.nextQuestionId,
+                question: {
+                  connect: {
+                    id: createdQuestions[i].id,
+                  },
+                },
+              },
+            });
+          }
+        }
 
         return res.status(200).json({ id: survey.id });
       }
