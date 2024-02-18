@@ -58,11 +58,11 @@ export default function Condition({
               <Select
                 classNames="flex-grow"
                 selectedValue={
-                  questions[questionIndex].logicPath?.[stepIndex].value
+                  questions[questionIndex].logicPath?.[stepIndex].selectedOption
                 }
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
-                    value: option.value,
+                    selectedOption: option.value,
                   })
                 }
                 options={
