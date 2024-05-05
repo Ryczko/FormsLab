@@ -337,6 +337,30 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     reorderQuestion(result.source.index, result.destination.index);
   };
 
+  const reorderEmoji = (
+    startIndex: number,
+    endIndex: number,
+    questionIndex: number
+  ) => {
+    const newOrderedEmojis = questions[questionIndex].options || [];
+
+    const [removed] = newOrderedEmojis.splice(startIndex, 1);
+    newOrderedEmojis.splice(endIndex, 0, removed);
+
+    const copyQuestions = questions;
+    copyQuestions[questionIndex].options = newOrderedEmojis;
+
+    setQuestions(copyQuestions);
+  };
+
+  const onDragEmojiEnd = (result: DropResult, questionIndex: number) => {
+    if (!result.destination) {
+      return;
+    }
+
+    reorderEmoji(result.source.index, result.destination.index, questionIndex);
+  };
+
   return {
     title,
     error,
@@ -361,6 +385,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     confirmEditSurvey,
     discardChanges,
     onDragQuestionEnd,
+    onDragEmojiEnd,
   };
 };
 

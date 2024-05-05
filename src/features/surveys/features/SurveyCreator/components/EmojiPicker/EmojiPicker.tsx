@@ -6,6 +6,7 @@ import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import Picker from '@emoji-mart/react';
 import Emoji from 'features/surveys/components/Emoji/Emoji';
 import { EmojiObject } from 'features/surveys/features/SurveyCreator/components/EmojiPicker/EmojiObject';
+import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 
 interface EmojiPickerProps {
   index?: number;
@@ -24,6 +25,7 @@ interface EmojiPickerProps {
   ) => void;
   onEmoteRemove?: (idx: number, questionIndex: number) => void;
   questionIndex: number;
+  dragHandleProps?: DraggableProvidedDragHandleProps | null | undefined;
 }
 
 function EmojiPicker({
@@ -34,6 +36,7 @@ function EmojiPicker({
   onEmoteAdd,
   onEmoteRemove,
   questionIndex,
+  dragHandleProps,
 }: EmojiPickerProps) {
   const [displayPicker, setDisplayPicker] = useState(false);
 
@@ -60,6 +63,16 @@ function EmojiPicker({
           <PlusSmIcon className="w-[22px]" />
         )}
       </button>
+
+      {!addEmoji && (
+        <div
+          className="mt-1 w-14 cursor-pointer rounded-md border bg-zinc-50 shadow-sm hover:scale-95"
+          {...dragHandleProps}
+        >
+          m
+        </div>
+      )}
+
       {onEmoteRemove && (
         <Button
           onClick={() => onEmoteRemove(index, questionIndex)}
