@@ -51,11 +51,12 @@ export default function PreviewPanel() {
                 options: question.options ?? [],
                 order: index,
                 createdAt: new Date(),
-                id: question.id,
+                id: question.draftId,
                 title: question.title,
                 type: question.type,
                 answers: [],
                 description: '',
+                logicPaths: [],
                 isRequired: question.isRequired,
               })),
             }}

@@ -22,26 +22,28 @@ export default function Condition({
   stepIndex,
   conditionOptions,
 }: ConditionProps) {
-  const { removeLogicPath, updateLogicPath, questions } =
+  const { removeLogicPath, updateLogicPath, questions, isEditMode } =
     useSurveyCreatorContext();
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 py-2">
+      <div className="mb-2 flex items-center justify-between gap-4">
         <div className="flex flex-grow items-center gap-4">
           {elseCondition ? (
-            <>
+            <div className="mt-1 flex items-center gap-4">
               <ArrowDownIcon className="h-4 w-4" />
               Else continue to the next question
-            </>
+            </div>
           ) : (
             <>
               <ArrowRightIcon className="h-4 w-4" />
               if this answer
               <Select
                 classNames="flex-grow"
+                disabled={isEditMode}
                 selectedValue={
-                  questions[questionIndex].logicPath?.[stepIndex].comparisonType
+                  questions[questionIndex].logicPaths?.[stepIndex]
+                    .comparisonType
                 }
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
@@ -57,8 +59,10 @@ export default function Condition({
               />
               <Select
                 classNames="flex-grow"
+                disabled={isEditMode}
                 selectedValue={
-                  questions[questionIndex].logicPath?.[stepIndex].selectedOption
+                  questions[questionIndex].logicPaths?.[stepIndex]
+                    .selectedOption
                 }
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
@@ -75,8 +79,10 @@ export default function Condition({
               jump to
               <Select
                 classNames="flex-grow"
+                disabled={isEditMode}
                 selectedValue={
-                  questions[questionIndex].logicPath?.[stepIndex].nextQuestionId
+                  questions[questionIndex].logicPaths?.[stepIndex]
+                    .nextQuestionId ?? undefined
                 }
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
@@ -94,16 +100,11 @@ export default function Condition({
           )}
         </div>
 
-        {!elseCondition && (
+        {!elseCondition && !isEditMode && (
           <TrashIcon
             onClick={() => removeLogicPath(questionIndex, stepIndex)}
             className="h-4 w-4 cursor-pointer text-red-800"
           />
-          // <Button
-          //   //   variant={ButtonVariant.DANGER}
-          //   className="aspect-square w-[10px]"
-          //   icon={<TrashIcon className="h-3.5 w-3.5" />}
-          // />
         )}
       </div>
     </>

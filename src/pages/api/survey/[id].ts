@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import prismadb from '../../../../lib/prismadb';
 import serverAuth from '../../../../lib/serverAuth';
-import { SurveyData, isSurveyValid } from '.';
+import { CreateEditSurveyPayload, isSurveyValid } from '.';
 
 export enum SurveyActionTypes {
   UPDATE_ACTIVE = 'UPDATE_ACTIVE',
@@ -137,7 +137,8 @@ export default async function handler(
           displayTitle,
           accentColor,
           hideProgressBar,
-        } = req.body as SurveyData;
+        } = req.body as CreateEditSurveyPayload;
+
         if (!isSurveyValid(req.body)) {
           return res.status(400).end();
         }
@@ -160,7 +161,7 @@ export default async function handler(
 
         surveyQuestions.forEach(async (question) => {
           const foundQuestionIndex = questions.findIndex(
-            (q) => q.id === question.id
+            (q) => q.draftId === question.id
           );
 
           if (foundQuestionIndex === -1) return;

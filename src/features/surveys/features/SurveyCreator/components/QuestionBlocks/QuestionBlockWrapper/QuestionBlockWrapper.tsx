@@ -1,10 +1,9 @@
 import {
   ChevronDownIcon,
-  ChevronRightIcon,
   SelectorIcon,
   TrashIcon,
 } from '@heroicons/react/outline';
-import React, { ChangeEvent, PropsWithChildren, useState } from 'react';
+import React, { ChangeEvent, PropsWithChildren } from 'react';
 import Input from 'shared/components/Input/Input';
 import useTranslation from 'next-translate/useTranslation';
 import {
@@ -34,8 +33,6 @@ export default function QuestionBlockWrapper({
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
 
-  const [isAdvancedSettingsOpen, setIsAdvancedSettingsOpen] = useState(false);
-
   const {
     removeQuestion,
     updateQuestion,
@@ -44,6 +41,7 @@ export default function QuestionBlockWrapper({
     expandQuestion,
     questions,
     isEditMode,
+    expandAdvancedSettings,
   } = useSurveyCreatorContext();
 
   const isRemovingPossible = questions.length > MIN_QUESTIONS;
@@ -54,7 +52,7 @@ export default function QuestionBlockWrapper({
   };
 
   const toggleAdvancedSettings = () => {
-    setIsAdvancedSettingsOpen((prev) => !prev);
+    expandAdvancedSettings(index);
   };
 
   const questionError = () => {
@@ -155,12 +153,12 @@ export default function QuestionBlockWrapper({
                 <ChevronDownIcon
                   className={clsx(
                     'w-[15px] transition-transform',
-                    !isAdvancedSettingsOpen && '-rotate-90'
+                    !questionData.advancedSettingsExpanded && '-rotate-90'
                   )}
                 />
                 Show advanced settings
               </button>
-              {isAdvancedSettingsOpen && (
+              {questionData.advancedSettingsExpanded && (
                 <div className="ml-8 mr-2 mt-2 py-2">{advancedSettings}</div>
               )}
             </div>

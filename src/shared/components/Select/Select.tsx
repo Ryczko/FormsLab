@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import clsx from 'clsx';
@@ -13,6 +13,7 @@ interface SelectProps {
   classNames?: string;
   onChangeCallback?: (value: Option) => void;
   selectedValue?: string;
+  disabled?: boolean;
 }
 
 export default function Select({
@@ -20,21 +21,28 @@ export default function Select({
   classNames,
   onChangeCallback,
   selectedValue,
+  disabled,
 }: SelectProps) {
-  const [selected, setSelected] = useState<Option | undefined>(
-    options.find((option) => option.value === selectedValue)
-  );
+  const selectedItem = options.find((option) => option.value === selectedValue);
 
   const handleOnChange = (value: Option) => {
-    setSelected(value);
     onChangeCallback?.(value);
   };
 
   return (
-    <Listbox value={selected} onChange={handleOnChange}>
+    <Listbox value={selectedItem} onChange={handleOnChange} disabled={disabled}>
       <div className={clsx('relative', classNames)}>
-        <Listbox.Button className="relative w-full cursor-default rounded-md border bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-          <span className="block truncate">{selected?.name ?? '-'}</span>
+        <Listbox.Button
+          className={clsx(
+            'relative w-full rounded-md border py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm',
+            disabled
+              ? 'cursor-not-allowed bg-gray-100'
+              : 'cursor-default bg-white'
+          )}
+        >
+          <span className="block max-w-[150px] truncate">
+            {selectedItem?.name ?? '-'}
+          </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronDownIcon
               className="h-5 w-5 text-gray-400"

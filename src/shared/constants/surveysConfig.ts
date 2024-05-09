@@ -15,7 +15,7 @@ export const MAX_ANSWER_LENGTH = 255;
 
 export const defaultQuestions: DraftQuestion[] = [
   {
-    id: v4(),
+    draftId: v4(),
     title: 'How are you feeling today?',
     options: [
       ':rage:',
@@ -26,13 +26,15 @@ export const defaultQuestions: DraftQuestion[] = [
     type: QuestionType.EMOJI,
     isRequired: true,
     expanded: true,
-    logicPath: [],
+    logicPaths: [],
+    advancedSettingsExpanded: false,
   },
   {
-    id: v4(),
+    draftId: v4(),
     title: 'Tell us more',
-    type: QuestionType.INPUT,
+    type: QuestionType.RATE,
     isRequired: true,
     expanded: false,
+    advancedSettingsExpanded: false,
   },
 ];

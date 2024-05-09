@@ -31,8 +31,8 @@ export default function QuestionsSection() {
               >
                 {questions.map((question, index) => (
                   <Draggable
-                    key={question.id}
-                    draggableId={question.id}
+                    key={question.draftId}
+                    draggableId={question.draftId}
                     index={index}
                   >
                     {(provided, snapshot) => (
@@ -43,7 +43,7 @@ export default function QuestionsSection() {
                         style={provided.draggableProps.style}
                       >
                         <QuestionBlockFactory
-                          key={question.id}
+                          key={question.draftId}
                           questionData={question}
                           dragHandleProps={provided.dragHandleProps}
                           questionIndex={index}

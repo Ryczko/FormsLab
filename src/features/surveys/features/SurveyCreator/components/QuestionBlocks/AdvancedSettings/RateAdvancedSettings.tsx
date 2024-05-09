@@ -4,6 +4,8 @@ import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { ComparisonType } from '@prisma/client';
 
+import useTranslation from 'next-translate/useTranslation';
+
 interface RateAdvancedSettingsProps {
   questionData: DraftQuestion;
   questionIndex: number;
@@ -15,18 +17,24 @@ export default function RateAdvancedSettings({
 }: RateAdvancedSettingsProps) {
   const { questions } = useSurveyCreatorContext();
 
+  const { t } = useTranslation('surveyCreate');
+
   const getAvailableJumps = () => {
-    const availableSteps = ['End of survey'];
+    // TODO: handle in the future
+    // const endOfSurveyStep = {
+    //   title: 'End of survey',
+    //   draftId: 'END_OF_SURVEY',
+    // };
 
-    const availableQuestions = questions
-      .filter((question) => question.id !== questionData.id)
-      .map((question) => question.title);
+    const availableQuestions = questions.filter(
+      (question) => question.draftId !== questionData.draftId
+    );
 
-    const allAvailableSteps = [...availableQuestions, ...availableSteps];
+    const allAvailableSteps = [...availableQuestions];
 
     const namesWithValues = allAvailableSteps.map((step) => ({
-      name: step,
-      value: step,
+      name: step.title,
+      value: step.draftId,
     }));
 
     return namesWithValues;
@@ -40,7 +48,7 @@ export default function RateAdvancedSettings({
     ];
 
     const namesWithValues = availableComparisons.map((comparison) => ({
-      name: comparison,
+      name: t(comparison),
       value: comparison,
     }));
 
@@ -63,7 +71,7 @@ export default function RateAdvancedSettings({
       <LogicalJump
         questionIndex={questionIndex}
         conditions={
-          questionData.logicPath?.map((condition) => ({
+          questionData.logicPaths?.map(() => ({
             comparisons: getAvailableComparisons(),
             options: getAvailableOptions(),
             jumpQuestions: getAvailableJumps(),

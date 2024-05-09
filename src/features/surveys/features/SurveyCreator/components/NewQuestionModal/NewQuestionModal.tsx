@@ -23,7 +23,7 @@ export default function NewQuestionModal({
   const addEmojiQuestion = () => {
     closeModal();
     onSuccess?.({
-      id: v4(),
+      draftId: v4(),
       type: QuestionType.EMOJI,
       title: 'How are you feeling today?',
       isRequired: true,
@@ -34,41 +34,45 @@ export default function NewQuestionModal({
         ':smiley:',
       ],
       expanded: true,
+      advancedSettingsExpanded: false,
     });
   };
 
   const addInputQuestion = () => {
     closeModal();
     onSuccess?.({
-      id: v4(),
+      draftId: v4(),
       type: QuestionType.INPUT,
       title: '',
       isRequired: true,
       expanded: true,
+      advancedSettingsExpanded: false,
     });
   };
 
   const addChoiceQuestion = () => {
     closeModal();
     onSuccess?.({
-      id: v4(),
+      draftId: v4(),
       type: QuestionType.CHOICE,
       title: 'What came first?',
       isRequired: true,
       options: ['Chicken 🐔', 'Egg 🥚'],
       expanded: true,
+      advancedSettingsExpanded: false,
     });
   };
 
   const addRateQuestion = () => {
     closeModal();
     onSuccess?.({
-      id: v4(),
+      draftId: v4(),
       type: QuestionType.RATE,
       title: 'How do you rate the process?',
       isRequired: true,
       expanded: true,
-      logicPath: [],
+      logicPaths: [],
+      advancedSettingsExpanded: false,
     });
   };
 

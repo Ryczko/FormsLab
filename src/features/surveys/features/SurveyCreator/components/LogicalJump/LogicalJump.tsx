@@ -26,7 +26,7 @@ export default function LogicalJump({
   conditions,
   questionIndex,
 }: LogicalJumpProps) {
-  const { addLogicPath } = useSurveyCreatorContext();
+  const { addLogicPath, isEditMode } = useSurveyCreatorContext();
 
   return (
     <div>
@@ -48,18 +48,25 @@ export default function LogicalJump({
           stepIndex={index}
         />
       ))}
-
       {conditions.length > 0 && (
         <Condition elseCondition questionIndex={questionIndex} stepIndex={-1} />
       )}
 
-      <Button
-        onClick={() => addLogicPath(questionIndex)}
-        className="mt-3"
-        icon={<TerminalIcon className="mr-1 h-5 w-5" />}
-      >
-        Add path
-      </Button>
+      {conditions.length === 0 && (
+        <div className="mt-3 flex gap-4">
+          There are no logic paths set for this question
+        </div>
+      )}
+
+      {!isEditMode && (
+        <Button
+          onClick={() => addLogicPath(questionIndex)}
+          className="mt-4"
+          icon={<TerminalIcon className="mr-1 h-5 w-5" />}
+        >
+          Add path
+        </Button>
+      )}
     </div>
   );
 }
