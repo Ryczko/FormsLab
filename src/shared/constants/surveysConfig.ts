@@ -32,8 +32,8 @@ export const defaultQuestions: DraftQuestion[] = [
   {
     draftId: v4(),
     title: 'Tell us more',
-    type: QuestionType.RATE,
-    isRequired: true,
+    type: QuestionType.INPUT,
+    isRequired: false,
     expanded: false,
     advancedSettingsExpanded: false,
   },

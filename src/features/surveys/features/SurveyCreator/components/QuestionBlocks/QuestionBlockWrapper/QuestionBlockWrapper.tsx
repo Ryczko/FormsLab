@@ -68,7 +68,7 @@ export default function QuestionBlockWrapper({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-md border border-l-4 border-indigo-200 bg-white/30 shadow-sm">
+    <div className="relative rounded-md border border-l-4 border-indigo-200 bg-white shadow-sm">
       <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
           <button
@@ -144,33 +144,34 @@ export default function QuestionBlockWrapper({
             children
           )}
 
-          {!!advancedSettings && (
-            <div className="mt-2 border-l-2 border-indigo-200 text-left text-sm">
-              <button
-                onClick={toggleAdvancedSettings}
-                className="flex w-auto cursor-pointer items-center gap-2  py-1 pl-2"
-              >
-                <ChevronDownIcon
-                  className={clsx(
-                    'w-[15px] transition-transform',
-                    !questionData.advancedSettingsExpanded && '-rotate-90'
-                  )}
-                />
-                Show advanced settings
-              </button>
-              {questionData.advancedSettingsExpanded && (
-                <div className="ml-8 mr-2 mt-2 py-2">{advancedSettings}</div>
-              )}
-            </div>
-          )}
+          <div className="relative min-h-[40px] border-t pt-3">
+            {!!advancedSettings && (
+              <div className="hidden w-full border-l-2 border-indigo-200 text-left text-sm md:block">
+                <button
+                  onClick={toggleAdvancedSettings}
+                  className="flex w-auto cursor-pointer items-center gap-2  py-1 pl-2"
+                >
+                  <ChevronDownIcon
+                    className={clsx(
+                      'w-[15px] transition-transform',
+                      !questionData.advancedSettingsExpanded && '-rotate-90'
+                    )}
+                  />
+                  Show advanced settings
+                </button>
+                {questionData.advancedSettingsExpanded && (
+                  <div className="ml-8 mr-2 mt-2 py-2">{advancedSettings}</div>
+                )}
+              </div>
+            )}
 
-          <div className="mt-2 flex justify-end border-t">
-            <Toggle
-              classNames="mt-3.5"
-              label={t('requiredToggle')}
-              onToggle={handleRequiredToggle}
-              isEnabled={questionData.isRequired}
-            />
+            <div className="absolute right-1 top-4">
+              <Toggle
+                label={t('requiredToggle')}
+                onToggle={handleRequiredToggle}
+                isEnabled={questionData.isRequired}
+              />
+            </div>
           </div>
         </div>
       )}

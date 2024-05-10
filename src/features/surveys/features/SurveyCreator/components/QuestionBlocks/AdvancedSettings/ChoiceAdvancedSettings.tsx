@@ -9,15 +9,15 @@ import { getAvailableOptions } from 'features/surveys/features/SurveyCreator/com
 import { getAvailableComparisons } from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/utils/getAvailableComparisons';
 import { getAvailableJumps } from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/utils/getAvailableJumps';
 
-interface RateAdvancedSettingsProps {
+interface ChoiceAdvancedSettingsProps {
   questionData: DraftQuestion;
   questionIndex: number;
 }
 
-export default function RateAdvancedSettings({
+export default function ChoiceAdvancedSettings({
   questionData,
   questionIndex,
-}: RateAdvancedSettingsProps) {
+}: ChoiceAdvancedSettingsProps) {
   const { questions } = useSurveyCreatorContext();
 
   const { t } = useTranslation('surveyCreate');
@@ -28,15 +28,8 @@ export default function RateAdvancedSettings({
         questionIndex={questionIndex}
         conditions={
           questionData.logicPaths?.map(() => ({
-            comparisons: getAvailableComparisons(
-              [
-                // ComparisonType.LESS_THAN,
-                ComparisonType.EQUAL,
-                // ComparisonType.GREATER_THAN,
-              ],
-              t
-            ),
-            options: getAvailableOptions(['1', '2', '3', '4', '5']),
+            comparisons: getAvailableComparisons([ComparisonType.EQUAL], t),
+            options: getAvailableOptions(questionData.options ?? []),
             jumpQuestions: getAvailableJumps(questions, questionData),
           })) ?? []
         }

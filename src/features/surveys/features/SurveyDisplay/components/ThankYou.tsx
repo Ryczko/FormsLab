@@ -6,7 +6,7 @@ export default function ThankYou() {
   const { t } = useTranslation('thankyou');
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="my-4 flex flex-col items-center justify-center">
       <Image
         src="/images/thankyou.svg"
         alt="thankyou"

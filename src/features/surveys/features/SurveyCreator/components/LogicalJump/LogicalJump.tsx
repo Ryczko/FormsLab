@@ -34,7 +34,7 @@ export default function LogicalJump({
         Logic path
         <QuestionMarkCircleIcon
           data-tooltip-id="logic-path-info"
-          className="ml-1 h-5 w-5 text-gray-600"
+          className="ml-1 h-4 w-4"
         />
         <Tooltip id={'logic-path-info'} place="right" positionStrategy="fixed">
           Set logic path to jump to a specific question based on the answer

@@ -39,7 +39,7 @@ export const AnswersComponentFactory = (
   const isLastQuestion = activeQuestionIndex === formData?.questions.length - 1;
 
   return (
-    <div className="mb-3 rounded-md border bg-white/50 px-6 py-4 shadow">
+    <div className="mb-3 rounded-md border bg-white px-6 py-4 shadow">
       <h2 className="mb-4 text-lg font-semibold">
         {currentQuestion.title.trim() || '-'}
       </h2>

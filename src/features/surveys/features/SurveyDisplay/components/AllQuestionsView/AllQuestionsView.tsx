@@ -29,7 +29,7 @@ export default function AllQuestionView() {
       {formData.questions.length > 0 && (
         <div className="flex justify-center">
           <Button
-            onClick={handleSave}
+            onClick={() => handleSave()}
             variant={ButtonVariant.PRIMARY}
             sizeType={ButtonSize.FULL}
             isLoading={isAnswering}

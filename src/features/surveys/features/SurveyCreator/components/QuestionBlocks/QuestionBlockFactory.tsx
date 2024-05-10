@@ -7,6 +7,8 @@ import QuestionBlockWrapper from 'features/surveys/features/SurveyCreator/compon
 import RateQuestionBlock from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/RateQuestionBlock/RateQuestionBlock';
 import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import RateAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/RateAdvancedSettings';
+import ChoiceAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/ChoiceAdvancedSettings';
+import EmojiAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/EmojiAdvancedSettings';
 
 interface QuestionBlockFactoryProps {
   questionData: DraftQuestion;
@@ -20,9 +22,27 @@ export default function QuestionBlockFactory({
   questionData,
 }: QuestionBlockFactoryProps) {
   const getAdvancedSettings = () => {
+    if (questionData.type === QuestionType.EMOJI) {
+      return (
+        <EmojiAdvancedSettings
+          questionData={questionData}
+          questionIndex={questionIndex}
+        />
+      );
+    }
+
     if (questionData.type === QuestionType.RATE) {
       return (
         <RateAdvancedSettings
+          questionData={questionData}
+          questionIndex={questionIndex}
+        />
+      );
+    }
+
+    if (questionData.type === QuestionType.CHOICE) {
+      return (
+        <ChoiceAdvancedSettings
           questionData={questionData}
           questionIndex={questionIndex}
         />

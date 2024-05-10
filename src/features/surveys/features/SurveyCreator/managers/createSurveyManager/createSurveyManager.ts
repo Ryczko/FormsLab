@@ -105,9 +105,17 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   };
 
   const removeQuestion = (index: number) => {
-    setQuestions((oldQuestions) =>
-      oldQuestions.filter((question, idx) => idx !== index)
-    );
+    setQuestions((oldQuestions) => {
+      oldQuestions.forEach((question) => {
+        question.logicPaths?.forEach((path) => {
+          if (path.nextQuestionId === questions[index].draftId) {
+            path.nextQuestionId = undefined;
+          }
+        });
+      });
+
+      return oldQuestions.filter((question, idx) => idx !== index);
+    });
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -152,6 +160,15 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     blockDuplicate = false
   ) => {
     setQuestions((oldQuestions) => {
+      oldQuestions[questionIndex].logicPaths?.forEach((path) => {
+        if (
+          path.selectedOption ===
+          oldQuestions[questionIndex].options?.[optionIndex]
+        ) {
+          path.selectedOption = undefined;
+        }
+      });
+
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
       const newOptions = [...(newQuestion.options ?? [])];
@@ -189,11 +206,21 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   };
 
   const handleOptionRemove = (optionIndex: number, questionIndex: number) => {
-    const newQuestion = { ...questions[questionIndex] };
-    const newOptions = [...(newQuestion.options ?? [])];
-    newOptions.splice(optionIndex, 1);
-    newQuestion.options = newOptions;
     setQuestions((oldQuestions) => {
+      oldQuestions[questionIndex].logicPaths?.forEach((path) => {
+        if (
+          path.selectedOption ===
+          oldQuestions[questionIndex].options?.[optionIndex]
+        ) {
+          path.selectedOption = undefined;
+        }
+      });
+
+      const newQuestion = { ...questions[questionIndex] };
+      const newOptions = [...(newQuestion.options ?? [])];
+      newOptions.splice(optionIndex, 1);
+      newQuestion.options = newOptions;
+
       const newQuestions = [...oldQuestions];
       newQuestions.splice(questionIndex, 1, newQuestion);
       return newQuestions;
