@@ -138,7 +138,8 @@ export const useSurveyAnswerManager = (
     if (
       !process.env.NEXT_PUBLIC_ALLOW_MULTIPLE_ANSWERS &&
       localStorageValue.includes(surveyId) &&
-      !isAnswering
+      !isAnswering &&
+      !isSurveyFinished
     ) {
       router.replace('/');
       toast.success(t('alreadyAnswered'));
