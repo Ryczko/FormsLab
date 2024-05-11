@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
-describe('Create and Answer Survey', () => {
-  it('should create a survey and answer it and show thank you page', () => {
+describe('Answering survey tests', () => {
+  it('should create a survey, answer it and show thank you page', () => {
     // Login before proceeding
     cy.login();
 
@@ -11,10 +11,15 @@ describe('Create and Answer Survey', () => {
 
     cy.get('[data-test-id="create-survey"]').click();
     cy.url().should('include', '/survey/create');
-    cy.get('input[name="survey-title"]').type(surveyTitle);
+    cy.get('input[name="survey-title"]').clear().type(surveyTitle);
 
-    cy.get('input[data-test-id="question-input-0"]').type(questionContent);
-    cy.get('input[data-test-id="question-input-1"]').type(questionContent);
+    cy.get('input[data-test-id="question-input-0"]')
+      .clear()
+      .type(questionContent);
+
+    cy.get('input[data-test-id="question-input-1"]')
+      .clear()
+      .type(questionContent);
 
     cy.get('button[data-test-id="options-button"]').click();
     cy.get('[data-test-id="one-per-step-toggle"]').click();
@@ -42,7 +47,7 @@ describe('Create and Answer Survey', () => {
       cy.contains('button', 'Send').should('be.visible').click();
 
       // Verify Thank You Page
-      cy.url().should('include', '/thank-you');
+      cy.get('[data-test-id="thank-you-header"]').should('exist');
     });
   });
 });

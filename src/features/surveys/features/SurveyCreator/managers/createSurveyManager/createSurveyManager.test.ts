@@ -14,12 +14,13 @@ const setUp = () => {
 
   act(() => {
     result.current.addQuestion({
-      id: v4(),
+      draftId: v4(),
       type: 'INPUT',
       title: NEW_QUESTION_TITLE,
       options: [],
       isRequired: false,
       expanded: true,
+      advancedSettingsExpanded: false,
     });
   });
 
@@ -31,12 +32,13 @@ describe('useCreateSurveyManager tests', () => {
     const result = setUp();
     act(() => {
       result.current.addQuestion({
-        id: v4(),
+        draftId: v4(),
         type: 'INPUT',
         title: 'test',
         options: [],
         isRequired: false,
         expanded: true,
+        advancedSettingsExpanded: false,
       });
     });
 

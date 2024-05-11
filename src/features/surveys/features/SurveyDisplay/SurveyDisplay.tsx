@@ -7,13 +7,19 @@ import SurveyDisplayContent from 'features/surveys/features/SurveyDisplay/Survey
 interface SurveyDisplayProps {
   initialData: SurveyWithQuestions;
   previewMode?: boolean;
+  restartTrigger?: number;
 }
 
 export default function SurveyDisplay({
   initialData,
   previewMode = false,
+  restartTrigger,
 }: SurveyDisplayProps) {
-  const manager = useSurveyAnswerManager(initialData, previewMode);
+  const manager = useSurveyAnswerManager(
+    initialData,
+    previewMode,
+    restartTrigger
+  );
 
   return (
     <SurveyDisplayContext.Provider value={manager}>

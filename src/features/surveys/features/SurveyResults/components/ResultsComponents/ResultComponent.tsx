@@ -73,7 +73,7 @@ export default function ResultComponent({
   }, [notEmptyAnswers]);
 
   return (
-    <div className="mb-2 rounded-md border bg-white/50 p-4 shadow-sm">
+    <div className="mb-2 rounded-md border bg-white p-4 shadow-sm">
       <h2 className="mb-4 text-lg font-semibold">{question}</h2>
       {type === QuestionType.EMOJI && <BarChart data={chartData} emojiLabels />}
       {type === QuestionType.INPUT && <TextResults answers={notEmptyAnswers} />}

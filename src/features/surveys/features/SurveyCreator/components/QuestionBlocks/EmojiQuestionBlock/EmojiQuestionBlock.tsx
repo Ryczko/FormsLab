@@ -16,7 +16,7 @@ export default function EmojiQuestionBlock({
 
   return (
     <div
-      className="mb-3 mt-1"
+      className="mb-5 mt-1"
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, 58px)',

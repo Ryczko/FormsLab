@@ -4,7 +4,7 @@
   "heading": "Create new survey",
   "editHeading": "Edit survey",
   "buttonCreate": "Create Survey",
-  "editNote": "Some action like adding and removing questions or changing answers are not available in edit mode.",
+  "editNote": "Some action like adding, removing questions or changing answers are not currently available in edit mode.",
   "editNoteTitle": "Note",
   "buttonSave": "Save changes",
   "discardChanges": "Discard changes",
@@ -19,5 +19,8 @@
   "fillRequiredFields": "Please fill all required fields",
   "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard",
   "signInToCreateSurvey": "Sign in to create survey",
-  "options": "Display options"
+  "options": "Display options",
+  "GREATER_THAN": "Greater than",
+  "LESS_THAN": "Less than",
+  "EQUAL": "Equal"
 }

@@ -20,6 +20,15 @@ export default function QuestionsSection() {
         <Note title={t('editNoteTitle')} description={t('editNote')} />
       )}
 
+      <div className="block md:hidden">
+        <Note
+          title={'Note'}
+          description={
+            'Some actions, such as advanced settings, are not available on low resolution devices.'
+          }
+        />
+      </div>
+
       <DragDropContext onDragEnd={onDragQuestionEnd}>
         {isBrowser ? (
           <Droppable droppableId="droppable">
@@ -31,8 +40,8 @@ export default function QuestionsSection() {
               >
                 {questions.map((question, index) => (
                   <Draggable
-                    key={question.id}
-                    draggableId={question.id}
+                    key={question.draftId}
+                    draggableId={question.draftId}
                     index={index}
                   >
                     {(provided, snapshot) => (
@@ -43,7 +52,7 @@ export default function QuestionsSection() {
                         style={provided.draggableProps.style}
                       >
                         <QuestionBlockFactory
-                          key={question.id}
+                          key={question.draftId}
                           questionData={question}
                           dragHandleProps={provided.dragHandleProps}
                           questionIndex={index}

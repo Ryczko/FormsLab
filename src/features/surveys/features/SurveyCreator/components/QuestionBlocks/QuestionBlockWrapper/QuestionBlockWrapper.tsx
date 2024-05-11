@@ -3,7 +3,7 @@ import {
   SelectorIcon,
   TrashIcon,
 } from '@heroicons/react/outline';
-import { ChangeEvent, PropsWithChildren } from 'react';
+import React, { ChangeEvent, PropsWithChildren } from 'react';
 import Input from 'shared/components/Input/Input';
 import useTranslation from 'next-translate/useTranslation';
 import {
@@ -15,12 +15,13 @@ import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 import clsx from 'clsx';
 import QuestionTypeIcons from 'shared/components/QuestionTypeIcons/QuestionTypeIcons';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
 interface QuestionBlockWrapperProps {
   index: number;
-  questionData: Question;
+  questionData: DraftQuestion;
   dragHandleProps: DraggableProvidedDragHandleProps | null | undefined;
+  advancedSettings?: React.ReactNode;
 }
 
 export default function QuestionBlockWrapper({
@@ -28,6 +29,7 @@ export default function QuestionBlockWrapper({
   index,
   dragHandleProps,
   questionData,
+  advancedSettings,
 }: PropsWithChildren<QuestionBlockWrapperProps>) {
   const { t } = useTranslation('surveyCreate');
 
@@ -39,6 +41,7 @@ export default function QuestionBlockWrapper({
     expandQuestion,
     questions,
     isEditMode,
+    expandAdvancedSettings,
   } = useSurveyCreatorContext();
 
   const isRemovingPossible = questions.length > MIN_QUESTIONS;
@@ -46,6 +49,10 @@ export default function QuestionBlockWrapper({
 
   const handleRequiredToggle = () => {
     updateQuestionRequired(index);
+  };
+
+  const toggleAdvancedSettings = () => {
+    expandAdvancedSettings(index);
   };
 
   const questionError = () => {
@@ -61,7 +68,7 @@ export default function QuestionBlockWrapper({
   };
 
   return (
-    <div className="relative overflow-hidden rounded-md border bg-white/30 shadow-sm">
+    <div className="relative rounded-md border border-l-4 border-indigo-200 bg-white shadow-sm">
       <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
           <button
@@ -126,7 +133,7 @@ export default function QuestionBlockWrapper({
       </div>
 
       {questionData.expanded && (
-        <div className="mb-4 px-3">
+        <div className="mb-3 px-3">
           {isEditMode ? (
             <div className="relative opacity-50">
               <div className="absolute z-50 h-full w-full cursor-not-allowed"></div>
@@ -137,13 +144,34 @@ export default function QuestionBlockWrapper({
             children
           )}
 
-          <div className="mt-2 flex justify-end border-t">
-            <Toggle
-              classNames="mt-3.5"
-              label={t('requiredToggle')}
-              onToggle={handleRequiredToggle}
-              isEnabled={questionData.isRequired}
-            />
+          <div className="relative min-h-[36px] border-t pt-2">
+            {!!advancedSettings && (
+              <div className="hidden w-full border-l-2 border-indigo-200 text-left text-sm md:block">
+                <button
+                  onClick={toggleAdvancedSettings}
+                  className="flex w-auto cursor-pointer items-center gap-2  py-1 pl-2"
+                >
+                  <ChevronDownIcon
+                    className={clsx(
+                      'w-[15px] transition-transform',
+                      !questionData.advancedSettingsExpanded && '-rotate-90'
+                    )}
+                  />
+                  Show advanced settings
+                </button>
+                {questionData.advancedSettingsExpanded && (
+                  <div className="ml-8 mr-2 mt-2 py-2">{advancedSettings}</div>
+                )}
+              </div>
+            )}
+
+            <div className="absolute right-1 top-3">
+              <Toggle
+                label={t('requiredToggle')}
+                onToggle={handleRequiredToggle}
+                isEnabled={questionData.isRequired}
+              />
+            </div>
           </div>
         </div>
       )}

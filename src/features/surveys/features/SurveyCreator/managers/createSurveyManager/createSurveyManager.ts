@@ -3,21 +3,25 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
-import { QuestionType } from '@prisma/client';
+import { ComparisonType, QuestionType } from '@prisma/client';
 import { postFetch, putFetch } from '../../../../../../../lib/axiosConfig';
 import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
-import { Question as QuestionDto } from '@prisma/client';
+import { LogicPath } from '@prisma/client';
 import { DropResult } from 'react-beautiful-dnd';
+import { CreateEditSurveyPayload } from 'pages/api/survey';
+import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
 
-export interface Question {
-  id: string;
+export interface DraftQuestion {
+  draftId: string;
   title: string;
   options?: string[];
   type: QuestionType;
   isRequired: boolean;
+  logicPaths?: Partial<LogicPath>[];
   expanded: boolean;
+  advancedSettingsExpanded: boolean;
 }
 
 export interface SurveyOptions {
@@ -32,15 +36,21 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
 
   const [title, setTitle] = useState(initialData?.title ?? 'My survey');
 
-  const mapQuestionsWithExpanded = (questions?: QuestionDto[]) => {
-    return questions?.map((question) => ({
+  const mapQuestionsWithExpanded = (
+    questions: QuestionWithLogicPath[]
+  ): DraftQuestion[] => {
+    return questions.map((question) => ({
       ...question,
       expanded: false,
+      advancedSettingsExpanded: false,
+      draftId: question.id,
     }));
   };
 
-  const [questions, setQuestions] = useState<Question[]>(
-    mapQuestionsWithExpanded(initialData?.questions) ?? defaultQuestions
+  const [questions, setQuestions] = useState<DraftQuestion[]>(
+    initialData
+      ? mapQuestionsWithExpanded(initialData.questions)
+      : defaultQuestions
   );
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
@@ -87,16 +97,24 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setSurveyOptions((oldOptions) => ({ ...oldOptions, [option]: value }));
   };
 
-  const addQuestion = (newQuestion: Question) => {
+  const addQuestion = (newQuestion: DraftQuestion) => {
     setQuestions((oldQuestions) => [...oldQuestions, newQuestion]);
     setIsSubmitted(false);
     setError('');
   };
 
   const removeQuestion = (index: number) => {
-    setQuestions((oldQuestions) =>
-      oldQuestions.filter((question, idx) => idx !== index)
-    );
+    setQuestions((oldQuestions) => {
+      oldQuestions.forEach((question) => {
+        question.logicPaths?.forEach((path) => {
+          if (path.nextQuestionId === questions[index].draftId) {
+            path.nextQuestionId = undefined;
+          }
+        });
+      });
+
+      return oldQuestions.filter((question, idx) => idx !== index);
+    });
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -108,7 +126,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
-      newQuestion.title = newQuestionTitle;
+      newQuestion.title = newQuestionTitle.trimStart();
       newQuestions.splice(questionIndex, 1, newQuestion);
       return newQuestions;
     });
@@ -141,12 +159,21 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     blockDuplicate = false
   ) => {
     setQuestions((oldQuestions) => {
+      oldQuestions[questionIndex].logicPaths?.forEach((path) => {
+        if (
+          path.selectedOption ===
+          oldQuestions[questionIndex].options?.[optionIndex]
+        ) {
+          path.selectedOption = undefined;
+        }
+      });
+
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
       const newOptions = [...(newQuestion.options ?? [])];
 
       if (!blockDuplicate || !isEmojiPicked(newValue, questionIndex)) {
-        newOptions.splice(optionIndex, 1, newValue);
+        newOptions.splice(optionIndex, 1, newValue.trimStart());
       }
 
       newQuestion.options = newOptions;
@@ -178,11 +205,21 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   };
 
   const handleOptionRemove = (optionIndex: number, questionIndex: number) => {
-    const newQuestion = { ...questions[questionIndex] };
-    const newOptions = [...(newQuestion.options ?? [])];
-    newOptions.splice(optionIndex, 1);
-    newQuestion.options = newOptions;
     setQuestions((oldQuestions) => {
+      oldQuestions[questionIndex].logicPaths?.forEach((path) => {
+        if (
+          path.selectedOption ===
+          oldQuestions[questionIndex].options?.[optionIndex]
+        ) {
+          path.selectedOption = undefined;
+        }
+      });
+
+      const newQuestion = { ...questions[questionIndex] };
+      const newOptions = [...(newQuestion.options ?? [])];
+      newOptions.splice(optionIndex, 1);
+      newQuestion.options = newOptions;
+
       const newQuestions = [...oldQuestions];
       newQuestions.splice(questionIndex, 1, newQuestion);
       return newQuestions;
@@ -197,20 +234,45 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     return true;
   };
 
-  const areQuestionsValid = (questions: Question[]) => {
-    setQuestions((oldQuestions) =>
-      oldQuestions.map((question) => {
-        if (question.options?.includes('')) {
-          return { ...question, expanded: true };
-        }
-        return question;
-      })
-    );
+  const areQuestionsValid = (questions: DraftQuestion[]) => {
+    const questionIndexesToExpand: number[] = [];
+    const andvancedSettingsIndexesToExpand: number[] = [];
+
+    questions.forEach((question, index) => {
+      if (question.options?.includes('')) {
+        questionIndexesToExpand.push(index);
+      }
+
+      if (
+        question.logicPaths?.some(
+          (path) =>
+            !path.selectedOption || !path.comparisonType || !path.nextQuestionId
+        )
+      ) {
+        questionIndexesToExpand.push(index);
+        andvancedSettingsIndexesToExpand.push(index);
+      }
+    });
+
+    const newQuestions = questions.map((question, index) => {
+      const newQuestion = { ...question };
+      if (questionIndexesToExpand.includes(index)) {
+        newQuestion.expanded = true;
+      }
+
+      if (andvancedSettingsIndexesToExpand.includes(index)) {
+        newQuestion.advancedSettingsExpanded = true;
+      }
+
+      return newQuestion;
+    });
+
+    setQuestions(newQuestions);
 
     if (
-      questions.some(
-        (question) => question.options?.includes('') || question.title === ''
-      )
+      questions.some((question) => question.title === '') ||
+      questionIndexesToExpand.length > 0 ||
+      andvancedSettingsIndexesToExpand.length > 0
     ) {
       return false;
     }
@@ -237,25 +299,43 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     return isValid;
   };
 
+  const getCreateEditSurveyPayload = (): CreateEditSurveyPayload => {
+    return {
+      title,
+      oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
+      displayTitle: surveyOptions.displayTitle,
+      hideProgressBar: surveyOptions.hideProgressBar,
+      accentColor: surveyOptions.accentColor,
+      questions: questions.map((question) => ({
+        draftId: question.draftId,
+        title: question.title,
+        options: question.options ?? [],
+        type: question.type,
+        isRequired: question.isRequired,
+        logicPaths:
+          question.logicPaths?.map((path) => ({
+            comparisonType: path.comparisonType as ComparisonType,
+            selectedOption: path.selectedOption as string,
+            nextQuestionOrder: questions.findIndex(
+              (question) => question.draftId === path.nextQuestionId
+            ),
+          })) ?? [],
+      })),
+    };
+  };
+
   const createSurvey = async () => {
     if (!isSurveyValid()) return;
 
     setIsCreating(true);
 
     try {
-      const newSurvey = await postFetch('/api/survey', {
-        title,
-        oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
-        displayTitle: surveyOptions.displayTitle,
-        hideProgressBar: surveyOptions.hideProgressBar,
-        accentColor: surveyOptions.accentColor,
-        questions: questions.map((question) => ({
-          title: question.title,
-          options: question.options,
-          type: question.type,
-          isRequired: question.isRequired,
-        })),
-      });
+      const newSurveyPayload = getCreateEditSurveyPayload();
+
+      const newSurvey = await postFetch<CreateEditSurveyPayload>(
+        '/api/survey',
+        newSurveyPayload
+      );
 
       const link = `${window.location.protocol}//${window.location.host}/survey/${newSurvey.id}`;
 
@@ -280,20 +360,12 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setIsCreating(true);
 
     try {
-      const newSurvey = await putFetch(`/api/survey/${initialData.id}`, {
-        title,
-        oneQuestionPerStep: surveyOptions.oneQuestionPerStep,
-        displayTitle: surveyOptions.displayTitle,
-        hideProgressBar: surveyOptions.hideProgressBar,
-        accentColor: surveyOptions.accentColor,
-        questions: questions.map((question) => ({
-          id: question.id,
-          title: question.title,
-          options: question.options,
-          type: question.type,
-          isRequired: question.isRequired,
-        })),
-      });
+      const newSurveyPayload = getCreateEditSurveyPayload();
+
+      const newSurvey = await putFetch<CreateEditSurveyPayload>(
+        `/api/survey/${initialData.id}`,
+        newSurveyPayload
+      );
 
       await router.push(`/survey/answer/${newSurvey.id}`, undefined, {
         scroll: false,
@@ -329,12 +401,67 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     });
   };
 
+  const expandAdvancedSettings = (questionIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      newQuestion.advancedSettingsExpanded =
+        !newQuestion.advancedSettingsExpanded;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
   const onDragQuestionEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
     }
 
     reorderQuestion(result.source.index, result.destination.index);
+  };
+
+  const addLogicPath = (questionIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      newQuestion.logicPaths = [...(newQuestion.logicPaths ?? []), {}];
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
+  const removeLogicPath = (questionIndex: number, logicPathIndex: number) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+      const newLogicPath = [...(newQuestion.logicPaths ?? [])];
+      newLogicPath.splice(logicPathIndex, 1);
+      newQuestion.logicPaths = newLogicPath;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
+  };
+
+  const updateLogicPath = (
+    questionIndex: number,
+    logicPathIndex: number,
+    conditions: Partial<LogicPath>
+  ) => {
+    setQuestions((oldQuestions) => {
+      const newQuestions = [...oldQuestions];
+      const newQuestion = { ...newQuestions[questionIndex] };
+
+      const newLogicPath = [...(newQuestion.logicPaths ?? [])];
+      const newLogicPathItem = {
+        ...newLogicPath[logicPathIndex],
+        ...conditions,
+      };
+
+      newLogicPath.splice(logicPathIndex, 1, newLogicPathItem);
+      newQuestion.logicPaths = newLogicPath;
+      newQuestions.splice(questionIndex, 1, newQuestion);
+      return newQuestions;
+    });
   };
 
   return {
@@ -361,6 +488,10 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     confirmEditSurvey,
     discardChanges,
     onDragQuestionEnd,
+    addLogicPath,
+    removeLogicPath,
+    updateLogicPath,
+    expandAdvancedSettings,
   };
 };
 

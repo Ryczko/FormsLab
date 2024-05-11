@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from '../../../../lib/prismadb';
 
 import serverAuth from '../../../../lib/serverAuth';
-import { Question } from '@prisma/client';
+import { ComparisonType, QuestionType } from '@prisma/client';
 import {
   MAX_QUESTIONS,
   MAX_QUESTION_LENGTH,
@@ -11,10 +11,22 @@ import {
   MIN_QUESTIONS,
 } from 'shared/constants/surveysConfig';
 
-export interface SurveyData {
+export interface CreateEditSurveyPayload {
   title: string;
-  description: string;
-  questions: Question[];
+  description?: string;
+  questions: {
+    draftId?: string;
+    title: string;
+    type: QuestionType;
+    description?: string;
+    isRequired: boolean;
+    options: string[];
+    logicPaths: {
+      comparisonType: ComparisonType;
+      selectedOption: string;
+      nextQuestionOrder: number;
+    }[];
+  }[];
   oneQuestionPerStep: boolean;
   displayTitle: boolean;
   hideProgressBar: boolean;
@@ -40,7 +52,7 @@ export async function getAllUserSurveys(userId: string) {
   return surveys;
 }
 
-export const isSurveyValid = (survey: SurveyData) => {
+export const isSurveyValid = (survey: CreateEditSurveyPayload) => {
   if (
     survey.title.trim() === '' ||
     survey.title.length > MAX_TITLE_LENGTH ||
@@ -75,12 +87,12 @@ export default async function handler(
         const {
           title,
           description,
-          questions,
+          questions: payloadQuestions,
           oneQuestionPerStep,
           displayTitle,
           hideProgressBar,
           accentColor,
-        } = req.body as SurveyData;
+        } = req.body as CreateEditSurveyPayload;
 
         if (!isSurveyValid(req.body)) {
           return res.status(400).end();
@@ -97,7 +109,7 @@ export default async function handler(
             displayTitle,
             hideProgressBar,
             questions: {
-              create: questions.map((question, index) => ({
+              create: payloadQuestions.map((question, index) => ({
                 type: question.type,
                 title: question.title,
                 description: question.description,
@@ -107,6 +119,28 @@ export default async function handler(
               })),
             },
           },
+          include: {
+            questions: true,
+          },
+        });
+
+        // Adding logic paths is seperated because we need all questions to be created first
+        survey.questions.forEach(async (question) => {
+          const payloadQuestion = payloadQuestions[question.order];
+          const logicPaths = payloadQuestion.logicPaths.map((path) => ({
+            comparisonType: path.comparisonType,
+            selectedOption: path.selectedOption,
+            nextQuestionId: survey.questions.find(
+              (q) => q.order === path.nextQuestionOrder
+            )?.id,
+          }));
+
+          await prismadb.question.update({
+            where: { id: question.id },
+            data: {
+              logicPaths: logicPaths,
+            },
+          });
         });
 
         return res.status(200).json({ id: survey.id });

@@ -1,5 +1,5 @@
 import { QuestionType } from '@prisma/client';
-import { Question } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import { v4 } from 'uuid';
 
 export const MAX_TITLE_LENGTH = 255;
@@ -13,9 +13,9 @@ export const MIN_OPTIONS = 2;
 export const MAX_QUESTION_LENGTH = 255;
 export const MAX_ANSWER_LENGTH = 255;
 
-export const defaultQuestions: Question[] = [
+export const defaultQuestions: DraftQuestion[] = [
   {
-    id: v4(),
+    draftId: v4(),
     title: 'How are you feeling today?',
     options: [
       ':rage:',
@@ -26,12 +26,15 @@ export const defaultQuestions: Question[] = [
     type: QuestionType.EMOJI,
     isRequired: true,
     expanded: true,
+    logicPaths: [],
+    advancedSettingsExpanded: false,
   },
   {
-    id: v4(),
+    draftId: v4(),
     title: 'Tell us more',
     type: QuestionType.INPUT,
-    isRequired: true,
+    isRequired: false,
     expanded: false,
+    advancedSettingsExpanded: false,
   },
 ];

@@ -1,5 +1,6 @@
-import { Question, Survey } from '@prisma/client';
+import { Survey } from '@prisma/client';
+import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
 
 export type SurveyWithQuestions = Survey & {
-  questions: Question[];
+  questions: QuestionWithLogicPath[];
 };

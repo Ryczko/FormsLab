@@ -6,13 +6,16 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getFetch, postFetch } from '../../../../../../lib/axiosConfig';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
-import { Question, Survey } from '@prisma/client';
+import { ComparisonType, Survey } from '@prisma/client';
+import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
 
 export type Answers = { [key: string]: string };
 
 const DEFAULT_VALUE: string[] = [];
 
-export type DraftQuestionWithAnswer = Question & { answer?: string };
+export type DraftQuestionWithAnswer = QuestionWithLogicPath & {
+  answer?: string;
+};
 
 export type SurveyWithQuestionsAndUsersAnswers = Survey & {
   questions: DraftQuestionWithAnswer[];
@@ -20,12 +23,15 @@ export type SurveyWithQuestionsAndUsersAnswers = Survey & {
 
 export const useSurveyAnswerManager = (
   initialData: SurveyWithQuestions,
-  previewMode: boolean
+  previewMode: boolean,
+  restartTrigger?: number
 ) => {
   const router = useRouter();
   const { t } = useTranslation('survey');
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [isSurveyFinished, setIsSurveyFinished] = useState(false);
 
   const { surveyId } = router.query as { surveyId: string };
 
@@ -39,6 +45,7 @@ export const useSurveyAnswerManager = (
   );
 
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [previousQuestions, setPreviousQuestions] = useState<number[]>([]);
 
   useEffect(() => {
     if (previewMode) {
@@ -54,22 +61,69 @@ export const useSurveyAnswerManager = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData, previewMode]);
 
+  useEffect(() => {
+    if (restartTrigger) {
+      restartSurvey();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restartTrigger]);
+
+  const restartSurvey = () => {
+    setFormData(initialData);
+    setActiveQuestionIndex(0);
+    setPreviousQuestions([]);
+    setIsSubmitted(false);
+    setIsSurveyFinished(false);
+  };
+
   const handleNextQuestion = () => {
     setIsSubmitted(true);
 
     if (isAnswerValid(activeQuestionIndex) && formData?.questions) {
+      const activeQuestion = formData?.questions[activeQuestionIndex];
+
+      setPreviousQuestions((previousQuestions) => [
+        ...previousQuestions,
+        activeQuestionIndex,
+      ]);
+
+      for (let i = 0; i < activeQuestion.logicPaths.length; i++) {
+        const path = activeQuestion.logicPaths[i];
+        if (
+          path.comparisonType === ComparisonType.EQUAL &&
+          activeQuestion.answer &&
+          path.selectedOption === activeQuestion.answer
+        ) {
+          const nextQuestionIndex = formData?.questions.findIndex(
+            (question) => question.id === path.nextQuestionId
+          );
+          setActiveQuestionIndex(
+            nextQuestionIndex !== -1 ? nextQuestionIndex : 0
+          );
+          setIsSubmitted(false);
+
+          return;
+        }
+      }
+
       if (activeQuestionIndex < formData?.questions.length - 1) {
         setActiveQuestionIndex((prev) => prev + 1);
         setIsSubmitted(false);
       } else {
-        handleSave();
+        handleSave(false);
       }
     }
   };
 
   const handlePreviousQuestion = () => {
-    if (activeQuestionIndex > 0) {
-      setActiveQuestionIndex((prev) => prev - 1);
+    if (previousQuestions.length > 0) {
+      const lastQuestionIndex = previousQuestions[previousQuestions.length - 1];
+      setActiveQuestionIndex(lastQuestionIndex);
+      setPreviousQuestions((previousQuestions) =>
+        previousQuestions.filter(
+          (questionIndex) => questionIndex !== lastQuestionIndex
+        )
+      );
     }
   };
 
@@ -130,10 +184,21 @@ export const useSurveyAnswerManager = (
     return true;
   };
 
-  const handleSave = async () => {
+  const handleSave = async (validateAllForm = true) => {
     setIsSubmitted(true);
 
-    if (previewMode || !isAnswersValid()) return;
+    if (validateAllForm && !isAnswersValid()) return;
+
+    if (previewMode) {
+      setIsAnswering(true);
+
+      //to simulate real request
+      setTimeout(() => {
+        setIsSurveyFinished(true);
+        setIsAnswering(false);
+      }, 600);
+      return;
+    }
 
     setIsAnswering(true);
 
@@ -156,7 +221,7 @@ export const useSurveyAnswerManager = (
         });
 
         setLocalStorageValue([...localStorageValue, surveyId]);
-        await router.replace(`/survey/${surveyId}/thank-you`);
+        setIsSurveyFinished(true);
         toast.success(t('successfullSubmit'));
       } else {
         setFormData((prev) => {
@@ -185,6 +250,8 @@ export const useSurveyAnswerManager = (
     handleNextQuestion,
     handlePreviousQuestion,
     previewMode,
+    isSurveyFinished,
+    restartSurvey,
   };
 };
 

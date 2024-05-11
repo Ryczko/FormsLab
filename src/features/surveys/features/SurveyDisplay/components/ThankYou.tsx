@@ -6,7 +6,7 @@ export default function ThankYou() {
   const { t } = useTranslation('thankyou');
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="my-4 flex flex-col items-center justify-center">
       <Image
         src="/images/thankyou.svg"
         alt="thankyou"
@@ -14,7 +14,10 @@ export default function ThankYou() {
         width="140"
       />
 
-      <h1 className="leading-tighter mt-4 text-3xl font-extrabold tracking-tighter">
+      <h1
+        data-test-id="thank-you-header"
+        className="leading-tighter mt-4 text-3xl font-extrabold tracking-tighter"
+      >
         {t('firstPartHeading')}&nbsp;
         <span className="text-indigo-200">{t('secondPartHeading')}</span>
       </h1>
