@@ -14,7 +14,10 @@ export default function ThankYou() {
         width="140"
       />
 
-      <h1 className="leading-tighter mt-4 text-3xl font-extrabold tracking-tighter">
+      <h1
+        data-test-id="thank-you-header"
+        className="leading-tighter mt-4 text-3xl font-extrabold tracking-tighter"
+      >
         {t('firstPartHeading')}&nbsp;
         <span className="text-indigo-200">{t('secondPartHeading')}</span>
       </h1>
