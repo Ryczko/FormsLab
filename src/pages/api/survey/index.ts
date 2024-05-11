@@ -120,35 +120,25 @@ export default async function handler(
             },
           },
           include: {
-            questions: {
-              orderBy: {
-                order: 'asc',
-              },
-              include: {
-                logicPaths: true,
-              },
-            },
+            questions: true,
           },
         });
 
         // Adding logic paths is seperated because we need all questions to be created first
         survey.questions.forEach(async (question) => {
           const payloadQuestion = payloadQuestions[question.order];
+          const logicPaths = payloadQuestion.logicPaths.map((path) => ({
+            comparisonType: path.comparisonType,
+            selectedOption: path.selectedOption,
+            nextQuestionId: survey.questions.find(
+              (q) => q.order === path.nextQuestionOrder
+            )?.id,
+          }));
 
           await prismadb.question.update({
             where: { id: question.id },
             data: {
-              logicPaths: {
-                createMany: {
-                  data: payloadQuestion.logicPaths.map((path) => ({
-                    comparisonType: path.comparisonType,
-                    selectedOption: path.selectedOption,
-                    nextQuestionId: survey.questions.find(
-                      (q) => q.order === path.nextQuestionOrder
-                    )?.id,
-                  })),
-                },
-              },
+              logicPaths: logicPaths,
             },
           });
         });

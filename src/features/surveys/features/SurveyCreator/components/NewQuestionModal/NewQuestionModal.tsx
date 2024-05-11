@@ -43,7 +43,7 @@ export default function NewQuestionModal({
     onSuccess?.({
       draftId: v4(),
       type: QuestionType.INPUT,
-      title: '',
+      title: 'Tell us more',
       isRequired: true,
       expanded: true,
       advancedSettingsExpanded: false,

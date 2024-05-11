@@ -10,7 +10,6 @@ import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
 import { LogicPath } from '@prisma/client';
 import { DropResult } from 'react-beautiful-dnd';
-import { v4 } from 'uuid';
 import { CreateEditSurveyPayload } from 'pages/api/survey';
 import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
 
@@ -127,7 +126,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
-      newQuestion.title = newQuestionTitle;
+      newQuestion.title = newQuestionTitle.trimStart();
       newQuestions.splice(questionIndex, 1, newQuestion);
       return newQuestions;
     });
@@ -174,7 +173,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
       const newOptions = [...(newQuestion.options ?? [])];
 
       if (!blockDuplicate || !isEmojiPicked(newValue, questionIndex)) {
-        newOptions.splice(optionIndex, 1, newValue);
+        newOptions.splice(optionIndex, 1, newValue.trimStart());
       }
 
       newQuestion.options = newOptions;
@@ -425,12 +424,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setQuestions((oldQuestions) => {
       const newQuestions = [...oldQuestions];
       const newQuestion = { ...newQuestions[questionIndex] };
-      newQuestion.logicPaths = [
-        ...(newQuestion.logicPaths ?? []),
-        {
-          id: v4(),
-        },
-      ];
+      newQuestion.logicPaths = [...(newQuestion.logicPaths ?? []), {}];
       newQuestions.splice(questionIndex, 1, newQuestion);
       return newQuestions;
     });

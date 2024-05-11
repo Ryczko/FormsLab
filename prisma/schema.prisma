@@ -94,15 +94,6 @@ model Question {
   survey Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
 }
 
-model LogicPath {
-  id             String         @id @default(auto()) @map("_id") @db.ObjectId
-  questionId     String         @db.ObjectId
-  nextQuestionId String?        @db.ObjectId
-  comparisonType ComparisonType
-  selectedOption String
-
-  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-}
 
 model Answer {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -123,6 +114,12 @@ model AnswerData {
   providedAnswer String?
 
   answer Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
+}
+
+type LogicPath {
+  nextQuestionId String?        @db.ObjectId
+  comparisonType ComparisonType
+  selectedOption String
 }
 
 enum QuestionType {

@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getFetch, postFetch } from '../../../../../../lib/axiosConfig';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
-import { Survey } from '@prisma/client';
+import { ComparisonType, Survey } from '@prisma/client';
 import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
 
 export type Answers = { [key: string]: string };
@@ -89,7 +89,11 @@ export const useSurveyAnswerManager = (
 
       for (let i = 0; i < activeQuestion.logicPaths.length; i++) {
         const path = activeQuestion.logicPaths[i];
-        if (path.selectedOption === activeQuestion.answer) {
+        if (
+          path.comparisonType === ComparisonType.EQUAL &&
+          activeQuestion.answer &&
+          path.selectedOption === activeQuestion.answer
+        ) {
           const nextQuestionIndex = formData?.questions.findIndex(
             (question) => question.id === path.nextQuestionId
           );

@@ -19,9 +19,6 @@ export async function getSurveyData(surveyId: string, userId?: string) {
           orderBy: {
             order: 'asc',
           },
-          include: {
-            logicPaths: true,
-          },
         },
         answers: false,
       },

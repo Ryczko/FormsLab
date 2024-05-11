@@ -133,7 +133,7 @@ export default function QuestionBlockWrapper({
       </div>
 
       {questionData.expanded && (
-        <div className="mb-4 px-3">
+        <div className="mb-3 px-3">
           {isEditMode ? (
             <div className="relative opacity-50">
               <div className="absolute z-50 h-full w-full cursor-not-allowed"></div>
@@ -144,7 +144,7 @@ export default function QuestionBlockWrapper({
             children
           )}
 
-          <div className="relative min-h-[40px] border-t pt-3">
+          <div className="relative min-h-[36px] border-t pt-2">
             {!!advancedSettings && (
               <div className="hidden w-full border-l-2 border-indigo-200 text-left text-sm md:block">
                 <button
@@ -165,7 +165,7 @@ export default function QuestionBlockWrapper({
               </div>
             )}
 
-            <div className="absolute right-1 top-4">
+            <div className="absolute right-1 top-3">
               <Toggle
                 label={t('requiredToggle')}
                 onToggle={handleRequiredToggle}
