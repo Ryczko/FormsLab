@@ -5,7 +5,6 @@ import SurveyRow from 'features/surveys/features/SurveyList/components/SurveyRow
 import usePagination from 'features/surveys/hooks/usePagination';
 import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
-import Header from 'shared/components/Header/Header';
 import { formatDateDistance } from 'shared/utilities/convertTime';
 import { getFetch } from '../../../../../lib/axiosConfig';
 import useTranslation from 'next-translate/useTranslation';
