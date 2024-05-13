@@ -11,18 +11,30 @@ import { getFetch } from '../../../../../lib/axiosConfig';
 import useTranslation from 'next-translate/useTranslation';
 import Image from 'next/image';
 import NoSurveys from '/public/images/no-surveys.svg';
+import { useApplicationContext } from 'features/application/context';
+import { Page } from 'features/application/types/Page';
 
 interface SurveyListProps {
   initialData: Survey[];
 }
 
 export default function SurveyList({ initialData }: SurveyListProps) {
+  const { setActivePage } = useApplicationContext();
   const { t } = useTranslation('surveys');
 
   const [surveysData, setSurveysData] = useState<Survey[]>(initialData);
 
   const { items, canGoNext, canGoPrev, goNext, goPrev, pageIndex } =
     usePagination<Survey>(surveysData ?? [], { size: 7 });
+
+  useEffect(() => {
+    setActivePage(Page.SURVEYS_LIST);
+
+    return () => {
+      setActivePage(undefined);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (items.length === 0) {
@@ -38,8 +50,6 @@ export default function SurveyList({ initialData }: SurveyListProps) {
 
   return (
     <>
-      <Header>{t('heading')}</Header>
-
       <div className="flex flex-col items-center justify-center">
         {initialData &&
           (items?.length > 0 ? (

@@ -10,8 +10,12 @@ import { getFetch, patchFetch } from '../../../../../../lib/axiosConfig';
 import { SurveyWithAnswers } from 'types/SurveyWithAnswers';
 import { QuestionType } from '@prisma/client';
 import { MappedAnswers } from 'types/MappedAnswers';
+import { useApplicationContext } from 'features/application/context';
+import { Page } from 'features/application/types/Page';
 
 export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
+  const { setActivePage } = useApplicationContext();
+
   const router = useRouter();
   const { surveyId } = router.query as { surveyId: string };
 
@@ -92,6 +96,8 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
   }, [setIsStatusLoading, setSurveyData, surveyData, surveyId, t]);
 
   useEffect(() => {
+    setActivePage(Page.SURVEYS_RESULTS);
+
     if (!surveyId) {
       router.replace('/');
       return;
@@ -99,6 +105,9 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
 
     fillSurveyData(initialData);
 
+    return () => {
+      setActivePage(undefined);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

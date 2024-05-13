@@ -5,12 +5,14 @@ import { User } from '@prisma/client';
 import data from '@emoji-mart/data/sets/14/apple.json';
 import { init as emojisInit } from 'emoji-mart';
 import { EMOJI_STYLE, customEmojisData } from 'shared/constants/emojisConfig';
+import { Page } from 'features/application/types/Page';
 
 export const useApplicationManager = () => {
   const [loading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [user, setUser] = useState<User>();
   const [isBrowser, setIsBrowser] = useState(false);
+  const [activePage, setActivePage] = useState<Page>();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -37,6 +39,8 @@ export const useApplicationManager = () => {
     loading,
     error,
     isBrowser,
+    activePage,
+    setActivePage,
   };
 };
 

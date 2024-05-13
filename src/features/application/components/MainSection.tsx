@@ -30,7 +30,9 @@ export default function MainSection({
           reversed ? 'lg:text-right' : 'lg:text-left'
         )}
       >
-        <h2 className="mb-2 text-lg font-semibold">{title}</h2>
+        <h2 className="mb-2 text-lg font-semibold text-secondary-800">
+          {title}
+        </h2>
         <p className="text-md">{description}</p>
       </div>
       <Image
