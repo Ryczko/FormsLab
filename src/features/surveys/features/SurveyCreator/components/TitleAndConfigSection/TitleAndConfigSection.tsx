@@ -33,6 +33,7 @@ export default function TitleAndConfigSection() {
       <div className="flex flex-col gap-x-2 sm:flex-row">
         <div className="w-full">
           <Input
+            className="mt-0"
             name="survey-title"
             placeholder={t('surveyTitlePlaceholder')}
             value={title}
@@ -42,7 +43,7 @@ export default function TitleAndConfigSection() {
           />
         </div>
 
-        <div className="flex gap-2 sm:mt-2">
+        <div className="flex gap-2">
           <Button
             className="h-[42px] flex-grow whitespace-nowrap"
             variant={ButtonVariant.PRIMARY}

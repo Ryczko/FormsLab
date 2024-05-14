@@ -13,9 +13,10 @@ import useTranslation from 'next-translate/useTranslation';
 import { signOut } from 'next-auth/react';
 import Avatar from 'shared/components/Avatar/Avatar';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
+import { Page } from 'features/application/types/Page';
 
 function Navigation() {
-  const { user, loading } = useApplicationContext();
+  const { user, loading, activePage } = useApplicationContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation('common');
@@ -25,6 +26,21 @@ function Navigation() {
     setIsOpen(false);
   };
 
+  const getPageTitle = () => {
+    switch (activePage) {
+      case Page.CREATE_SURVEY:
+        return t('navigation.pageTitles.createSurvey');
+      case Page.EDIT_SURVEY:
+        return t('navigation.pageTitles.editSurvey');
+      case Page.SURVEYS_LIST:
+        return t('navigation.pageTitles.mySurveys');
+      default:
+        return '';
+    }
+  };
+
+  const pageTitle = getPageTitle();
+
   return (
     <nav className="fixed left-0 top-0 z-40 flex h-[var(--navigation-height)] w-full items-center border-b bg-white/70 backdrop-blur-md">
       <GithubCorner />
@@ -32,9 +48,18 @@ function Navigation() {
       <div
         className={`flex grow ${
           user ? 'justify-between' : 'justify-center xsm:justify-between'
-        } items-center px-4 xsm:pl-20 md:pr-8`}
+        } items-center px-4 xsm:pl-20 md:pr-6`}
       >
-        <Logo />
+        <div className="flex items-center gap-6 text-secondary-800">
+          <Logo />
+
+          {pageTitle && (
+            <div className="hidden items-center gap-6 sm:flex">
+              <span>/</span>
+              <span className="font-semibold">{pageTitle}</span>
+            </div>
+          )}
+        </div>
         {!loading && user ? (
           <div className="flex md:space-x-4">
             <div className="none hidden space-x-4 lg:flex">
@@ -55,7 +80,7 @@ function Navigation() {
                   title="Expand menu"
                   className="flex w-full items-center justify-center rounded-md px-4 py-1 font-medium hover:bg-zinc-200"
                 >
-                  <p className="ml-2 mr-4 hidden items-center truncate sm:block">
+                  <p className="ml-2 mr-4 hidden items-center truncate text-secondary-800 sm:block">
                     {user.name}
                   </p>
                   <Avatar src={user.image} />

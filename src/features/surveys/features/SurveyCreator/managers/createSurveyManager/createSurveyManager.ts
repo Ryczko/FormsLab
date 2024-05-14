@@ -12,6 +12,8 @@ import { LogicPath } from '@prisma/client';
 import { DropResult } from 'react-beautiful-dnd';
 import { CreateEditSurveyPayload } from 'pages/api/survey';
 import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
+import { useApplicationContext } from 'features/application/context';
+import { Page } from 'features/application/types/Page';
 
 export interface DraftQuestion {
   draftId: string;
@@ -32,8 +34,9 @@ export interface SurveyOptions {
 }
 
 export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
-  const [isEditMode] = useState(!!initialData);
+  const { setActivePage } = useApplicationContext();
 
+  const [isEditMode] = useState(!!initialData);
   const [title, setTitle] = useState(initialData?.title ?? 'My survey');
 
   const mapQuestionsWithExpanded = (
@@ -79,15 +82,23 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   };
 
   useEffect(() => {
+    setActivePage(isEditMode ? Page.EDIT_SURVEY : Page.CREATE_SURVEY);
     const draftSurvey = sessionStorage.getItem(DRAFT_SURVEY_SESSION_STORAGE);
-    if (!draftSurvey) return;
 
-    const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
+    if (draftSurvey) {
+      const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
 
-    setTitle(title);
-    setQuestions(questions);
-    setSurveyOptions(surveyOptions);
-    sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
+      setTitle(title);
+      setQuestions(questions);
+      setSurveyOptions(surveyOptions);
+      sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
+    }
+
+    return () => {
+      console.log('clean');
+      setActivePage(undefined);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateSurveyOptions = (

@@ -4,7 +4,13 @@
     "mySurveysButton": "My Surveys",
     "settingsButton": "Settings",
     "signOutButton": "Sign out",
-    "signInButton": "Sign in"
+    "signInButton": "Sign in",
+
+    "pageTitles": {
+      "createSurvey": "Create new survey",
+      "editSurvey": "Edit survey",
+      "mySurveys": "My Surveys"
+    }
   },
   "coping": {
     "copyingSucces": "Copied to clipboard",

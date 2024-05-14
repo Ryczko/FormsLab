@@ -77,10 +77,10 @@
     @apply text-zinc-900 bg-zinc-100 shadow-zinc-600/50 hover:bg-zinc-50 border;
   }
   .btn-outline {
-    @apply text-indigo-900 bg-zinc-50 border border-zinc-600/50 shadow-zinc-400/50 hover:bg-zinc-50;
+    @apply text-secondary-800 bg-zinc-50 border border-zinc-600/50 shadow-zinc-400/50 hover:bg-zinc-50;
   }
   .btn-outline-primary {
-    @apply text-indigo-900 bg-transparent border border-indigo-900 shadow-indigo-400/50 hover:bg-indigo-50;
+    @apply text-secondary-800 bg-transparent border border-secondary-800 shadow-indigo-400/50 hover:bg-secondary-50;
   }
   .btn-danger {
     @apply text-red-900 bg-red-200 shadow-red-600/50 hover:bg-red-300;
@@ -89,7 +89,7 @@
     @apply text-green-900 bg-green-200 shadow-green-600/50 hover:bg-green-300;
   }
   .btn-flat {
-    @apply text-indigo-900 bg-transparent hover:bg-indigo-100 border-none;
+    @apply text-secondary-800 bg-transparent hover:bg-secondary-100 border-none;
   }
 }
 
