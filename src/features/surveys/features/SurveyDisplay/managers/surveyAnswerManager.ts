@@ -94,6 +94,11 @@ export const useSurveyAnswerManager = (
           activeQuestion.answer &&
           path.selectedOption === activeQuestion.answer
         ) {
+          if (path.endSurvey) {
+            handleSave(false);
+            return;
+          }
+
           const nextQuestionIndex = formData?.questions.findIndex(
             (question) => question.id === path.nextQuestionId
           );

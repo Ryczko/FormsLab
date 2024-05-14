@@ -71,7 +71,6 @@ export default function NewQuestionModal({
       title: 'How do you rate the process?',
       isRequired: true,
       expanded: true,
-      logicPaths: [],
       advancedSettingsExpanded: false,
     });
   };
