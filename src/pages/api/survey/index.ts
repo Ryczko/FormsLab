@@ -21,7 +21,7 @@ export interface CreateEditSurveyPayload {
     description?: string;
     isRequired: boolean;
     options: string[];
-    logicPaths: {
+    logicPaths?: {
       comparisonType: ComparisonType;
       selectedOption: string;
       nextQuestionOrder: number;
@@ -127,13 +127,18 @@ export default async function handler(
         // Adding logic paths is seperated because we need all questions to be created first
         survey.questions.forEach(async (question) => {
           const payloadQuestion = payloadQuestions[question.order];
-          const logicPaths = payloadQuestion.logicPaths.map((path) => ({
-            comparisonType: path.comparisonType,
-            selectedOption: path.selectedOption,
-            nextQuestionId: survey.questions.find(
+          const logicPaths = payloadQuestion.logicPaths?.map((path) => {
+            const nextQuestionId = survey.questions.find(
               (q) => q.order === path.nextQuestionOrder
-            )?.id,
-          }));
+            )?.id;
+
+            return {
+              comparisonType: path.comparisonType,
+              selectedOption: path.selectedOption,
+              nextQuestionId,
+              endSurvey: !nextQuestionId || undefined,
+            };
+          });
 
           await prismadb.question.update({
             where: { id: question.id },

@@ -8,6 +8,7 @@ import Select from 'shared/components/Select/Select';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { ConditionOptions } from 'features/surveys/features/SurveyCreator/components/LogicalJump/LogicalJump';
 import { ComparisonType, QuestionType } from '@prisma/client';
+import { END_OF_SURVEY } from 'shared/constants/surveysConfig';
 
 interface ConditionProps {
   elseCondition?: boolean;
@@ -102,6 +103,7 @@ export default function Condition({
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
                     nextQuestionId: option.value,
+                    endSurvey: option.value === END_OF_SURVEY || undefined,
                   })
                 }
                 options={conditionOptions?.jumpQuestions ?? []}

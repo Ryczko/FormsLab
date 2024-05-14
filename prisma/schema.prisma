@@ -118,6 +118,7 @@ model AnswerData {
 
 type LogicPath {
   nextQuestionId String?        @db.ObjectId
+  endSurvey      Boolean?
   comparisonType ComparisonType
   selectedOption String
 }

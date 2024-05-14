@@ -2,6 +2,8 @@ import { QuestionType } from '@prisma/client';
 import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import { v4 } from 'uuid';
 
+export const END_OF_SURVEY = 'END_OF_SURVEY';
+
 export const MAX_TITLE_LENGTH = 255;
 
 export const MAX_QUESTIONS = 10;
@@ -26,7 +28,6 @@ export const defaultQuestions: DraftQuestion[] = [
     type: QuestionType.EMOJI,
     isRequired: true,
     expanded: true,
-    logicPaths: [],
     advancedSettingsExpanded: false,
   },
   {

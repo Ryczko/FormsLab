@@ -14,8 +14,7 @@ export default function Progressbar({
   isSubmitted,
   accentColor,
 }: ProgressbarProps) {
-  const percentage =
-    ((currentStep - 1 + (isSubmitted ? 1 : 0)) / totalSteps) * 100;
+  const percentage = ((currentStep - 1) / totalSteps) * 100;
 
   const getBackgroundColor = () => {
     if (!accentColor) return undefined;
@@ -36,7 +35,7 @@ export default function Progressbar({
       <div
         data-testid="progressbar"
         style={{
-          width: `${percentage}%`,
+          width: `${isSubmitted ? 100 : percentage}%`,
           backgroundColor: accentColor ?? undefined,
         }}
         className="h-full bg-indigo-300 transition-all duration-300"

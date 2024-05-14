@@ -5,7 +5,10 @@ import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { ComparisonType, QuestionType } from '@prisma/client';
 import { postFetch, putFetch } from '../../../../../../../lib/axiosConfig';
-import { defaultQuestions } from 'shared/constants/surveysConfig';
+import {
+  END_OF_SURVEY,
+  defaultQuestions,
+} from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
 import { LogicPath } from '@prisma/client';
@@ -47,6 +50,10 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
       expanded: false,
       advancedSettingsExpanded: false,
       draftId: question.id,
+      logicPaths: question.logicPaths?.map((path) => ({
+        ...path,
+        nextQuestionId: path.endSurvey ? END_OF_SURVEY : path.nextQuestionId,
+      })),
     }));
   };
 
@@ -323,14 +330,16 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         options: question.options ?? [],
         type: question.type,
         isRequired: question.isRequired,
-        logicPaths:
-          question.logicPaths?.map((path) => ({
-            comparisonType: path.comparisonType as ComparisonType,
-            selectedOption: path.selectedOption as string,
-            nextQuestionOrder: questions.findIndex(
-              (question) => question.draftId === path.nextQuestionId
-            ),
-          })) ?? [],
+        logicPaths: question.logicPaths?.map(
+          (path) =>
+            ({
+              comparisonType: path.comparisonType as ComparisonType,
+              selectedOption: path.selectedOption as string,
+              nextQuestionOrder: questions.findIndex(
+                (question) => question.draftId === path.nextQuestionId
+              ),
+            } ?? undefined)
+        ),
       })),
     };
   };
