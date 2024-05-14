@@ -17,7 +17,7 @@ export default function SurveyCreator() {
           isPanelOpened && 'xl:mr-[550px]'
         )}
       >
-        <div className="mx-auto max-w-[58rem] px-6 xl:px-10">
+        <div className="mx-auto max-w-[58rem] px-4 xl:px-10">
           <TitleAndConfigSection />
           <QuestionsSection />
           <ActionButtons />

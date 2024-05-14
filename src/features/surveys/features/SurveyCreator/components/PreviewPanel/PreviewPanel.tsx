@@ -29,11 +29,11 @@ export default function PreviewPanel() {
 
       <div
         className={clsx(
-          'fixed bottom-0 right-0 top-[var(--navigation-height)] w-[550px] max-w-[100vw] items-center overflow-hidden border-l transition-transform duration-500 ease-in-out',
+          'fixed bottom-0 right-0 top-[var(--navigation-height)] w-[550px] max-w-[calc(100vw-(100vw-100%))] items-center overflow-hidden border-l transition-transform duration-500 ease-in-out',
           !isPanelOpened && 'translate-x-full'
         )}
       >
-        <div className="flex h-[40px] items-center justify-between border-b bg-zinc-50 pl-2 pr-4 text-left font-semibold">
+        <div className="flex h-[42px] items-center justify-between border-b bg-zinc-50 px-4 pl-2 text-left font-semibold">
           <div className="flex items-center gap-4">
             <Button onClick={handleRestart} className="h-[26px] text-xs">
               Restart Survey <RefreshIcon className="ml-2 h-4 w-4" />
@@ -42,7 +42,7 @@ export default function PreviewPanel() {
 
           <XIcon onClick={togglePanel} className="h-5 w-5 cursor-pointer" />
         </div>
-        <div className="no-scrollbar h-[calc(100%-40px)] overflow-auto p-6">
+        <div className="no-scrollbar h-[calc(100%-42px)] overflow-auto p-6 px-4">
           <Background hideAccents />
           <SurveyDisplay
             previewMode
