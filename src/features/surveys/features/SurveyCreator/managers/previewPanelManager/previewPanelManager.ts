@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const usePreviewPanelManager = () => {
   const [isPanelOpened, setIsPanelOpened] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth > 1280) {
+      setIsPanelOpened(true);
+    }
+  }, []);
 
   const togglePanel = () => {
     setIsPanelOpened((prev) => !prev);
