@@ -10,5 +10,10 @@ export const getAvailableComparisons = (
     value: comparison,
   }));
 
+  namesWithValues.push({
+    name: t(ComparisonType.SUBMITTED),
+    value: ComparisonType.SUBMITTED,
+  });
+
   return namesWithValues;
 };

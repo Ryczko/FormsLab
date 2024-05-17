@@ -22,5 +22,6 @@
   "options": "Display options",
   "GREATER_THAN": "Greater than",
   "LESS_THAN": "Less than",
-  "EQUAL": "Equal"
+  "EQUAL": "equals",
+  "SUBMITTED": "is submitted"
 }

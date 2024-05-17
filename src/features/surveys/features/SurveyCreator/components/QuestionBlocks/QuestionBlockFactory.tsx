@@ -9,6 +9,7 @@ import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/
 import RateAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/RateAdvancedSettings';
 import ChoiceAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/ChoiceAdvancedSettings';
 import EmojiAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/EmojiAdvancedSettings';
+import InputAdvancedSettings from 'features/surveys/features/SurveyCreator/components/QuestionBlocks/AdvancedSettings/InputAdvancedSettings';
 
 interface QuestionBlockFactoryProps {
   questionData: DraftQuestion;
@@ -43,6 +44,15 @@ export default function QuestionBlockFactory({
     if (questionData.type === QuestionType.CHOICE) {
       return (
         <ChoiceAdvancedSettings
+          questionData={questionData}
+          questionIndex={questionIndex}
+        />
+      );
+    }
+
+    if (questionData.type === QuestionType.INPUT) {
+      return (
+        <InputAdvancedSettings
           questionData={questionData}
           questionIndex={questionIndex}
         />
