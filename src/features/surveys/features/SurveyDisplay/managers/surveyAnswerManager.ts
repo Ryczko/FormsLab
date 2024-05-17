@@ -89,11 +89,16 @@ export const useSurveyAnswerManager = (
 
       for (let i = 0; i < activeQuestion.logicPaths.length; i++) {
         const path = activeQuestion.logicPaths[i];
-        if (
+
+        const equalCondition =
           path.comparisonType === ComparisonType.EQUAL &&
           activeQuestion.answer &&
-          path.selectedOption === activeQuestion.answer
-        ) {
+          path.selectedOption === activeQuestion.answer;
+
+        const submitCondition =
+          path.comparisonType === ComparisonType.SUBMITTED;
+
+        if (equalCondition || submitCondition) {
           if (path.endSurvey) {
             handleSave(false);
             return;
@@ -103,7 +108,9 @@ export const useSurveyAnswerManager = (
             (question) => question.id === path.nextQuestionId
           );
           setActiveQuestionIndex(
-            nextQuestionIndex !== -1 ? nextQuestionIndex : 0
+            nextQuestionIndex !== -1
+              ? nextQuestionIndex
+              : activeQuestionIndex + 1
           );
           setIsSubmitted(false);
 

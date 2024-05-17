@@ -119,8 +119,8 @@ model AnswerData {
 type LogicPath {
   nextQuestionId String?        @db.ObjectId
   endSurvey      Boolean?
+  selectedOption String?
   comparisonType ComparisonType
-  selectedOption String
 }
 
 enum QuestionType {
@@ -134,4 +134,5 @@ enum ComparisonType {
   EQUAL
   GREATER_THAN
   LESS_THAN
+  SUBMITTED
 }

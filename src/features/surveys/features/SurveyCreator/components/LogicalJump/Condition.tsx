@@ -31,8 +31,6 @@ export default function Condition({
     isSubmitted,
   } = useSurveyCreatorContext();
 
-  const currentQuestion = questions[questionIndex];
-
   useEffect(() => {
     if (conditionOptions?.comparisons.length === 1) {
       updateLogicPath(questionIndex, stepIndex, {
@@ -41,6 +39,13 @@ export default function Condition({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const currentQuestion = questions[questionIndex];
+
+  const displayAnswersOptions =
+    currentQuestion.logicPaths?.[stepIndex]?.comparisonType &&
+    currentQuestion.logicPaths?.[stepIndex].comparisonType !==
+      ComparisonType.SUBMITTED;
 
   return (
     <>
@@ -55,41 +60,40 @@ export default function Condition({
             <>
               <ArrowRightIcon className="h-4 w-4" />
               if this answer
-              {conditionOptions?.comparisons.length === 1 ? (
-                ' is'
-              ) : (
-                <Select
-                  classNames="flex-grow"
-                  required
-                  submitted={isSubmitted}
-                  disabled={isEditMode}
-                  selectedValue={
-                    currentQuestion.logicPaths?.[stepIndex].comparisonType
-                  }
-                  onChangeCallback={(option) =>
-                    updateLogicPath(questionIndex, stepIndex, {
-                      comparisonType: option.value as ComparisonType,
-                    })
-                  }
-                  options={conditionOptions?.comparisons ?? []}
-                />
-              )}
               <Select
                 classNames="flex-grow"
-                disabled={isEditMode}
                 required
                 submitted={isSubmitted}
-                emojiContent={currentQuestion.type === QuestionType.EMOJI}
+                disabled={isEditMode}
                 selectedValue={
-                  currentQuestion.logicPaths?.[stepIndex].selectedOption
+                  currentQuestion.logicPaths?.[stepIndex].comparisonType
                 }
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
-                    selectedOption: option.value,
+                    comparisonType: option.value as ComparisonType,
                   })
                 }
-                options={conditionOptions?.options ?? []}
+                options={conditionOptions?.comparisons ?? []}
               />
+              {displayAnswersOptions && (
+                <Select
+                  classNames="flex-grow"
+                  disabled={isEditMode}
+                  required
+                  submitted={isSubmitted}
+                  emojiContent={currentQuestion.type === QuestionType.EMOJI}
+                  selectedValue={
+                    currentQuestion.logicPaths?.[stepIndex].selectedOption ??
+                    undefined
+                  }
+                  onChangeCallback={(option) =>
+                    updateLogicPath(questionIndex, stepIndex, {
+                      selectedOption: option.value,
+                    })
+                  }
+                  options={conditionOptions?.options ?? []}
+                />
+              )}
               jump to
               <Select
                 classNames="flex-grow"
