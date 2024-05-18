@@ -31,7 +31,7 @@ export default function QuestionTypeIcons({
         )}`}
       </Tooltip>
       <div
-        className="mx-1 flex h-[42px] w-[26px] items-center justify-center px-[1px] text-gray-400"
+        className="mx-1 flex h-[38px] w-[25px] items-center justify-center px-[1px] text-gray-400"
         data-tooltip-id={`my-tooltip-${index}`}
       >
         {type === QuestionType.EMOJI && <EmojiIcon />}

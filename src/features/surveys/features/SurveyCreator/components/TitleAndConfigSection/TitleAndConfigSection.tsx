@@ -4,8 +4,11 @@ import useModal from 'features/surveys/hooks/useModal';
 import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
-import Button, { ButtonVariant } from 'shared/components/Button/Button';
-import Input from 'shared/components/Input/Input';
+import Button, {
+  ButtonSize,
+  ButtonVariant,
+} from 'shared/components/Button/Button';
+import Input, { InputSize } from 'shared/components/Input/Input';
 import { MAX_TITLE_LENGTH } from 'shared/constants/surveysConfig';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { usePreviewPanelContext } from 'features/surveys/features/SurveyCreator/managers/previewPanelManager/context';
@@ -40,23 +43,25 @@ export default function TitleAndConfigSection() {
             error={error}
             maxLength={MAX_TITLE_LENGTH}
             onChange={handleChangeTitle}
+            inputSize={InputSize.SMALL}
           />
         </div>
 
         <div className="flex gap-2">
           <Button
-            className="h-[42px] flex-grow whitespace-nowrap"
+            className="flex-grow whitespace-nowrap"
             variant={ButtonVariant.PRIMARY}
             onClick={openOptionsSurveyModal}
             icon={<CogIcon className="h-5 w-5" />}
             data-test-id="options-button"
+            sizeType={ButtonSize.SMALL}
           >
             <span className="ms-1">{t('options')}</span>
           </Button>
           <Button
-            className="h-[42px]"
             onClick={togglePanel}
             variant={ButtonVariant.PRIMARY}
+            sizeType={ButtonSize.SMALL}
             icon={
               isPanelOpened ? (
                 <EyeOffIcon className="h-5 w-5" />

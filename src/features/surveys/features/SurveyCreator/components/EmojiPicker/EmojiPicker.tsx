@@ -49,21 +49,20 @@ function EmojiPicker({
 
   return (
     <div>
-      <button
-        type="button"
-        className="label-text flex h-12 w-14 items-center justify-center rounded-md border bg-zinc-50 p-3 shadow-sm transition hover:scale-95"
+      <Button
+        className="label-text flex h-11 w-14 items-center justify-center rounded-md border bg-zinc-50 shadow-sm transition hover:scale-95"
         onClick={() => setDisplayPicker(!displayPicker)}
       >
         {!addEmoji ? (
-          <Emoji size={28} shortcodes={pickedEmoji || ''} />
+          <Emoji size={27} shortcodes={pickedEmoji || ''} />
         ) : (
-          <PlusSmIcon className="w-[22px]" />
+          <PlusSmIcon className="w-[20px]" />
         )}
-      </button>
+      </Button>
       {onEmoteRemove && (
         <Button
           onClick={() => onEmoteRemove(index, questionIndex)}
-          className="mt-1 w-14"
+          className="mt-1 w-14 py-1.5"
           variant={ButtonVariant.DANGER}
           icon={<TrashIcon className="h-[15px] w-[15px]" />}
         />

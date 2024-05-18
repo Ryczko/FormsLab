@@ -13,7 +13,7 @@ export default function SurveyCreator() {
     <>
       <div
         className={clsx(
-          'flex-grow py-8 transition-all duration-500 ease-in-out',
+          'flex-grow pb-8 pt-4 transition-all duration-500 ease-in-out',
           isPanelOpened && 'xl:mr-[550px]'
         )}
       >

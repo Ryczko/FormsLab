@@ -48,81 +48,79 @@ export default function Condition({
       ComparisonType.SUBMITTED;
 
   return (
-    <>
-      <div className="mb-2 flex items-center justify-between gap-4">
-        <div className="flex flex-grow items-center gap-4">
-          {elseCondition ? (
-            <div className="mt-1 flex items-center gap-4">
-              <ArrowDownIcon className="h-4 w-4" />
-              Else continue to the next question
-            </div>
-          ) : (
-            <>
-              <ArrowRightIcon className="h-4 w-4" />
-              if this answer
-              <Select
-                classNames="flex-grow"
-                required
-                submitted={isSubmitted}
-                disabled={isEditMode}
-                selectedValue={
-                  currentQuestion.logicPaths?.[stepIndex].comparisonType
-                }
-                onChangeCallback={(option) =>
-                  updateLogicPath(questionIndex, stepIndex, {
-                    comparisonType: option.value as ComparisonType,
-                  })
-                }
-                options={conditionOptions?.comparisons ?? []}
-              />
-              {displayAnswersOptions && (
-                <Select
-                  classNames="flex-grow"
-                  disabled={isEditMode}
-                  required
-                  submitted={isSubmitted}
-                  emojiContent={currentQuestion.type === QuestionType.EMOJI}
-                  selectedValue={
-                    currentQuestion.logicPaths?.[stepIndex].selectedOption ??
-                    undefined
-                  }
-                  onChangeCallback={(option) =>
-                    updateLogicPath(questionIndex, stepIndex, {
-                      selectedOption: option.value,
-                    })
-                  }
-                  options={conditionOptions?.options ?? []}
-                />
-              )}
-              jump to
+    <div className="mb-2 flex items-center justify-between gap-4">
+      <div className="flex flex-grow items-center gap-4">
+        {elseCondition ? (
+          <div className="mt-1 flex items-center gap-4">
+            <ArrowDownIcon className="h-4 w-4" />
+            Else continue to the next question
+          </div>
+        ) : (
+          <>
+            <ArrowRightIcon className="h-4 w-4" />
+            if this answer
+            <Select
+              classNames="flex-grow"
+              required
+              submitted={isSubmitted}
+              disabled={isEditMode}
+              selectedValue={
+                currentQuestion.logicPaths?.[stepIndex].comparisonType
+              }
+              onChangeCallback={(option) =>
+                updateLogicPath(questionIndex, stepIndex, {
+                  comparisonType: option.value as ComparisonType,
+                })
+              }
+              options={conditionOptions?.comparisons ?? []}
+            />
+            {displayAnswersOptions && (
               <Select
                 classNames="flex-grow"
                 disabled={isEditMode}
                 required
                 submitted={isSubmitted}
+                emojiContent={currentQuestion.type === QuestionType.EMOJI}
                 selectedValue={
-                  currentQuestion.logicPaths?.[stepIndex].nextQuestionId ??
+                  currentQuestion.logicPaths?.[stepIndex].selectedOption ??
                   undefined
                 }
                 onChangeCallback={(option) =>
                   updateLogicPath(questionIndex, stepIndex, {
-                    nextQuestionId: option.value,
-                    endSurvey: option.value === END_OF_SURVEY || undefined,
+                    selectedOption: option.value,
                   })
                 }
-                options={conditionOptions?.jumpQuestions ?? []}
+                options={conditionOptions?.options ?? []}
               />
-            </>
-          )}
-        </div>
-
-        {!elseCondition && !isEditMode && (
-          <TrashIcon
-            onClick={() => removeLogicPath(questionIndex, stepIndex)}
-            className="h-4 w-4 cursor-pointer text-red-800"
-          />
+            )}
+            jump to
+            <Select
+              classNames="flex-grow"
+              disabled={isEditMode}
+              required
+              submitted={isSubmitted}
+              selectedValue={
+                currentQuestion.logicPaths?.[stepIndex].nextQuestionId ??
+                undefined
+              }
+              onChangeCallback={(option) =>
+                updateLogicPath(questionIndex, stepIndex, {
+                  nextQuestionId: option.value,
+                  endSurvey: option.value === END_OF_SURVEY || undefined,
+                })
+              }
+              options={conditionOptions?.jumpQuestions ?? []}
+            />
+          </>
         )}
       </div>
-    </>
+
+      {!elseCondition && !isEditMode && (
+        <TrashIcon
+          onClick={() => removeLogicPath(questionIndex, stepIndex)}
+          className="h-4 w-4 cursor-pointer text-red-800"
+        />
+      )}
+    </div>
   );
 }

@@ -57,7 +57,7 @@ export const AnswersComponentFactory = (
       )}
 
       {formData.oneQuestionPerStep && (
-        <div className="mt-6 flex flex-col gap-x-4 gap-y-2 sm:flex-row">
+        <div className="mt-6 flex flex-col-reverse gap-x-4 gap-y-2 sm:flex-row">
           {isBackButtonVisible && (
             <Button
               variant={ButtonVariant.OUTLINE}

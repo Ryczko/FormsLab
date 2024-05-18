@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import SurveyDisplay from 'features/surveys/features/SurveyDisplay/SurveyDisplay';
-import Background from 'layout/Background/Background';
 import React from 'react';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { usePreviewPanelContext } from 'features/surveys/features/SurveyCreator/managers/previewPanelManager/context';
@@ -29,7 +28,7 @@ export default function PreviewPanel() {
 
       <div
         className={clsx(
-          'fixed bottom-0 right-0 top-[var(--navigation-height)] w-[550px] max-w-[calc(100vw-(100vw-100%))] items-center overflow-hidden border-l transition-transform duration-500 ease-in-out',
+          'fixed bottom-0 right-0 top-[var(--navigation-height)] w-[550px] max-w-[calc(100vw-(100vw-100%))] items-center overflow-hidden border-l shadow transition-transform duration-500 ease-in-out',
           !isPanelOpened && 'translate-x-full'
         )}
       >
@@ -42,8 +41,8 @@ export default function PreviewPanel() {
 
           <XIcon onClick={togglePanel} className="h-5 w-5 cursor-pointer" />
         </div>
-        <div className="no-scrollbar h-[calc(100%-42px)] overflow-auto p-6 px-4">
-          <Background hideAccents />
+        <div className="no-scrollbar h-[calc(100%-42px)] overflow-auto bg-white p-6 ">
+          {/* <Background hideAccents /> */}
           <SurveyDisplay
             previewMode
             restartTrigger={restartTrigger}

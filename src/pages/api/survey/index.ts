@@ -5,6 +5,7 @@ import prismadb from '../../../../lib/prismadb';
 import serverAuth from '../../../../lib/serverAuth';
 import { ComparisonType, QuestionType } from '@prisma/client';
 import {
+  MAX_LOGIC_PATHS,
   MAX_QUESTIONS,
   MAX_QUESTION_LENGTH,
   MAX_TITLE_LENGTH,
@@ -60,6 +61,10 @@ export const isSurveyValid = (survey: CreateEditSurveyPayload) => {
       (question) =>
         question.title.trim() === '' ||
         question.title.length > MAX_QUESTION_LENGTH
+    ) ||
+    survey.questions.some(
+      (question) =>
+        question.logicPaths && question.logicPaths.length > MAX_LOGIC_PATHS
     ) ||
     survey.questions.length < MIN_QUESTIONS ||
     survey.questions.length > MAX_QUESTIONS
