@@ -1,17 +1,20 @@
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import Toggle from 'shared/components/Toggle/Toggle';
-import { SurveyOptions } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import { SurveyOptions as SurveyOptionsKeys } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 
-type SurveyOptionsModalProps = {
-  surveyOptions: SurveyOptions;
-  updateOptions: (option: keyof SurveyOptions, value: boolean | string) => void;
+type SurveyOptionsProps = {
+  surveyOptions: SurveyOptionsKeys;
+  updateOptions: (
+    option: keyof SurveyOptionsKeys,
+    value: boolean | string
+  ) => void;
 };
 
-export default function SurveyOptionsModalModal({
+export default function SurveyOptions({
   surveyOptions,
   updateOptions,
-}: SurveyOptionsModalProps) {
+}: SurveyOptionsProps) {
   const { t } = useTranslation('common');
 
   return (

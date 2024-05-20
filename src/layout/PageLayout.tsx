@@ -12,6 +12,7 @@ import {
   FULL_PAGE_ROUTES,
 } from 'shared/constants/routesConfig';
 import clsx from 'clsx';
+import Sidebar from 'layout/Sidebar/Sidebar';
 
 function PageLayout({ children }: PropsWithChildren) {
   useGlobalProgressBar();
@@ -25,8 +26,9 @@ function PageLayout({ children }: PropsWithChildren) {
     <>
       <Background />
       <AnimatePresence>{loading && <GlobalLoader />}</AnimatePresence>
-      <div className="min-h-screen-dvh flex flex-col justify-between overflow-x-hidden">
+      <div className="min-h-screen-dvh flex flex-col justify-between  overflow-x-hidden pl-[170px]">
         {!isExternalRoute && <Navigation />}
+        {<Sidebar />}
         <div className={clsx('contents text-center', loading && 'hidden')}>
           <AnimatePresence exitBeforeEnter initial={false}>
             <Fragment key={router.asPath}>{children}</Fragment>

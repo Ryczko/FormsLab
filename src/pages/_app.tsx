@@ -7,17 +7,22 @@ import PageLayout from 'layout/PageLayout';
 import { ApplicationContext } from 'features/application/context';
 import { useApplicationManager } from 'features/application/manager';
 import { SessionProvider } from 'next-auth/react';
+import React from 'react';
+import { NavigationContext } from 'features/surveys/features/layout/context';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const manager = useApplicationManager();
+  const [ref, setRef] = React.useState(null);
 
   return (
     <SessionProvider session={session}>
       <ApplicationContext.Provider value={manager}>
-        <Toaster position="bottom-center" />
-        <PageLayout>
-          <Component {...pageProps} />
-        </PageLayout>
+        <NavigationContext.Provider value={{ ref, setRef }}>
+          <Toaster position="bottom-center" />
+          <PageLayout>
+            <Component {...pageProps} />
+          </PageLayout>
+        </NavigationContext.Provider>
       </ApplicationContext.Provider>
     </SessionProvider>
   );

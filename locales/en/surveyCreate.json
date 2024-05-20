@@ -3,7 +3,7 @@
   "content": "Create Survey - FormsLab",
   "heading": "Create new survey",
   "editHeading": "Edit survey",
-  "buttonCreate": "Create Survey",
+  "buttonCreate": "Publish",
   "editNote": "Some action like adding, removing questions or changing answers are not currently available in edit mode.",
   "editNoteTitle": "Note",
   "buttonSave": "Save changes",

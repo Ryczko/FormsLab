@@ -14,6 +14,7 @@ interface ButtonLinkProps extends ButtonProps {
   onClick?: () => void;
   href: string;
   target?: string;
+  position?: 'start' | 'center' | 'end';
 }
 
 const ButtonLink = ({
@@ -22,6 +23,7 @@ const ButtonLink = ({
   href,
   variant = ButtonLinkVariant.SECONDARY,
   sizeType = ButtonLinkSize.DEFAULT,
+  position = 'center',
   target,
   icon,
   ...props
@@ -32,7 +34,10 @@ const ButtonLink = ({
     {...props}
     scroll={false}
     className={clsx(
-      'btn relative flex items-center justify-center',
+      'btn relative flex items-center',
+      position === 'start' && 'justify-start',
+      position === 'center' && 'justify-center',
+      position === 'end' && 'justify-end',
       variant,
       sizeType,
       className

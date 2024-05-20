@@ -30,7 +30,7 @@ export default function TitleAndConfigSection() {
   } = useModal();
   return (
     <>
-      <div className="flex flex-col gap-x-2 sm:flex-row">
+      <div className="mt-3 flex flex-col gap-x-2 sm:flex-row">
         <div className="w-full">
           <Input
             className="mt-0"
@@ -43,7 +43,7 @@ export default function TitleAndConfigSection() {
           />
         </div>
 
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <Button
             className="h-[42px] flex-grow whitespace-nowrap"
             variant={ButtonVariant.PRIMARY}
@@ -53,28 +53,15 @@ export default function TitleAndConfigSection() {
           >
             <span className="ms-1">{t('options')}</span>
           </Button>
-          <Button
-            className="h-[42px]"
-            onClick={togglePanel}
-            variant={ButtonVariant.PRIMARY}
-            icon={
-              isPanelOpened ? (
-                <EyeOffIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )
-            }
-            data-test-id="preview-button"
-          />
-        </div>
+        </div> */}
       </div>
 
-      <SurveyOptionsModalModal
+      {/* <SurveyOptionsModalModal
         isOpened={isOptionsModalOpen}
         closeModal={closeOptionsSurveyModal}
         surveyOptions={surveyOptions}
         updateOptions={updateSurveyOptions}
-      />
+      /> */}
     </>
   );
 }

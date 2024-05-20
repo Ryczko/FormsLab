@@ -1,5 +1,5 @@
 import { LogoutIcon, MenuIcon, UserIcon } from '@heroicons/react/outline';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import Logo from 'layout/Logo/Logo';
 import BurgerMenu from 'layout/BurgerMenu/BurgerMenu';
@@ -14,9 +14,17 @@ import { signOut } from 'next-auth/react';
 import Avatar from 'shared/components/Avatar/Avatar';
 import ButtonLink from 'shared/components/ButtonLink/ButtonLink';
 import { Page } from 'features/application/types/Page';
+import { useNavigationContext } from 'features/surveys/features/layout/context';
 
 function Navigation() {
   const { user, loading, activePage } = useApplicationContext();
+
+  const contentRef = useRef(null);
+  const { setRef } = useNavigationContext();
+
+  useEffect(() => {
+    setRef?.(contentRef);
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation('common');
@@ -48,7 +56,7 @@ function Navigation() {
       <div
         className={`flex grow ${
           user ? 'justify-between' : 'justify-center xsm:justify-between'
-        } items-center px-4 xsm:pl-20 md:pr-6`}
+        } items-center px-4 xsm:pl-16 md:pr-6`}
       >
         <div className="flex items-center gap-6 text-secondary-800">
           <Logo />
@@ -60,7 +68,13 @@ function Navigation() {
             </div>
           )}
         </div>
-        {!loading && user ? (
+
+        {/* to fix */}
+
+        <div ref={contentRef} />
+        {/* <Button variant={ButtonVariant.SECONDARY}>Action Button</Button> */}
+
+        {/* {!loading && user ? (
           <div className="flex md:space-x-4">
             <div className="none hidden space-x-4 lg:flex">
               <ButtonLink variant={ButtonVariant.FLAT} href={'/survey/create'}>
@@ -138,7 +152,7 @@ function Navigation() {
           >
             {t('navigation.signInButton')}
           </ButtonLink>
-        )}
+        )} */}
       </div>
       <BurgerMenu isOpen={isOpen}>
         <ButtonLink
