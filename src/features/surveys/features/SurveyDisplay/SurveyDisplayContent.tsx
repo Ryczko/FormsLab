@@ -5,6 +5,8 @@ import AllQuestionsView from 'features/surveys/features/SurveyDisplay/components
 import SurveyNoActive from 'features/surveys/features/SurveyDisplay/components/SurveyNoActive/SurveyNoActive';
 import ThankYou from 'features/surveys/features/SurveyDisplay/components/ThankYou';
 import clsx from 'clsx';
+import NoSurveys from '/public/images/no-surveys.svg';
+import Image from 'next/image';
 
 export default function SurveyDisplayContent() {
   const { formData, isSurveyFinished, previewMode } = useSurveyDisplayContext();
@@ -16,11 +18,25 @@ export default function SurveyDisplayContent() {
           <ThankYou />
         </div>
       ) : formData?.isActive ? (
-        formData.oneQuestionPerStep ? (
-          <OneQuestionView />
-        ) : (
-          <AllQuestionsView />
-        )
+        <>
+          {formData.oneQuestionPerStep ? (
+            <OneQuestionView />
+          ) : (
+            <AllQuestionsView />
+          )}
+
+          {formData.questions.length === 0 && (
+            <>
+              <Image
+                className="mx-auto mb-6 w-[160px] -translate-x-3"
+                src={NoSurveys}
+                alt="no surveys"
+                height={165}
+              />
+              <p>There are no questions in this survey</p>
+            </>
+          )}
+        </>
       ) : (
         <SurveyNoActive />
       )}

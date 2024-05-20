@@ -79,7 +79,7 @@ export default function NewQuestionModal({
     <StyledDialog
       isOpen={isOpened}
       onClose={closeModal}
-      title={'Choose question type'}
+      title={'Choose block type'}
       content={
         <div className="mt-6 flex flex-col gap-2 sm:mt-4 sm:flex-row">
           <NewQuestionModalButton

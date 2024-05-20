@@ -1,10 +1,11 @@
 import React from 'react';
-import Button from 'shared/components/Button/Button';
+import Button, { ButtonSize } from 'shared/components/Button/Button';
 import Condition from 'features/surveys/features/SurveyCreator/components/LogicalJump/Condition';
 import { TerminalIcon } from '@heroicons/react/outline';
 import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
 import { Tooltip } from 'react-tooltip';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
+import { MAX_LOGIC_PATHS } from 'shared/constants/surveysConfig';
 
 export interface ConditionSelect {
   name: string;
@@ -58,10 +59,11 @@ export default function LogicalJump({
         </div>
       )}
 
-      {!isEditMode && (
+      {!isEditMode && conditions.length < MAX_LOGIC_PATHS && (
         <Button
           onClick={() => addLogicPath(questionIndex)}
           className="mt-4"
+          sizeType={ButtonSize.SMALL}
           icon={<TerminalIcon className="mr-1 h-5 w-5" />}
         >
           Add path

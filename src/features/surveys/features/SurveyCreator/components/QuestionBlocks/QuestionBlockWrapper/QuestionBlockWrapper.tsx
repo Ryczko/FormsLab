@@ -4,7 +4,7 @@ import {
   TrashIcon,
 } from '@heroicons/react/outline';
 import React, { ChangeEvent, PropsWithChildren } from 'react';
-import Input from 'shared/components/Input/Input';
+import Input, { InputSize } from 'shared/components/Input/Input';
 import useTranslation from 'next-translate/useTranslation';
 import {
   MAX_QUESTION_LENGTH,
@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import QuestionTypeIcons from 'shared/components/QuestionTypeIcons/QuestionTypeIcons';
 import { useSurveyCreatorContext } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/context';
 import { DraftQuestion } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
+import Button, { ButtonSize } from 'shared/components/Button/Button';
 
 interface QuestionBlockWrapperProps {
   index: number;
@@ -68,12 +69,13 @@ export default function QuestionBlockWrapper({
   };
 
   return (
-    <div className="relative rounded-md border border-l-4 border-indigo-200 bg-white shadow-sm">
-      <div className="flex flex-col items-start gap-1 px-3 pb-1 pt-3 sm:flex-row sm:gap-2">
+    <div className="relative rounded-md border border-l-4 border-secondary-200  border-l-secondary-300 bg-white shadow-sm">
+      <div className="flex flex-col items-start gap-1 pe-2 ps-2 pt-2 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
-          <button
+          <Button
             onClick={onExpand}
-            className="h-[42px] cursor-pointer rounded-md border border-opacity-100 bg-zinc-50 p-[13px]"
+            sizeType={ButtonSize.SMALL}
+            className="bg-secondary-50"
           >
             <ChevronDownIcon
               className={clsx(
@@ -81,7 +83,7 @@ export default function QuestionBlockWrapper({
                 !questionData.expanded && '-rotate-90'
               )}
             />
-          </button>
+          </Button>
 
           <div className="hidden sm:block">
             <QuestionTypeIcons type={questionData.type} index={index} />
@@ -95,7 +97,8 @@ export default function QuestionBlockWrapper({
               }
               value={questionData.title}
               error={questionError()}
-              className="mt-0 h-[42px]"
+              className="mt-0 !bg-white"
+              inputSize={InputSize.SMALL}
               maxLength={MAX_QUESTION_LENGTH}
               data-test-id={`question-input-${index}`}
             />
@@ -111,21 +114,22 @@ export default function QuestionBlockWrapper({
             <div className="flex gap-2">
               {isDraggingPossible && (
                 <div
-                  className="h-[42px] cursor-pointer rounded-md border bg-zinc-50 p-[13px] shadow-sm hover:scale-95"
+                  className="h-[38px] cursor-pointer rounded-md border bg-secondary-50 p-[12px] shadow-sm hover:scale-95"
                   {...dragHandleProps}
                 >
-                  <SelectorIcon className="w-[15px]" />
+                  <SelectorIcon className="w-[14px]" />
                 </div>
               )}
               {isRemovingPossible && (
-                <button
+                <Button
                   onClick={() => removeQuestion(index)}
+                  sizeType={ButtonSize.SMALL}
                   disabled={isEditMode}
                   data-test-id={`remove-question-${index}`}
-                  className="h-[42px] cursor-pointer rounded-md border border-red-200 bg-red-200 p-[13px] shadow-sm hover:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+                  className=" cursor-pointer rounded-md border border-red-200 bg-red-200 p-[13px] shadow-sm hover:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
                 >
                   <TrashIcon className="w-[15px] text-red-900" />
-                </button>
+                </Button>
               )}
             </div>
           )}
@@ -133,7 +137,7 @@ export default function QuestionBlockWrapper({
       </div>
 
       {questionData.expanded && (
-        <div className="mb-3 px-3">
+        <div className="mb-2.5 px-2">
           {isEditMode ? (
             <div className="relative opacity-50">
               <div className="absolute z-50 h-full w-full cursor-not-allowed"></div>
@@ -146,10 +150,10 @@ export default function QuestionBlockWrapper({
 
           <div className="relative min-h-[36px] border-t pt-2">
             {!!advancedSettings && (
-              <div className="hidden w-full border-l-2 border-indigo-200 text-left text-sm md:block">
+              <div className="w-fulltext-left hidden text-sm md:block">
                 <button
                   onClick={toggleAdvancedSettings}
-                  className="flex w-auto cursor-pointer items-center gap-2  py-1 pl-2"
+                  className="flex w-auto cursor-pointer items-center gap-2 py-1 pl-1.5"
                 >
                   <ChevronDownIcon
                     className={clsx(
@@ -160,7 +164,7 @@ export default function QuestionBlockWrapper({
                   Show advanced settings
                 </button>
                 {questionData.advancedSettingsExpanded && (
-                  <div className="ml-8 mr-2 mt-2 py-2">{advancedSettings}</div>
+                  <div className="ml-8 mr-2 mt-1 py-2">{advancedSettings}</div>
                 )}
               </div>
             )}

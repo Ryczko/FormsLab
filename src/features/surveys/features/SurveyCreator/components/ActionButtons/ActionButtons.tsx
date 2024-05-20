@@ -23,7 +23,7 @@ export default function ActionButtons() {
   } = useSurveyCreatorContext();
 
   return (
-    <div className="mt-4">
+    <div className="mt-2">
       {questions.length < MAX_QUESTIONS && !isEditMode && (
         <AddQuestionButton onClick={addQuestion} />
       )}

@@ -15,7 +15,7 @@ export default function QuestionsSection() {
     useSurveyCreatorContext();
 
   return (
-    <div className="mt-4">
+    <div className="mt-2">
       {isEditMode && (
         <Note title={t('editNoteTitle')} description={t('editNote')} />
       )}

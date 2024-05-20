@@ -264,7 +264,10 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
       if (
         question.logicPaths?.some(
           (path) =>
-            !path.selectedOption || !path.comparisonType || !path.nextQuestionId
+            (path.comparisonType !== ComparisonType.SUBMITTED &&
+              !path.selectedOption) ||
+            !path.comparisonType ||
+            !path.nextQuestionId
         )
       ) {
         questionIndexesToExpand.push(index);

@@ -79,7 +79,7 @@ export default function Select({
               <Listbox.Option
                 key={optionIdx}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-1 text-sm px-4 ${
+                  `relative cursor-default select-none py-1 text-sm text-left px-4 ${
                     active ? 'bg-indigo-100 text-indigo-400' : 'text-gray-900'
                   }`
                 }

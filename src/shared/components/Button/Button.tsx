@@ -12,10 +12,11 @@ export enum ButtonVariant {
   FLAT = 'btn-flat',
 }
 export enum ButtonSize {
-  DEFAULT = '',
-  MEDIUM = 'w-32',
-  LARGE = 'w-40',
-  FULL = 'w-full',
+  SMALL = 'SMALL',
+  DEFAULT = 'DEFAULT',
+  MEDIUM = 'MEDIUM',
+  LARGE = 'LARGE',
+  FULL = ' FULL',
 }
 export interface ButtonProps {
   variant?: ButtonVariant;
@@ -44,7 +45,11 @@ const Button = ({
     className={clsx(
       'btn relative flex items-center justify-center',
       variant,
-      sizeType,
+      sizeType === ButtonSize.SMALL && 'h-[38px] px-3 py-1 text-sm',
+      sizeType === ButtonSize.DEFAULT && '',
+      sizeType === ButtonSize.MEDIUM && 'w-32',
+      sizeType === ButtonSize.LARGE && 'w-40 ',
+      sizeType === ButtonSize.FULL && 'w-full',
       className
     )}
     style={style}
