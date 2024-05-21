@@ -98,7 +98,24 @@ export const useSurveyAnswerManager = (
         const submitCondition =
           path.comparisonType === ComparisonType.SUBMITTED;
 
-        if (equalCondition || submitCondition) {
+        const greatThanCondition =
+          path.comparisonType === ComparisonType.GREATER_THAN &&
+          activeQuestion.answer &&
+          path.selectedOption &&
+          Number(activeQuestion.answer) > Number(path.selectedOption);
+
+        const lessThanCondition =
+          path.comparisonType === ComparisonType.LESS_THAN &&
+          activeQuestion.answer &&
+          path.selectedOption &&
+          Number(activeQuestion.answer) < Number(path.selectedOption);
+
+        if (
+          equalCondition ||
+          submitCondition ||
+          greatThanCondition ||
+          lessThanCondition
+        ) {
           if (path.endSurvey) {
             handleSave(false);
             return;

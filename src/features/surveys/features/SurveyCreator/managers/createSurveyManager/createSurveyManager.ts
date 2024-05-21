@@ -102,7 +102,6 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     }
 
     return () => {
-      console.log('clean');
       setActivePage(undefined);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -28,12 +28,13 @@ export default function ActionButtons() {
         <AddQuestionButton onClick={addQuestion} />
       )}
 
+      <hr className="my-3" />
       {user ? (
         <div className="flex flex-col gap-2 sm:flex-row">
           {isEditMode && (
             <Button
               onClick={discardChanges}
-              className="z-0 w-full"
+              className="z-0 h-[50px] w-full"
               variant={ButtonVariant.OUTLINE}
               disabled={isCreating}
             >
@@ -43,7 +44,7 @@ export default function ActionButtons() {
           <Button
             name="create-survey"
             onClick={isEditMode ? confirmEditSurvey : createSurvey}
-            className="z-0 w-full"
+            className="z-0 h-[50px] w-full"
             variant={ButtonVariant.PRIMARY}
             isLoading={isCreating}
             disabled={questions.length === 0}
@@ -55,7 +56,7 @@ export default function ActionButtons() {
         <Button
           onClick={signInToCreateSurvey}
           variant={ButtonVariant.PRIMARY}
-          className="z-0 mt-2 w-full"
+          className="z-0 mt-2 h-[50px] w-full"
         >
           {t('signInToCreateSurvey')}
         </Button>

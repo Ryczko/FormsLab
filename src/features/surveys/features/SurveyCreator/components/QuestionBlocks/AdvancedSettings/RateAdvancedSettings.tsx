@@ -30,9 +30,9 @@ export default function RateAdvancedSettings({
           questionData.logicPaths?.map(() => ({
             comparisons: getAvailableComparisons(
               [
-                // ComparisonType.LESS_THAN,
+                ComparisonType.LESS_THAN,
+                ComparisonType.GREATER_THAN,
                 ComparisonType.EQUAL,
-                // ComparisonType.GREATER_THAN,
               ],
               t
             ),

@@ -15,7 +15,8 @@ export const AddQuestionButton = ({ onClick }: AddQuestionButtonProps) => {
       <Button
         onClick={openModal}
         sizeType={ButtonSize.FULL}
-        icon={<PlusCircleIcon className="h-5 w-5" />}
+        className="h-[50px]"
+        icon={<PlusCircleIcon className="h-5  w-5" />}
       >
         Add new block
       </Button>
