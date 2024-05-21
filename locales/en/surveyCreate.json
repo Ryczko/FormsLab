@@ -20,8 +20,8 @@
   "surveyCreationSucessCopiedCorrectly": "and link copied to clipboard",
   "signInToCreateSurvey": "Sign in to create survey",
   "options": "Display options",
-  "GREATER_THAN": "Greater than",
-  "LESS_THAN": "Less than",
+  "GREATER_THAN": "greater than",
+  "LESS_THAN": "less than",
   "EQUAL": "equals",
   "SUBMITTED": "is submitted"
 }

@@ -70,7 +70,7 @@ export default function QuestionBlockWrapper({
 
   return (
     <div className="relative rounded-md border border-l-4 border-secondary-200  border-l-secondary-300 bg-white shadow-sm">
-      <div className="flex flex-col items-start gap-1 pe-2 ps-2 pt-2 sm:flex-row sm:gap-2">
+      <div className="flex flex-col items-start gap-0 pe-2 ps-2 pt-2 sm:flex-row sm:gap-2">
         <div className="flex w-full items-start gap-2">
           <Button
             onClick={onExpand}
