@@ -24,7 +24,7 @@
     "@heroicons/react": "^1.0.6",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.14.0",
-    "axios": "^1.6.0",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.0",
     "clsx": "^1.1.1",
     "colord": "^2.9.3",
@@ -87,7 +87,7 @@
     "next-router-mock": "^0.9.7",
     "postcss": "^8.4.31",
     "prisma": "^4.14.0",
-    "start-server-and-test": "^2.0.0",
+    "start-server-and-test": "^2.0.8",
     "tailwindcss": "^3.2.7"
   }
 }
