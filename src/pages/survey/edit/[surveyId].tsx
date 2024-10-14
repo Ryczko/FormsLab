@@ -13,7 +13,7 @@ import { usePreviewPanelManager } from 'features/surveys/features/SurveyCreator/
 import { PreviewPanelContext } from 'features/surveys/features/SurveyCreator/managers/previewPanelManager/context';
 
 export async function getServerSideProps(context: NextPageContext) {
-  const surveyId = context.query.surveyId?.[0];
+  const surveyId = context.query.surveyId as string;
   let surveyData;
 
   if (surveyId) {
@@ -27,6 +27,7 @@ export async function getServerSideProps(context: NextPageContext) {
     }
 
     surveyData = await getSurveyData(surveyId, session.user?.id);
+
 
     if (!surveyData) {
       return {
@@ -44,7 +45,7 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
-function SurveyCreatePage({
+function SurveyEditPage({
   initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation('surveyCreate');
@@ -68,4 +69,4 @@ function SurveyCreatePage({
   );
 }
 
-export default withAnimation(SurveyCreatePage);
+export default withAnimation(SurveyEditPage);

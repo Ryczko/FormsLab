@@ -49,7 +49,7 @@ export default function SurveyResults() {
   const router = useRouter();
 
   const handleEditSurvey = () => {
-    router.push(`/survey/create/${surveyId}`);
+    router.push(`/survey/edit/${surveyId}`);
   };
 
   return (
