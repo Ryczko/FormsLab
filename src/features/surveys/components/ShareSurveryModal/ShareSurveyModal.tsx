@@ -4,6 +4,7 @@ import Button, { ButtonVariant } from 'shared/components/Button/Button';
 import StyledDialog from 'shared/components/StyledDialog/StyledDialog';
 import useTranslation from 'next-translate/useTranslation';
 import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
+import QRCode from 'react-qr-code';
 
 type ShareSurveyModalProps = {
   surveyId: string;
@@ -32,6 +33,16 @@ export default function ShareSurveyModal({
       title={t('shareSurveyModal.title')}
       content={
         <>
+          <div className="mt-4 flex justify-center">
+            <div className="w-1/2">
+              <QRCode
+                size={256}
+                style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+                value={link}
+              />
+            </div>
+          </div>
+
           <div className="mt-4">
             <span className="scrollbar-hide block w-full select-all overflow-x-auto whitespace-nowrap rounded-md border border-gray-300 px-3 py-2 text-center text-sm focus:outline-none">
               {link}
