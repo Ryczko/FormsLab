@@ -51,7 +51,7 @@ function IndexPage({
             {repositoryData?.stargazers_count && (
               <>
                 ({repositoryData.stargazers_count}{' '}
-                <StarIcon className="h-4 w-4" />)
+                <StarIcon className="size-4" />)
               </>
             )}
           </ButtonLink>
