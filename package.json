@@ -40,6 +40,7 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.2.0",
+    "react-qr-code": "^2.0.15",
     "react-tooltip": "^5.25.1",
     "recharts": "^2.4.3",
     "sass": "^1.52.1",
