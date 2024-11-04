@@ -3,11 +3,11 @@ import { useState } from 'react';
 export const usePreviewPanelManager = () => {
   const [isPanelOpened, setIsPanelOpened] = useState(false);
 
-  // useEffect(() => {
-  //   if (window.innerWidth > 1280) {
-  //     setIsPanelOpened(true);
-  //   }
-  // }, []);
+  const [restartTrigger, setRestartTrigger] = useState(0);
+
+  const handleRestart = () => {
+    setRestartTrigger((prev) => prev + 1);
+  };
 
   const togglePanel = () => {
     setIsPanelOpened((prev) => !prev);
@@ -16,6 +16,8 @@ export const usePreviewPanelManager = () => {
   return {
     isPanelOpened,
     togglePanel,
+    restartTrigger,
+    handleRestart,
   };
 };
 
