@@ -100,15 +100,6 @@ export default function IndividualResults() {
                         ? 'text-yellow-400'
                         : 'text-gray-300'
                     )}
-                    onMouseEnter={() => {
-                      console.log('OK');
-                    }}
-                    onMouseLeave={() => {
-                      console.log('OK');
-                    }}
-                    onClick={() => {
-                      console.log('OK');
-                    }}
                   />
                 ))}
             </div>
@@ -122,9 +113,6 @@ export default function IndividualResults() {
                     answer === option && 'bg-gray-200'
                   )}
                   disabled={true}
-                  onClick={() => {
-                    console.log('OK');
-                  }}
                 >
                   {option.trim() || '-'}
                 </button>
@@ -138,9 +126,6 @@ export default function IndividualResults() {
                     selected={answer === icon}
                     isAnySelected={!!answer}
                     key={icon}
-                    onClick={() => {
-                      console.log('OK');
-                    }}
                   />
                 ))}
             </div>
