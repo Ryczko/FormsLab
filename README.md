@@ -18,7 +18,7 @@
 We are open to any contributions!
 
 - If you like the project, <strong>star this repository </strong> ⭐
-- If you are interested in contributing you can read [Contributing guide](https://github.com/Ryczko/FormsLab/blob/dev/CONTRIBUTING.md)
+- If you are interested in contributing you can read [Contributing guide](https://github.com/Ryczko/FormsLab/blob/develop/CONTRIBUTING.md)
 
 We are happy that our community is growing 👏 </br> </br>
 <a href="https://github.com/Ryczko/FormsLab/graphs/contributors">
