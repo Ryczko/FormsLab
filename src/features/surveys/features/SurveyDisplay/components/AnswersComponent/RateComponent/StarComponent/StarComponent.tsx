@@ -3,9 +3,9 @@ import React from 'react';
 
 interface StarComponentProps {
   classNames?: string;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  onClick: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  onClick?: () => void;
 }
 
 export default function StarComponent({

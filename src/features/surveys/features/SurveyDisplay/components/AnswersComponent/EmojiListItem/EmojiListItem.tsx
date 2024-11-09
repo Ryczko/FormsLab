@@ -5,12 +5,12 @@ interface EmojiListItemProps {
   icon: string;
   selected?: boolean;
   isAnySelected?: boolean;
-  onClick: (icon: string) => void;
+  onClick?: (icon: string) => void;
 }
 
 function EmojiListItem({
   icon,
-  onClick,
+  onClick = () => undefined,
   isAnySelected,
   selected = false,
 }: EmojiListItemProps) {
