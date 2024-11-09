@@ -33,35 +33,34 @@ export default function IndividualResults() {
   }
 
   return (
-    <div className="mt-8">
-      <div className="my-5 flex flex-row items-center justify-start gap-x-1">
+    <div className="mt-6">
+      <div className="mx-auto mb-5 flex flex-row items-center justify-center gap-x-1">
         <Button
           title={'Previous'}
           onClick={handlePrevious}
-          className="grow px-2 sm:grow-0"
+          className="px-2"
           variant={ButtonVariant.FLAT}
           icon={<ChevronLeftIcon className="h-5 w-5" />}
           disabled={currentIndex === 0}
         />
 
         <div className="flex flex-row items-center gap-x-2">
-          <div>
-            <Input
-              className="my-0 max-w-[100px]"
-              name="survey-title"
-              placeholder={'1'}
-              value={currentIndex + 1}
-              type="number"
-              error={''}
-              max={totalAnswers}
-              min={1}
-              step={1}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleInputChange(e)
-              }
-              inputSize={InputSize.SMALL}
-            />
-          </div>
+          <Input
+            className="my-0 max-w-[100px] text-center"
+            name="survey-title"
+            placeholder={'1'}
+            value={currentIndex + 1}
+            type="number"
+            error={''}
+            max={totalAnswers}
+            min={1}
+            step={1}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleInputChange(e)
+            }
+            inputSize={InputSize.SMALL}
+          />
+
           <p>of</p>
           <p>{surveyData?.answers.length || 0}</p>
         </div>
@@ -69,7 +68,7 @@ export default function IndividualResults() {
         <Button
           title={'Next'}
           onClick={handleNext}
-          className="grow px-2 sm:grow-0"
+          className="px-2"
           variant={ButtonVariant.FLAT}
           icon={<ChevronRightIcon className="h-5 w-5" />}
           disabled={currentIndex === totalAnswers - 1}
@@ -84,51 +83,57 @@ export default function IndividualResults() {
 
         return (
           <div
-            className="mb-3 rounded-md border bg-white p-4 text-start shadow"
+            className="mb-3 rounded-md border bg-white p-4 text-center shadow-sm"
             key={index}
           >
             <h2 className="mb-4 text-lg font-semibold">{question}</h2>
-            {questionType === QuestionType.INPUT && <p>{answer}</p>}
+            {answer ? (
+              <>
+                {questionType === QuestionType.INPUT && <p>{answer}</p>}
 
-            <div className="flex flex-wrap justify-start gap-x-2">
-              {questionType === QuestionType.RATE &&
-                [...Array(5)].map((_, index) => (
-                  <StarComponent
-                    key={index}
-                    classNames={clsx(
-                      answer && index < +answer
-                        ? 'text-yellow-400'
-                        : 'text-gray-300'
-                    )}
-                  />
-                ))}
-            </div>
+                <div className="mb-1 flex flex-wrap justify-center gap-x-1">
+                  {questionType === QuestionType.RATE &&
+                    [...Array(5)].map((_, index) => (
+                      <StarComponent
+                        key={index}
+                        classNames={clsx(
+                          answer && index < +answer
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                        )}
+                      />
+                    ))}
+                </div>
 
-            {questionType === QuestionType.CHOICE &&
-              questionData?.options.map((option, idx) => (
-                <button
-                  key={idx}
-                  className={clsx(
-                    'mb-2 w-full rounded border p-4 text-center text-sm font-medium',
-                    answer === option && 'bg-gray-200'
-                  )}
-                  disabled={true}
-                >
-                  {option.trim() || '-'}
-                </button>
-              ))}
+                {questionType === QuestionType.CHOICE &&
+                  questionData?.options.map((option, idx) => (
+                    <button
+                      key={idx}
+                      className={clsx(
+                        'mb-2 w-full rounded border p-4 text-center text-sm font-medium',
+                        answer === option && 'bg-gray-200'
+                      )}
+                      disabled={true}
+                    >
+                      {option.trim() || '-'}
+                    </button>
+                  ))}
 
-            <div className="flex flex-wrap justify-start gap-x-2">
-              {questionType === QuestionType.EMOJI &&
-                questionData?.options.map((icon, idx) => (
-                  <EmojiListItem
-                    icon={icon}
-                    selected={answer === icon}
-                    isAnySelected={!!answer}
-                    key={icon}
-                  />
-                ))}
-            </div>
+                <div className="mb-1 flex flex-wrap justify-center gap-x-1">
+                  {questionType === QuestionType.EMOJI &&
+                    questionData?.options.map((icon, idx) => (
+                      <EmojiListItem
+                        icon={icon}
+                        selected={answer === icon}
+                        isAnySelected={!!answer}
+                        key={icon}
+                      />
+                    ))}
+                </div>
+              </>
+            ) : (
+              <div className="mb-1 italic">No answer</div>
+            )}
           </div>
         );
       })}

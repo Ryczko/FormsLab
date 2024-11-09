@@ -1,4 +1,9 @@
-import { CogIcon, EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
+import {
+  ArrowLeftIcon,
+  CogIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from '@heroicons/react/outline';
 import SurveyOptionsModalModal from 'features/surveys/components/SurveyOptionsModal/SurveyOptionsModal';
 import useModal from 'features/surveys/hooks/useModal';
 import useTranslation from 'next-translate/useTranslation';
@@ -22,6 +27,8 @@ export default function TitleAndConfigSection() {
     handleChangeTitle,
     surveyOptions,
     updateSurveyOptions,
+    isEditMode,
+    setIsTemplatePicked,
   } = useSurveyCreatorContext();
 
   const { togglePanel, isPanelOpened } = usePreviewPanelContext();
@@ -34,6 +41,19 @@ export default function TitleAndConfigSection() {
   return (
     <>
       <div className="flex flex-col gap-x-2 sm:flex-row">
+        {!isEditMode && (
+          <Button
+            className="mb-2"
+            onClick={() => {
+              setIsTemplatePicked(false);
+            }}
+            sizeType={ButtonSize.SMALL}
+            icon={<ArrowLeftIcon className="mr-1 h-5 w-5" />}
+          >
+            Back
+          </Button>
+        )}
+
         <div className="w-full">
           <Input
             className="mt-0"

@@ -6,13 +6,14 @@ import {
   ButtonSize,
   ButtonVariant,
 } from 'shared/components/Button/Button';
+import { UrlObject } from 'url';
 
 export const ButtonLinkVariant = ButtonVariant;
 export const ButtonLinkSize = ButtonSize;
 
 interface ButtonLinkProps extends ButtonProps {
   onClick?: () => void;
-  href: string;
+  href: string | UrlObject;
   target?: string;
 }
 

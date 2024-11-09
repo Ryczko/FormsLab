@@ -1,3 +1,3 @@
 export const EXTERNAL_ROUTES = ['/survey/[surveyId]'];
 
-export const FULL_PAGE_ROUTES = ['/survey/create/[[...surveyId]]'];
+export const FULL_PAGE_ROUTES = ['/survey/create', '/survey/[surveyId]/edit'];

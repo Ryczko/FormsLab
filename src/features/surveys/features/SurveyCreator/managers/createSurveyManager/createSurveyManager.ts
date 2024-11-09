@@ -5,10 +5,7 @@ import useCopyToClipboard from 'shared/hooks/useCopyToClipboard';
 import useTranslation from 'next-translate/useTranslation';
 import { ComparisonType, QuestionType } from '@prisma/client';
 import { postFetch, putFetch } from '../../../../../../../lib/axiosConfig';
-import {
-  END_OF_SURVEY,
-  defaultQuestions,
-} from 'shared/constants/surveysConfig';
+import { END_OF_SURVEY } from 'shared/constants/surveysConfig';
 import { DRAFT_SURVEY_SESSION_STORAGE } from 'shared/constants/app';
 import { SurveyWithQuestions } from 'types/SurveyWithQuestions';
 import { LogicPath } from '@prisma/client';
@@ -58,13 +55,11 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   };
 
   const [questions, setQuestions] = useState<DraftQuestion[]>(
-    initialData
-      ? mapQuestionsWithExpanded(initialData.questions)
-      : defaultQuestions
+    initialData ? mapQuestionsWithExpanded(initialData.questions) : []
   );
   const [surveyOptions, setSurveyOptions] = useState<SurveyOptions>({
     oneQuestionPerStep: initialData?.oneQuestionPerStep ?? true,
-    displayTitle: initialData?.displayTitle ?? true,
+    displayTitle: initialData?.displayTitle ?? false,
     hideProgressBar: initialData?.hideProgressBar ?? false,
     accentColor: initialData?.accentColor ?? '#C7D2FE',
   });
@@ -76,36 +71,44 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
 
+  const [isTemplatePicked, setIsTemplatePicked] = useState(false);
+
   const signInToCreateSurvey = () => {
     router.push('/login');
-    sessionStorage.setItem(
-      DRAFT_SURVEY_SESSION_STORAGE,
-      JSON.stringify({
-        title,
-        questions,
-        surveyOptions,
-      })
-    );
   };
 
   useEffect(() => {
-    setActivePage(isEditMode ? Page.EDIT_SURVEY : Page.CREATE_SURVEY);
-    const draftSurvey = sessionStorage.getItem(DRAFT_SURVEY_SESSION_STORAGE);
+    if (!isTemplatePicked || isEditMode) return;
 
-    if (draftSurvey) {
-      const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
-
-      setTitle(title);
-      setQuestions(questions);
-      setSurveyOptions(surveyOptions);
-      sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
+    if (questions.length > 0) {
+      sessionStorage.setItem(
+        DRAFT_SURVEY_SESSION_STORAGE,
+        JSON.stringify({
+          title,
+          questions,
+          surveyOptions,
+        })
+      );
     }
+  }, [title, questions, surveyOptions, isTemplatePicked, isEditMode]);
+
+  useEffect(() => {
+    setActivePage(isEditMode ? Page.EDIT_SURVEY : Page.CREATE_SURVEY);
 
     return () => {
       setActivePage(undefined);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getDraftSurveyFromSessionStorage = () => {
+    const draftSurvey = sessionStorage.getItem(DRAFT_SURVEY_SESSION_STORAGE);
+    if (draftSurvey) {
+      const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
+
+      return { title, questions, surveyOptions };
+    }
+  };
 
   const updateSurveyOptions = (
     option: keyof SurveyOptions,
@@ -332,16 +335,13 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         options: question.options ?? [],
         type: question.type,
         isRequired: question.isRequired,
-        logicPaths: question.logicPaths?.map(
-          (path) =>
-            ({
-              comparisonType: path.comparisonType as ComparisonType,
-              selectedOption: path.selectedOption as string,
-              nextQuestionOrder: questions.findIndex(
-                (question) => question.draftId === path.nextQuestionId
-              ),
-            } ?? undefined)
-        ),
+        logicPaths: question.logicPaths?.map((path) => ({
+          comparisonType: path.comparisonType as ComparisonType,
+          selectedOption: path.selectedOption as string,
+          nextQuestionOrder: questions.findIndex(
+            (question) => question.draftId === path.nextQuestionId
+          ),
+        })),
       })),
     };
   };
@@ -370,6 +370,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
           copiedCorrectly ? t('surveyCreationSucessCopiedCorrectly') : ''
         }`
       );
+      sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
     } catch (error) {
       toast.error(t('surveyCreationFailed'));
     }
@@ -486,6 +487,11 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     });
   };
 
+  const selectTemplate = (title: string, questions: DraftQuestion[]) => {
+    setTitle(title);
+    setQuestions(questions);
+  };
+
   return {
     title,
     error,
@@ -514,6 +520,10 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     removeLogicPath,
     updateLogicPath,
     expandAdvancedSettings,
+    selectTemplate,
+    getDraftSurveyFromSessionStorage,
+    isTemplatePicked,
+    setIsTemplatePicked,
   };
 };
 

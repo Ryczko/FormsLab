@@ -1,7 +1,6 @@
 import { useCreateSurveyManager } from 'features/surveys/features/SurveyCreator/managers/createSurveyManager/createSurveyManager';
 import { v4 } from 'uuid';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { defaultQuestions } from 'shared/constants/surveysConfig';
 import { useApplicationManager } from 'features/application/manager';
 import { ApplicationContext } from 'features/application/context';
 import { PropsWithChildren } from 'react';
@@ -58,7 +57,7 @@ describe('useCreateSurveyManager tests', () => {
     });
 
     await waitFor(() => {
-      expect(result.current.questions.length).toBe(defaultQuestions.length + 2);
+      expect(result.current.questions.length).toBe(2);
     });
   });
 
@@ -70,10 +69,7 @@ describe('useCreateSurveyManager tests', () => {
     });
 
     await waitFor(() => {
-      expect(result.current.questions.length).toBe(defaultQuestions.length);
-    });
-    await waitFor(() => {
-      expect(result.current.questions[1].title).toBe(NEW_QUESTION_TITLE);
+      expect(result.current.questions.length).toBe(0);
     });
   });
 

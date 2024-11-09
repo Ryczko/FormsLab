@@ -16,6 +16,7 @@ export const AddQuestionButton = ({ onClick }: AddQuestionButtonProps) => {
         onClick={openModal}
         sizeType={ButtonSize.FULL}
         className="h-[50px]"
+        data-test-id="add-question-button"
         icon={<PlusCircleIcon className="h-5  w-5" />}
       >
         Add new block

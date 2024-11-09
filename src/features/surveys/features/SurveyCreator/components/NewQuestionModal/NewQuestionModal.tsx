@@ -86,21 +86,25 @@ export default function NewQuestionModal({
             onClick={addEmojiQuestion}
             icon={<EmojiIcon />}
             text="Emoji"
+            testSelector="emoji-question-button"
           />
           <NewQuestionModalButton
             onClick={addInputQuestion}
             icon={<InputIcon />}
             text="Text"
+            testSelector="input-question-button"
           />
           <NewQuestionModalButton
             onClick={addChoiceQuestion}
             icon={<ChoiceIcon />}
             text="Choice"
+            test-selector="choice-question-button"
           />
           <NewQuestionModalButton
             onClick={addRateQuestion}
             icon={<RateIcon />}
             text="Rate"
+            test-selector="rate-question-button"
           />
         </div>
       }

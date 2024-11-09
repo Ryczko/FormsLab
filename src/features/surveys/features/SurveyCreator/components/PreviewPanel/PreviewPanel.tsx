@@ -9,13 +9,8 @@ import Button from 'shared/components/Button/Button';
 
 export default function PreviewPanel() {
   const { questions, title, surveyOptions } = useSurveyCreatorContext();
-  const { isPanelOpened, togglePanel } = usePreviewPanelContext();
-
-  const [restartTrigger, setRestartTrigger] = React.useState(0);
-
-  const handleRestart = () => {
-    setRestartTrigger((prev) => prev + 1);
-  };
+  const { isPanelOpened, togglePanel, handleRestart, restartTrigger } =
+    usePreviewPanelContext();
 
   return (
     <>

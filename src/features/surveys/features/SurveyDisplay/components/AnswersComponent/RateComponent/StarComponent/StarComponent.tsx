@@ -22,7 +22,7 @@ export default function StarComponent({
       onClick={onClick}
     >
       <svg
-        className={clsx('h-5 w-5', classNames)}
+        className={clsx('h-8 w-8', classNames)}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
