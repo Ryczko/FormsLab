@@ -109,16 +109,12 @@ export default function SurveyResults() {
         createDate={surveyData?.createdAt ?? ''}
       />
 
-      {process.env.NEXT_PUBLIC_INDIVIDUAL_RESULTS ? (
-        <Tabs
-          categories={{
-            Summary: <SummaryResults />,
-            Individual: <IndividualResults />,
-          }}
-        />
-      ) : (
-        <SummaryResults />
-      )}
+      <Tabs
+        categories={{
+          Summary: <SummaryResults />,
+          Individual: <IndividualResults />,
+        }}
+      />
 
       {surveyData?.answers?.length === 0 && (
         <>
