@@ -10,6 +10,8 @@ interface TemplateItemProps {
   onTemplatePick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   isInPreview: boolean;
   buttonContent?: string;
+  fieldTestSelector?: string;
+  buttonTestSelector?: string;
 }
 
 export default function TemplateItem({
@@ -19,10 +21,13 @@ export default function TemplateItem({
   onTemplatePick,
   isInPreview,
   buttonContent,
+  fieldTestSelector,
+  buttonTestSelector,
 }: TemplateItemProps) {
   return (
     <div
       onClick={(e) => onTemplatePreview?.(e)}
+      data-test-id={fieldTestSelector}
       className={clsx(
         'flex h-[140px] flex-grow cursor-pointer flex-col items-center rounded border border-zinc-600/50 px-4 pb-4 shadow',
         template ? 'border-solid bg-zinc-50' : 'bg-white',
@@ -35,6 +40,7 @@ export default function TemplateItem({
           className="w-full"
           variant={ButtonVariant.PRIMARY}
           onClick={(e) => onTemplatePick(e)}
+          data-test-id={buttonTestSelector}
         >
           {buttonContent || 'Use Template'}
         </Button>

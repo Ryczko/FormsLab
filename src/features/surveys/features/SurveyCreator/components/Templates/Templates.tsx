@@ -85,6 +85,8 @@ function Templates() {
           }
           isInPreview={previewIndex === 1}
           buttonContent="Start from scratch"
+          fieldTestSelector="start-from-scratch-field"
+          buttonTestSelector="start-from-scratch-button"
         />
 
         {TEMPLATES.map((template, index) => (

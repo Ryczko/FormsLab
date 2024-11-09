@@ -11,6 +11,13 @@ describe('Answering survey tests', () => {
 
     cy.get('[data-test-id="create-survey"]').click();
     cy.url().should('include', '/survey/create');
+    cy.get('[data-test-id="start-from-scratch-field"]').click();
+    cy.get('[data-test-id="start-from-scratch-button"]').click();
+    cy.get('[data-test-id="add-question-button"]').click();
+    cy.get('[data-test-id="emoji-question-button"]').click();
+    cy.get('[data-test-id="add-question-button"]').click();
+    cy.get('[data-test-id="input-question-button"]').click();
+
     cy.get('input[name="survey-title"]').clear().type(surveyTitle);
 
     cy.get('input[data-test-id="question-input-0"]')
