@@ -106,6 +106,6 @@ export default function BarChart({ data, emojiLabels }: BarChartProps) {
       </ResponsiveContainer>
     </div>
   ) : (
-    <div className="mb-4 mt-5">{t('noAnswers')}</div>
+    <div className="mb-3 mt-4 italic">{t('noAnswers')}</div>
   );
 }

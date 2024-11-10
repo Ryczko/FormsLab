@@ -34,7 +34,7 @@ export default function IndividualResults() {
 
   return (
     <div className="mt-6">
-      <div className="mx-auto mb-5 flex flex-row items-center justify-center gap-x-1">
+      <div className="mx-auto mb-6 flex flex-row items-center justify-center gap-x-1">
         <Button
           title={'Previous'}
           onClick={handlePrevious}
@@ -76,24 +76,26 @@ export default function IndividualResults() {
       </div>
 
       {Object.keys(mappedAnswersData).map((key, index) => {
-        const questionData = surveyData?.questions[index];
         const question = mappedAnswersData[key].question;
         const questionType = mappedAnswersData[key].questionType;
         const answer = mappedAnswersData[key].answers[currentIndex].answer;
+        const options = mappedAnswersData[key].options;
 
         return (
           <div
-            className="mb-3 rounded-md border bg-white p-4 text-center shadow-sm"
+            className="mb-2 rounded-md border bg-white p-4 text-center shadow-sm"
             key={index}
           >
             <h2 className="mb-4 text-lg font-semibold">{question}</h2>
             {answer ? (
               <>
-                {questionType === QuestionType.INPUT && <p>{answer}</p>}
+                {questionType === QuestionType.INPUT && (
+                  <p className="mb-3 mt-4">{answer}</p>
+                )}
 
-                <div className="mb-1 flex flex-wrap justify-center gap-x-1">
-                  {questionType === QuestionType.RATE &&
-                    [...Array(5)].map((_, index) => (
+                {questionType === QuestionType.RATE && (
+                  <div className="mb-3 flex flex-wrap justify-center gap-x-1">
+                    {[...Array(5)].map((_, index) => (
                       <StarComponent
                         key={index}
                         classNames={clsx(
@@ -103,10 +105,24 @@ export default function IndividualResults() {
                         )}
                       />
                     ))}
-                </div>
+                  </div>
+                )}
+
+                {questionType === QuestionType.EMOJI && (
+                  <div className="mb-3 flex flex-wrap justify-center gap-x-1">
+                    {options.map((icon) => (
+                      <EmojiListItem
+                        icon={icon}
+                        selected={answer === icon}
+                        isAnySelected={!!answer}
+                        key={icon}
+                      />
+                    ))}
+                  </div>
+                )}
 
                 {questionType === QuestionType.CHOICE &&
-                  questionData?.options.map((option, idx) => (
+                  options.map((option, idx) => (
                     <button
                       key={idx}
                       className={clsx(
@@ -118,21 +134,9 @@ export default function IndividualResults() {
                       {option.trim() || '-'}
                     </button>
                   ))}
-
-                <div className="mb-1 flex flex-wrap justify-center gap-x-1">
-                  {questionType === QuestionType.EMOJI &&
-                    questionData?.options.map((icon, idx) => (
-                      <EmojiListItem
-                        icon={icon}
-                        selected={answer === icon}
-                        isAnySelected={!!answer}
-                        key={icon}
-                      />
-                    ))}
-                </div>
               </>
             ) : (
-              <div className="mb-1 italic">No answer</div>
+              <div className="mb-3 mt-4 italic">No answer</div>
             )}
           </div>
         );

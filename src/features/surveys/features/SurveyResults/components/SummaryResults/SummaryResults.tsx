@@ -6,7 +6,7 @@ export default function SummaryResults() {
   const { mappedAnswersData } = useSurveyResultsContext();
 
   return (
-    <>
+    <div className="mt-6">
       {Object.keys(mappedAnswersData).map((key) => (
         <ResultComponent
           key={key}
@@ -15,6 +15,6 @@ export default function SummaryResults() {
           answers={mappedAnswersData[key].answers}
         />
       ))}
-    </>
+    </div>
   );
 }

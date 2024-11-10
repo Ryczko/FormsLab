@@ -46,6 +46,7 @@ export const useSurveyResultsManager = (initialData: SurveyWithAnswers) => {
           mappedDataByQuestion[answerData.questionId] = {
             questionType: questionData?.type as QuestionType,
             question: questionData?.title as string,
+            options: questionData?.options ?? [],
             answers: [
               {
                 id: answerData.id,

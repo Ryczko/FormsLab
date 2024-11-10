@@ -23,7 +23,7 @@ export default function TextResults({ answers }: TextResultsProps) {
           <AnswerTableRow key={answer.id} answer={answer} />
         ))
       ) : (
-        <div className="mb-4 mt-5">{t('noAnswers')}</div>
+        <div className="mb-3 mt-4 italic">{t('noAnswers')}</div>
       )}
 
       {(canGoNext || canGoPrev) && (
