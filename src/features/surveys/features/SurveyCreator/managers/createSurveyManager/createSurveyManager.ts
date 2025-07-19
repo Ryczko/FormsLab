@@ -38,6 +38,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
 
   const [isEditMode] = useState(!!initialData);
   const [title, setTitle] = useState(initialData?.title ?? 'My survey');
+  const [isLoaded, setIsLoaded] = useState(isEditMode);
 
   const mapQuestionsWithExpanded = (
     questions: QuestionWithLogicPath[]
@@ -71,16 +72,14 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
   const { copy } = useCopyToClipboard();
   const { t } = useTranslation('surveyCreate');
 
-  const [isTemplatePicked, setIsTemplatePicked] = useState(false);
-
   const signInToCreateSurvey = () => {
     router.push('/login');
   };
 
   useEffect(() => {
-    if (!isTemplatePicked || isEditMode) return;
+    if (isEditMode) return;
 
-    if (questions.length > 0) {
+    if (typeof window !== 'undefined' && isLoaded) {
       sessionStorage.setItem(
         DRAFT_SURVEY_SESSION_STORAGE,
         JSON.stringify({
@@ -90,25 +89,27 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         })
       );
     }
-  }, [title, questions, surveyOptions, isTemplatePicked, isEditMode]);
+  }, [title, questions, surveyOptions, isEditMode, isLoaded]);
 
   useEffect(() => {
     setActivePage(isEditMode ? Page.EDIT_SURVEY : Page.CREATE_SURVEY);
-
+    if (!isEditMode && typeof window !== 'undefined') {
+      const draftSurvey = sessionStorage.getItem(DRAFT_SURVEY_SESSION_STORAGE);
+      if (draftSurvey) {
+        const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
+        if (title !== undefined) setTitle(title);
+        if (questions !== undefined) setQuestions(questions);
+        if (surveyOptions !== undefined) setSurveyOptions(surveyOptions);
+      }
+      setIsLoaded(true);
+    } else if (isEditMode) {
+      setIsLoaded(true);
+    }
     return () => {
       setActivePage(undefined);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const getDraftSurveyFromSessionStorage = () => {
-    const draftSurvey = sessionStorage.getItem(DRAFT_SURVEY_SESSION_STORAGE);
-    if (draftSurvey) {
-      const { title, questions, surveyOptions } = JSON.parse(draftSurvey);
-
-      return { title, questions, surveyOptions };
-    }
-  };
 
   const updateSurveyOptions = (
     option: keyof SurveyOptions,
@@ -370,7 +371,9 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
           copiedCorrectly ? t('surveyCreationSucessCopiedCorrectly') : ''
         }`
       );
-      sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem(DRAFT_SURVEY_SESSION_STORAGE);
+      }
     } catch (error) {
       toast.error(t('surveyCreationFailed'));
     }
@@ -521,9 +524,6 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     updateLogicPath,
     expandAdvancedSettings,
     selectTemplate,
-    getDraftSurveyFromSessionStorage,
-    isTemplatePicked,
-    setIsTemplatePicked,
   };
 };
 
