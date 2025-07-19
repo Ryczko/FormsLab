@@ -9,8 +9,10 @@ describe('Creating survey tests', () => {
     cy.get('[data-test-id="create-survey"]').click();
     cy.url().should('include', '/survey/create');
 
+    cy.get('[data-test-id="expand-templates"]').click();
     cy.get('[data-test-id="start-from-scratch-field"]').click();
-    cy.get('[data-test-id="start-from-scratch-button"]').click();
+    cy.get('[data-test-id="confirm-template-change"]').click();
+
     cy.get('[data-test-id="add-question-button"]').click();
     cy.get('[data-test-id="emoji-question-button"]').click();
     cy.get('[data-test-id="add-question-button"]').click();

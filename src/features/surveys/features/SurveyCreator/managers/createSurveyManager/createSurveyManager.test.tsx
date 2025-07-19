@@ -41,6 +41,10 @@ const setUp = () => {
   return result;
 };
 
+beforeEach(() => {
+  window.sessionStorage.clear();
+});
+
 describe('useCreateSurveyManager tests', () => {
   it('should add questions correctly', async () => {
     const result = setUp();

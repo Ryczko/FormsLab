@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const usePreviewPanelManager = () => {
   const [isPanelOpened, setIsPanelOpened] = useState(false);
-
+  const [openedWithoutAnimation, setOpenedWithoutAnimation] = useState(false);
   const [restartTrigger, setRestartTrigger] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1280) {
+      setIsPanelOpened(true);
+      setOpenedWithoutAnimation(true);
+    }
+  }, []);
 
   const handleRestart = () => {
     setRestartTrigger((prev) => prev + 1);
@@ -11,6 +18,7 @@ export const usePreviewPanelManager = () => {
 
   const togglePanel = () => {
     setIsPanelOpened((prev) => !prev);
+    setOpenedWithoutAnimation(false);
   };
 
   return {
@@ -18,6 +26,7 @@ export const usePreviewPanelManager = () => {
     togglePanel,
     restartTrigger,
     handleRestart,
+    openedWithoutAnimation,
   };
 };
 

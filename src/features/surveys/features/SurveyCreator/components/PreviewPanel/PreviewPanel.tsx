@@ -9,8 +9,13 @@ import Button from 'shared/components/Button/Button';
 
 export default function PreviewPanel() {
   const { questions, title, surveyOptions } = useSurveyCreatorContext();
-  const { isPanelOpened, togglePanel, handleRestart, restartTrigger } =
-    usePreviewPanelContext();
+  const {
+    isPanelOpened,
+    togglePanel,
+    handleRestart,
+    restartTrigger,
+    openedWithoutAnimation,
+  } = usePreviewPanelContext();
 
   return (
     <>
@@ -23,7 +28,9 @@ export default function PreviewPanel() {
 
       <div
         className={clsx(
-          'fixed bottom-0 right-0 top-[var(--navigation-height)] w-[550px] max-w-[calc(100vw-(100vw-100%))] items-center overflow-hidden border-l shadow transition-transform duration-500 ease-in-out',
+          'fixed bottom-0 right-0 top-[var(--navigation-height)] w-[550px] max-w-[calc(100vw-(100vw-100%))] items-center overflow-hidden border-l shadow',
+          !openedWithoutAnimation &&
+            'transition-transform duration-500 ease-in-out',
           !isPanelOpened && 'translate-x-full'
         )}
       >
