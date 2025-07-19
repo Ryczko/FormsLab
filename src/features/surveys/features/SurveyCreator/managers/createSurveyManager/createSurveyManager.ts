@@ -14,6 +14,7 @@ import { CreateEditSurveyPayload } from 'pages/api/survey';
 import { QuestionWithLogicPath } from 'types/QuestionWithLogicPath';
 import { useApplicationContext } from 'features/application/context';
 import { Page } from 'features/application/types/Page';
+import { USER_FEEDBACK_TEMPLATE } from 'features/surveys/features/SurveyCreator/constants/templatesData/UserFeedbackTemplate';
 
 export interface DraftQuestion {
   draftId: string;
@@ -100,6 +101,9 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
         if (title !== undefined) setTitle(title);
         if (questions !== undefined) setQuestions(questions);
         if (surveyOptions !== undefined) setSurveyOptions(surveyOptions);
+      } else {
+        setTitle(USER_FEEDBACK_TEMPLATE.title);
+        setQuestions(USER_FEEDBACK_TEMPLATE.questions);
       }
       setIsLoaded(true);
     } else if (isEditMode) {
@@ -122,6 +126,10 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     setQuestions((oldQuestions) => [...oldQuestions, newQuestion]);
     setIsSubmitted(false);
     setError('');
+  };
+
+  const removeAllQuestions = () => {
+    setQuestions([]);
   };
 
   const removeQuestion = (index: number) => {
@@ -524,6 +532,7 @@ export const useCreateSurveyManager = (initialData?: SurveyWithQuestions) => {
     updateLogicPath,
     expandAdvancedSettings,
     selectTemplate,
+    removeAllQuestions,
   };
 };
 

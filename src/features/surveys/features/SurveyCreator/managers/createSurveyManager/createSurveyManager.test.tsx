@@ -8,7 +8,6 @@ import { PropsWithChildren } from 'react';
 jest.mock('next/router', () => require('next-router-mock'));
 
 const NEW_QUESTION_TITLE = 'new question';
-
 const NEW_SURVEY_TITLE = 'new survey title';
 
 const setUp = () => {
@@ -27,6 +26,7 @@ const setUp = () => {
   });
 
   act(() => {
+    result.current.removeAllQuestions();
     result.current.addQuestion({
       draftId: v4(),
       type: 'INPUT',
