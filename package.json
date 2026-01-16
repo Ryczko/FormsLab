@@ -25,7 +25,7 @@
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.14.0",
     "axios": "^1.10.0",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^6.0.0",
     "clsx": "^1.1.1",
     "colord": "^2.9.3",
     "date-fns": "^2.28.0",
